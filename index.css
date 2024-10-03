@@ -1,246 +1,119 @@
 
-@media (max-width: 600px) {  
-    .element {  
-      width: 100vw; /* 在小于600px的屏幕上，元素的宽度是视口宽度的100% */  
-      height: auto; /* 高度自动调整以保持元素的原始纵横比 */  
-    }  
-  }  
-    
-@media (min-width: 601px) {  
-.element {  
-    width: 50vw; /* 在大于600px的屏幕上，元素的宽度是视口宽度的50% */  
-    height: 50vh; /* 元素的高度是视口高度的50% */  
-}  
-}
-html, body {
-    scroll-behavior: smooth; /* 平滑滚动 */
-}
-html { 
-    height: 100vh; /* 设置body和html的高度为100% */ 
-    width: 100%; ;
-    margin: 0; /* 移除默认的外边距 */ 
-    padding: 0; /* 移除默认的内边距 */ 
-    /* overflow: hidden; 隐藏滚动条 */
-}
-   body {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
     margin: 0;
-    height: 100vh;
-    width: 100%; 
-    margin: 0; /* 移除默认的外边距 */ 
-    padding: 0; /* 移除默认的内边距 */ 
-    /* overflow: hidden; 隐藏滚动条 */
-    flex-direction: column;
-}
-
-/* 导航栏整体样式 */  
-nav {  
-    background-color: #0b0b0b;  
-    padding: 5px;  
-}  
-
-/* 导航链接样式 */  
-nav a { 
-    font-size: 0.6rem; 
-    justify-content: space-between;
-    display: inline-block;  
-    padding: 0.1rem 0.8rem;  
-    color: #e0dddd;  
-    text-decoration: none;  
-    margin-right: 0px;  
-    border-radius: 0.5rem;  
-}  
-
-/* 鼠标悬停时链接的样式 */  
-nav a:hover {  
-    background-color: #e9ecef;  
-}  
-#daohang {
-    position: relative;
-    top: 0;
-    left: 0;
-}
-.nav-link {
-    font-size: 1vw;
-}
-/* 当前活动链接的样式  
-nav a.active {  
-    background-color: #007bff;  
-    color: white;  
-}   */
-
-/* 确保跳转到的模块在视觉上有所区分 */  
-.section {  
-    margin-top: 50px; /* 根据需要调整间距 */  
-    padding: 20px;  
-    border: 1px solid #ccc;  
-    border-radius: 5px;  
-}
-
-
-/* 弹窗样式 */
-@media (max-width: 600px) {
-    .popup-content {
-        width: 90vw;
-        padding: 1rem;
-    }
-    .popup-content h3 {
-        font-size: 1.2rem;
-    }
-    .popup-content p {
-        font-size: 0.8rem;
-        line-height: 1.2rem;
-    }
-    .popup-content a {
-        font-size: 0.8rem;
-        margin: 0.5rem 0;
-    }
-    .close {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.5rem;
-    }
-}
-#popup {
-    display: none; /* 默认隐藏弹窗 */
-    position: fixed; /* 弹窗位置固定 */
-    left: 0;
-    top: 0;
+    padding: 0;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
-    z-index: 1000; /* 确保弹窗在最上层 */
-    overflow: auto; /* 允许滚动 */
 }
 
-.popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(80vw - 4rem); /* 适应不同屏幕尺寸，留出一定边距 */
-    max-width: 20rem; /* 设置最大宽度，避免在大屏幕上过于宽广 */
-    background: #FFF;
-    transform: translate(-50%, -50%);
-    border-radius: 1rem; /* 使用更通用的单位 */
-    padding: 1.5rem;
-    box-sizing: border-box; /* 确保padding不会影响宽度 */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 12px 0;
+    font-size: 0.8rem;
 }
 
-/* 标题居中 */
-.popup-content h3 {
-    font-weight: bold;
-    font-size: 1.5rem; /* 使用rem单位 */
-    margin-bottom: 1rem; /* 添加底部边距 */
-    text-align: center; /* 标题居中 */
-}
 
-/* 正文内容整体居中，文字左对齐 */
-.popup-content p {
-    font-size: 1rem; /* 使用rem单位 */
-    line-height: 1.5rem; /* 改善行高 */
-    color: #625f5f;
-    margin-bottom: 1rem; /* 添加底部边距 */
-    text-align: center; /* 文字左对齐 */
-}
 
-/* 按钮容器，用于整体居中 */
-.button-container {
+.nav-main{
     display: flex;
-    justify-content: center; /* 按钮整体居中 */
-    align-items: center; /* 垂直居中 */
-    gap: 1rem; /* 按钮间的间距 */
-    margin-top: 1rem;
+    justify-content: space-around;
 }
 
-/* 按钮通用样式 */
-.tanchuang-button {
-    display: inline-block;
-    background: #98a3ff;
-    font-weight: bold;
-    font-size: 1rem; /* 使用rem单位 */
-    border-radius: 0.4rem;
-    padding: 0.5rem 1rem; /* 调整内边距 */
-    color: #000;
-    text-decoration: none;
-    transition: all 0.3s ease; /* 平滑过渡效果 */
-}
 
-.tanchuang-button:hover,
-.tanchuang-button:focus {
-    background: hsl(190, 91%, 49%); /* 鼠标悬停时改变背景色 */
-    cursor: pointer;
-}
 
-/* 底部按钮容器 */
-.popup-content > div:last-child {
+nav {
     display: flex;
     justify-content: center;
-    gap: 1rem; /* 按钮间的间距 */
-    margin-top: 1rem;
+    gap: 1.6rem;
+    width: 80%;
+
 }
 
-/* 关闭按钮 */
-.close {
-    background: #98a3ff; /* 更改背景色 */
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
-.close:hover,
-.close:focus {
-    background: hsl(190, 91%, 49%); /* 鼠标悬停时改变背景色 */
+.nav-link:hover {
+    color: #aaa;
 }
 
-/* 邮箱弹窗 */
-.email-popup {  
-    text-align: center;
-    display: none; /* 默认隐藏弹窗 */
-    position: fixed; /* 弹窗位置固定 */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
-    z-index: 10000; /* 确保弹窗在最上层 */
-    overflow: auto; /* 允许滚动 */
-}  
-.email-popup h3 {  
+.nav-link.active {
     font-weight: bold;
-    font-size: 1.5rem; /* 使用rem单位 */
-    margin-bottom: 1rem; /* 添加底部边距 */
-    text-align: center; /* 标题居中 */  
-}
-.email-popup p {  
-    font-size: 1rem; /* 使用rem单位 */
-    line-height: 1.5rem; /* 改善行高 */
-    color: #625f5f;
-    margin-bottom: 1rem; /* 添加底部边距 */
-    text-align: center; /* 文字居中 */ 
-}
-.email-popup a {  
-    text-decoration: none; 
-    font-size: 1.5vw; 
-    text-align: center; 
-    color: rgb(255, 255, 255);  
-    /*margin: 3% 16%;*/
-    margin-right: 5px; /* 链接之间的间距 */  
 }
 
+#popup, #emailPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    display: none;
+}
 
+#popup h3 {
+    margin-top: 0;
+}
+
+#popup p {
+    margin: 5px 0;
+}
+
+.button-container a {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+#sendSuggestion {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+#sendSuggestion:hover {
+    background-color: #45a049;
+}
+
+.close {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.close:hover {
+    background-color: #d32f2f;
+}
 
 /* 倒计时窗口 */
-/* 通用样式 */  
-.countdown-container { 
+
+.countdown-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.5rem;
+    font-size: 0.6rem;
+    background-color: #fbfdfd;
+    border: 1px solid #ddd;
     text-align: center;
-    margin-top: 1vw; 
-    width: 7vw;  
-    font-size: 0.2vw
-}  
+}
     
 /* 窗口样式 */  
 .countdown {  
-    background-color: rgb(242, 244, 248);  
+    /* background-color: rgb(242, 244, 248);   */
     padding: 5px;  
+    font-size: 0.6rem;  
 }  
     
 .countdown-days {  
-    font-size: 0.5rem;  
+    font-size: 0.65rem;  
 }  
     
 .countdown-label {  
@@ -248,169 +121,170 @@ nav a.active {
 }  
 
 #kaoyan {
+    font-size: 0.6rem;  
     color: red;
     padding: 2px 2px;
-    background-color: #70baf7;
+    /* background-color: #70baf7; */
 }
 #kaogong {
+    font-size: 0.6rem;  
     color: red;
     padding: 2px 2px;
-    background-color: #70f7ee;
+    /* background-color: #70f7ee; */
 }
 
-/* 基础样式重置 */  
-* {  
-    margin: 0;  
-    padding: 0;  
-}  
+/* 搜索框 */
+.search-main{
+    width: 100% !important;
+    justify-content: center;
+    /* text-align: center; */
+    display: flex; 
+    flex-wrap: wrap;
+}
+.search-container {
+    display: flex;
+    width: 80%;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-top: 10px ;
+    margin-bottom: 10px ;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
 
-/* 搜索框样式 */  
-.search-container {  
-    margin-top: 1%;
-    display: flex; /* 使用 Flexbox 布局 */  
-    align-items: center; /* 垂直居中 */  
+
+.search-list {
+    width: auto;
+    display: flex;
+    list-style: none;
     justify-content: center; /* 水平居中 */
-    width: 100%;  
-    /* max-width: 150%;  */
-}  
-    
-.search-box {  
-    display: flex;  
-    flex-direction: column;  
-    align-items: center; /* 如果需要垂直居中，可以使用这个属性 */  
-    width: 100%;
-    /* justify-content: flex-start; 水平对齐方式 */
-    /* max-width: 150%;  */
-    padding: 3vh 1vw;
-}  
-    
-.search-list {  
-    font-size: 0.6rem; /* 使用视口单位设置字体大小 */
-}  
+    padding: 10px;
+    margin: 0;
+    gap: 3px;
+    font-size: 0.8rem;
+}
 
-.search-tab {  
-    display: inline-flex; /* 使用 inline-flex 以便链接可以单独设置样式 */   
-    cursor: pointer;  
-    font-size: 0.9rem; /* 使用视口单位设置字体大小 */
+.search-tab {
     text-align: center;
-    padding: 2px 5px; /* 增加一些水平内边距使链接看起来更好 */  
-    text-decoration: none;  
-    color: inherit;  
-    background-color: #f2f4f8;  
-    margin-right: 8px;
-    margin-bottom: 1%;
-    margin-top: 1%
-    /* margin: 0 auto; 添加一些外边距使列表项之间有一些间隔 */
-}  
-/* 鼠标悬停时卡片变色效果 */    
-.search-tab:hover {    
-    background-color: rgba(81, 241, 239, 0.3); /* 悬停时变为半透明白色 */    
-} 
+    display: inline-flex; 
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    /* border-radius: 5px 5px 0 0; */
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+}
 
-.search-tab.active {  
-    border-bottom-color: #333333;  
-}  
-.search-content {  
-    margin-top: 1px;  
+.search-tab:hover {
+    background-color: #eee;
+}
+
+.search-tab.active {
+    background-color: #a1ccf1;
+    color: #fff;
+}
+
+.search-content {
+    /* border: 1px solid #ddd; */
+    border-top: none;
     text-align: center;
-    width: 60vw; /* 占据整个.search-box宽度 */  
-}  
+    padding: 10px;
+    width: auto;
+}
 
 .search-form {  
     display: none;  
-}  
+}
 
 .search-form.active {  
     display: block;  
 }  
 
-.search-input {  
-    flex: 1; /* 占据剩余空间 */
-    width: 60%;  
-    padding: 1.5vh;  
-}  
-
-.search-button {  
-   /* 这里添加搜索按钮的样式 */  
-   text-align: center;
-   padding: 1.5vh 2vw; /* 设置内边距 */  
-   background-color: #e0e2e6; /* 设置背景色 */  
-   border: none; /* 移除默认边框 */  
-   border-radius: 2px; /* 设置圆角 */  
-   cursor: pointer; /* 设置鼠标悬停样式 */ 
-   white-space: nowrap; /* 防止按钮文本换行 */  
-    /* 设置一个合适的固定宽度 */  
-    flex-shrink: 0; /* 防止按钮缩小 */  
-    /* width: auto; 根据内容自动调整宽度  */
+.search-input {
+    width: 30vw;
+    padding: 1.5vh;
+    border: 1px solid #ddd;
+    border-radius: 3px;
 }
 
-/* 鼠标悬停时卡片变色效果 */    
-.search-button:hover {    
-    background-color: rgba(110, 236, 143, 0.3); /* 悬停时变为半透明白色 */    
-} 
-
-
-/* 内容框 */
-
-.row {  
-    margin:0px;
-    width: 100%; ;
+.search-button {
+    padding: 5px 10px;
+    background-color: #b6cef6;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+.search-button:hover {
+    background-color: #b5f8b9;
+}
+
+.row {
+    width: 100%;
+}
 #main-container {  
-    width: 100% !important;  
-}  
-.main-content {  
-     
-    text-align: center;
-    display: flex;  
-    justify-content: center; /* 这将使列表项在水平方向上居中 */ 
-    padding: 0.6rem;   
-}  
-.indexbox {  
-    width: 80vw;
-    background-color: #f2f7f8;  
-    border-radius: 0.5rem;  
-    overflow: hidden; 
-    margin-bottom: 0rem;  
+    width: 100% !important;
+    justify-content: center;
+    /* text-align: center; */
+    display: flex; 
+    flex-wrap: wrap;
 } 
-.indexbox_title_biaoti {
-    padding: 0.5rem;
-    color: rgb(50, 51, 51);
-    background-color:rgb(175, 213, 247);
-} 
-.indexbox_title strong {  
-    font-size: 0.8rem;  
-    padding: 1rem;
-}  
-.cygjtabs {  
-    display: flex;  
-    padding: 0.3rem 0.5rem;  
-    list-style: none;  
-    margin: 0;  
-}  
-.tabcheck-tools {  
-    font-size: 0.8rem;
-    cursor: pointer;  
-    background-color: #ffffff;
-    padding: 0.5rem 1rem;  
-    border-radius: 1rem; /* 底部圆角 */
-    margin-right: 1rem;  
-    border-bottom: 0.1rem solid transparent;  
-}  
-/* 鼠标悬停时卡片变色效果 */    
-.tabcheck-tools:hover {  
+.main-content {
+    
+    margin: 5px 10px;
+    width: 80%;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 0.5rem;
+}
+
+.section-header h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    justify-content: center;
+    display: flex;
+    background-color: rgb(227, 244, 251);
+    border-radius: 1rem;
+}
+
+.section-tabs {
+    display: flex;
+    justify-content:flex-start;
+    margin-top: 10px;
+}
+
+.tabcheck-tools {
+    display: inline-flex; 
+    cursor: pointer;
+    font-size: 0.88rem;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.tabcheck-tools:hover {
     transform: translateY(-5px); /* 鼠标悬停时轻微上升效果 */  
-    background-color: rgba(179, 246, 244, 0.3); /* 悬停时变为半透明白色 */    
-} 
-.tabcheck-tools.current {  
-    color: #000;  
-    border-color: #090808;  
-}  
-.showdiv {  
-    padding: 15px;  
-    /* display: none; */
-}  
+    background-color: #eee;
+}
+
+
+.tabcheck-tools.current {
+    background-color: #a1ccf1;
+    color: #fff;
+}
+
+.showdiv {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
 .website-list {  
     display: flex; /* 使用 Flexbox 布局 */  
     text-align: center;
@@ -419,22 +293,28 @@ nav a.active {
     list-style: none;  
     flex-wrap: wrap; /* 允许卡片换行 */
     padding: 0 1rem;  
-}  
+} 
 .website-list li {  
     margin-bottom: 1rem; 
 }  
+/* 移除最后一个卡片的右边距 */    
+website-list .hot-item:last-child {    
+    margin-right: 0;    
+} 
 .item-card {  
     border: 1px solid #ddd;  
-    border-radius: 0.5rem;  
-    overflow: hidden;  
-}  
-
+    border-radius: 0.5rem; 
+    font-size: 0.66rem;
+    padding: 10px;    
+    text-align: center; /* 确保文本水平居中 */    
+    overflow: hidden; /* 隐藏溢出内容 */  
+    white-space: nowrap; /* 防止文本换行 */  
+    text-overflow: ellipsis; /* 当文本溢出时显示省略号 */
+} 
 /* 卡片样式 */    
 .hot-item {    
     font-size: 0.6rem; /* 使用视口单位设置字体大小 */  
     width: calc(25% - 1rem); /* 使用calc()函数和视口单位来动态计算宽度 */
-    /* width: 15%; */
-    /* margin-right: 10px; 使用视口单位设置右侧间距     */
     margin-bottom: 1rem; /* 使用视口单位设置右侧间距 */ 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);    
     border-radius: 0.5rem; /* 底部圆角 */   
@@ -442,6 +322,41 @@ nav a.active {
     background-color: transparent; /* 设置为透明 */    
     transition: background-color 0.3s ease; /* 添加背景色变化过渡效果 */  
 } 
+/* 链接样式 */    
+.hot-item a {    
+    text-decoration: none;    
+    font-weight: 450;    
+    color: #333;    
+    transition: color 0.3s ease;    
+} 
+
+.hot-item a:hover{    
+    color: #007BFF;    
+    text-decoration: underline;    
+}    
+    
+/* 鼠标悬停时卡片变色效果 */    
+.hot-item:hover {    
+    transform: translateY(-5px); /* 鼠标悬停时轻微上升效果 */
+    background-color: rgba(124, 186, 252, 0.3); /* 悬停时变为半透明白色 */    
+}
+
+.contents a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.contents a:hover {
+    
+    color: #4CAF50;
+}
+
+.description {
+    font-size: 12px;
+    color: #666;
+}
+
 /* 响应式设计 */
 @media (max-width: 600px) {
     .website-list li {
@@ -463,65 +378,3 @@ nav a.active {
         width: calc(14.28% - 1rem); /* 在较小屏幕上使用两列布局 */
     }
 } 
-  
-/* 移除最后一个卡片的右边距 */    
-website-list .hot-item:last-child {    
-    margin-right: 0;    
-} 
-  
-.item-card {    
-    padding: 10px; /* 调整内边距以减少空白 */    
-    display: flex; /* 启用 flex 布局 */    
-    flex-direction: column; /* 垂直布局 */    
-    justify-content: center; /* 垂直居中 */    
-    align-items: center; /* 水平居中，如果内容简单的话 */    
-    text-align: center; /* 确保文本水平居中 */    
-    overflow: hidden; /* 隐藏溢出内容 */  
-    white-space: nowrap; /* 防止文本换行 */  
-    text-overflow: ellipsis; /* 当文本溢出时显示省略号 */  
-}    
-    
-/* 链接样式 */    
-.hot-item a {    
-    text-decoration: none;    
-    font-weight: 450;    
-    color: #333;    
-    transition: color 0.3s ease;    
-}     
-    
-.hot-item a:hover {    
-    color: #007BFF;    
-    text-decoration: underline;    
-}    
-    
-/* 鼠标悬停时卡片变色效果 */    
-.hot-item:hover {    
-    transform: translateY(-5px); /* 鼠标悬停时轻微上升效果 */
-    background-color: rgba(124, 186, 252, 0.3); /* 悬停时变为半透明白色 */    
-}    
-    
-/* 描述样式 */    
-.description {    
-    font-size: 0.4rem;    
-    color: #666;    
-    margin-top: 0.5rem; /* 上边距 */    
-    position: absolute;    
-    bottom: 0;    
-    left: 10px; /* 左内边距 */    
-    right: 10px; /* 右内边距 */    
-    padding: 0.5rem; /* 上下内边距和左右内边距 */    
-    background-color: rgba(255, 255, 255, 0.9);    
-    border-radius: 0.5rem;    
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);    
-    opacity: 0;    
-    visibility: hidden;    
-    max-height: 0;    
-    overflow: hidden;    
-    transition: opacity 0.3s ease, visibility 0.3s ease, max-height 0.3s ease;    
-} 
-/* 当鼠标悬停在链接上时显示描述  
-.hot-item:hover .description {  
-    opacity: 1;  
-    visibility: visible;  
-    max-height: 100px; /* 根据需要调整最大高度 */  
-/* } */ 
