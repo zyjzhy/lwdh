@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-<head>  
-    <meta charset="utf-8">  
-    <!-- <meta http-equiv="refresh" content="0;url=#top_gr"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">  
-    <link rel="canonical" href="https://zyjzhy.github.io/lwdh/"> 
-    <meta name="keywords" content="璐璐导航">  
-    <meta name="description" content="璐璐导航">  
-    <meta name="renderer" content="webkit">  
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-    <title>璐璐导航</title>  
-    <link rel="icon" type="image/x-icon" href="./z.ico" sizes="32x32"> 
-  
-    <!-- 加载外部的css文件-->  
-    <link rel="stylesheet" href="./index.css"> 
-    <!-- <link rel="stylesheet" href="./static/css/index.css?v=1.01">  
-    <link rel="stylesheet" href="./static/css/common.css?v=1.01">  
-    <link rel="stylesheet" href="./static/css/lantern.css">-->  
-    <script> 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://zyjzhy.github.io/lwdh/">
+    <meta name="keywords" content="猪猪导航">
+    <meta name="description" content="猪猪导航">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>猪猪导航</title>
+    <link rel="icon" type="image/x-icon" href="./static/img/z.ico" sizes="32x32">
+    <link rel="stylesheet" href="./index2.css">
+    <script>
         var _hmt = _hmt || [];
         (function () {
             var hm = document.createElement("script");
@@ -27,189 +21,160 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
- 
-</head>  
-<body >  
-    
-    <!-- 导航栏 -->  
-    <nav id="daohang" onclick="scrollToTop()" style="text-align: center;">  
-        <a href="#daohang" class="nav-link active">首页</a>  
-        <a href="#top_gr" class="nav-link">个人栏</a>  
-        <a href="#top_zy" class="nav-link">资源栏</a>  
-        <a href="#top_yyw" class="nav-link">有用网</a>  
-        <a href="#top_lw" class="nav-link">论文栏</a>
-        <a href="#top_yl" class="nav-link">娱乐栏</a> 
-        <a href="#top_gj" class="nav-link">工具栏</a> 
-    </nav>  
-    <!-- 弹窗内容 -->  
-    <div id="popup">  
-        <div class="popup-content">  
-            <!-- <span class="close">&times;</span> -->
-            <h3>需知</h3>  
-            <p>①个人使用，内容自行甄别！</p>  
-            <p>②在卡片悬停可查看链接介绍哦！</p>  
-            <p>③非盈利，随缘更新！</p>  
+</head>
+
+<body>
+    <header class="nav-main">
+        
+        <nav id="daohang" onclick="scrollToTop()">
+            <a href="#daohang" class="nav-link active">首页</a>
+            <a href="#top_gr" class="nav-link">个人栏</a>
+            <a href="#top_zy" class="nav-link">资源栏</a>
+            <a href="#top_yyw" class="nav-link">有用网</a>
+            <a href="#top_lw" class="nav-link">论文栏</a>
+            <a href="#top_yl" class="nav-link">娱乐栏</a>
+            <a href="#top_gj" class="nav-link">工具栏</a>
+        </nav>
+    </header>
+
+    <div id="popup">
+        <div class="popup-content">
+            <h3>需知</h3>
+            <p>①个人使用，内容自行甄别！</p>
+            <p>②在卡片悬停可查看链接介绍哦！</p>
+            <p>③非盈利，随缘更新！</p>
             <p>④如有侵权请及时联系本人！</p>
             <div class="button-container">
                 <a href="#" id="sendSuggestion" class="tanchuang-button email-button">发送建议</a>
                 <a href="#" class="tanchuang-button close">我知道了</a>
-            </div>   
-        </div>    
-    </div>  
-    
-    <!-- 新弹窗内容 -->  
-    <div id="emailPopup" class="email-popup" >  
-        <div class="popup-content">  
-            <h3>我的邮箱地址</h3>  
-            <p>如果您有任何建议或问题，请通过以下邮箱地址联系我：</p>  
-            <p id="emailAddress">2577539099@qq.com</p>  
-            <div class="button-container"></div>
-                <a href="#" class="tanchuang-button close">已知道</a>
-            </div>  
-        </div>  
+            </div>
+        </div>
     </div>
 
-    <!-- 页面内容 -->  
-    
-    <div class="search-container" >  
-        <!-- 考研倒计时窗口 - 左侧 -->  
-        <div class="countdown-container" style="float: left;margin-left: 2%;">  
-            <div class="countdown countdown-days" id="remainTimeLeft">考研倒计时</div>  
-            <div class="countdown" id="remainTime1Left"><span id="kaoyan"></span>天</div>  
+    <div id="emailPopup" class="email-popup">
+        <div class="popup-content">
+            <h3>我的邮箱地址</h3>
+            <p>如果您有任何建议或问题，请通过以下邮箱地址联系我：</p>
+            <p id="emailAddress">2577539099@qq.com</p>
+            <a href="#" class="tanchuang-button close">已知道</a>
         </div>
-            
-        <div class="search-box" >  
-            <ul class="search-list" > 
-                <li class="search-tab active" onclick="switchSearchTab(0)">百度</a></li>  
-                <li class="search-tab" onclick="switchSearchTab(1)">编程</a></li>  
-                <li class="search-tab" onclick="switchSearchTab(2)">必应</a></li>  
-                <li class="search-tab" onclick="switchSearchTab(3)">微信</a></li>  
-                <li class="search-tab" onclick="switchSearchTab(4)">知乎</a></li>  
-                <li class="search-tab" onclick="switchSearchTab(5)">谷歌</a></li>  
-            </ul>  
-            <div class="search-content"> 
-                <!-- Search Forms -->  
-                <form class="search-form active" action="https://www.baidu.com/s" method="get" target="_blank">  
-                    <input type="text" class="search-input" placeholder="百度一下,你就知道" name="wd">  
-                    <button type="submit" class="search-button">搜索</button>  
-                </form>  
-                <form class="search-form" action="https://kaifa.baidu.com/searchPage?" method="get" target="_blank">  
-                    <input type="text" class="search-input" placeholder="专注于程序员编程的搜索" name="wd">  
-                    <button type="submit" class="search-button">搜索</button>  
-                </form>  
-                <form class="search-form" action="https://cn.bing.com/search" method="get" target="_blank">  
-                    <input type="text" class="search-input" placeholder="必应搜索" name="q">  
-                    <button type="submit" class="search-button">搜索</button>  
-                </form>  
-                <form class="search-form" action="https://weixin.sogou.com/weixin" method="get" target="_blank">  
-                    <input type="text" class="search-input" placeholder="微信文章搜索" name="query">  
-                    <button type="submit" class="search-button">搜索</button>  
-                </form>  
-                <form class="search-form" action="https://www.zhihu.com/search" method="get" target="_blank">  
-                    <input type="text" class="search-input" placeholder="知乎文章搜索" name="q">  
-                    <button type="submit" class="search-button">搜索</button>  
-                </form>  
-                <form class="search-form" action="https://www.google.com.hk/search" method="get" target="_blank">  
-                    <input type="text" class="search-input" placeholder="Google搜索" name="q">  
-                    <button type="submit" class="search-button">搜索</button>  
-                </form>  
-            </div>  
+    </div>
+
+    <main class="search-main">
+        <div class="search-container">
+            <div class="countdown-container left-countdown">
+                <div class="countdown countdown-days" id="remainTimeLeft">考研倒计时</div>
+                <div class="countdown" id="remainTime1Left"><span id="kaoyan"></span>天</div>
+            </div>
+
+            <div class="search-box">
+                <ul class="search-list">
+                    <li class="search-tab active" onclick="switchSearchTab(0)">百度</li>
+                    <li class="search-tab" onclick="switchSearchTab(1)">编程</li>
+                    <li class="search-tab" onclick="switchSearchTab(2)">必应</li>
+                    <li class="search-tab" onclick="switchSearchTab(3)">微信</li>
+                    <li class="search-tab" onclick="switchSearchTab(4)">知乎</li>
+                    <li class="search-tab" onclick="switchSearchTab(5)">谷歌</li>
+                </ul>
+                <div class="search-content">
+                    <form class="search-form active" action="https://www.baidu.com/s" method="get" target="_blank">
+                        <input type="text" class="search-input" placeholder="百度一下,你就知道" name="wd">
+                        <button type="submit" class="search-button">搜索</button>
+                    </form>
+                    <form class="search-form" action="https://kaifa.baidu.com/searchPage?" method="get" target="_blank">
+                        <input type="text" class="search-input" placeholder="专注于程序员编程的搜索" name="wd">
+                        <button type="submit" class="search-button">搜索</button>
+                    </form>
+                    <form class="search-form" action="https://cn.bing.com/search" method="get" target="_blank">
+                        <input type="text" class="search-input" placeholder="必应搜索" name="q">
+                        <button type="submit" class="search-button">搜索</button>
+                    </form>
+                    <form class="search-form" action="https://weixin.sogou.com/weixin" method="get" target="_blank">
+                        <input type="text" class="search-input" placeholder="微信文章搜索" name="query">
+                        <button type="submit" class="search-button">搜索</button>
+                    </form>
+                    <form class="search-form" action="https://www.zhihu.com/search" method="get" target="_blank">
+                        <input type="text" class="search-input" placeholder="知乎文章搜索" name="q">
+                        <button type="submit" class="search-button">搜索</button>
+                    </form>
+                    <form class="search-form" action="https://www.google.com.hk/search" method="get" target="_blank">
+                        <input type="text" class="search-input" placeholder="Google搜索" name="q">
+                        <button type="submit" class="search-button">搜索</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="countdown-container right-countdown">
+                <div class="countdown countdown-days" id="remainTimeright">考公倒计时</div>
+                <div class="countdown" id="remainTimeright"><span id="kaogong"></span>天</div>
+            </div>
         </div>
-    
-        <!-- 考研倒计时窗口 - 右侧 -->   
-        <div class="countdown-container" style="float: right;margin-right: 2%;">  
-            <div class="countdown countdown-days" id="remainTimeright">考公倒计时</div>  
-            <div class="countdown" id="remainTimeright"><span id="kaogong"></span>天</div>  
-        </div> 
-    </div> 
-    <div class="row">  
-        <div id="main-container">  
-            <!-- 个人栏开始 -->  
-            <div class="main-content">  
-                <div class="indexbox fNAV" id="top_gr">  
-                    <div class="indexbox_title indexbox_title_biaoti" >  
-                        <strong>个人栏</strong>  
-                    </div>  
-                    <div class="indexbox_title cygjtabs">  
-                        <strong class="tabcheck-tools" data-id="grwd" onclick="switchContentTab(this)">个人网店</strong>  
-                        <strong class="tabcheck-tools" data-id="grbk" onclick="switchContentTab(this)">个人博客</strong>  
-                        <strong class="tabcheck-tools" data-id="grwz" onclick="switchContentTab(this)">个人网站</strong>  
-                    </div>  
-                    <!-- 个人网店内容 -->  
-                    <div class="showdiv" id="content_grwd">  
-                        <section data-catalog="download" class="active">  
-                            <ul class="website-list">  
+
+        <div class="row">
+            <div id="main-container">
+                <!-- 个人栏 -->
+                <section class="main-content personal-section" id="top_gr">
+                    <div class="section-header">
+                        <h2>个人栏</h2>
+                    </div>
+                    <div class="section-tabs">
+                        <strong class="tabcheck-tools" data-id="grwd" onclick="switchContentTab(this)">个人网店</strong>
+                        <strong class="tabcheck-tools" data-id="grbk" onclick="switchContentTab(this)">个人博客</strong>
+                        <strong class="tabcheck-tools" data-id="grwz" onclick="switchContentTab(this)">个人网站</strong>
+                    </div>
+                    <div class="showdiv" id="content_grwd">
+                        <section data-catalog="download" class="active">
+                            <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
-                                            <a href="https://zzfl.89vip.site"
-                                                target="_blank" style="color:#131313"
+                                            <a href="https://zzfl.89vip.site" target="_blank" style="color:#131313"
                                                 title='各类会员，网课，租号，实物等应有尽有，价格实惠！！'>
                                                 甄选商城
-                                                <p class="description">各类会员，网课，租号，实物等应有尽有，价格实惠！！</p>
                                             </a>
                                         </div>
                                     </div>
                                 </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="showdiv" id="content_grbk" style="display: none;">
+                        <section data-catalog="blog">
+                            <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
-                                            <a href="https://index.feihuang.vip/hk/index?st=1&sc=23062611165222"
-                                                target="_blank" style="color:#131313"
-                                                title='各种实惠流量卡（招代理）！！'>
-                                                实惠流量卡
-                                                <p class="description">各种实惠流量卡（招代理）！！</p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                                 
-                            </ul>  
-                        </section>  
-                    </div>  
-                    <!-- 个人博客内容（初始隐藏） -->  
-                    <div class="showdiv" id="content_grbk" style="display: none;">  
-                        <section data-catalog="blog">  
-                            <ul>
-                                <li class="hot-item">
-                                    <div class="item-card">
-                                        <div class="contents">
-                                            <a href="https://blog.csdn.net/qq_25990967"
-                                                target="_blank" style="color:#131313"
+                                            <a href="https://blog.csdn.net/qq_25990967" target="_blank" style="color:#131313"
                                                 title='以前学习时记得一些笔记，有些潦草，会更新的！'>
                                                 学习笔记
-                                                <p class="description">以前学习时记得一些笔记，有些潦草，会更新的！</p>
                                             </a>
                                         </div>
                                     </div>
                                 </li>
-                            </ul> 
-                        </section>  
-                    </div>  
-                    <!-- 个人网站内容（初始隐藏） -->  
-                    <div class="showdiv" id="content_grwz" style="display: none;">  
-                        <section data-catalog="website">  
-                            <p>更新ing...</p>  
-                        </section>  
-                    </div>  
-                </div>  
-            </div>  
-            <!-- 个人栏结束 -->
-            <!-- 资源栏开始 -->  
-            <div class="main-content">  
-                <div class="indexbox fNAV" id="top_zy">  
-                    <div class="indexbox_title indexbox_title_biaoti">  
-                        <strong>资源栏</strong>  
-                    </div>  
-                    <div class="indexbox_title cygjtabs">  
-                        <strong class="tabcheck-tools" data-id="zhzy" onclick="switchContentTab(this)">综合资源</strong> 
-                        <strong class="tabcheck-tools" data-id="wpzy" onclick="switchContentTab(this)">网盘资源</strong>  
-                        <strong class="tabcheck-tools" data-id="sjzy" onclick="switchContentTab(this)">数据资源</strong>  
-                    </div>  
-                    <!--综合资源--> 
-                    <div class="showdiv" id="content_zhzy">  
-                        <section data-catalog="download" class="active">  
-                            <ul class="website-list">  
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="showdiv" id="content_grwz" style="display: none;">
+                        <section data-catalog="website">
+                            <p>更新ing...</p>
+                        </section>
+                    </div>
+                </section>
+        
+                <!-- 资源栏 -->
+                <section class="main-content resource-section" id="top_zy">
+                    <div class="section-header">
+                        <h2>资源栏</h2>
+                    </div>
+                    <div class="section-tabs">
+                        <strong class="tabcheck-tools" data-id="zhzy" onclick="switchContentTab(this)">综合资源</strong>
+                        <strong class="tabcheck-tools" data-id="wpzy" onclick="switchContentTab(this)">网盘资源</strong>
+                        <strong class="tabcheck-tools" data-id="sjzy" onclick="switchContentTab(this)">数据资源</strong>
+                    </div>
+                    <!-- 综合资源-->  
+                    <div class="showdiv" id="content_zhzy">
+                        <section data-catalog="download" class="active">
+                            <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
@@ -217,7 +182,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='全能型资源集合'>
                                                 白嫖の地
-                                                <p class="description">全能型资源集合</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -228,7 +193,7 @@
                                             <a href="http://huxiaogou.ysepan.com/" target="_blank"
                                                 style="color:#131313" title='狐小狗科技馆'>
                                                 狐小狗科技馆
-                                                <p class="description">狐小狗科技馆</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -239,7 +204,7 @@
                                             <a href="http://redamancy.ysepan.com/" target="_blank"
                                                 style="color:#131313" title='小仓鼠的资源库'>
                                                 小仓鼠的资源库
-                                                <p class="description">小仓鼠的资源库</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -250,7 +215,7 @@
                                             <a href="http://wjsaustin.ysepan.com/" target="_blank"
                                                 style="color:#131313" title='软件柯基资源分享'>
                                                 软件柯基资源分享
-                                                <p class="description">软件柯基资源分享</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -261,7 +226,7 @@
                                             <a href="http://chendandan.ysepan.com/" target="_blank"
                                                 style="color:#131313" title='陈蛋蛋的宝藏库'>
                                                 陈蛋蛋的宝藏库
-                                                <p class="description">陈蛋蛋的宝藏库</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -272,7 +237,7 @@
                                             <a href="https://tuostudy.com/" target="_blank"
                                                 style="color:#131313" title='学习资源、考证考级资源等'>
                                                 图欧学习资源库
-                                                <p class="description">学习资源、考证考级资源等</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -284,7 +249,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='资源汇社区的资源库密码：zyhsq55'>
                                                 资源汇社区的资源库
-                                                <p class="description">资源汇社区的资源库密码：zyhsq55</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -295,7 +260,7 @@
                                             <a href="http://zscc.ysepan.com/" target="_blank"
                                                 style="color:#131313" title='知识船仓·公益知识库·致终身学习者'>
                                                 知识船仓
-                                                <p class="description">知识船仓·公益知识库·致终身学习者</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -306,7 +271,7 @@
                                             <a href="http://wrm8.ysepan.com/" target="_blank"
                                                 style="color:#131313" title='万人迷社区'>
                                                 万人迷社区
-                                                <p class="description">万人迷社区</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -317,25 +282,24 @@
                                             <a href="https://axutongxue.com/" target="_blank"
                                                 style="color:#131313" title='阿虚同学的储物间'>
                                                 阿虚同学的储物间
-                                                <p class="description">阿虚同学的储物间</p>
                                             </a>
                                         </div>
                                     </div>
                                 </li> 
-                            </ul>  
-                        </section>  
-                    </div>  
+                            </ul>
+                        </section>
+                    </div>
                     <!-- 网盘资源（初始隐藏） -->  
-                    <div class="showdiv" id="content_wpzy" style="display: none;">  
-                        <section data-catalog="blog">  
-                            <ul class="website-list">  
+                    <div class="showdiv" id="content_wpzy" style="display: none;">
+                        <section data-catalog="blog">
+                            <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
                                             <a href="https://pan666.net/" target="_blank"
                                                 style="color:#131313" title='阿里云盘资源共享站'>
                                                 阿里小站
-                                                <p class="description">阿里云盘资源共享站</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -346,7 +310,7 @@
                                             <a href="https://newxiaozhan.com/" target="_blank"
                                                 style="color:#131313" title='阿里云盘资源共享站'>
                                                 阿里小站(备用)
-                                                <p class="description">阿里云盘资源共享站</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -357,7 +321,7 @@
                                             <a href="https://ssgo.app/" target="_blank"
                                                 style="color:#131313" title='好用的阿里云盘搜索，更新快、失效少'>
                                                 阿里云盘搜索
-                                                <p class="description">好用的阿里云盘搜索，更新快、失效少</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -368,7 +332,7 @@
                                             <a href="https://upyunso.com/#pan666.cn" target="_blank"
                                                 style="color:#131313" title='好用的阿里云盘搜索，更新快、失效少'>
                                                 UP云搜
-                                                <p class="description">好用的阿里云盘搜索，更新快、失效少</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -379,7 +343,7 @@
                                             <a href="https://www.xuesousou.com/" target="_blank"
                                                 style="color:#131313" title='网盘资源搜索'>
                                                 学搜搜
-                                                <p class="description">网盘资源搜索</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -390,7 +354,7 @@
                                             <a href="http://feiyu100.cn/" target="_blank"
                                                 style="color:#131313" title='网盘资源搜索'>
                                                 飞鱼盘搜
-                                                <p class="description">网盘资源搜索</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -401,7 +365,7 @@
                                             <a href="https://www.pansoso.com/" target="_blank"
                                                 style="color:#131313" title='网盘资源搜索'>
                                                 盘搜搜
-                                                <p class="description">网盘资源搜索</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -413,7 +377,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='网盘资源搜索'>
                                                 小猪快盘
-                                                <p class="description">网盘资源搜索</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -424,7 +388,7 @@
                                             <a href="https://www.xiaomapan.com/" target="_blank"
                                                 style="color:#131313" title='网盘资源搜索'>
                                                 小马盘
-                                                <p class="description">网盘资源搜索</p>
+                                            
                                             </a>
                                         </div>
                                     </div>
@@ -436,8 +400,7 @@
                                                 style="color:#131313"
                                                 title='阿里云盘、百度网盘、夸克网盘、迅雷云盘四大网盘免费搜索！'>
                                                 易搜
-                                                <p class="description">阿里云盘、百度网盘、夸克网盘、迅雷云盘四大网盘免费搜索！
-                                                </p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -449,8 +412,6 @@
                                                 style="color:#131313"
                                                 title='坚持用心做最简单的综合云盘资源搜索引擎，并且永久免费使用无广告'>
                                                 咔帕搜索
-                                                <p class="description">
-                                                    坚持用心做最简单的综合云盘资源搜索引擎，并且永久免费使用无广告</p>
                                             </a>
                                         </div>
                                     </div>
@@ -461,7 +422,7 @@
                                             <a href="https://yougit.net/" target="_blank"
                                                 style="color:#131313" title='阿里云蓝奏云搜'>
                                                 YOUGIT
-                                                <p class="description">阿里云蓝奏云搜</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -472,17 +433,17 @@
                                             <a href="https://jujuso.com/" target="_blank"
                                                 style="color:#131313" title='聚合搜索多个网盘资源'>
                                                 优聚搜
-                                                <p class="description">聚合搜索多个网盘资源</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
                                 </li>  
-                            </ul> 
-                        </section>  
-                    </div>  
+                            </ul>
+                        </section>
+                    </div>
                     <!-- 数据资源（初始隐藏） -->  
-                    <div class="showdiv" id="content_sjzy" style="display: none;">  
-                        <section data-catalog="website">  
+                    <div class="showdiv" id="content_sjzy" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -491,8 +452,7 @@
                                                 style="color:#131313"
                                                 title='关乎国计民生与经济发展的各类数据；经济、人口普查报告；统计年鉴'>
                                                 国家统计网
-                                                <p class="description">
-                                                    关乎国计民生与经济发展的各类数据；经济、人口普查报告；统计年鉴</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -504,7 +464,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='工伤保险、失业保险、养老保险、城镇就业率等'>
                                                 人力资源和社会保障网
-                                                <p class="description">工伤保险、失业保险、养老保险、城镇就业率等</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -516,7 +476,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='医疗保险、失业保险、医疗保障事业等'>
                                                 国家医疗保障网
-                                                <p class="description">医疗保险、失业保险、医疗保障事业等</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -528,7 +488,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='财政收入、支出'>
                                                 财政网
-                                                <p class="description">财政收入、支出</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -539,7 +499,7 @@
                                             <a href="http://www.chinatax.gov.cn/n810214/n810631/index.html"
                                                 target="_blank" style="color:#131313" title='税收收入'>
                                                 国家税务总网
-                                                <p class="description">税收收入</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -550,7 +510,7 @@
                                             <a href="http://www.mnr.gov.cn/sj/" target="_blank"
                                                 style="color:#131313" title='海洋 测绘 地质 矿产 土地'>
                                                 自然资源网
-                                                <p class="description">海洋 测绘 地质 矿产 土地</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -561,7 +521,7 @@
                                             <a href="http://www.mee.gov.cn/hjzl/" target="_blank"
                                                 style="color:#131313" title='海洋生态环境、噪声污染、水质量、大气质量'>
                                                 生态环境网
-                                                <p class="description">海洋生态环境、噪声污染、水质量、大气质量</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -572,7 +532,7 @@
                                             <a href="http://www.mwr.gov.cn/sj/" target="_blank"
                                                 style="color:#131313" title='水系流域、水土流失、水库信息等'>
                                                 水利网
-                                                <p class="description">水系流域、水土流失、水库信息等</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -583,7 +543,7 @@
                                             <a href="http://data.cma.cn/" target="_blank"
                                                 style="color:#131313" title='气象预警 降水量'>
                                                 中国气象网
-                                                <p class="description">气象预警 降水量</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -595,7 +555,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='用电量、能源状况'>
                                                 国家能源网
-                                                <p class="description">用电量、能源状况</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -607,7 +567,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='投资、贸易、消费、价格等'>
                                                 商务网
-                                                <p class="description">投资、贸易、消费、价格等</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -618,7 +578,7 @@
                                             <a href="http://www.customs.gov.cn/customs/302249/302274/302277/index.html"
                                                 target="_blank" style="color:#131313" title='进出口贸易'>
                                                 海关总署
-                                                <p class="description">进出口贸易</p>
+                                            
                                             </a>
                                         </div>
                                     </div>
@@ -630,7 +590,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='机动车数量、案件信息数据'>
                                                 公安网
-                                                <p class="description">机动车数量、案件信息数据</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -641,7 +601,7 @@
                                             <a href="https://www.mot.gov.cn/shuju/" target="_blank"
                                                 style="color:#131313" title='客运、货运信息，'>
                                                 交通运输网
-                                                <p class="description">客运、货运信息，</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -653,7 +613,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='运输数据，发展报告等'>
                                                 中国民用航空网
-                                                <p class="description">运输数据，发展报告等</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -665,8 +625,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='各行业数据信息（原材料、装备、消费品、通信、电子信息、软件等）'>
                                                 工信网
-                                                <p class="description">
-                                                    各行业数据信息（原材料、装备、消费品、通信、电子信息、软件等）</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -677,7 +636,7 @@
                                             <a href="http://www.spb.gov.cn/sj/tjjd/" target="_blank"
                                                 style="color:#131313" title='邮政业务相关数据'>
                                                 邮政网
-                                                <p class="description">邮政业务相关数据</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -688,7 +647,7 @@
                                             <a href="http://www.pbc.gov.cn/diaochatongjisi/116219/index.html"
                                                 target="_blank" style="color:#131313" title='存贷款数据'>
                                                 中国人民银行
-                                                <p class="description">存贷款数据</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -699,7 +658,7 @@
                                             <a href="http://www.safe.gov.cn/safe/tjsj1/index.html"
                                                 target="_blank" style="color:#131313" title='外汇数据'>
                                                 国家外汇管理网
-                                                <p class="description">外汇数据</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -711,7 +670,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='科研经费支出状况'>
                                                 科学技术网
-                                                <p class="description">科研经费支出状况</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -723,7 +682,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='专利侵权数据、专利调查报告等'>
                                                 国家知识产权网
-                                                <p class="description">专利侵权数据、专利调查报告等</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -735,7 +694,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='教职工信息、入学率、学历信息等'>
                                                 教育网
-                                                <p class="description">教职工信息、入学率、学历信息等</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -747,7 +706,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='社会救助、福利状况'>
                                                 民政网
-                                                <p class="description">社会救助、福利状况</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -759,7 +718,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='季度、年度旅游数据'>
                                                 文化和旅游网
-                                                <p class="description">季度、年度旅游数据</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -770,7 +729,7 @@
                                             <a href="http://www.samr.gov.cn/zw/sj/" target="_blank"
                                                 style="color:#131313" title='相关国家标准'>
                                                 国家市场监督管理总网
-                                                <p class="description">相关国家标准</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -782,7 +741,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='年度行政复议、应诉案件数量统计'>
                                                 司法网
-                                                <p class="description">年度行政复议、应诉案件数量统计</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -793,7 +752,7 @@
                                             <a href="https://www.chyxx.com/" target="_blank"
                                                 style="color:#131313" title='产业信息网'>
                                                 产业信息网
-                                                <p class="description">产业信息网</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -805,7 +764,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='行业协会汇总'>
                                                 行业协会汇总
-                                                <p class="description">行业协会汇总</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -816,7 +775,7 @@
                                             <a href="https://fdc.fang.com/index/" target="_blank"
                                                 style="color:#131313" title='房天下'>
                                                 房天下
-                                                <p class="description">房天下</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -827,7 +786,7 @@
                                             <a href="https://research.ke.com/" target="_blank"
                                                 style="color:#131313" title='贝壳研究院'>
                                                 贝壳研究院
-                                                <p class="description">贝壳研究院</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -838,7 +797,7 @@
                                             <a href="http://www.cbnri.org/" target="_blank"
                                                 style="color:#131313" title='宏观经济数据'>
                                                 第一财经研究院
-                                                <p class="description">宏观经济数据</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -850,7 +809,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='投资领域的市场数据'>
                                                 投中网
-                                                <p class="description">投资领域的市场数据</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -861,7 +820,7 @@
                                             <a href="https://wk.askci.com/" target="_blank"
                                                 style="color:#131313" title='各种行业的投资报告'>
                                                 前沿报告库
-                                                <p class="description">各种行业的投资报告</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -873,7 +832,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='中国国民食品消费'>
                                                 中国食品工业协会
-                                                <p class="description">中国国民食品消费</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -885,7 +844,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='外卖、餐饮等生活消费'>
                                                 美团研究院
-                                                <p class="description">外卖、餐饮等生活消费</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -897,7 +856,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='电影票房、排片等信息'>
                                                 艺恩数据
-                                                <p class="description">电影票房、排片等信息</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -909,7 +868,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='影视、综艺等文化消费以及终端硬件消费情况'>
                                                 勾正数据
-                                                <p class="description">影视、综艺等文化消费以及终端硬件消费情况</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -921,8 +880,7 @@
                                                 style="color:#131313"
                                                 title='媒介经营管理、品牌传播营销、消费者研究、行业研究等方面的内容'>
                                                 央视市场研究
-                                                <p class="description">
-                                                    媒介经营管理、品牌传播营销、消费者研究、行业研究等方面的内容</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -933,7 +891,7 @@
                                             <a href="http://auto-stats.org.cn/" target="_blank"
                                                 style="color:#131313" title='汽车消费市场数据'>
                                                 汽车工业协会
-                                                <p class="description">汽车消费市场数据</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -945,7 +903,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='汽车消费指数数据'>
                                                 易车
-                                                <p class="description">汽车消费指数数据</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -957,8 +915,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='互联网行业发展趋势:数字贸易、5G、人工智能、虚拟现实等'>
                                                 中国通信院
-                                                <p class="description">互联网行业发展趋势:数字贸易、5G、人工智能、虚拟现实等
-                                                </p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -970,7 +927,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='中国互联网发展状况'>
                                                 中国互联网络信息中心
-                                                <p class="description">中国互联网发展状况</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -982,7 +939,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='中国半导体行业协会'>
                                                 中国半导体行业协会
-                                                <p class="description">中国半导体行业协会</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -993,7 +950,7 @@
                                             <a href="http://ccta.org.cn/tjjq/" target="_blank"
                                                 style="color:#131313" title='中国棉纺织行业协会'>
                                                 中国棉纺织行业协会
-                                                <p class="description">中国棉纺织行业协会</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1005,7 +962,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='公共卫生科学数据中心'>
                                                 公共卫生科学数据中心
-                                                <p class="description">公共卫生科学数据中心</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1016,7 +973,7 @@
                                             <a href="https://www.cec.org.cn/" target="_blank"
                                                 style="color:#131313" title='中国电力企业联合会'>
                                                 中国电力企业联合会
-                                                <p class="description">中国电力企业联合会</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1028,7 +985,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='各国官方统计网站汇总'>
                                                 各国官方统计网站汇总
-                                                <p class="description">各国官方统计网站汇总</p>
+                                             
                                             </a>
                                         </div>
                                     </div>
@@ -1040,8 +997,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='第三方全球数据库，收录了200多个国家的730万条数据'>
                                                 CEIC
-                                                <p class="description">第三方全球数据库，收录了200多个国家的730万条数据
-                                                </p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1052,7 +1008,7 @@
                                             <a href="https://ukdataexplorer.com/" target="_blank"
                                                 style="color:#131313" title='英国相关数据的可视化呈现'>
                                                 英国公开数据浏览工具
-                                                <p class="description">英国相关数据的可视化呈现</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1063,7 +1019,7 @@
                                             <a href="https://datafrance.info/" target="_blank"
                                                 style="color:#131313" title='法国相关数据的可视化呈现'>
                                                 数据法国
-                                                <p class="description">法国相关数据的可视化呈现</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1075,7 +1031,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='国际组织统计网站汇总'>
                                                 国际组织统计网站汇总
-                                                <p class="description">国际组织统计网站汇总</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1086,7 +1042,7 @@
                                             <a href="https://data.worldbank.org.cn/" target="_blank"
                                                 style="color:#131313" title='世界银行公开数据'>
                                                 世界银行公开数据
-                                                <p class="description">世界银行公开数据</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1098,7 +1054,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='世界贸易组织'>
                                                 世界贸易组织
-                                                <p class="description">世界贸易组织</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1109,7 +1065,7 @@
                                             <a href="https://www.unicef.org/research-and-reports"
                                                 target="_blank" style="color:#131313" title='儿童基金会'>
                                                 儿童基金会
-                                                <p class="description">儿童基金会</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1121,7 +1077,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='国际货币基金组织'>
                                                 国际货币基金组织
-                                                <p class="description">国际货币基金组织</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1133,7 +1089,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='联合国人口司'>
                                                 联合国人口司
-                                                <p class="description">联合国人口司</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1144,7 +1100,7 @@
                                             <a href="https://zh.unesco.org/" target="_blank"
                                                 style="color:#131313" title='联合国教科文组织'>
                                                 联合国教科文组织
-                                                <p class="description">联合国教科文组织</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1156,7 +1112,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='国际劳工组织'>
                                                 国际劳工组织
-                                                <p class="description">国际劳工组织</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1167,7 +1123,7 @@
                                             <a href="https://www.who.int/data" target="_blank"
                                                 style="color:#131313" title='世界卫生组织'>
                                                 世界卫生组织
-                                                <p class="description">世界卫生组织</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1179,7 +1135,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='联合国粮农组织'>
                                                 联合国粮农组织
-                                                <p class="description">联合国粮农组织</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1191,7 +1147,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='亚太经合组织'>
                                                 亚太经合组织
-                                                <p class="description">亚太经合组织</p>
+                                            
                                             </a>
                                         </div>
                                     </div>
@@ -1202,7 +1158,7 @@
                                             <a href="https://data.europa.eu/en" target="_blank"
                                                 style="color:#131313" title='欧洲数据门户'>
                                                 欧洲数据门户
-                                                <p class="description">欧洲数据门户</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1213,7 +1169,7 @@
                                             <a href="https://www.ecb.europa.eu/stats/html/index.en.html"
                                                 target="_blank" style="color:#131313" title='欧洲统计网'>
                                                 欧洲统计网
-                                                <p class="description">欧洲统计网</p>
+                                             
                                             </a>
                                         </div>
                                     </div>
@@ -1224,7 +1180,7 @@
                                             <a href="https://www.afdb.org/en" target="_blank"
                                                 style="color:#131313" title='非洲发展银行'>
                                                 非洲发展银行
-                                                <p class="description">非洲发展银行</p>
+                                             
                                             </a>
                                         </div>
                                     </div>
@@ -1236,7 +1192,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='亚洲发展银行'>
                                                 亚洲发展银行
-                                                <p class="description">亚洲发展银行</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1248,7 +1204,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='各种地理信息'>
                                                 国家地球系统科学数据中心
-                                                <p class="description">各种地理信息</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1259,7 +1215,7 @@
                                             <a href="http://dc.xinhua08.com/" target="_blank"
                                                 style="color:#131313" title='世界主要经济体的宏观经济数据'>
                                                 新华社 全球经济数据
-                                                <p class="description">世界主要经济体的宏观经济数据</p>
+                                             
                                             </a>
                                         </div>
                                     </div>
@@ -1270,7 +1226,7 @@
                                             <a href="https://cadmapper.com/" target="_blank"
                                                 style="color:#131313" title='可下载世界各大城市的DXF文件'>
                                                 CADMAPPER
-                                                <p class="description">可下载世界各大城市的DXF文件</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1281,31 +1237,30 @@
                                             <a href="http://hao.199it.com/" target="_blank"
                                                 style="color:#131313" title='一个最好用的数据查找导航网站'>
                                                 1991IT
-                                                <p class="description">一个最好用的数据查找导航网站</p>
+                                            
                                             </a>
                                         </div>
                                     </div>
                                 </li>
-                            </ul> 
-                        </section>  
-                    </div>  
-                </div>  
-            </div>  
-            <!-- 资源栏结束 --> 
-            <!--有用网开始-->
-            <div class="main-content" >
-                <div class="indexbox fNAV" id="top_yyw">
-                    <div class="indexbox_title indexbox_title_biaoti">
-                        <strong >有用网</strong>
+                            </ul>
+                        </section>
                     </div>
-                    <div class="indexbox_title cygjtabs" >
+                </section>
+        
+                <!-- 有用网栏 -->
+                <section class="main-content useful - section" id="top_yy">
+                    <div class="section-header">
+                        <h2>有用网</h2>
+                    </div>
+                    <div class="section-tabs">
                         <strong class="tabcheck-tools" data-id="bc" onclick="switchContentTab(this)">编程类</strong>
                         <strong class="tabcheck-tools" data-id="zp" onclick="switchContentTab(this)">招聘类</strong>
                         <strong class="tabcheck-tools" data-id="xx" onclick="switchContentTab(this)">学习类</strong>
+                        <strong class="tabcheck-tools" data-id="bs" onclick="switchContentTab(this)">比赛类</strong>
                     </div>
                     <!--编程类-->
-                    <div class="showdiv default" id="content_bc">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_bc" class="active">
+                        <section data-catalog="download">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -1313,7 +1268,7 @@
                                             <a href="https://www.52pojie.cn/" target="_blank"
                                                 style="color:#131313" title='吾爱破解,破解论坛,破解软件,软件论坛,病毒分析,脱壳破解,安卓破解,加密解密,软件安全'>
                                                 吾爱破解
-                                                <p class="description">吾爱破解,破解论坛,破解软件,软件论坛,病毒分析,脱壳破解,安卓破解,加密解密,软件安全</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1324,7 +1279,7 @@
                                             <a href="https://www.cnblogs.com/" target="_blank"
                                                 style="color:#131313" title='开发者的网上家园'>
                                                 博客园
-                                                <p class="description">开发者的网上家园</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1335,7 +1290,7 @@
                                             <a href="https://www.csdn.net/" target="_blank"
                                                 style="color:#131313" title='中国最大的技术社区'>
                                                 CSDN
-                                                <p class="description">中国最大的技术社区</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1346,7 +1301,7 @@
                                             <a href="https://juejin.cn/" target="_blank"
                                                 style="color:#131313" title='一个帮助开发者成长的社区'>
                                                 掘金
-                                                <p class="description">一个帮助开发者成长的社区</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1357,7 +1312,7 @@
                                             <a href="https://www.51cto.com/" target="_blank"
                                                 style="color:#131313" title='中国领先的IT技术网站'>
                                                 51CTO
-                                                <p class="description">中国领先的IT技术网站</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1368,7 +1323,7 @@
                                             <a href="https://www.runoob.com/" target="_blank"
                                                 style="color:#131313" title='各类代码简单教程'>
                                                 菜鸟教程
-                                                <p class="description">各类代码简单教程</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1379,7 +1334,7 @@
                                             <a href="https://www.captainai.net/puresmilex/"
                                                 target="_blank" style="color:#131313" title='通俗易懂的AI教程'>
                                                 人工智能教程
-                                                <p class="description">通俗易懂的AI教程</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1390,7 +1345,7 @@
                                             <a href="https://gitee.com/" target="_blank"
                                                 style="color:#131313" title='中国最大的开源代码共享社区'>
                                                 Gitee
-                                                <p class="description">中国最大的开源代码共享社区</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1401,7 +1356,7 @@
                                             <a href="https://github.com/" target="_blank"
                                                 style="color:#131313" title='世界最大的开源代码共享社区'>
                                                 GitHub
-                                                <p class="description">世界最大的开源代码共享社区</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1410,8 +1365,8 @@
                         </section>
                     </div>
                     <!--招聘类-->
-                    <div class="showdiv default" id="content_zp" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_zp" style="display: none;">
+                        <section data-catalog="blog">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -1419,7 +1374,7 @@
                                             <a href="https://c.liepin.com/" target="_blank"
                                                 style="color:#131313" title='专业高效的求职招聘平台'>
                                                 猎聘
-                                                <p class="description">专业高效的求职招聘平台</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1431,7 +1386,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='大学生一站式求职平台'>
                                                 前程无忧
-                                                <p class="description">大学生一站式求职平台</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1442,7 +1397,7 @@
                                             <a href="https://www.zhipin.com/" target="_blank"
                                                 style="color:#131313" title='求职者与BOSS直接开聊'>
                                                 BOSS直聘
-                                                <p class="description">求职者与BOSS直接开聊</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1453,7 +1408,7 @@
                                             <a href="https://landing.zhaopin.com/" target="_blank"
                                                 style="color:#131313" title='中国领先的IT技术网站'>
                                                 智联招聘
-                                                <p class="description">中国领先的IT技术网站</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1464,7 +1419,7 @@
                                             <a href="https://www.haitou.cc/" target="_blank"
                                                 style="color:#131313" title='为高校毕业生与知名企业搭建了一座有效的桥梁'>
                                                 海投网
-                                                <p class="description">为高校毕业生与知名企业搭建了一座有效的桥梁</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1475,7 +1430,7 @@
                                             <a href="https://www.iguopin.com/" target="_blank"
                                                 style="color:#131313" title='国聘行动为全国用户服务'>
                                                 国聘
-                                                <p class="description">国聘行动为全国用户服务</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1486,7 +1441,7 @@
                                             <a href="https://www.lagou.com/" target="_blank"
                                                 style="color:#131313" title='互联网行业找工作就上拉勾招聘'>
                                                 拉勾招聘
-                                                <p class="description">互联网行业找工作就上拉勾招聘</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1497,7 +1452,7 @@
                                             <a href="https://www.shixiseng.com/" target="_blank"
                                                 style="color:#131313" title='实习僧,专注实习,校招的校园招聘平台'>
                                                 实习僧
-                                                <p class="description">实习僧,专注实习,校招的校园招聘平台</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1505,9 +1460,8 @@
                             </ul>
                         </section>
                     </div>
-                    <!--学习类-->
-                    <div class="showdiv default" id="content_xx" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_xx" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -1515,7 +1469,7 @@
                                             <a href="https://www.w3cschool.cn/codecamp" target="_blank"
                                                 style="color:#131313" title='CodeCamp在线编程实战_w3cschool'>
                                                 w3cschool
-                                                <p class="description">CodeCamp在线编程实战_w3cschool</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1526,40 +1480,25 @@
                                             <a href="https://leetcode.cn/" target="_blank"
                                                 style="color:#131313" title='海量技术面试题库，拥有算法、数据结构、系统设计等 1000+题目，帮助你高效提升编程技能，轻松拿下世界 IT 名企 Dream Offer。'>
                                                 力扣
-                                                <p class="description">海量技术面试题库，拥有算法、数据结构、系统设计等 1000+题目，帮助你高效提升编程技能，轻松拿下世界 IT 名企 Dream Offer。</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
+                            </ul>
                         </section>
                     </div>
-                </div>
-            </div>
-            <!--有用网结束--> 
-            <!--论文栏开始-->
-            <div class="main-content" >
-                <div class="indexbox fNAV" id="top_lw">
-                    <div class="indexbox_title indexbox_title_biaoti">
-                        <strong >论文栏</strong>
-                    </div>
-                    <div class="indexbox_title cygjtabs" >
-                        <strong class="tabcheck-tools" data-id="lwcz"onclick="switchContentTab(this)">论文查找</strong>
-                        <strong class="tabcheck-tools" data-id="lwfy"onclick="switchContentTab(this)">论文翻译</strong>
-                        <strong class="tabcheck-tools" data-id="lwcc"onclick="switchContentTab(this)">论文查重</strong>
-                        <strong class="tabcheck-tools" data-id="lwjc"onclick="switchContentTab(this)">论文降重</strong>
-                    </div>
-                    <!--论文查找-->
-                    <div class="showdiv default" id="content_lwcz">
-                        <section data-catalog="download" class="active">
+                    <!--比赛-->
+                    <div class="showdiv" id="content_bs" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
-                                            <a href="http://www.9312.net/#/" target="_blank"
-                                                style="color:#131313" title='sci-hub小天地_小鲸鱼文献,一站搞定文献下载！'>
-                                                小鲸鱼文献
-                                                <p class="description">sci-hub小天地_小鲸鱼文献,一站搞定文献下载！</p>
+                                            <a href="" target="_blank"
+                                                style="color:#131313" title=''>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1567,10 +1506,41 @@
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
-                                            <a href="https://sc.panda985.com/"
-                                                target=" _blank" style="color:#131313" title='学术搜索：站在巨人的肩上'>
+                                            <a href="" target="_blank"
+                                                style="color:#131313" title=''>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            </ul>
+                        </section>
+                    </div>
+                </section>
+
+                <!-- 论文栏 -->
+                <section class="main-content paper - section" id="top_lw">
+                    <div class="section-header">
+                        <h2>论文栏</h2>
+                    </div>
+                    <div class="section-tabs">
+                        <strong class="tabcheck-tools" data-id="lwcx" onclick="switchContentTab(this)">论文查找</strong>
+                        <strong class="tabcheck-tools" data-id="lwyf" onclick="switchContentTab(this)">论文翻译</strong>
+                        <strong class="tabcheck-tools" data-id="lwcz" onclick="switchContentTab(this)">论文查重</strong>
+                        <strong class="tabcheck-tools" data-id="lwjz" onclick="switchContentTab(this)">论文降重</strong>
+                    </div>
+                    <!--论文查找-->
+                    <div class="showdiv" id="content_lwcx" class="active">
+                        <section data-catalog="download">
+                            <ul class="website-list">
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://panda321.com/" target="_blank"
+                                                style="color:#131313" title='论文小叮当'>
                                                 熊猫学术
-                                                <p class="description">学术搜索：站在巨人的肩上</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -1581,7 +1551,7 @@
                                             <a href="https://xueshu.lanfanshu.cn/"
                                                 target=" _blank" style="color:#131313" title='文献查找'>
                                                 烂番薯学术
-                                                <p class="description">文献查找</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1592,7 +1562,7 @@
                                             <a href="https://www.cnki.net/" target="_blank"
                                                 style="color:#131313" title='中国知网'>
                                                 中国知网
-                                                <p class="description">中国知网</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1603,7 +1573,7 @@
                                             <a href="https://xueshu.baidu.com/" target="_blank"
                                                 style="color:#131313" title='百度旗下的免费学术资源搜索平台'>
                                                 百度学术
-                                                <p class="description">百度旗下的免费学术资源搜索平台</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1614,7 +1584,7 @@
                                             <a href="https://xs2.zidianzhan.net/" target="_blank"
                                                 style="color:#131313" title='谷歌学术'>
                                                 深度学术搜索
-                                                <p class="description">谷歌学术</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1625,7 +1595,7 @@
                                             <a href="http://www.1762.net/" target="_blank"
                                                 style="color:#131313" title='知网免费，国内外文献免费下载'>
                                                 考拉图书馆
-                                                <p class="description">知网免费，国内外文献免费下载</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1636,7 +1606,7 @@
                                             <a href="https://www.sci-hub.ren/" target="_blank"
                                                 style="color:#131313" title='DOI查询外文文献电子书学术论文资源免费下载'>
                                                 Sci-Hub（一）
-                                                <p class="description">DOI查询外文文献电子书学术论文资源免费下载</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1647,7 +1617,7 @@
                                             <a href="https://sci-hub.ru/" target="_blank"
                                                 style="color:#131313" title='DOI查询外文文献电子书学术论文资源免费下载'>
                                                 Sci-Hub（二）
-                                                <p class="description">DOI查询外文文献电子书学术论文资源免费下载</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1658,7 +1628,7 @@
                                             <a href="https://sci-hub.se/" target="_blank"
                                                 style="color:#131313" title='DOI查询外文文献电子书学术论文资源免费下载'>
                                                 Sci-Hub（三）
-                                                <p class="description">DOI查询外文文献电子书学术论文资源免费下载</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1669,7 +1639,7 @@
                                             <a href="https://sci-hub.st/" target="_blank"
                                                 style="color:#131313" title='DOI查询外文文献电子书学术论文资源免费下载'>
                                                 Sci-Hub（四）
-                                                <p class="description">DOI查询外文文献电子书学术论文资源免费下载</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1680,7 +1650,7 @@
                                             <a href="https://www.ncbi.nlm.nih.gov/pubmed/"
                                                 target="_blank" style="color:#131313" title='英文文献查找'>
                                                 Pubmed
-                                                <p class="description">英文文献查找</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1691,7 +1661,7 @@
                                             <a href="https://www.oalib.com/" target="_blank"
                                                 style="color:#131313" title='期刊查找'>
                                                 OALib
-                                                <p class="description">期刊查找</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1702,7 +1672,7 @@
                                             <a href="https://libgen.gs/" target="_blank"
                                                 style="color:#131313" title='国外期刊电子书查找'>
                                                 Libgen
-                                                <p class="description">国外期刊电子书查找</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1711,8 +1681,8 @@
                         </section>
                     </div>
                     <!--论文翻译-->
-                    <div class="showdiv default" id="content_lwfy" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_lwyf" style="display: none;">
+                        <section data-catalog="blog">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -1720,7 +1690,7 @@
                                             <a href="https://lyrify.sipc.ink/" target="_blank"
                                                 style="color:#131313" title='AI聚合翻译'>
                                                 AI聚合翻译
-                                                <p class="description">AI聚合翻译</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1731,7 +1701,7 @@
                                             <a href="https://translate.google.cn/" target="_blank"
                                                 style="color:#131313" title='Google翻译'>
                                                 Google翻译
-                                                <p class="description">Google翻译</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1742,7 +1712,7 @@
                                             <a href="https://fanyi.youdao.com/index.html"
                                                 target="_blank" style="color:#131313" title='有道翻译'>
                                                 有道翻译
-                                                <p class="description">有道翻译</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1753,7 +1723,7 @@
                                             <a href="https://www.deepl.com/" target="_blank"
                                                 style="color:#131313" title='Deepl翻译'>
                                                 Deepl翻译
-                                                <p class="description">Deepl翻译</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1764,7 +1734,7 @@
                                             <a href="https://fanyi.baidu.com/" target="_blank"
                                                 style="color:#131313" title='百度翻译'>
                                                 百度翻译
-                                                <p class="description">百度翻译</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1775,7 +1745,7 @@
                                             <a href="https://fanyi.sogou.com/" target="_blank"
                                                 style="color:#131313" title='搜狗翻译'>
                                                 搜狗翻译
-                                                <p class="description">搜狗翻译</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1786,7 +1756,7 @@
                                             <a href="https://cn.bing.com/translator?h_text=msn_ctxt&setlang=zh-cn"
                                                 target="_blank" style="color:#131313" title='必应翻译'>
                                                 必应翻译
-                                                <p class="description">必应翻译</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1797,7 +1767,7 @@
                                             <a href="http://www.5628.org/" target="_blank"
                                                 style="color:#131313" title='大木虫翻译'>
                                                 大木虫翻译
-                                                <p class="description">大木虫翻译</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1808,7 +1778,7 @@
                                             <a href="https://fanyi.caiyunapp.com/" target="_blank"
                                                 style="color:#131313" title='彩云小译'>
                                                 彩云小译
-                                                <p class="description">彩云小译</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1817,8 +1787,8 @@
                         </section>
                     </div>
                     <!--论文查重-->
-                    <div class="showdiv default" id="content_lwcc" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_lwcz" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -1826,7 +1796,7 @@
                                             <a href="https://www.paperyy.com/" target="_blank"
                                                 style="color:#131313" title='每天免费一次，中午有限免'>
                                                 paperyy
-                                                <p class="description">每天免费一次，中午有限免</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1837,7 +1807,7 @@
                                             <a href="https://check.lunwengo.net/" target="_blank"
                                                 style="color:#131313" title='每天免费一次'>
                                                 论文狗
-                                                <p class="description">每天免费一次</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1848,7 +1818,7 @@
                                             <a href="https://www.paperred.com/" target="_blank"
                                                 style="color:#131313" title='专业版：全天免费查重；旗舰版：每日早8点'>
                                                 paperred
-                                                <p class="description">专业版：全天免费查重；旗舰版：每日早8点</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1859,7 +1829,7 @@
                                             <a href="https://www.paperpm.com/" target="_blank"
                                                 style="color:#131313" title='免费,数据库少'>
                                                 paperpm
-                                                <p class="description">免费,数据库少</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1870,7 +1840,7 @@
                                             <a href="https://www.paperlike.net/" target="_blank"
                                                 style="color:#131313" title='每天免费1篇'>
                                                 paperlike
-                                                <p class="description">每天免费1篇</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1881,7 +1851,7 @@
                                             <a href="https://simidetect.jianguoyun.net.cn/?promotion_source=zh265279294"
                                                 target="_blank" style="color:#131313" title='每天签到做题送字数'>
                                                 坚果云查重
-                                                <p class="description">每天签到做题送字数</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1892,7 +1862,7 @@
                                             <a href="https://www.paperpass.com/" target="_blank"
                                                 style="color:#131313" title='免费1w字，可做任务叠加'>
                                                 paperpass
-                                                <p class="description">免费1w字，可做任务叠加</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1903,7 +1873,7 @@
                                             <a href="https://www.paperfree.cn/" target="_blank"
                                                 style="color:#131313" title='免费1w字，可做任务叠加'>
                                                 paperfree
-                                                <p class="description">免费1w字，可做任务叠加</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1914,7 +1884,7 @@
                                             <a href="https://ywj.checkcms.com/bd/index.html"
                                                 target="_blank" style="color:#131313" title='80/篇'>
                                                 源文鉴本科
-                                                <p class="description">80/篇</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1925,7 +1895,7 @@
                                             <a href="https://ywj.checkcms.com/bd/index.html"
                                                 target="_blank" style="color:#131313" title='258/篇'>
                                                 源文鉴硕博
-                                                <p class="description">258/篇</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1936,7 +1906,7 @@
                                             <a href="https://jc.wanfangdata.com.cn/#/newPapers"
                                                 target="_blank" style="color:#131313" title='3/千字'>
                                                 万方本科检测
-                                                <p class="description">3/千字</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1947,7 +1917,7 @@
                                             <a href="https://www.cnweipu.com/" target="_blank"
                                                 style="color:#131313" title='3/千字'>
                                                 维普本科研究生检测
-                                                <p class="description">3/千字</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1958,7 +1928,7 @@
                                             <a href="https://cx.cnki.net/main.html#/login"
                                                 target="_blank" style="color:#131313" title='1.5/千字'>
                                                 知网个人检测
-                                                <p class="description">1.5/千字</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1969,7 +1939,7 @@
                                             <a href="https://www.chsi.com.cn/" target="_blank"
                                                 style="color:#131313" title='毕业生免费一次'>
                                                 学信网
-                                                <p class="description">毕业生免费一次</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -1980,7 +1950,7 @@
                                             <a href="http://campus.lib.chaoxing.com/" target="_blank"
                                                 style="color:#131313" title='免费查重5次，第一次查重报告免费'>
                                                 超星校园通
-                                                <p class="description">免费查重5次，第一次查重报告免费</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -1988,9 +1958,9 @@
                             </ul>
                         </section>
                     </div>
-                    <!--论文降重-->
-                    <div class="showdiv default" id="content_lwjc" style="display: none;">
-                        <section data-catalog="download" class="active">
+                     <!--论文降重-->
+                    <div class="showdiv" id="content_lwjz" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -1998,7 +1968,7 @@
                                             <a href="https://xiezuocat.com/" target="_blank"
                                                 style="color:#131313" title='每天免费8000字改写+多种付费降重'>
                                                 秘塔写作猫
-                                                <p class="description">每天免费8000字改写+多种付费降重</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2009,7 +1979,7 @@
                                             <a href="http://www.6338.org/" target="_blank"
                                                 style="color:#131313" title='免费无限制'>
                                                 天临助手
-                                                <p class="description">免费无限制</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2020,7 +1990,7 @@
                                             <a href="https://www.beiying.net/" target="_blank"
                                                 style="color:#131313" title='每天免费3000字'>
                                                 贝影助手
-                                                <p class="description">每天免费3000字</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2031,7 +2001,7 @@
                                             <a href="https://www.paperpass.com/" target="_blank"
                                                 style="color:#131313" title='免费降重宝盒'>
                                                 paperpass
-                                                <p class="description">免费降重宝盒</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2042,7 +2012,7 @@
                                             <a href="http://www.papereasy.com/" target="_blank"
                                                 style="color:#131313" title='每天免费1000字'>
                                                 papereasy
-                                                <p class="description">每天免费1000字</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2053,7 +2023,7 @@
                                             <a href="https://www.paperfree.cn/" target="_blank"
                                                 style="color:#131313" title='部分免费有限制'>
                                                 paperfree
-                                                <p class="description">部分免费有限制</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2064,7 +2034,7 @@
                                             <a href="https://mooc-lwgx.checkpass.net/" target="_blank"
                                                 style="color:#131313" title='2元/千字'>
                                                 论文改写
-                                                <p class="description">2元/千字</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2072,25 +2042,99 @@
                             </ul>
                         </section>
                     </div>
+                </section>
 
-                </div>
-            </div>
-            <!--论文栏结束-->
-            <!--娱乐栏开始-->
-            <div class="main-content" >
-                <div class="indexbox fNAV" id="top_yl">
-                    <div class="indexbox_title indexbox_title_biaoti">
-                        <strong >娱乐栏</strong>
+                <!-- 娱乐栏 -->
+                <section class="main-content entertainment - section" id="top_yule">
+                    <div class="section-header">
+                        <h2>娱乐栏</h2>
                     </div>
-                    <div class="indexbox_title cygjtabs" >
-                        <strong class="tabcheck-tools" data-id="zxys" onclick="switchContentTab(this)">在线影视</strong>
-                        <strong class="tabcheck-tools" data-id="zxyy" onclick="switchContentTab(this)">在线音乐</strong>
-                        <strong class="tabcheck-tools" data-id="zxyd" onclick="switchContentTab(this)">在线阅读</strong>
-                        <strong class="tabcheck-tools" data-id="zxmh" onclick="switchContentTab(this)">在线漫画</strong>
+                    <div class="section-tabs">
+                        <strong class="tabcheck-tools" data-id="rs" onclick="switchContentTab(this)">热搜热点</strong>
+                        <strong class="tabcheck-tools" data-id="yx" onclick="switchContentTab(this)">在线影视</strong>
+                        <strong class="tabcheck-tools" data-id="yy" onclick="switchContentTab(this)">在线音乐</strong>
+                        <strong class="tabcheck-tools" data-id="yd" onclick="switchContentTab(this)">在线阅读</strong>
+                        <strong class="tabcheck-tools" data-id="mh" onclick="switchContentTab(this)">在线漫画</strong>
+                    </div>
+                    <div class="showdiv" id="content_rs" class="active">
+                        <section data-catalog="download">
+                            <ul class="website-list">
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://tophub.today/n/KqndgxeLl9" target="_blank"
+                                                style="color:#131313" title='微博热搜'>
+                                                微博热搜
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://top.baidu.com/board" target="_blank"
+                                                style="color:#131313" title='百度热搜'>
+                                                百度热搜
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://m.thepaper.cn/htmlstatic" target="_blank"
+                                                style="color:#131313" title='澎湃热搜'>
+                                                澎湃热搜
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://tophub.today/n/mproPpoq6O" target="_blank"
+                                                style="color:#131313" title='知乎热搜'>
+                                                知乎热搜
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://tophub.today/n/WnBe01o371" target="_blank"
+                                                style="color:#131313" title='微信热搜'>
+                                                微信热搜
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://tophub.today/n/74KvxwokxM" target="_blank"
+                                                style="color:#131313" title='B站热搜'>
+                                                B站热搜
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://tophub.today/n/DpQvNABoNE" target="_blank"
+                                                style="color:#131313" title='抖音热搜'>
+                                                抖音热搜
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
                     </div>
                     <!--在线影视-->
-                    <div class="showdiv default" id="content_zxys">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_yx" style="display: none;">
+                        <section data-catalog="blog">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -2098,7 +2142,7 @@
                                             <a href="https://v.qq.com/" target="_blank"
                                                 style="color:#131313" title=''>
                                                 腾讯视频
-                                                <p class="description"></p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2109,7 +2153,7 @@
                                             <a href="https://www.iqiyi.com/" target="_blank"
                                                 style="color:#131313" title=''>
                                                 爱奇艺
-                                                <p class="description"></p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2120,7 +2164,7 @@
                                             <a href="https://www.youku.com/" target="_blank"
                                                 style="color:#131313" title=''>
                                                 优酷
-                                                <p class="description"></p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2131,7 +2175,7 @@
                                             <a href="https://www.mgtv.com/" target="_blank"
                                                 style="color:#131313" title=''>
                                                 芒果TV
-                                                <p class="description"></p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2142,7 +2186,7 @@
                                             <a href="https://www.bilibili.com/" target="_blank"
                                                 style="color:#131313" title='中国年轻世代高度聚集的文化社区和视频平台'>
                                                 B站
-                                                <p class="description">中国年轻世代高度聚集的文化社区和视频平台</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2153,7 +2197,7 @@
                                             <a href="https://www.douyin.com/" target="_blank"
                                                 style="color:#131313" title='中国广受欢迎的原创短视频分享平台'>
                                                 抖音
-                                                <p class="description">中国广受欢迎的原创短视频分享平台</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2164,7 +2208,7 @@
                                             <a href="https://www.kuaishou.com/new-reco" target="_blank"
                                                 style="color:#131313" title='国民短视频社区,记录和分享生活的平台'>
                                                 快手
-                                                <p class="description">国民短视频社区,记录和分享生活的平台</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2176,7 +2220,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='无需kxsw即可访问'>
                                                 Youtube(镜像)
-                                                <p class="description">无需kxsw即可访问</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2187,7 +2231,7 @@
                                             <a href="http://zqjy.info/tv/NzM3NzA3?channel=CCTV-11" target="_blank"
                                                 style="color:#131313" title='在线直播，在线观看'>
                                                 在线直播
-                                                <p class="description">在线直播</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2198,7 +2242,7 @@
                                             <a href="https://www.05jl.com/" target="_blank"
                                                 style="color:#131313" title='免费纪录片，在线观看'>
                                                 纪录片之家
-                                                <p class="description">纪录片之家</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2209,7 +2253,7 @@
                                             <a href="https://www.minjiancai.com/?btwaf=55740329" target="_blank"
                                                 style="color:#131313" title='在线免费电影网,视频免费看!'>
                                                 灰太狼影视
-                                                <p class="description">在线免费电影网,视频免费看!</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2220,7 +2264,7 @@
                                             <a href="http://ylu.cc/" target="_blank"
                                                 style="color:#131313" title='在线免费电影网,视频免费看!'>
                                                 羽路均沾
-                                                <p class="description">在线免费电影网,视频免费看!</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2232,8 +2276,7 @@
                                                 style="color:#131313"
                                                 title='最新电视剧、最新电影、动漫番剧、学习课程，蓝光视频免费在线观看'>
                                                 奈飞工厂
-                                                <p class="description">最新电视剧、最新电影、动漫番剧、学习课程，蓝光视频免费在线观看
-                                                </p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2245,8 +2288,7 @@
                                                 style="color:#131313"
                                                 title='最新电视剧、最新电影、动漫番剧、学习课程，蓝光视频免费在线观看'>
                                                 流真岁月
-                                                <p class="description">最新电视剧、最新电影、动漫番剧、学习课程，蓝光视频免费在线观看
-                                                </p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2257,7 +2299,7 @@
                                             <a href="https://reqiqiu.icu/" target="_blank"
                                                 style="color:#131313" title='最新电视剧、最新电影、动漫番剧、学习课程，蓝光视频免费在线观看'>
                                                 热气球影视
-                                                <p class="description">最新电视剧、最新电影、动漫番剧、学习课程，蓝光视频免费在线观看</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2269,8 +2311,7 @@
                                                 style="color:#131313"
                                                 title='最新电影、电视剧大全、好看的动漫综艺、最新的影视资源在线免费观看'>
                                                 影视工厂
-                                                <p class="description">最新电影、电视剧大全、好看的动漫综艺、最新的影视资源在线免费观看
-                                                </p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2281,7 +2322,7 @@
                                             <a href="https://atym.app/" target="_blank"
                                                 style="color:#131313" title='最新电影、电视剧大全、好看的动漫综艺、最新的影视资源在线免费观看'>
                                                 艾兔影漫
-                                                <p class="description">最新电影、电视剧大全、好看的动漫综艺、最新的影视资源在线免费观看</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2292,7 +2333,7 @@
                                             <a href="https://www.dygang.cc/" target="_blank"
                                                 style="color:#131313" title='努力打造在线之家为最好的海外热门影视剧在线观看站点'>
                                                 电影港
-                                                <p class="description">努力打造在线之家为最好的海外热门影视剧在线观看站点</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2303,7 +2344,7 @@
                                             <a href="https://www.95dy.tv/" target="_blank"
                                                 style="color:#131313" title='电影、电视剧、美剧、动漫、综艺节目免费在线观看'>
                                                 95电影
-                                                <p class="description">电影、电视剧、美剧、动漫、综艺节目免费在线观看</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2315,8 +2356,7 @@
                                                 style="color:#131313"
                                                 title='韩剧看看'>
                                                 韩剧看看
-                                                <p class="description">
-                                                    韩剧看看</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2327,7 +2367,7 @@
                                             <a href="https://m.mubai.link/index" target="_blank"
                                                 style="color:#131313" title='聚合全网影片，你想看的全都找得到！'>
                                                 GoFilm
-                                                <p class="description">聚合全网影片，你想看的全都找得到！</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2338,18 +2378,17 @@
                                             <a href="https://www.mitang.tv/" target="_blank"
                                                 style="color:#131313" title='老牌动漫网站'>
                                                 蜜糖动漫
-                                                <p class="description">老牌动漫网站</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
                                 </li>
-                                
                             </ul>
                         </section>
                     </div>
                     <!--在线音乐-->
-                    <div class="showdiv default" id="content_zxyy" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_yy" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -2357,7 +2396,7 @@
                                             <a href="https://music.163.com/" target="_blank"
                                                 style="color:#131313" title='听会歌放松一下啦！'>
                                                 网易云音乐
-                                                <p class="description">听会歌放松一下啦！</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2368,7 +2407,7 @@
                                             <a href="https://y.qq.com/" target="_blank"
                                                 style="color:#131313" title='海量音乐在线试听'>
                                                 qq音乐
-                                                <p class="description">海量音乐在线试听</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2379,7 +2418,7 @@
                                             <a href="https://www.missevan.com/" target="_blank"
                                                 style="color:#131313" title='来自二次元的声音'>
                                                 猫耳FM
-                                                <p class="description">来自二次元的声音</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2390,7 +2429,7 @@
                                             <a href="https://tools.liumingye.cn/music/" target="_blank"
                                                 style="color:#131313" title='在线下载收听音乐'>
                                                 MyFreeMP3
-                                                <p class="description">在线下载收听音乐</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2401,7 +2440,7 @@
                                             <a href="https://music.y444.cn/" target="_blank"
                                                 style="color:#131313" title='下歌吧_音乐免费下载_音乐在线试听_无损音乐下载'>
                                                 下歌吧
-                                                <p class="description">下歌吧_音乐免费下载_音乐在线试听_无损音乐下载</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2413,7 +2452,7 @@
                                                 target="_blank" style="color:#131313"
                                                 title='免费在线听又提供下载链接'>
                                                 HIFINI音乐磁场
-                                                <p class="description">免费在线听又提供下载链接</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2422,8 +2461,8 @@
                         </section>
                     </div>
                     <!--在线阅读-->
-                    <div class="showdiv default" id="content_zxyd" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_yd" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -2432,8 +2471,7 @@
                                                 style="color:#131313"
                                                 title='找书神器'>
                                                 找书神器
-                                                <p class="description">找书神器
-                                                </p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2444,7 +2482,7 @@
                                             <a href="http://www.xysudu.com/" target="_blank"
                                                 style="color:#131313" title='小鱼速读'>
                                                 小鱼速读
-                                                <p class="description">大佬制作的在线小说站，无广告抓取速度快</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2456,8 +2494,7 @@
                                                 style="color:#131313"
                                                 title='提供超快更新小说免费首发，网站干净无任何广告，阅读环境好'>
                                                 书趣阁
-                                                <p class="description">提供超快更新小说免费首发，网站干净无任何广告，阅读环境好
-                                                </p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2468,7 +2505,7 @@
                                             <a href="https://wap.ibiquge.la/" target="_blank"
                                                 style="color:#131313" title='免费在线小说阅读，更新超快'>
                                                 香书小说
-                                                <p class="description">免费在线小说阅读，更新超快</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2479,7 +2516,7 @@
                                             <a href="https://www.yiruan.la/" target="_blank"
                                                 style="color:#131313" title='免费在线小说阅读，更新超快'>
                                                 亿软网
-                                                <p class="description">免费在线小说阅读，更新超快</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2490,7 +2527,7 @@
                                             <a href="https://www.99mk.info/" target="_blank"
                                                 style="color:#131313" title='免费在线小说阅读，更新超快'>
                                                 鸟书网
-                                                <p class="description">免费在线小说阅读，更新超快</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2501,7 +2538,7 @@
                                             <a href="https://www.biqukun.info/" target="_blank"
                                                 style="color:#131313" title='免费在线小说阅读，更新超快'>
                                                 笔书网
-                                                <p class="description">免费在线小说阅读，更新超快</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2512,7 +2549,7 @@
                                             <a href="https://www.zztxt.net/" target="_blank"
                                                 style="color:#131313" title='每天不定时更新热门小说免费小说,免费提供高质量小说'>
                                                 渣渣小说
-                                                <p class="description">每天不定时更新热门小说免费小说,免费提供高质量小说</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2523,7 +2560,7 @@
                                             <a href="https://www.xxsy.net/" target="_blank"
                                                 style="color:#131313" title='免费言情小说'>
                                                 潇湘书院
-                                                <p class="description">免费言情小说</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2534,7 +2571,7 @@
                                             <a href="https://xr.unionread.net/" target="_blank"
                                                 style="color:#131313" title='原创精品阅读平台'>
                                                 聚合阅读
-                                                <p class="description">原创精品阅读平台</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2545,7 +2582,7 @@
                                             <a href="https://www.xssousou.com/" target="_blank"
                                                 style="color:#131313" title='网盘资源搜索'>
                                                 小说搜索
-                                                <p class="description">网盘资源搜索</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2554,8 +2591,8 @@
                         </section>
                     </div>
                     <!--在线漫画-->
-                    <div class="showdiv default" id="content_zxmh" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_mh" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -2563,7 +2600,7 @@
                                             <a href="https://mikanani.me" target="_blank"
                                                 style="color:#131313" title='蜜柑计划：新一代的动漫下载站'>
                                                 蜜柑计划
-                                                <p class="description">蜜柑计划：新一代的动漫下载站</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2574,7 +2611,7 @@
                                             <a href="https://buding3.com/" target="_blank"
                                                 style="color:#131313" title='原布丁动画,布丁动漫官网'>
                                                 布丁动漫
-                                                <p class="description">原布丁动画,布丁动漫官网</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2585,7 +2622,7 @@
                                             <a href="https://baozimh.org/" target="_blank"
                                                 style="color:#131313" title='免费在线看，更新超快'>
                                                 包子漫画
-                                                <p class="description">免费在线看，更新超快</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2596,7 +2633,7 @@
                                             <a href="http://www.qiximh2.com/" target="_blank"
                                                 style="color:#131313" title='免费在线看，更新超快'>
                                                 七夕漫画
-                                                <p class="description">免费在线看，更新超快</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2607,7 +2644,7 @@
                                             <a href="http://www.kumw7.com/" target="_blank"
                                                 style="color:#131313" title='免费在线看，更新超快'>
                                                 酷漫屋
-                                                <p class="description">免费在线看，更新超快</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2618,7 +2655,7 @@
                                             <a href="http://www.qiman59.com/" target="_blank"
                                                 style="color:#131313" title='免费在线看，更新超快'>
                                                 奇漫屋
-                                                <p class="description">免费在线看，更新超快</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2626,16 +2663,14 @@
                             </ul>
                         </section>
                     </div>
-                </div>
-            </div>
-            <!--娱乐栏结束-->
-            <!-- 工具栏开始 -->
-            <div class="main-content" >
-                <div class="indexbox fNAV" id="top_gj">
-                    <div class="indexbox_title indexbox_title_biaoti">
-                        <strong >工具栏</strong>
+                </section>
+
+                <!-- 工具栏 -->
+                <section class="main-content tool - section" id="top_gj">
+                    <div class="section-header">
+                        <h2>工具栏</h2>
                     </div>
-                    <div class="indexbox_title cygjtabs" >
+                    <div class="section-tabs">
                         <strong class="tabcheck-tools" data-id="cygj" onclick="switchContentTab(this)">常用工具</strong>
                         <strong class="tabcheck-tools" data-id="gcai" onclick="switchContentTab(this)">国产AI</strong>
                         <strong class="tabcheck-tools" data-id="gwai" onclick="switchContentTab(this)">国外AI</strong>
@@ -2643,8 +2678,8 @@
                         <strong class="tabcheck-tools" data-id="qtgj" onclick="switchContentTab(this)">其他工具</strong>
                     </div>
                     <!--常用工具-->
-                    <div class="showdiv default" id="content_cygj">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_cygj" class="active">
+                        <section data-catalog="download">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -2652,7 +2687,7 @@
                                             <a href="https://www.dirs.cn" target="_blank"
                                                 style="color:#131313" title='在线工具合集'>
                                                 在线工具合集
-                                                <p class="description">在线工具合集</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2663,7 +2698,7 @@
                                             <a href="https://lyrify.sipc.ink" target="_blank"
                                                 style="color:#131313" title='在线翻译'>
                                                 在线翻译
-                                                <p class="description">在线翻译</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2674,7 +2709,7 @@
                                             <a href="https://www.uugai.com/" target="_blank"
                                                 style="color:#131313" title='在线logo设计'>
                                                 在线logo设计
-                                                <p class="description">在线logo设计</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2685,7 +2720,7 @@
                                             <a href="https://zhimap.com/home" target="_blank"
                                                 style="color:#131313" title='在线思维导图'>
                                                 在线思维导图
-                                                <p class="description">在线思维导图</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2696,7 +2731,7 @@
                                             <a href="https://lyly.top" target="_blank"
                                                 style="color:#131313" title='简历在线制作'>
                                                 简历在线制作
-                                                <p class="description">简历在线制作</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2707,7 +2742,7 @@
                                             <a href="https://evoreader.github.io/" target="_blank"
                                                 style="color:#131313" title='epub阅读器'>
                                                 epub阅读器
-                                                <p class="description">epub阅读器</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2718,7 +2753,7 @@
                                             <a href="https://www.justlaws.cn/" target="_blank"
                                                 style="color:#131313" title='法律文库'>
                                                 法律文库
-                                                <p class="description">法律文库</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2729,7 +2764,7 @@
                                             <a href="https://tableconvert.com/" target="_blank"
                                                 style="color:#131313" title='表格格式转换'>
                                                 表格格式转换
-                                                <p class="description">表格格式转换</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2740,7 +2775,7 @@
                                             <a href="https://woc.space/" target="_blank"
                                                 style="color:#131313" title='文件传输'>
                                                 文件传输
-                                                <p class="description">文件传输</p>
+                                             
                                             </a>
                                         </div>
                                     </div>
@@ -2751,7 +2786,7 @@
                                             <a href="https://app.xunjiepdf.com/" target="_blank"
                                                 style="color:#131313" title='PDF、CAJ格式免费文档转换'>
                                                 迅捷pdf转换
-                                                <p class="description">PDF、CAJ格式免费文档转换</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2762,7 +2797,7 @@
                                             <a href="https://www.pdfpai.com/" target="_blank"
                                                 style="color:#131313" title='无限次使用，永久免费'>
                                                 PDF转换
-                                                <p class="description">无限次使用，永久免费</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2773,7 +2808,7 @@
                                             <a href="https://www.paperdigest.org/" target="_blank"
                                                 style="color:#131313" title='简单提取相关文献，操作可百度'>
                                                 文献综述在线生成
-                                                <p class="description">简单提取相关文献，操作可百度</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2784,7 +2819,7 @@
                                             <a href="https://www.paperdigest.org/" target="_blank"
                                                 style="color:#131313" title='快速得到LaTex源码与word公式'>
                                                 图片公式识别
-                                                <p class="description">快速得到LaTex源码与word公式</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2795,7 +2830,7 @@
                                             <a href="https://mp3cut.net/cn/" target="_blank"
                                                 style="color:#131313" title='在线修剪或剪切任何音频文件'>
                                                 Audio Cutter
-                                                <p class="description">在线修剪或剪切任何音频文件</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2806,7 +2841,7 @@
                                             <a href="https://wwx.lanzoui.com/i4u2Qselgva"
                                                 target="_blank" style="color:#131313" title='下载文献如此简单'>
                                                 文献神器
-                                                <p class="description">下载文献如此简单</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2817,7 +2852,7 @@
                                             <a href="https://www.zhiyunwenxian.cn/" target="_blank"
                                                 style="color:#131313" title='免费文献翻译神器'>
                                                 知云文献翻译
-                                                <p class="description">免费文献翻译神器</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2828,7 +2863,7 @@
                                             <a href="https://www.similarsites.com/" target="_blank"
                                                 style="color:#131313" title='立即找到类似的网站'>
                                                 查找相同类型网站
-                                                <p class="description">立即找到类似的网站</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -2839,7 +2874,7 @@
                                             <a href="https://gate.ofo.moe/" target="_blank"
                                                 style="color:#131313" title='开启一次未知之旅，这里总有一个属于你的宝站！'>
                                                 任意门
-                                                <p class="description">开启一次未知之旅，这里总有一个属于你的宝站！</p>
+                                             
                                             </a>
                                         </div>
                                     </div>
@@ -2848,8 +2883,8 @@
                         </section>
                     </div>
                     <!--国产ai-->
-                    <div class="showdiv default" id="content_gcai" style="display:none">
-                        <section data-catalog="download">
+                    <div class="showdiv" id="content_gcai" style="display: none;">
+                        <section data-catalog="blog">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -2857,7 +2892,7 @@
                                             <a href="https://www.tiangong.cn/" target="_blank"
                                                 style="color:#131313" title='天宫AI'>
                                                 天宫AI
-                                                <p class="description">天宫AI</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2868,7 +2903,7 @@
                                             <a href="https://hailuoai.com/" target="_blank"
                                                 style="color:#131313" title='海螺AI'>
                                                 海螺AI
-                                                <p class="description">海螺AI</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2879,7 +2914,7 @@
                                             <a href="https://raccoon.sensetime.com/" target="_blank"
                                                 style="color:#131313" title='小浣熊AI'>
                                                 小浣熊AI
-                                                <p class="description">小浣熊AI</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2890,7 +2925,7 @@
                                             <a href="https://cp.baidu.com/" target="_blank"
                                                 style="color:#131313" title='百度综合性AI原生应用'>
                                                 橙篇AI
-                                                <p class="description">百度综合性AI原生应用</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2901,7 +2936,7 @@
                                             <a href="https://yiyan.baidu.com/" target="_blank"
                                                 style="color:#131313" title='百度AI工具'>
                                                 文心一言
-                                                <p class="description">百度AI工具</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2912,7 +2947,7 @@
                                             <a href="https://chat.baidu.com/" target="_blank"
                                                 style="color:#131313" title='百度AI伙伴'>
                                                 百度AI伙伴
-                                                <p class="description">百度AI伙伴</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2923,7 +2958,7 @@
                                             <a href="https://xinghuo.xfyun.cn/" target="_blank"
                                                 style="color:#131313" title='讯飞AI工具'>
                                                 讯飞星火
-                                                <p class="description">讯飞AI工具</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -2934,7 +2969,7 @@
                                             <a href="https://www.chatglm.cn" target="_blank"
                                                 style="color:#131313" title='清华AI工具'>
                                                 智谱清言
-                                                <p class="description">清华AI工具</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2945,7 +2980,7 @@
                                             <a href="https://tongyi.aliyun.com/qianwen/" target="_blank"
                                                 style="color:#131313" title='阿里AI工具'>
                                                 通义千文
-                                                <p class="description">阿里AI工具</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2956,7 +2991,7 @@
                                             <a href="https://www.doubao.com/" target="_blank"
                                                 style="color:#131313" title='抖音AI工具'>
                                                 豆包AI
-                                                <p class="description">抖音AI工具</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2967,7 +3002,7 @@
                                             <a href="https://zhida.zhihu.com/" target="_blank"
                                                 style="color:#131313" title='知乎AI工具'>
                                                 知乎AI
-                                                <p class="description">知乎AI工具</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2978,7 +3013,7 @@
                                             <a href="https://hunyuan.tencent.com/bot/chat" target="_blank"
                                                 style="color:#131313" title='腾讯AI工具'>
                                                 混元助手
-                                                <p class="description">腾讯AI工具</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -2989,7 +3024,7 @@
                                             <a href="https://chat.360.com/" target="_blank"
                                                 style="color:#131313" title='360AI工具'>
                                                 360智脑
-                                                <p class="description">360AI工具</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3000,7 +3035,7 @@
                                             <a href="https://www.baichuan-ai.com/" target="_blank"
                                                 style="color:#131313" title='CCF联合北京百川智能科技有限公司共同创立的AI工具'>
                                                 百川大模型
-                                                <p class="description">CCF联合北京百川智能科技有限公司共同创立的AI工具</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -3011,7 +3046,7 @@
                                             <a href="https://kimi.moonshot.cn/" target="_blank"
                                                 style="color:#131313" title='支持长达20万字的上下文处理，文章总结助手'>
                                                 Kimi Chat
-                                                <p class="description">支持长达20万字的上下文处理，文章总结助手</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3023,7 +3058,7 @@
                                             <a href="https://www.modelscope.cn/studios/iic/ModelScopeGPT/summary" target="_blank"
                                                 style="color:#131313" title='智能工具ModelScopeGPT（魔搭GPT），它能接收用户指令，通过“中枢模型”一键调用魔搭社区其他的AI模型，大小模型协同完成复杂任务。'>
                                                 魔搭GPT
-                                                <p class="description">智能工具ModelScopeGPT（魔搭GPT），它能接收用户指令，通过“中枢模型”一键调用魔搭社区其他的AI模型，大小模型协同完成复杂任务。</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3034,7 +3069,7 @@
                                             <a href="https://taichu-web.ia.ac.cn/" target="_blank"
                                                 style="color:#131313" title='中国科学院自动化研究所和武汉人工智能研究院推出新一代多模态大模型'>
                                                 紫东太初
-                                                <p class="description">中国科学院自动化研究所和武汉人工智能研究院推出新一代多模态大模型</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -3045,7 +3080,7 @@
                                             <a href="https://wukong.com/tool" target="_blank"
                                                 style="color:#131313" title='字节跳动AI工具'>
                                                 小悟空
-                                                <p class="description">字节跳动AI工具</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -3056,7 +3091,7 @@
                                             <a href="https://www.langboat.com/portal/mengzi-gpt" target="_blank"
                                                 style="color:#131313" title='澜舟科技研发的一款功能强大的生成式可控大语言模型'>
                                                 孟子 GPT
-                                                <p class="description">澜舟科技研发的一款功能强大的生成式可控大语言模型</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3067,7 +3102,7 @@
                                             <a href="https://chat.sensetime.com/wb/chat" target="_blank"
                                                 style="color:#131313" title='商量智能助手'>
                                                 商量智能助手
-                                                <p class="description">商量智能助手</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3078,7 +3113,7 @@
                                             <a href="https://so.csdn.net/chat" target="_blank"
                                                 style="color:#131313" title='CSDN AI'>
                                                 C知道
-                                                <p class="description">CSDN AI</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -3089,7 +3124,7 @@
                                             <a href="https://zuojia.baidu.com/" target="_blank"
                                                 style="color:#131313" title='百度智能写作AI'>
                                                 百度作家平台
-                                                <p class="description">百度智能写作AI</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3100,7 +3135,7 @@
                                             <a href="https://writingo.net/document" target="_blank"
                                                 style="color:#131313" title='字节跳动智能写作AI'>
                                                 火山写作
-                                                <p class="description">字节跳动智能写作AI</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3111,7 +3146,7 @@
                                             <a href="https://xiezuocat.com/" target="_blank"
                                                 style="color:#131313" title='秘塔写作AI'>
                                                 AI写作猫
-                                                <p class="description">秘塔写作AI</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3122,7 +3157,7 @@
                                             <a href="https://gw.iflydocs.com/" target="_blank"
                                                 style="color:#131313" title='讯飞智能写作AI'>
                                                 讯飞写作
-                                                <p class="description">讯飞智能写作AI</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3130,9 +3165,9 @@
                             </ul>
                         </section>
                     </div>
-                    <!--国外ai-->
-                    <div class="showdiv default" id="content_gwai" style="display:none">
-                        <section data-catalog="download">
+                     <!--国外ai-->
+                    <div class="showdiv" id="content_gwai" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
                                 <li class="hot-item">
                                     <div class="item-card">
@@ -3140,7 +3175,7 @@
                                             <a href="https://copilot.microsoft.com/" target="_blank"
                                                 style="color:#131313" title='微软AI'>
                                                 Copilot
-                                                <p class="description">微软AI</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -3151,7 +3186,7 @@
                                             <a href="https://openai.com/chatgpt/" target="_blank"
                                                 style="color:#131313" title='openAI'>
                                                 chatgpt
-                                                <p class="description">openAI</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3162,7 +3197,7 @@
                                             <a href="https://blog.google/technology/ai/try-bard/" target="_blank"
                                                 style="color:#131313" title='Google AI'>
                                                 Google Bard
-                                                <p class="description">Google AI</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3173,7 +3208,7 @@
                                             <a href="https://www.ai-character.ai/" target="_blank"
                                                 style="color:#131313" title='创建虚拟角色对话'>
                                                 Character.AI
-                                                <p class="description">创建虚拟角色对话</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3184,7 +3219,7 @@
                                             <a href="https://www.deepl.com/zh/write" target="_blank"
                                                 style="color:#131313" title='使用 DeepL Write 梦笔生花'>
                                                 DeepL Write
-                                                <p class="description">使用 DeepL Write 梦笔生花</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3195,7 +3230,7 @@
                                             <a href="https://www.grammarly.com/" target="_blank"
                                                 style="color:#131313" title='AI英语语法和拼写检查'>
                                                 grammarly
-                                                <p class="description">AI英语语法和拼写检查</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -3206,7 +3241,7 @@
                                             <a href="https://writingpal.ai/" target="_blank"
                                                 style="color:#131313" title='留学生专属的写作AI'>
                                                 WritingPal
-                                                <p class="description">留学生专属的写作AI</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3217,7 +3252,7 @@
                                             <a href="https://quillbot.com/" target="_blank"
                                                 style="color:#131313" title='AI英德写作润色'>
                                                 QuillBot
-                                                <p class="description">AI英德写作润色</p>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -3228,7 +3263,7 @@
                                             <a href="https://baoyueai.com/" target="_blank"
                                                 style="color:#131313" title='免费AI总结翻译神器，文档翻译+阅读+改写+OCR'>
                                                 AI阅读专家
-                                                <p class="description">免费AI总结翻译神器，文档翻译+阅读+改写+OCR</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3239,7 +3274,7 @@
                                             <a href="https://www.dreampress.ai/" target="_blank"
                                                 style="color:#131313" title='故事生成器'>
                                                 故事生成器
-                                                <p class="description">故事生成器</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3250,7 +3285,7 @@
                                             <a href="https://wj.qq.com/ai/generate.html" target="_blank"
                                                 style="color:#131313" title='AI生成问卷'>
                                                 AI生成问卷
-                                                <p class="description">AI生成问卷</p>
+                                            
                                             </a>
                                         </div>
                                     </div>
@@ -3261,7 +3296,7 @@
                                             <a href="https://describepicture.org/" target="_blank"
                                                 style="color:#131313" title='AI图片解读'>
                                                 AI图片解读
-                                                <p class="description">AI图片解读</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3272,7 +3307,7 @@
                                             <a href="https://ai-math.top/teacher" target="_blank"
                                                 style="color:#131313" title='AI生成问卷'>
                                                 AI数学题解答
-                                                <p class="description">AI数学题解答</p>
+                                               
                                             </a>
                                         </div>
                                     </div>
@@ -3283,7 +3318,7 @@
                                             <a href="https://search.lepton.run/" target="_blank"
                                                 style="color:#131313" title='AI搜索引擎'>
                                                 AI搜索引擎
-                                                <p class="description">AI搜索引擎</p>
+                                              
                                             </a>
                                         </div>
                                     </div>
@@ -3291,221 +3326,138 @@
                             </ul>
                         </section>
                     </div>
-                    <!--cycj-->
-                    <div class="showdiv default" id="content_cycj" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_cycj" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
-                                
+                                <!-- 这里可以添加常用插件类网站的列表项 -->
                             </ul>
                         </section>
                     </div>
-                    <!--qtgj-->
-                    <div class="showdiv default" id="content_qtgj" style="display:none">
-                        <section data-catalog="download" class="active">
+                    <div class="showdiv" id="content_qtgj" style="display: none;">
+                        <section data-catalog="website">
                             <ul class="website-list">
-                                
+                                <!-- 这里可以添加其他工具类网站的列表项 -->
                             </ul>
                         </section>
                     </div>
-                </div>
-            </div>
-            <!--工具栏结束-->
-        </div>
-    </div>
-    <!-- </div> -->
-    <!--倒计时开始-->  
-    <script>  
-        (function() {  
-            // 1. 设置目的时间  
-            var oYear = new Date().getFullYear();  
-            var kyMonth = 11; // 注意：JavaScript月份是从0开始的，所以11月应该是10  
-            var kyDay = 24; 
-            var kgMonth = 10; // 注意：JavaScript月份是从0开始的，所以11月应该是10  
-            var kgDay = 24;  
-            var kyDate = new Date(oYear, kyMonth, kyDay); 
-            var kgDate = new Date(oYear, kgMonth, kgDay);   
-    
-            // 格式化日期  
-            function formatDate(date) {  
-                return `${date.getFullYear()}-${padZero(date.getMonth() + 1)}-${padZero(date.getDate())}`;  
-            }  
-    
-            // 如果数<10,则在前面补0  
-            function padZero(num) {  
-                return (num < 10 ? '0' : '') + num;  
-            }  
-    
-            // 2. 设置定时器  
-            setInterval(function() {  
-                // 3. 获取现在的时间  
-                var presentDate = new Date();  
-    
-                // 4. 计算剩余天数  
-                var kyTime = kyDate - presentDate;  
-                var kyDays = Math.ceil(kyTime / (1000 * 60 * 60 * 24));  
-
-                var kgTime = kgDate - presentDate;  
-                var kgDays = Math.ceil(kgTime / (1000 * 60 * 60 * 24)); 
-    
-                // 5. 注入：  
-                document.getElementById('kaoyan').innerHTML = kyDays;  
-                document.getElementById('kaogong').innerHTML = kgDays; 
-            }, 1000); // 每秒更新一次，根据需要可以调整为每分钟或每小时更新一次  
-        })();  
-    </script>  
-    <!--倒计时结束-->
-    
-    <script>  
-        function switchContentTab(clickedTab) {  
-        // 获取当前tab的父元素（即个人栏模块）  
-        var parentBox = clickedTab.closest('.indexbox_title.cygjtabs');  
-        if (!parentBox) return; // 如果找不到父元素，则不执行任何操作  
-    
-        // 隐藏父元素下的所有内容区域  
-        var contentDivs = parentBox.parentElement.querySelectorAll('.showdiv');  
-        contentDivs.forEach(function(div) {  
-            div.style.display = 'none';  
-        });  
-    
-        // 移除所有tab的激活状态  
-        var tabTools = parentBox.querySelectorAll('.tabcheck-tools');  
-        tabTools.forEach(function(tab) {  
-            tab.classList.remove('current');  
-        });  
-    
-        // 添加激活状态到当前tab  
-        clickedTab.classList.add('current');  
-    
-        // 获取当前tab的data-id属性值  
-        var tabId = clickedTab.getAttribute('data-id');  
-    
-        // 显示对应的内容区域  
-        var contentId = 'content_' + tabId;  
-        var content = parentBox.parentElement.querySelector('#' + contentId);  
-        if (content) {  
-            content.style.display = 'block';  
-        }  
-    }  
-    
-    // 移除tab上的onclick属性，因为它们现在通过事件监听器处理  
-    document.addEventListener('DOMContentLoaded', function() {  
-        // 为每个tab添加点击事件监听器  
-        var tabTools = document.querySelectorAll('.tabcheck-tools');  
-        tabTools.forEach(function(tab) {  
-            tab.addEventListener('click', function() {  
-                switchContentTab(this); // 调用函数并传入被点击的tab元素  
-            });  
-        });  
-    
-        // 如果有需要默认激活的tab，可以在这里手动触发点击事件  
-        // 例如：document.querySelector('.tabcheck-tools.default-active').click();  
-    });
-    </script>
-          
-    <script>  
-        function switchSearchTab(index) {  
-            // 获取所有的search-tab元素  
-            const tabs = document.querySelectorAll('.search-tab');  
-            // 获取所有的search-form元素  
-            const forms = document.querySelectorAll('.search-form');  
-              
-            // 移除所有tab的active类  
-            tabs.forEach(tab => tab.classList.remove('active'));  
-            // 移除所有form的active类  
-            forms.forEach(form => form.classList.remove('active'));  
-              
-            // 添加active类到指定索引的tab和form上  
-            if (index >= 0 && index < tabs.length) {  
-                tabs[index].classList.add('active');  
-                forms[index].classList.add('active');  
-            }  
-        }  
-          
-        // 假设第一个tab和form默认是激活的  
-        switchSearchTab(0);  
-    </script>
-
-    <!-- JavaScript代码，用于在页面加载后显示弹窗 -->  
-    
-    <script>    
-        window.onload = function() {  
-            // 获取页面上ID为'top_gr'的元素  
-            var topGrElement = document.getElementById('daohang'); // 假设您想滚动到的元素ID是'top_gr'  
-            if (topGrElement) {  
-                // 如果元素存在，则滚动到该元素的位置  
-                topGrElement.scrollIntoView({behavior: "smooth"});  
-            } else {  
-                // 如果元素不存在，则滚动到页面顶部  
-                window.scroll({top: 0, behavior: "smooth"});  
-            }  
-      
-            var popup = document.getElementById("popup");  
-            var closeBtn = document.querySelector(".close");  
-            var emailPopup = document.getElementById("emailPopup"); // 获取新弹窗元素  
-      
-            // 显示弹窗  
-            popup.style.display = "block";  
-      
-            // 关闭弹窗的功能  
-            closeBtn.addEventListener("click", function() {  
-                popup.style.display = "none";  
-            });  
-      
-            // 点击弹窗外部也关闭弹窗  
-            window.addEventListener("click", function(event) {  
-                if (event.target == popup) {  
-                    popup.style.display = "none";  
-                }  
-            });  
-      
-            // 设置3秒后自动关闭弹窗  
-            setTimeout(function() {  
-                popup.style.display = "none";  
-            }, 3000); // 3秒后执行  
-      
-            // 获取发送建议按钮  
-            var sendSuggestionButton = document.getElementById('sendSuggestion');  
-      
-            // 为发送建议按钮添加点击事件监听器  
-            sendSuggestionButton.addEventListener('click', function(e) {  
-                e.preventDefault(); // 阻止链接的默认行为（打开新页面或跳转）  
-      
-                // 隐藏原弹窗  
-                popup.style.display = "none";  
-      
-                // 显示新弹窗  
-                emailPopup.style.display = "block";  
-            });  
-      
-            // 关闭新弹窗的功能  
-            var emailPopupCloseBtn = emailPopup.querySelector(".close");  
-            emailPopupCloseBtn.addEventListener("click", function() {  
-                emailPopup.style.display = "none";  
-            });  
-      
-            // 点击新弹窗外部也关闭新弹窗  
-            window.addEventListener("click", function(event) {  
-                if (event.target == emailPopup) {  
-                    emailPopup.style.display = "none";  
-                }  
-            });  
-        };  
-    </script>
-
-    <div style="background: #8b9dbe;color:#2f3033;padding:12px;font-size:12px;" class="d-none  d-lg-block" id="footer">
-        <div class="container">
-            <div id="yqlinks-cate-00" class=" links-box">
-                【个人使用】 © 2024-2025 &nbsp; &nbsp;
-                <a href="https://zyjzhy.github.io/lwdh/">
-                    <span style="color: #5a4420;">小张导航</span>
-                </a>&nbsp; &nbsp;
-
-                </a>&nbsp; &nbsp; 声明：网站上的服务均为第三方提供，与本导航网无关。请用户注意甄别服务质量，避免上当受骗。
+                </section>
             </div>
         </div>
-    </div>
+
+    </main>
     
-    
+    <script>
+        (function () {
+            const currentYear = new Date().getFullYear();
+            const kyMonth = 11;
+            const kyDay = 24;
+            const kgMonth = 10;
+            const kgDay = 24;
+            const kyDate = new Date(currentYear, kyMonth, kyDay);
+            const kgDate = new Date(currentYear, kgMonth, kgDay);
+
+            function formatDate(date) {
+                return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+}
+
+            setInterval(() => {
+                const presentDate = new Date();
+                const kyTime = kyDate - presentDate;
+                const kgTime = kgDate - presentDate;
+                const kyDays = Math.ceil(kyTime / (1000 * 60 * 60 * 24));
+                const kgDays = Math.ceil(kgTime / (1000 * 60 * 60 * 24));
+                document.getElementById('kaoyan').textContent = kyDays;
+                document.getElementById('kaogong').textContent = kgDays;
+            }, 1000);
+        })();
+    </script>
+
+    <script>
+        function switchContentTab(clickedTab) {
+            const parentBox = clickedTab.closest('.section-tabs');
+            if (!parentBox) return;
+
+            const contentDivs = parentBox.parentElement.querySelectorAll('.showdiv');
+            contentDivs.forEach(div => div.style.display = 'none');
+
+            const tabTools = parentBox.querySelectorAll('.tabcheck-tools');
+            tabTools.forEach(tab => tab.classList.remove('current'));
+
+            clickedTab.classList.add('current');
+
+            const tabId = clickedTab.getAttribute('data-id');
+            const contentId = 'content_' + tabId;
+            const content = parentBox.parentElement.querySelector('#' + contentId);
+            if (content) {
+                content.style.display = 'block';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabTools = document.querySelectorAll('.tabcheck-tools');
+            tabTools.forEach(tab => tab.addEventListener('click', () => switchContentTab(tab)));
+        });
+    </script>
+
+    <script>
+        function switchSearchTab(index) {
+            const tabs = document.querySelectorAll('.search-tab');
+            const forms = document.querySelectorAll('.search-form');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            forms.forEach(form => form.classList.remove('active'));
+
+            if (index >= 0 && index < tabs.length) {
+                tabs[index].classList.add('active');
+                forms[index].classList.add('active');
+            }
+        }
+
+        switchSearchTab(0);
+    </script>
+
+    <script>
+        window.onload = function () {
+            const topGrElement = document.getElementById('daohang');
+            if (topGrElement) {
+                topGrElement.scrollIntoView({ behavior: "smooth" });
+            } else {
+                window.scroll({ top: 0, behavior: "smooth" });
+            }
+
+            const popup = document.getElementById("popup");
+            const closeBtn = document.querySelector(".close");
+            const emailPopup = document.getElementById("emailPopup");
+
+            popup.style.display = "block";
+
+            closeBtn.addEventListener("click", () => popup.style.display = "none");
+
+            window.addEventListener("click", event => {
+                if (event.target === popup) {
+                    popup.style.display = "none";
+                }
+            });
+
+            setTimeout(() => popup.style.display = "none", 3000);
+
+            const sendSuggestionButton = document.getElementById('sendSuggestion');
+            sendSuggestionButton.addEventListener('click', e => {
+                e.preventDefault();
+                popup.style.display = "none";
+                emailPopup.style.display = "block";
+            });
+
+            emailPopup.querySelector(".close").addEventListener("click", () => emailPopup.style.display = "none");
+
+            window.addEventListener("click", event => {
+                if (event.target === emailPopup) {
+                    emailPopup.style.display = "none";
+                }
+            });
+        };
+    </script>
+
 </body>
 
 </html>
