@@ -59,13 +59,53 @@ nav {
 
 #popup h3 {
     margin-top: 0;
+    display: flex;
+    justify-content: space-around;
 }
 
-#popup p {
+#popup h5 {
+    display: flex;
+    justify-content: space-around;
     margin: 5px 0;
 }
+#popup p {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-around;
+}
 
+#emailPopup h3 {
+    margin-top: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+#emailPopup h5 {
+    display: flex;
+    justify-content: space-around;
+    margin: 5px 0;
+}
+#emailPopup p {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.button-container {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-around;
+}
 .button-container a {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.popup-content a {
     display: inline-block;
     padding: 10px 20px;
     text-decoration: none;
@@ -376,5 +416,10 @@ website-list .hot-item:last-child {
 @media (min-width: 1200px) {
     .website-list li {
         width: calc(14.28% - 1rem); /* 在较小屏幕上使用两列布局 */
+    }
+} 
+@media (min-width: 1500px) {
+    .website-list li {
+        width: calc(12% - 1rem); /* 在较小屏幕上使用两列布局 */
     }
 } 
