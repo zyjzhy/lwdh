@@ -40,8 +40,8 @@
     <div id="popup">
         <div class="popup-content">
             <h3 style="display: flex;justify-content: space-around;">需知</h3>
-            <h5 style="color: red;">更新于2024.10.28
-                (论文查找，国产AI)</h5>
+            <h5 style="color: red;">更新于2024.11.3
+                (修复bug，更新在线影视、国产ai)</h5>
             <p>①个人使用，内容自行甄别！</p>
             <p>②在卡片悬停可查看链接介绍哦！</p>
             <p>③非盈利，随缘更新！</p>
@@ -1262,7 +1262,7 @@
                 </section>
         
                 <!-- 有用网栏 -->
-                <section class="main-content useful - section" id="top_yy">
+                <section class="main-content useful - section" id="top_yyw">
                     <div class="section-header">
                         <h2>有用网</h2>
                     </div>
@@ -2160,7 +2160,7 @@
                 </section>
 
                 <!-- 娱乐栏 -->
-                <section class="main-content entertainment - section" id="top_yule">
+                <section class="main-content entertainment - section" id="top_yl">
                     <div class="section-header">
                         <h2>娱乐栏</h2>
                     </div>
@@ -2409,11 +2409,10 @@
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
-                                            <a href="https://www.thhtyh.com/" target="_blank"
+                                            <a href="https://www.kanmeiju.org/" target="_blank"
                                                 style="color:#131313"
-                                                title='最新电视剧、最新电影、动漫番剧、学习课程，蓝光视频免费在线观看'>
-                                                流真岁月
-                                                
+                                                title='看美剧是一个专注外国影视剧高清在线点播的的网站!看美剧涵盖了广泛的题材，包括科幻、悬疑、犯罪、喜剧、历史、医疗、政治等，几乎能满足所有观众的口味。'>
+                                                看美剧
                                             </a>
                                         </div>
                                     </div>
@@ -2421,9 +2420,9 @@
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
-                                            <a href="https://fjvtw.com/" target="_blank"
+                                            <a href="www.hainatv.net" target="_blank"
                                                 style="color:#131313" title='在线影视站，内容包括电影、剧集、综艺和动漫，清晰度和速度都很好，无广告，无需注册'>
-                                                金牌影院
+                                                海纳TV
                                             </a>
                                         </div>
                                     </div>
@@ -2431,7 +2430,7 @@
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
-                                            <a href="https://www.freeok.vip/" target="_blank"
+                                            <a href="http://www.freeokk.pro" target="_blank"
                                                 style="color:#131313"
                                                 title='在线影视站，超清画质速度快'>
                                                 FreeOK
@@ -3607,6 +3606,18 @@
                 }
             });
         };
+    </script>
+    <script>
+        const cards = document.querySelectorAll('.hot-item');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('active'); // 添加激活类
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('active'); // 移除激活类
+            });
+        });
+
     </script>
 
 </body>
