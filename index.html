@@ -40,8 +40,8 @@
     <div id="popup">
         <div class="popup-content">
             <h3 style="display: flex;justify-content: space-around;">需知</h3>
-            <h5 style="color: red;">更新于2024.11.3
-                (修复bug，更新在线影视、国产ai)</h5>
+            <h5 style="color: red;">更新于2024.12.31
+                (修复倒计时bug)</h5>
             <p>①个人使用，内容自行甄别！</p>
             <p>②在卡片悬停可查看链接介绍哦！</p>
             <p>③非盈利，随缘更新！</p>
@@ -3008,26 +3008,6 @@
                                 <li class="hot-item">
                                     <div class="item-card">
                                         <div class="contents">
-                                            <a href="https://ai.rcouyi.com" target="_blank"
-                                                style="color:#131313" title='阿水AI，全能的AI，拥有无限可能！'>
-                                                欧亿AI
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="hot-item">
-                                    <div class="item-card">
-                                        <div class="contents">
-                                            <a href="https://ai.ashui80.com" target="_blank"
-                                                style="color:#131313" title='阿水AI，全能的AI，拥有无限可能！'>
-                                                阿水AI
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="hot-item">
-                                    <div class="item-card">
-                                        <div class="contents">
                                             <a href="https://www.tiangong.cn/" target="_blank"
                                                 style="color:#131313" title='天宫AI'>
                                                 天工AI
@@ -3111,6 +3091,16 @@
                                             <a href="https://intern-ai.org.cn/home" target="_blank"
                                                 style="color:#131313" title='上海人工智能实验室开源大模型'>
                                                 书生AI
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="hot-item">
+                                    <div class="item-card">
+                                        <div class="contents">
+                                            <a href="https://ai.rcouyi.com" target="_blank"
+                                                style="color:#131313" title='阿水AI，全能的AI，拥有无限可能！'>
+                                                欧亿AI
                                             </a>
                                         </div>
                                     </div>
@@ -3510,29 +3500,76 @@
     </main>
     
     <script>
+        // 立即执行函数，创建独立作用域
         (function () {
-            const currentYear = new Date().getFullYear();
-            const kyMonth = 11;
-            const kyDay = 22;
-            const kgMonth = 11;
-            const kgDay = 1;
-            const kyDate = new Date(currentYear, kyMonth, kyDay);
-            const kgDate = new Date(currentYear, kgMonth, kgDay);
+            // 获取当前日期
+            const currentDate = new Date();
+            // 获取当前年份
+            const currentYear = currentDate.getFullYear();
+            // 定义考研日期所在的月份（11表示12月，因为JavaScript中月份从0开始计数）
+            const examMonths = {
+                kaoyan: 11,
+                kaogong: 11
+            };
+            // 定义考研和考公在对应月份中的日期
+            const examDays = {
+                kaoyan: 22,
+                kaogong: 1
+            };
 
+            // 根据给定的年份、月份、日期创建Date对象的函数
+            function createDate(year, month, day) {
+                return new Date(year, month, day);
+            }
+
+            // 格式化日期的函数，将Date对象格式化为'YYYY-MM-DD'的字符串形式
             function formatDate(date) {
-                return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
-}
+                const year = date.getFullYear();
+                const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                const day = ('0' + date.getDate()).slice(-2);
+                return `${year}-${month}-${day}`;
+            }
 
+            // 获取下一年考试日期的函数，传入考试类型（如'kaoyan'或'kaogong'）
+            function getNextExamDate(examType) {
+                // 如果当前日期已经超过了当年的考试日期，就使用下一年的年份来创建考试日期对象
+                const year = currentDate > createDate(currentYear, examMonths[examType], examDays[examType])? currentYear + 1 : currentYear;
+                return createDate(year, examMonths[examType], examDays[examType]);
+            }
+
+            // 每隔1秒执行一次的定时器函数
             setInterval(() => {
+                // 获取当前日期时间
                 const presentDate = new Date();
+
+                // 获取下一年考研日期
+                const kyDate = getNextExamDate('kaoyan');
+                // 获取下一年考公日期
+                const kgDate = getNextExamDate('kaogong');
+
+                // 计算距离考研日期的时间差（单位为毫秒）
                 const kyTime = kyDate - presentDate;
+                // 计算距离考公日期的时间差（单位为毫秒）
                 const kgTime = kgDate - presentDate;
+
+                // 将时间差转换为天数（向上取整）
                 const kyDays = Math.ceil(kyTime / (1000 * 60 * 60 * 24));
                 const kgDays = Math.ceil(kgTime / (1000 * 60 * 60 * 24));
-                document.getElementById('kaoyan').textContent = kyDays;
-                document.getElementById('kaogong').textContent = kgDays;
+
+                // 获取页面中id为'kaoyan'的元素，并设置其文本内容为距离考研的天数
+                const kyElement = document.getElementById('kaoyan');
+                if (kyElement) {
+                    kyElement.textContent = kyDays;
+                }
+
+                // 获取页面中id为'kaogong'的元素，并设置其文本内容为距离考公的天数
+                const kgElement = document.getElementById('kaogong');
+                if (kgElement) {
+                    kgElement.textContent = kgDays;
+                }
             }, 1000);
         })();
+
     </script>
 
     <script>
