@@ -22,7 +22,7 @@
             justify-content: center;
             min-height: 90vh;
             background-color: transparent;
-            background-image: url('C:/Users/zyj/Pictures/2025.png');  /*设置背景图片*/
+            background-image: url('C:/Users/zyj/Pictures/123.jpg');  /*设置背景图片*/
             background-size:cover;  /*背景图片覆盖整个页面*/
             background-repeat: no-repeat;  /*防止背景图片重复*/
             background-attachment: fixed; /* 固定背景 */
@@ -907,7 +907,7 @@
     </header>
 
     <div id="scrolling-text" >
-        <span>欢迎来到猪猪导航！这是一个简洁、美观的导航网站，帮助您快速访问常用资源！</span>
+        <span>欢迎来到猪猪导航！这是一个简洁、经常更新的导航网站，帮助您快速访问常用资源！</span>
     </div>
 
     <div id="sidebar">
@@ -926,9 +926,12 @@
     <div id="announcement">
         <div class="title">🎉 最新公告 🎉</div>
         <div class="content">
-            <p>欢迎来到猪猪导航！这是一个简洁、美观的导航网站，旨在帮助您快速访问常用的网站和资源。</p>
+            <p>欢迎来到猪猪导航！很高兴与你相遇，希望能帮到你。</p>
+            <p>感谢x，c，q，y等人的免费赞名关注以及某导的HelloKitty背景😂。</p>
+            <p>新的一年，新的网站，祝各位2025快乐，诸事顺利！</p>
             <img src="C:/Users/zyj/Pictures/2025.png" alt="公告图片">
-            <p>我们定期更新网站内容，敬请关注！</p>
+            <p>我们会常更新网站内容，敬请关注！</p>
+            <p>若网站有失效内容或有什么建议可以点击邮箱联系作者！</p>
         </div>
         <button onclick="closeAnnouncement()">关闭</button>
     </div>
@@ -939,7 +942,8 @@
         </div>
         <div class="modal-content">
             <p>邮箱: 2577539099@qq.com</p>
-            <p>"公主"号为：</p>
+            <p>"公主"号为：暂无！！</p>
+            <p>2025快乐，诸事顺利！</p>
             <img src="C:/Users/zyj/Pictures/2025.png" alt="公众号二维码">
         </div>
         <button onclick="close_contact_author()">关闭</button>
@@ -1277,7 +1281,7 @@
                     <div class="card" data-tooltip="B站" onclick="window.open('https://www.bilibili.com/', '_blank')">B站</div>
                     <div class="card" data-tooltip="抖音" onclick="window.open('https://www.douyin.com/', '_blank')">抖音</div>
                     <div class="card" data-tooltip="快手" onclick="window.open('https://www.kuaishou.com/new-reco', '_blank')">快手</div>
-                    <div class="card" data-tooltip="Youtube(镜像)" onclick="window.open('https://ggg.add.pub/-----https://www.youtube.com/', '_blank')">Youtube(镜像)</div>
+                    <div class="card" data-tooltip="小红书" onclick="window.open('https://www.xiaohongshu.com/explore', '_blank')">小红书</div>
                     <div class="card" data-tooltip="在线直播" onclick="window.open('http://zqjy.info/tv/NzM3NzA3?channel=CCTV-11', '_blank')">在线直播</div>
                     <div class="card" data-tooltip="纪录片之家" onclick="window.open('https://www.05jl.com/', '_blank')">纪录片之家</div>
                     <div class="card" data-tooltip="人人电影网" onclick="window.open('https://www.rrdynb.com/index.html', '_blank')">人人电影网</div>
@@ -1753,6 +1757,7 @@
         }
         function switchToNewVersion() {
             // alert('切换到新版本');
+            window.location.href = './index.html'
         }
         function switchToAcademicVersion() {
             alert('学术版待更新');
