@@ -36,8 +36,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.1); /* 黑色半透明叠加层 */
             z-index: -1; /* 确保叠加层不挡住内容 */
         }
@@ -497,10 +497,11 @@
             z-index: 1002;
             left: 50%;
             top: 50%;
-            width: 35vw;
-            height: 40vh;
+            /* width: 35vw; */
+            /* height: 40vh; */
+            /* min-height: 200px; */
             max-height: 300px; /* 最大高度，防止内容溢出 */
-            max-width: 400px;
+            max-width: 300px;
             overflow: hidden; /* 隐藏多余内容 */
             z-index: 1002;
             transform: translate(-50%, -50%);
@@ -536,7 +537,8 @@
         /* 弹窗内容区域：可滚动但隐藏滚动条 */
         #announcement .content,
         #contact-author-modal .modal-content {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            min-height: 60px;
             max-height: calc(40vh - 120px); /* 限制内容区高度 */
             overflow-y: scroll; /* 内容可垂直滚动 */
             -ms-overflow-style: none; /* IE/Edge 隐藏滚动条 */
@@ -560,8 +562,8 @@
         #announcement button,
         #contact-author-modal button {
             /* margin: 10px auto; 按钮左右居中 */
-            /* margin-bottom: 10px; */
-            margin-top: 15px;
+            margin-bottom: 1px;
+            /* margin-top: 5px; */
             padding: 10px 20px;
             background-color: #4CAF50;
             width:100%;
@@ -1030,14 +1032,19 @@
             <div class="sub-column">
                 <h3>学校类</h3> 
                 <div class="card-container">
-                    <div class="card" data-tooltip="哈商大校外访问VPN" onclick="window.open('https://webvpn.hrbcu.edu.cn/', '_blank')"><img src="https://webvpn.hrbcu.edu.cn/favicon.ico">哈商大VPN</div>
                     <div class="card" data-tooltip="哈商大官网" onclick="window.open('https://www.hrbcu.edu.cn/index.htm', '_blank')"><img src="https://www.hrbcu.edu.cn/favicon.ico">商大官网</div>
-                    <div class="card" data-tooltip="哈商大研究生院" onclick="window.open('https://yjsc.hrbcu.edu.cn/', '_blank')"><img src="https://yjsc.hrbcu.edu.cn/favicon.ico">商大研究生院</div>
-                    <div class="card" data-tooltip="哈商大本科正方教务系统" onclick="window.open('http://jw.hrbcu.edu.cn/jwglxt/xtgl/login_slogin.html', '_blank')"><img src="https://jw.webvpn.hrbcu.edu.cn/favicon.ico">本科教务</div>
-                    <div class="card" data-tooltip="哈商大研究生正方教务系统" onclick="window.open('http://111.117.45.14:8080/yjsxt/xtgl/login_slogin.html', '_blank')"><img src="https://111-117-45-14-8080.webvpn.hrbcu.edu.cn/yjsxt/logo/favicon.ico">研究生教务</div>
-                    <div class="card" data-tooltip="哈商大新版科研系统" onclick="window.open('https://ky.hrbcu.edu.cn/userAction!to_login.action', '_blank')"><img src="https://ky-443.webvpn.hrbcu.edu.cn/system/img/favicon.ico">新科研系统</div>
-                    <div class="card" data-tooltip="哈商大综合档案系统" onclick="window.open('https://nds.hrbcu.edu.cn/', '_blank')">档案系统</div>
-                    <div class="card" data-tooltip="哈商大OA邮箱系统" onclick="window.open('https://xt-443.webvpn.hrbcu.edu.cn/', '_blank')"><img src="https://xt-443.webvpn.hrbcu.edu.cn/favicon.ico">OA邮箱</div>
+                    <div class="card" data-tooltip="哈商大经济院官网" onclick="window.open('https://yjsc.hrbcu.edu.cn/', '_blank')"><img src="https://yjsc.hrbcu.edu.cn/favicon.ico">经济学院</div>
+                    <div class="card" data-tooltip="哈商大研究生院官网" onclick="window.open('https://jjxy.hrbcu.edu.cn/', '_blank')"><img src="https://jjxy.hrbcu.edu.cn/favicon.ico">研究生学院</div>
+                    <div class="card" data-tooltip="(校内访问)哈商大本科正方教务系统" onclick="window.open('http://jw.hrbcu.edu.cn/jwglxt/xtgl/login_slogin.html', '_blank')"><img src="https://jw.webvpn.hrbcu.edu.cn/favicon.ico">(内)本科教务</div>
+                    <div class="card" data-tooltip="(校内访问)哈商大研究生正方教务系统" onclick="window.open('http://111.117.45.14:8080/yjsxt/xtgl/login_slogin.html', '_blank')"><img src="https://111-117-45-14-8080.webvpn.hrbcu.edu.cn/yjsxt/logo/favicon.ico">(内)研究生教务</div>
+                    <div class="card" data-tooltip="(校内访问)哈商大新版科研系统" onclick="window.open('https://ky.hrbcu.edu.cn/userAction!to_login.action', '_blank')"><img src="https://ky-443.webvpn.hrbcu.edu.cn/system/img/favicon.ico">(内)新科研系统</div>
+                    <div class="card" data-tooltip="(校内访问)哈商大综合档案系统" onclick="window.open('https://nds.hrbcu.edu.cn/', '_blank')">(内)档案系统</div>
+                    <div class="card" data-tooltip="(校内访问)哈商大OA邮箱系统" onclick="window.open('https://xt.hrbcu.edu.cn/', '_blank')"><img src="https://xt-443.webvpn.hrbcu.edu.cn/favicon.ico">(内)OA邮箱</div>
+                    <div class="card" data-tooltip="哈商大校外访问VPN" onclick="window.open('https://webvpn.hrbcu.edu.cn/', '_blank')"><img src="https://webvpn.hrbcu.edu.cn/favicon.ico">哈商大VPN</div>
+                    <div class="card" data-tooltip="(校外访问)哈商大本科正方教务系统" onclick="window.open('https://jw.webvpn.hrbcu.edu.cn/jwglxt/xtgl/login_slogin.html', '_blank')"><img src="https://jw.webvpn.hrbcu.edu.cn/favicon.ico">(外)本科教务</div>
+                    <div class="card" data-tooltip="(校外访问)哈商大研究生正方教务系统" onclick="window.open('https://111-117-45-14-8080.webvpn.hrbcu.edu.cn/yjsxt/xtgl/login_slogin.html', '_blank')"><img src="https://111-117-45-14-8080.webvpn.hrbcu.edu.cn/yjsxt/logo/favicon.ico">(外)研究生教务</div>
+                    <div class="card" data-tooltip="(校外访问)哈商大新版科研系统" onclick="window.open('https://ky-443.webvpn.hrbcu.edu.cn/userAction!to_login.action', '_blank')"><img src="https://ky-443.webvpn.hrbcu.edu.cn/system/img/favicon.ico">(外)新科研系统</div>
+                    <div class="card" data-tooltip="(校外访问)哈商大OA邮箱系统" onclick="window.open('https://xt-443.webvpn.hrbcu.edu.cn/', '_blank')"><img src="https://xt-443.webvpn.hrbcu.edu.cn/favicon.ico">(外)OA邮箱</div>
                     
                 </div>
             </div>
