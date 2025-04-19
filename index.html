@@ -20,10 +20,11 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
             --primary-color: #ff6b6b;
-            --secondary-color: #4ecdc4;
+            --secondary-color: #4d80ff;
             --dark-color: #333;
             --light-color: #f8f9fa;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -600,8 +601,11 @@
             max-height: 350px;
             overflow-y: auto;
             padding: 10px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.1);
+            /* 隐藏滚动条但保留滚动功能 */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            /* scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.1); */
             background: 
                 linear-gradient(white 30%, rgba(255,255,255,0)),
                 linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
@@ -613,10 +617,15 @@
             flex-grow: 1;
         }
 
-        .modal .content::-webkit-scrollbar, 
+        /* WebKit浏览器隐藏滚动条 */
+        .modal .modal-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* .modal .content::-webkit-scrollbar, 
         .modal .modal-content::-webkit-scrollbar {
             width: 6px;
-        }
+        } */
 
         .modal .content::-webkit-scrollbar-track, 
         .modal .modal-content::-webkit-scrollbar-track {
@@ -952,12 +961,13 @@
             <div class="title"><i class="fas fa-bullhorn"></i> 最新公告</div>
             <div class="content">
                 <p>欢迎来到猪猪导航！很高兴与你相遇，希望能帮到你。</p>
-                <p>感谢c，q，x，y等人的免费赞名帮助以及某导的HelloKitty背景😂。</p>
-                <p>本次更新：加载的图标，分离出了AI栏，整合了常用栏，更新时间2025/2/22</p>
-                <p>新的一年，新的网站，祝各位2025快乐，诸事顺利！</p>
-                <img src="https://i.postimg.cc/T11nMJM1/2025.webp" alt="公告图片">
+                <p>小编最近对网站进行了更新！</p>
+                <p>1.优化了网站的显示和交互效果</p>
+                <p>2.实现了可以发送意见反馈邮箱功能</p>
+                <p>3.更新了最强数模ai，视频网站等</p>
+                <!-- <img src="https://i.postimg.cc/T11nMJM1/2025.webp" alt="公告图片"> -->
                 <p>我们会常更新网站内容，敬请关注！</p>
-                <p>若网站有失效内容或有什么建议可以点击邮箱联系作者！</p>
+                <p>若网站有失效内容或有什么建议可以点击邮箱发送反馈内容！！</p>
             </div>
             <div class="modal-footer">
                 <button onclick="closeAnnouncement()">关闭</button>
@@ -965,19 +975,63 @@
         </div>
     </div>
 
-    <!-- 联系作者弹窗优化 -->
+    <!-- 反馈弹窗 -->
+    <!-- 联系作者弹窗 - EmailJS版本 -->
     <div id="contact-author-modal" class="modal">
         <div class="modal-content-wrapper">
             <span class="modal-close" onclick="closeContactModal()">&times;</span>
-            <div class="title"><i class="fas fa-envelope"></i> 联系作者</div>
+            <div class="title"><i class="fas fa-envelope"></i> 问题反馈</div>
             <div class="modal-content">
-                <p><i class="fas fa-envelope"></i> 邮箱: 2577539099@qq.com</p>
-                <p><i class="fas fa-comment"></i> "公主"号为：暂无！！</p>
-                <p><i class="fas fa-heart"></i> 2025快乐，诸事顺利！</p>
-                <img src="https://i.postimg.cc/T11nMJM1/2025.webp" alt="公众号二维码">
+                <form id="feedback-form">
+                    <!-- 反馈内容输入 -->
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-color);">
+                            <i class="fas fa-comment-dots" style="margin-right: 5px;"></i>
+                            反馈内容
+                        </label>
+                        <textarea 
+                            id="message" 
+                            style="width: 100%; min-height: 120px; padding: 10px; border: 1px solid #ddd; border-radius: var(--border-radius);"
+                            placeholder="请详细描述您遇到的问题..."
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <!-- 发件人信息 -->
+                    <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; font-size: 13px; color: var(--text-light);">
+                                <i class="fas fa-user" style="margin-right: 5px;"></i>
+                                您的称呼
+                            </label>
+                            <input 
+                                type="text" 
+                                id="from_name" 
+                                style="width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: var(--border-radius);"
+                                placeholder="可选填"
+                            >
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="display: block; margin-bottom: 5px; font-size: 13px; color: var(--text-light);">
+                                <i class="fas fa-reply" style="margin-right: 5px;"></i>
+                                回复邮箱
+                            </label>
+                            <input 
+                                type="email" 
+                                id="reply_to" 
+                                style="width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: var(--border-radius);"
+                                placeholder="如需回复请填写"
+                            >
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 12px; color: var(--text-light); margin-top: 10px;">
+                        <i class="fas fa-info-circle"></i> 我们会通过邮件及时处理您的反馈
+                    </p>
+                </form>
             </div>
             <div class="modal-footer">
-                <button onclick="closeContactModal()">关闭</button>
+                <button onclick="sendFeedback()"><i class="fas fa-paper-plane" style="margin-right: 5px;"></i> 发送反馈</button>
             </div>
         </div>
     </div>
@@ -1500,7 +1554,7 @@
                     <div class="card" data-tooltip="电影港" onclick="window.open('https://www.dygang.cc/', '_blank')"><img src="https://www.dygang.cc/favicon.ico">电影港</div>
                     <div class="card" data-tooltip="韩剧看看" onclick="window.open('https://www.hanjukankan.com/', '_blank')"><img src="https://www.hanjukankan.com/mxtheme/images/favicon.png">韩剧看看</div>
                     <div class="card" data-tooltip="GoFilm" onclick="window.open('https://m.mubai.link/index', '_blank')"><img src="https://m.mubai.link/favicon.ico">GoFilm</div>
-                    <!-- <div class="card" data-tooltip="蜜糖动漫" onclick="window.open('https://www.mitang.tv/', '_blank')"><img src="https://www.mitang.tv/favicon.ico">蜜糖动漫</div> -->
+                    <div class="card" data-tooltip="网飞猫🐱" onclick="window.open('https://www.ncat1.app/', '_blank')"><img src="https://www.ncat1.app/favicon.ico">网飞猫🐱</div>
                 </div>
             </div>
         
@@ -1780,5 +1834,54 @@
         window.addEventListener('resize', handleZoom);
         handleZoom();
     </script>
+    <!-- 加载EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    // 初始化EmailJS（替换为您的实际公钥）
+    emailjs.init('ZqKUJXh-0iqkAEsVV');
+    
+    // 关闭弹窗函数
+    function closeContactModal() {
+        document.getElementById('contact-author-modal').style.display = 'none';
+    }
+    
+    // 发送反馈函数
+    function sendFeedback() {
+        const params = {
+            message: document.getElementById('message').value,
+            from_name: document.getElementById('from_name').value || "匿名用户",
+            reply_to: document.getElementById('reply_to').value || "no-reply@" + location.hostname
+        };
+
+        if (!params.message) {
+            alert('请填写反馈内容！');
+            return;
+        }
+
+        const btn = document.querySelector('#contact-author-modal .modal-footer button');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 发送中...';
+
+        emailjs.send('service_ob2v3ek', 'template_klhycbc', params)
+            .then(() => {
+                alert('反馈已发送！');
+                closeContactModal();
+                document.getElementById('feedback-form').reset();
+            })
+            .catch(err => {
+                console.error("邮件发送失败:", err);
+                alert('发送失败: ' + (err.text || "请检查网络连接"));
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 发送反馈';
+            });
+    }
+    
+    // 如果您需要显示弹窗的函数
+    function showFeedbackModal() {
+        document.getElementById('contact-author-modal').style.display = 'block';
+    }
+</script> 
 </body>
 </html>
