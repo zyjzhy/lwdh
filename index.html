@@ -591,6 +591,12 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            background: linear-gradient(135deg, #ff8e8e 0%, #ff5252 100%); 
+            color: white; 
+            padding: 15px 20px; 
+            margin: -25px -25px 20px -25px; 
+            border-radius: var(--border-radius) 
+            var(--border-radius) 0 0;
         }
 
         /* 弹窗文字区域优化 */
@@ -958,25 +964,61 @@
     <div id="announcement" class="modal">
         <div class="modal-content-wrapper">
             <span class="modal-close" onclick="closeAnnouncement()">&times;</span>
-            <div class="title"><i class="fas fa-bullhorn"></i> 最新公告</div>
-            <div class="content">
-                <p>欢迎来到猪猪导航！很高兴与你相遇，希望能帮到你。</p>
-                <p>小编最近对网站进行了更新！</p>
-                <p>1.优化了网站的显示和交互效果</p>
-                <p>2.实现了可以发送意见反馈邮箱功能</p>
-                <p>3.更新了最强数模ai，视频网站等</p>
-                <!-- <img src="https://i.postimg.cc/T11nMJM1/2025.webp" alt="公告图片"> -->
-                <p>我们会常更新网站内容，敬请关注！</p>
-                <p>若网站有失效内容或有什么建议可以点击邮箱发送反馈内容！！</p>
+            
+            <!-- 标题区优化 -->
+            <div class="title" >
+                <i class="fas fa-bullhorn" style="margin-right: 10px;"></i> 
+                最新公告
             </div>
-            <div class="modal-footer">
-                <button onclick="closeAnnouncement()">关闭</button>
+            
+            <!-- 内容区优化 -->
+            <div class="content" style="padding: 0 15px;">
+                <!-- 欢迎语卡片 -->
+                <div  style="background: #f8f9fa; border-left: 4px solid #2575fc; padding: 12px 15px; margin-bottom: 20px; border-radius: 0 var(--border-radius) var(--border-radius) 0;">
+                    <p style="margin: 0; font-size: 15px; color: #333; font-weight: 500;">
+                        欢迎来到猪猪导航！希望能帮到你 ❤️
+                    </p>
+                </div>
+                
+                <!-- 更新列表 -->
+                <h4 style="margin: 0 0 10px 0; color: #444; font-size: 16px; display: flex; align-items: center;">
+                    <i class="fas fa-rocket" style="color: #6a11cb; margin-right: 8px;"></i>
+                    最新更新内容
+                </h4>
+                <ul style="padding-left: 20px; margin: 0 0 20px 0; list-style-type: none;">
+                    <li style="padding: 5px 0; position: relative;">
+                        <span style="position: absolute; left: -18px; color: #2575fc;">•</span>
+                        1.优化了网站的显示和交互效果
+                    </li>
+                    <li style="padding: 5px 0; position: relative;">
+                        <span style="position: absolute; left: -18px; color: #2575fc;">•</span>
+                        2.实现了邮件反馈功能
+                    </li>
+                    <li style="padding: 5px 0; position: relative;">
+                        <span style="position: absolute; left: -18px; color: #2575fc;">•</span>
+                        3.更新了AI工具和视频资源
+                    </li>
+                </ul>
+                
+                <!-- 提示信息 -->
+                <div style="background: #fff8e6; border: 1px solid #ffeeba; padding: 12px; border-radius: var(--border-radius); margin-bottom: 15px; display: flex;">
+                    <i class="fas fa-info-circle" style="color: #ffc107; margin-right: 10px; font-size: 18px;"></i>
+                    <p style="margin: 0; font-size: 14px; color: #856404;">
+                        网站将持续更新，如有失效链接或建议，欢迎使用<b style="color: #2575fc;">反馈功能</b>联系我们！
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 底部按钮优化 -->
+            <div class="modal-footer" style="border-top: 1px solid #eee; padding-top: 15px;">
+                <button onclick="closeAnnouncement()" style="background: linear-gradient(135deg, #ff8e8e 0%, #ff5252 100%); width: 100%; padding: 10px 25px;">
+                    <i class="fas fa-check" style="margin-right: 5px;"></i> 我知道了
+                </button>
             </div>
         </div>
     </div>
 
     <!-- 反馈弹窗 -->
-    <!-- 联系作者弹窗 - EmailJS版本 -->
     <div id="contact-author-modal" class="modal">
         <div class="modal-content-wrapper">
             <span class="modal-close" onclick="closeContactModal()">&times;</span>
