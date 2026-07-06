@@ -26,13 +26,14 @@ s.parentNode.insertBefore(hm, s);
 <body>
 <header class="nav-main">
 <nav id="daohang">
-<a href="#" data-target="offen-links" class="nav-link"><i class="fas fa-star"></i> 常用</a>
+<a href="#" data-target="offen-links" class="nav-link"><i class="fas fa-star"></i> 推荐</a>
 <a href="#" data-target="AI-links" class="nav-link"><i class="fas fa-robot"></i> AI</a>
 <a href="#" data-target="resources-links" class="nav-link"><i class="fas fa-box-open"></i> 资源</a>
 <a href="#" data-target="useful-links" class="nav-link"><i class="fas fa-globe"></i> 有用网</a>
 <a href="#" data-target="papers-links" class="nav-link"><i class="fas fa-file-alt"></i> 论文</a>
 <a href="#" data-target="entertainment-links" class="nav-link"><i class="fas fa-gamepad"></i> 娱乐</a>
 <a href="#" data-target="tools-links" class="nav-link"><i class="fas fa-tools"></i> 工具</a>
+<a href="#" data-target="life-links" class="nav-link"><i class="fas fa-shopping-bag"></i> 生活</a>
 </nav>
 <div class="nav-actions" aria-label="快捷操作">
 <button class="icon-button about-open" type="button" aria-label="关于本站" title="关于本站">
@@ -60,13 +61,14 @@ s.parentNode.insertBefore(hm, s);
 </button>
 </div>
 <ul>
-<li><a href="#" data-target="offen-links"><i class="fas fa-star"></i><span class="sidebar-label">常用</span></a></li>
+<li><a href="#" data-target="offen-links"><i class="fas fa-star"></i><span class="sidebar-label">推荐</span></a></li>
 <li><a href="#" data-target="AI-links"><i class="fas fa-robot"></i><span class="sidebar-label">AI</span></a></li>
 <li><a href="#" data-target="resources-links"><i class="fas fa-box-open"></i><span class="sidebar-label">资源</span></a></li>
 <li><a href="#" data-target="useful-links"><i class="fas fa-globe"></i><span class="sidebar-label">有用网</span></a></li> 
 <li><a href="#" data-target="papers-links"><i class="fas fa-file-alt"></i><span class="sidebar-label">论文</span></a></li> 
 <li><a href="#" data-target="entertainment-links"><i class="fas fa-gamepad"></i><span class="sidebar-label">娱乐</span></a></li> 
-<li><a href="#" data-target="tools-links"><i class="fas fa-tools"></i><span class="sidebar-label">工具</span></a></li> 
+<li><a href="#" data-target="tools-links"><i class="fas fa-tools"></i><span class="sidebar-label">工具</span></a></li>
+<li><a href="#" data-target="life-links"><i class="fas fa-shopping-bag"></i><span class="sidebar-label">生活</span></a></li>
 </ul>
 <div class="sidebar-tools" aria-label="底部工具">
 <button class="sidebar-tool-button about-open" type="button" aria-label="关于本站" title="关于本站">
@@ -97,15 +99,19 @@ s.parentNode.insertBefore(hm, s);
 <p>
 本站是一个集成了学术工具、AI应用、影音娱乐及常用网站的综合型导航平台。旨在提升您的工作与学习效率。
 </p>
+<p class="disclaimer">
+本站所有网站链接均来源于网络收集，仅供学习和参考。链接指向的内容均归原始权利人所有。如有侵权，请联系我们移除。
+</p>
 </div>
 <h4 class="announcement-heading">
 <i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i>
 最近更新
 </h4>
 <ul class="announcement-list about-update-list">
-<li><span>1</span> 新增了多个前沿AI大模型访问链接</li>
-<li><span>2</span> 优化了暗黑模式下的阅读体验</li>
-<li><span>3</span> 修复了部分失效的学术资源直达链接</li>
+<li><span>1</span> 新增"生活"模块：购物、生活服务、美食、金融理财</li>
+<li><span>2</span> 补充大量链接：电子书阅读、资讯阅读、开发工具、网络工具</li>
+<li><span>3</span> 新增娱乐链接：樱花动漫、风车动漫等动漫追番站点</li>
+<li><span>4</span> 新增社区子栏目：知乎、微博、豆瓣、微信网页版</li>
 </ul>
 <div class="announcement-note">
 <i class="fas fa-envelope-open-text" aria-hidden="true"></i>
@@ -137,9 +143,10 @@ s.parentNode.insertBefore(hm, s);
 7-20 更新说明
 </h4>
 <ul class="announcement-list">
-<li><span>1</span> 新增论文写作专栏</li>
-<li><span>2</span> 新版本待上线，加入了自定义布局、背景等诸多内容</li>
-<li><span>3</span> 邮件反馈功能已上线，欢迎反馈问题和建议</li>
+<li><span>1</span> 新增"生活"模块（购物/生活服务/美食/金融）</li>
+<li><span>2</span> 新增"社区""阅读""资讯""开发工具"等子栏目</li>
+<li><span>3</span> AI模块补充了更多国内外AI工具和绘图工具</li>
+<li><span>4</span> 动漫资源新增多个追番站点</li>
 </ul>
 <div class="announcement-note">
 <i class="fas fa-info-circle" aria-hidden="true"></i>
@@ -320,10 +327,10 @@ s.parentNode.insertBefore(hm, s);
 </div>
 </div>
 
-<div id="offen-links" class="column active">
+<div id="offen-links" class="column active" data-no-tabs>
 <!-- 校园相关 -->
 <div class="sub-column">
-<h3><i class="fas fa-school"></i> 我主学校</h3> 
+<h3><i class="fas fa-school"></i> 校园服务</h3> 
 <div class="card-container">
 <div class="card" data-tooltip="哈商大官网" onclick="window.open('https://www.hrbcu.edu.cn/index.htm', '_blank')"><img src="https://www.hrbcu.edu.cn/favicon.ico" alt="官网" loading="lazy" decoding="async" referrerpolicy="no-referrer">商大官网</div>
 <div class="card" data-tooltip="哈商大研究生院官网" onclick="window.open('https://yjsc.hrbcu.edu.cn/', '_blank')"><img src="https://yjsc.hrbcu.edu.cn/favicon.ico" alt="研究生院" loading="lazy" decoding="async" referrerpolicy="no-referrer">研究生学院</div>
@@ -345,85 +352,13 @@ s.parentNode.insertBefore(hm, s);
 </div>
 <!-- 个人/常用推荐 -->
 <div class="sub-column">
-<h3><i class="fas fa-user"></i> 我主私用</h3>
+<h3><i class="fas fa-user"></i> 个人推荐</h3>
 <div class="card-container">
 <div class="card" data-tooltip="各类会员，网课，租号，实物等应有尽有，价格实惠！！" onclick="window.open('https://zzfl.98qyz.top/', '_blank')"><img src="https://zzfl.98qyz.top/upload/20240829/cd004422a108219e691c60b6abbe9da6.png" alt="博客主页" loading="lazy" decoding="async" referrerpolicy="no-referrer">猪猪甄选</div>
-<div class="card" data-tooltip="刷步数，网易云，哔哩哔哩，爱奇艺，Epic" onclick="window.open('https://zzdg.dgh1.top/', '_blank')"><img src="https://zzdg.dgh1.top/favicon.ico" alt="项目作品" loading="lazy" decoding="async" referrerpolicy="no-referrer">猪猪呆瓜</div>
 <div class="card" data-tooltip="以前的学习笔记！" onclick="window.open('https://blog.csdn.net/qq_25990967', '_blank')"><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" alt="开发者专栏" loading="lazy" decoding="async" referrerpolicy="no-referrer">学习笔记</div>
-<div class="card" data-tooltip="作者自己写的AI聊天网站！！" onclick="window.open('https://zyjzhy.github.io/zz-ai/', '_blank')"><img src="https://yjsc.hrbcu.edu.cn/favicon.ico" alt="AI站点" loading="lazy" decoding="async" referrerpolicy="no-referrer">大前门AI</div>
 </div>
 </div>
 
-<div class="sub-column">
-<h3><i class="fas fa-robot"></i> 我主AI</h3>
-<div class="card-container">
-<div class="card" data-tooltip="抖音AI工具" onclick="window.open('https://www.doubao.com/', '_blank')"><img src="https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/logo_new.png" alt="豆包" loading="lazy" decoding="async" referrerpolicy="no-referrer">豆包AI</div>
-<div class="card" data-tooltip="DeepSeek" onclick="window.open('https://www.deepseek.com/', '_blank')"><img src="https://www.deepseek.com/favicon.ico" alt="DeepSeek" loading="lazy" decoding="async" referrerpolicy="no-referrer">DeepSeek</div>
-<div class="card" data-tooltip="openAI" onclick="window.open('https://openai.com/chatgpt/', '_blank')"><img src="https://ai.rcouyi.com/images/model/openai.svg" alt="ChatGPT" loading="lazy" decoding="async" referrerpolicy="no-referrer">chatgpt</div>
-<div class="card" data-tooltip="Google AI" onclick="window.open('https://gemini.google.com/app?hl=zh', '_blank')"><img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="Gemini" loading="lazy" decoding="async" referrerpolicy="no-referrer">Gemini</div>
-<div class="card" data-tooltip="阿里AI工具" onclick="window.open('https://tongyi.aliyun.com/qianwen/', '_blank')"><img src="https://img.alicdn.com/imgextra/i1/O1CN01AKUdEM1qP6BQVaYhT_!!6000000005487-2-tps-512-512.png" alt="通义千问" loading="lazy" decoding="async" referrerpolicy="no-referrer">通义千文</div>
-<div class="card" data-tooltip="百度AI工具" onclick="window.open('https://yiyan.baidu.com/', '_blank')"><img src="https://nlp-eb.cdn.bcebos.com/logo/favicon.ico" alt="文心一言" loading="lazy" decoding="async" referrerpolicy="no-referrer">文心一言</div>
-<div class="card" data-tooltip="Kimi Chat" onclick="window.open('https://kimi.moonshot.cn/', '_blank')"><img src="https://statics.moonshot.cn/kimi-chat/favicon.ico" alt="Kimi" loading="lazy" decoding="async" referrerpolicy="no-referrer">Kimi Chat</div>
-<div class="card" data-tooltip="马斯克的"地球最强AI"" onclick="window.open('https://x.com/', '_blank')"><img src="https://abs.twimg.com/responsive-web/client-web/icon-svg.ea5ff4aa.svg" alt="Grok" loading="lazy" decoding="async" referrerpolicy="no-referrer">Grok3</div>
-</div>
-</div>
-
-<div class="sub-column">
-<h3><i class="fas fa-book"></i> 我主学习</h3>
-<div class="card-container">
-<div class="card" data-tooltip="全国大学四六级考试" onclick="window.open('https://cet.neea.edu.cn/', '_blank')"><img src="https://cet.neea.edu.cn/favicon.ico" alt="四六级官网" loading="lazy" decoding="async" referrerpolicy="no-referrer">四六级考试</div>
-<div class="card" data-tooltip="中国研究生招生信息网" onclick="window.open('https://yz.chsi.com.cn/', '_blank')"><img src="https://yz.chsi.com.cn/favicon.ico" alt="研招网" loading="lazy" decoding="async" referrerpolicy="no-referrer">研招网</div>
-<div class="card" data-tooltip="国家公务员局" onclick="window.open('http://www.scs.gov.cn/', '_blank')">国家公务员局</div>
-<div class="card" data-tooltip="吾爱破解,破解论坛,破解软件,软件论坛,病毒分析,脱壳破解,安卓破解,加密解密,软件安全" onclick="window.open('https://www.52pojie.cn/', '_blank')"><img src="https://www.52pojie.cn/favicon.ico" alt="吾爱破解" loading="lazy" decoding="async" referrerpolicy="no-referrer">吾爱破解</div>
-<div class="card" data-tooltip="世界最大的开源代码共享社区" onclick="window.open('https://github.com/', '_blank')"><img src="https://github.com/favicon.ico" alt="GitHub" loading="lazy" decoding="async" referrerpolicy="no-referrer">GitHub</div>
-<div class="card" data-tooltip="中国最大的技术社区" onclick="window.open('https://www.csdn.net/', '_blank')"><img src="https://www.csdn.net/favicon.ico" alt="CSDN" loading="lazy" decoding="async" referrerpolicy="no-referrer">CSDN</div>
-</div>
-</div>
-
-<!-- 论文模块 -->
-<div class="sub-column">
-<h3><i class="fas fa-file-alt"></i> 论文</h3>
-<div class="card-container">
-<div class="card" data-tooltip="中国知网" onclick="window.open('https://www.cnki.net/', '_blank')"><img src="https://www.cnki.net/favicon.ico" alt="知网" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国知网</div>
-<div class="card" data-tooltip="谷歌学术" onclick="window.open('https://scholar.google.com/', '_blank')"><img src="https://i.postimg.cc/2S5TH6jd/image.png" alt="谷歌学术" loading="lazy" decoding="async" referrerpolicy="no-referrer">谷歌学术</div>
-<div class="card" data-tooltip="DOI查询外文文献电子书学术论文资源免费下载" onclick="window.open('https://www.sci-hub.ren/', '_blank')"><img src="https://www.sci-hub.ren/favicon.ico" alt="Sci-Hub" loading="lazy" decoding="async" referrerpolicy="no-referrer">Sci-Hub</div>
-<div class="card" data-tooltip="Google翻译" onclick="window.open('https://translate.google.com/', '_blank')"><img src="https://i.postimg.cc/3NbtMqPk/2a01f2ff2390339349b75d78adb7d2b.png" alt="Google翻译" loading="lazy" decoding="async" referrerpolicy="no-referrer">Google翻译</div>
-<div class="card" data-tooltip="Deepl翻译" onclick="window.open('https://www.deepl.com/', '_blank')"><img src="https://www.deepl.com/favicon.ico" alt="Deepl" loading="lazy" decoding="async" referrerpolicy="no-referrer">Deepl翻译</div>
-<div class="card" data-tooltip="每天11:11-11:22全版本查重限时免费" onclick="window.open('https://www.paperyy.com/', '_blank')"><img src="https://www.paperyy.com/favicon.ico" alt="paperyy" loading="lazy" decoding="async" referrerpolicy="no-referrer">paperyy</div>
-<div class="card" data-tooltip="1.5/千字" onclick="window.open('https://cx.cnki.net/main.html#/login', '_blank')"><img src="https://cx.cnki.net/favicon.ico" alt="知网入口" loading="lazy" decoding="async" referrerpolicy="no-referrer">知网检测</div>
-<div class="card" data-tooltip="毕业生免费一次" onclick="window.open('https://www.chsi.com.cn/', '_blank')"><img src="https://www.chsi.com.cn/favicon.ico" alt="学信网" loading="lazy" decoding="async" referrerpolicy="no-referrer">学信网</div>
-</div>
-</div>
-
-<!-- 娱乐模块 -->
-<div class="sub-column">
-<h3><i class="fas fa-gamepad"></i> 娱乐</h3>
-<div class="card-container">
-<div class="card" data-tooltip="微博热搜" onclick="window.open('https://tophub.today/n/KqndgxeLl9', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/s.weibo.com.png_160x160.png" alt="微博热搜" loading="lazy" decoding="async" referrerpolicy="no-referrer">微博热搜</div>
-<div class="card" data-tooltip="百度热搜" onclick="window.open('https://top.baidu.com/board', '_blank')"><img src="https://www.baidu.com/img/baidu_85beaf5496f291521eb75ba38eacbd87.svg" alt="百度热搜" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度热搜</div>
-<div class="card" data-tooltip="哔哩哔哩 (゜-゜)つロ 乾杯~" onclick="window.open('https://www.bilibili.com/', '_blank')"><img src="https://www.bilibili.com/favicon.ico" alt="B站" loading="lazy" decoding="async" referrerpolicy="no-referrer">哔哩哔哩</div>
-<div class="card" data-tooltip="抖音短视频" onclick="window.open('https://www.douyin.com/', '_blank')"><img src="https://www.douyin.com/favicon.ico" alt="抖音" loading="lazy" decoding="async" referrerpolicy="no-referrer">抖音</div>
-<div class="card" data-tooltip="腾讯视频" onclick="window.open('https://v.qq.com/', '_blank')"><img src="https://v.qq.com/favicon.ico" alt="腾讯视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯视频</div>
-<div class="card" data-tooltip="爱奇艺视频" onclick="window.open('https://www.iqiyi.com/', '_blank')"><img src="https://www.iqiyi.com/favicon.ico" alt="爱奇艺" loading="lazy" decoding="async" referrerpolicy="no-referrer">爱奇艺</div>
-<div class="card" data-tooltip="网易云音乐官网" onclick="window.open('https://music.163.com/', '_blank')"><img src="https://s1.music.126.net/style/favicon.ico?v20180823" alt="网易云" loading="lazy" decoding="async" referrerpolicy="no-referrer">网易云音乐</div>
-<div class="card" data-tooltip="QQ音乐网页版" onclick="window.open('https://y.qq.com/', '_blank')"><img src="https://y.qq.com/favicon.ico" alt="QQ音乐" loading="lazy" decoding="async" referrerpolicy="no-referrer">QQ音乐</div>
-</div>
-</div>
-
-<!-- 工具模块 -->
-<div class="sub-column">
-<h3><i class="fas fa-tools"></i> 工具</h3>
-<div class="card-container">
-<div class="card" data-tooltip="在线logo设计" onclick="window.open('https://www.uugai.com/', '_blank')"><img src="https://www.uugai.com/favicon.ico" alt="Logo设计" loading="lazy" decoding="async" referrerpolicy="no-referrer">在线logo设计</div>
-<div class="card" data-tooltip="在线思维导图" onclick="window.open('https://zhimap.com/home', '_blank')"><img src="https://zhimap.com/favicon.ico" alt="思维导图" loading="lazy" decoding="async" referrerpolicy="no-referrer">在线思维导图</div>
-<div class="card" data-tooltip="问卷星" onclick="window.open('https://www.wjx.cn/', '_blank')"><img src="https://image.wjx.cn/images/wlogo.png" alt="问卷星" loading="lazy" decoding="async" referrerpolicy="no-referrer">问卷星</div>
-<div class="card" data-tooltip="表格格式转换" onclick="window.open('https://tableconvert.com/', '_blank')"><img src="https://tableconvert.com/favicon.ico" alt="格式转换" loading="lazy" decoding="async" referrerpolicy="no-referrer">表格格式转换</div>
-<div class="card" data-tooltip="PDF、CAJ格式免费文档转换" onclick="window.open('https://app.xunjiepdf.com/', '_blank')"><img src="https://app.xunjiepdf.com/favicon.ico" alt="迅捷PDF" loading="lazy" decoding="async" referrerpolicy="no-referrer">迅捷pdf转换</div>
-<div class="card" data-tooltip="Canva可画在线设计" onclick="window.open('https://www.canva.cn/', '_blank')"><img src="https://www.canva.cn/favicon.ico" alt="Canva" loading="lazy" decoding="async" referrerpolicy="no-referrer">Canva可画</div>
-<div class="card" data-tooltip="图片背景消除" onclick="window.open('https://www.remove.bg/zh', '_blank')"><img src="https://www.remove.bg/favicon-32x32.png?v=fc0bfce6e1310f1539afec9729716721" alt="智能抠图" loading="lazy" decoding="async" referrerpolicy="no-referrer">图片背景消除</div>
-<div class="card" data-tooltip="短视频/图集在线去水印解析" onclick="window.open('https://watermark.liumingye.cn/', '_blank')"><img src="https://watermark.liumingye.cn/favicon.png" alt="去水印" loading="lazy" decoding="async" referrerpolicy="no-referrer">短视频去水印</div>
-</div>
-</div>
 </div>
 
 <div id="AI-links" class="column">
@@ -475,6 +410,16 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="AI英语语法和拼写检查" onclick="window.open('https://www.grammarly.com/', '_blank')"><img src="https://static-web.grammarly.com/cms/master/public/favicon.ico" alt="Grammarly" loading="lazy" decoding="async" referrerpolicy="no-referrer">Grammarly</div>
 <div class="card" data-tooltip="Napkin AI - The visual AI for business storytelling" onclick="window.open('https://www.napkin.ai', '_blank')"><img src="https://www.napkin.ai/favicon-32x32.png?v=2" alt="Napkin" loading="lazy" decoding="async" referrerpolicy="no-referrer">Napkin</div>
 <div class="card" data-tooltip="AI英德写作润色" onclick="window.open('https://quillbot.com/', '_blank')"><img src="https://quillbot.com/favicon.ico" alt="QuillBot" loading="lazy" decoding="async" referrerpolicy="no-referrer">QuillBot</div>
+<div class="card" data-tooltip="AI图片生成和编辑平台" onclick="window.open('https://playground.com/', '_blank')"><img src="https://playground.com/favicon.ico" alt="Playground" loading="lazy" decoding="async" referrerpolicy="no-referrer">Playground AI</div>
+<div class="card" data-tooltip="AI图片处理工具，支持抠图、放大、清理背景等" onclick="window.open('https://magicstudio.com/', '_blank')"><img src="https://magicstudio.com/favicon.ico" alt="Magic Studio" loading="lazy" decoding="async" referrerpolicy="no-referrer">Magic Studio</div>
+<div class="card" data-tooltip="开放式AI生成接口和图片生成工具" onclick="window.open('https://pollinations.ai/', '_blank')"><img src="https://pollinations.ai/favicon.ico" alt="Pollinations" loading="lazy" decoding="async" referrerpolicy="no-referrer">Pollinations</div>
+<div class="card" data-tooltip="Leonardo.ai - AI艺术创作平台" onclick="window.open('https://leonardo.ai/', '_blank')"><img src="https://leonardo.ai/favicon.ico" alt="Leonardo" loading="lazy" decoding="async" referrerpolicy="no-referrer">Leonardo AI</div>
+<div class="card" data-tooltip="Stable Diffusion Online - AI图像生成" onclick="window.open('https://stablediffusionweb.com/', '_blank')"><img src="https://stablediffusionweb.com/favicon.ico" alt="Stable Diffusion" loading="lazy" decoding="async" referrerpolicy="no-referrer">Stable Diffusion</div>
+<div class="card" data-tooltip="Adobe Firefly - 创意生成式AI" onclick="window.open('https://firefly.adobe.com/', '_blank')"><img src="https://firefly.adobe.com/favicon.ico" alt="Firefly" loading="lazy" decoding="async" referrerpolicy="no-referrer">Adobe Firefly</div>
+<div class="card" data-tooltip="Perplexity AI - AI搜索引擎" onclick="window.open('https://www.perplexity.ai/', '_blank')"><img src="https://www.perplexity.ai/favicon.ico" alt="Perplexity" loading="lazy" decoding="async" referrerpolicy="no-referrer">Perplexity</div>
+<div class="card" data-tooltip="Suno AI - AI音乐生成" onclick="window.open('https://suno.com/', '_blank')"><img src="https://suno.com/favicon.ico" alt="Suno" loading="lazy" decoding="async" referrerpolicy="no-referrer">Suno AI</div>
+<div class="card" data-tooltip="ElevenLabs - AI语音合成" onclick="window.open('https://elevenlabs.io/', '_blank')"><img src="https://elevenlabs.io/favicon.ico" alt="ElevenLabs" loading="lazy" decoding="async" referrerpolicy="no-referrer">ElevenLabs</div>
+<div class="card" data-tooltip="Hugging Face - AI模型社区" onclick="window.open('https://huggingface.co/', '_blank')"><img src="https://huggingface.co/favicon.ico" alt="HuggingFace" loading="lazy" decoding="async" referrerpolicy="no-referrer">Hugging Face</div>
 </div>
 </div>
 </div>
@@ -506,9 +451,18 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="好用的阿里云盘搜索，更新快、失效少" onclick="window.open('https://upyunso.com/#pan666.cn', '_blank')"><img src="https://cdn.tkk78.com/upyunso/web_static/static/img/upso_mlogo.png" alt="搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">UP云搜</div>
 <div class="card" data-tooltip="网盘资源搜索" onclick="window.open('http://feiyu100.cn/', '_blank')"><img src="http://feiyu100.cn/images/favicon.ico" alt="搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">飞鱼盘搜</div>
 <div class="card" data-tooltip="网盘资源搜索" onclick="window.open('https://www.pansoso.com/', '_blank')">盘搜搜</div>
+<div class="card" data-tooltip="盘他 - 网盘资源搜索引擎" onclick="window.open('https://www.pantaa.com/', '_blank')"><img src="https://www.pantaa.com/favicon.ico" alt="盘他" loading="lazy" decoding="async" referrerpolicy="no-referrer">盘他</div>
+<div class="card" data-tooltip="盘么么 - 网盘资源搜索" onclick="window.open('https://www.panmeme.com/', '_blank')"><img src="https://www.panmeme.com/favicon.ico" alt="盘么么" loading="lazy" decoding="async" referrerpolicy="no-referrer">盘么么</div>
+<div class="card" data-tooltip="小不点搜索 - 网盘资源搜索引擎" onclick="window.open('https://www.xiaobudian.cc/', '_blank')"><img src="https://www.xiaobudian.cc/favicon.ico" alt="小不点搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">小不点搜索</div>
 <div class="card" data-tooltip="网盘资源搜索" onclick="window.open('https://www.xiaomapan.com/', '_blank')"><img src="https://www.xiaomapan.com/favicon.ico" alt="搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">小马盘</div>
 <div class="card" data-tooltip="阿里云盘、百度网盘、夸克网盘、迅雷云盘四大网盘免费搜索！" onclick="window.open('https://yiso.fun/', '_blank')"><img src="https://yiso.fun/favicon.ico" alt="搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">易搜</div>
 <div class="card" data-tooltip="聚合搜索多个网盘资源" onclick="window.open('https://jujuso.com/', '_blank')"><img src="https://jujuso.com/favicon.ico" alt="搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">优聚搜</div>
+<div class="card" data-tooltip="百度网盘资源搜索引擎" onclick="window.open('https://www.dalipan.com/', '_blank')"><img src="https://www.dalipan.com/favicon.ico" alt="大力盘" loading="lazy" decoding="async" referrerpolicy="no-referrer">大力盘</div>
+<div class="card" data-tooltip="支持多种网盘的聚合资源搜索" onclick="window.open('https://pan.qianfan.app/', '_blank')"><img src="https://pan.qianfan.app/favicon.ico" alt="千帆搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">千帆搜索</div>
+<div class="card" data-tooltip="百度网盘官方入口" onclick="window.open('https://pan.baidu.com/', '_blank')"><img src="https://nd-static.bdstatic.com/m-static/v20-main/favicon-main.ico" alt="百度网盘" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度网盘</div>
+<div class="card" data-tooltip="阿里云盘官方入口" onclick="window.open('https://www.aliyundrive.com/', '_blank')"><img src="https://www.aliyundrive.com/favicon.ico" alt="阿里云盘" loading="lazy" decoding="async" referrerpolicy="no-referrer">阿里云盘</div>
+<div class="card" data-tooltip="夸克网盘官方入口" onclick="window.open('https://pan.quark.cn/', '_blank')"><img src="https://pan.quark.cn/favicon.ico" alt="夸克网盘" loading="lazy" decoding="async" referrerpolicy="no-referrer">夸克网盘</div>
+<div class="card" data-tooltip="迅雷云盘官方入口" onclick="window.open('https://pan.xunlei.com/', '_blank')"><img src="https://pan.xunlei.com/favicon.ico" alt="迅雷云盘" loading="lazy" decoding="async" referrerpolicy="no-referrer">迅雷云盘</div>
 </div>
 </div>
 
@@ -555,9 +509,32 @@ s.parentNode.insertBefore(hm, s);
 </div>
 
 <div id="useful-links" class="column">
-<!-- 比赛类 -->
+<!-- 编程社区 -->
 <div class="sub-column">
-<h3><i class="fas fa-trophy"></i> 考试/比赛类</h3>
+<h3><i class="fas fa-code"></i> 编程社区</h3>
+<div class="card-container">
+<div class="card" data-tooltip="吾爱破解,破解论坛,破解软件,软件论坛,病毒分析,脱壳破解,安卓破解,加密解密,软件安全" onclick="window.open('https://www.52pojie.cn/', '_blank')"><img src="https://www.52pojie.cn/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">吾爱破解</div>
+<div class="card" data-tooltip="开发者的网上家园" onclick="window.open('https://www.cnblogs.com/', '_blank')"><img src="https://www.cnblogs.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">博客园</div>
+<div class="card" data-tooltip="中国最大的技术社区" onclick="window.open('https://www.csdn.net/', '_blank')"><img src="https://www.csdn.net/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">CSDN</div>
+<div class="card" data-tooltip="一个帮助开发者成长的社区" onclick="window.open('https://juejin.cn/', '_blank')"><img src="https://lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/static/favicons/favicon-32x32.png" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">掘金</div>
+<div class="card" data-tooltip="中国领先的IT技术网站" onclick="window.open('https://www.51cto.com/', '_blank')"><img src="https://www.51cto.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">51CTO</div>
+<div class="card" data-tooltip="各类代码简单教程" onclick="window.open('https://www.runoob.com/', '_blank')"><img src="https://www.runoob.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">菜鸟教程</div>
+<div class="card" data-tooltip="通俗易懂的AI教程" onclick="window.open('https://www.captainai.net/', '_blank')"><img src="https://www.captainai.net/wp-content/uploads/2018/11/cropped-1_jiangjunshow-32x32.png" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">人工智能教程</div>
+<div class="card" data-tooltip="中国最大的开源代码共享社区" onclick="window.open('https://gitee.com/', '_blank')"><img src="https://gitee.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">Gitee</div>
+<div class="card" data-tooltip="世界最大的开源代码共享社区" onclick="window.open('https://github.com/', '_blank')"><img src="https://github.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">GitHub</div>
+<div class="card" data-tooltip="全球开发者问答社区，适合查编程问题" onclick="window.open('https://stackoverflow.com/', '_blank')"><img src="https://stackoverflow.com/favicon.ico" alt="Stack Overflow" loading="lazy" decoding="async" referrerpolicy="no-referrer">Stack Overflow</div>
+<div class="card" data-tooltip="中文开发者问答与技术社区" onclick="window.open('https://segmentfault.com/', '_blank')"><img src="https://segmentfault.com/favicon.ico" alt="SegmentFault" loading="lazy" decoding="async" referrerpolicy="no-referrer">SegmentFault</div>
+<div class="card" data-tooltip="在线前端代码编辑和作品展示平台" onclick="window.open('https://codepen.io/', '_blank')"><img src="https://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-Black-Large.png" alt="CodePen" loading="lazy" decoding="async" referrerpolicy="no-referrer">CodePen</div>
+<div class="card" data-tooltip="Visual Studio Code 官方下载和插件入口" onclick="window.open('https://code.visualstudio.com/', '_blank')"><img src="https://code.visualstudio.com/favicon.ico" alt="VS Code" loading="lazy" decoding="async" referrerpolicy="no-referrer">VS Code</div>
+<div class="card" data-tooltip="TypeScript 官方文档和在线练习场" onclick="window.open('https://www.typescriptlang.org/', '_blank')"><img src="https://www.typescriptlang.org/favicon-32x32.png" alt="TypeScript" loading="lazy" decoding="async" referrerpolicy="no-referrer">TypeScript</div>
+<div class="card" data-tooltip="React 官方文档" onclick="window.open('https://react.dev/', '_blank')"><img src="https://react.dev/favicon.ico" alt="React" loading="lazy" decoding="async" referrerpolicy="no-referrer">React</div>
+<div class="card" data-tooltip="Vue.js 官方文档" onclick="window.open('https://vuejs.org/', '_blank')"><img src="https://vuejs.org/logo.svg" alt="Vue" loading="lazy" decoding="async" referrerpolicy="no-referrer">Vue.js</div>
+<div class="card" data-tooltip="Ant Design 企业级 UI 设计体系和 React 组件库" onclick="window.open('https://ant.design/', '_blank')"><img src="https://gw.alipayobjects.com/zos/rmsportal/UTjFYEzMSYVwzxIGVhMu.png" alt="Ant Design" loading="lazy" decoding="async" referrerpolicy="no-referrer">Ant Design</div>
+</div>
+</div>
+<!-- 考试/学习类 -->
+<div class="sub-column">
+<h3><i class="fas fa-graduation-cap"></i> 考试/学习类</h3>
 <div class="card-container">
 <div class="card" data-tooltip="中国商业统计学会" onclick="window.open('http://www.china-cssc.org/', '_blank')">中国商业统计学会</div>
 <div class="card" data-tooltip="全国大学生统计建模大赛官网" onclick="window.open('http://tjjmds.ai-learning.net', '_blank')"><img src="http://tjjmds.ai-learning.net/u/cms/tjjmds/202203/02064129sldb.ico" alt="考试" loading="lazy" decoding="async" referrerpolicy="no-referrer">统计建模大赛官网</div>
@@ -565,12 +542,6 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="中国研究生招生信息网" onclick="window.open('https://yz.chsi.com.cn/', '_blank')"><img src="https://yz.chsi.com.cn/favicon.ico" alt="考试" loading="lazy" decoding="async" referrerpolicy="no-referrer">研招网</div>
 <div class="card" data-tooltip="国家公务员局" onclick="window.open('http://www.scs.gov.cn/', '_blank')">国家公务员局</div>
 <div class="card" data-tooltip="全国大学生竞赛活动平台，汇聚高含金量比赛信息，提供专业报名系统和赛事服务" onclick="window.open('https://www.saikr.com/', '_blank')"><img src="https://www.saikr.com/favicon.ico" alt="考试" loading="lazy" decoding="async" referrerpolicy="no-referrer">赛氪</div>
-</div>
-</div>
-<!-- 学习类 -->
-<div class="sub-column">
-<h3><i class="fas fa-book-open"></i> 学习类</h3>
-<div class="card-container">
 <div class="card" data-tooltip="涵盖国考及各省市的真题，是备考公务员考试的考生们的重要学习平台" onclick="window.open('https://www.chinagwy.org/html/stzx/index.html', '_blank')">公务员真题网</div>
 <div class="card" data-tooltip="人体 3D 解剖在线学习网站" onclick="window.open('https://www.zygotebody.com/', '_blank')"><img src="https://www.zygotebody.com/favicon.ico" alt="学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">Zygote Body</div>
 <div class="card" data-tooltip="全面英语学习网站" onclick="window.open('https://wordforest.cn', '_blank')"><img src="https://wordforest.cn/static/images/logo.ico" alt="学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">单词森林</div>
@@ -583,22 +554,11 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="免费编程学习网站" onclick="window.open('http://www.codebaoku.com/', '_blank')"><img src="http://www.codebaoku.com/favicon.ico" alt="学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">编程宝库</div>
 <div class="card" data-tooltip="CodeCamp在线编程实战_w3cschool" onclick="window.open('https://www.w3cschool.cn/', '_blank')"><img src="https://www.w3cschool.cn/favicon.ico" alt="学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">w3cschool</div>
 <div class="card" data-tooltip="海量技术面试题库，拥有算法、数据结构、系统设计等 1000+题目，帮助你高效提升编程技能，轻松拿下世界 IT 名企 Dream Offer。" onclick="window.open('https://leetcode.cn/', '_blank')"><img src="https://leetcode.cn/favicon.ico" alt="学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">力扣</div>
-</div>
-</div>
-
-<!-- 编程类 -->
-<div class="sub-column">
-<h3><i class="fas fa-code"></i> 编程类</h3>
-<div class="card-container">
-<div class="card" data-tooltip="吾爱破解,破解论坛,破解软件,软件论坛,病毒分析,脱壳破解,安卓破解,加密解密,软件安全" onclick="window.open('https://www.52pojie.cn/', '_blank')"><img src="https://www.52pojie.cn/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">吾爱破解</div>
-<div class="card" data-tooltip="开发者的网上家园" onclick="window.open('https://www.cnblogs.com/', '_blank')"><img src="https://www.cnblogs.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">博客园</div>
-<div class="card" data-tooltip="中国最大的技术社区" onclick="window.open('https://www.csdn.net/', '_blank')"><img src="https://www.csdn.net/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">CSDN</div>
-<div class="card" data-tooltip="一个帮助开发者成长的社区" onclick="window.open('https://juejin.cn/', '_blank')"><img src="https://lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/static/favicons/favicon-32x32.png" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">掘金</div>
-<div class="card" data-tooltip="中国领先的IT技术网站" onclick="window.open('https://www.51cto.com/', '_blank')"><img src="https://www.51cto.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">51CTO</div>
-<div class="card" data-tooltip="各类代码简单教程" onclick="window.open('https://www.runoob.com/', '_blank')"><img src="https://www.runoob.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">菜鸟教程</div>
-<div class="card" data-tooltip="通俗易懂的AI教程" onclick="window.open('https://www.captainai.net/', '_blank')"><img src="https://www.captainai.net/wp-content/uploads/2018/11/cropped-1_jiangjunshow-32x32.png" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">人工智能教程</div>
-<div class="card" data-tooltip="中国最大的开源代码共享社区" onclick="window.open('https://gitee.com/', '_blank')"><img src="https://gitee.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">Gitee</div>
-<div class="card" data-tooltip="世界最大的开源代码共享社区" onclick="window.open('https://github.com/', '_blank')"><img src="https://github.com/favicon.ico" alt="编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">GitHub</div>
+<div class="card" data-tooltip="扇贝英语学习平台，背单词、听力和阅读训练" onclick="window.open('https://web.shanbay.com/', '_blank')"><img src="https://web.shanbay.com/favicon.ico" alt="扇贝" loading="lazy" decoding="async" referrerpolicy="no-referrer">扇贝</div>
+<div class="card" data-tooltip="英语学习资讯、四六级、考研英语和口语资料" onclick="window.open('https://www.hjenglish.com/', '_blank')"><img src="https://www.hjenglish.com/favicon.ico" alt="沪江英语" loading="lazy" decoding="async" referrerpolicy="no-referrer">沪江英语</div>
+<div class="card" data-tooltip="英语听力材料和考试听力训练" onclick="window.open('https://www.tingclass.net/', '_blank')"><img src="https://www.tingclass.net/favicon.ico" alt="听力课堂" loading="lazy" decoding="async" referrerpolicy="no-referrer">听力课堂</div>
+<div class="card" data-tooltip="英语听力、口语、考试和双语阅读学习网站" onclick="window.open('https://www.kekenet.com/', '_blank')"><img src="https://www.kekenet.com/favicon.ico" alt="可可英语" loading="lazy" decoding="async" referrerpolicy="no-referrer">可可英语</div>
+<div class="card" data-tooltip="教育部高校招生阳光工程指定信息发布平台" onclick="window.open('https://gaokao.chsi.com.cn/', '_blank')"><img src="https://gaokao.chsi.com.cn/favicon.ico" alt="阳光高考" loading="lazy" decoding="async" referrerpolicy="no-referrer">阳光高考</div>
 </div>
 </div>
 
@@ -614,6 +574,57 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="国聘行动为全国用户服务" onclick="window.open('https://www.iguopin.com/', '_blank')"><img src="https://www.iguopin.com/favicon.ico" alt="招聘" loading="lazy" decoding="async" referrerpolicy="no-referrer">国聘</div>
 <div class="card" data-tooltip="互联网行业找工作就上拉勾招聘" onclick="window.open('https://www.lagou.com/', '_blank')"><img src="https://www.lagou.com/favicon.ico" alt="招聘" loading="lazy" decoding="async" referrerpolicy="no-referrer">拉勾招聘</div>
 <div class="card" data-tooltip="实习僧,专注实习,校招的校园招聘平台" onclick="window.open('https://www.shixiseng.com/', '_blank')"><img src="https://sxsimg.xiaoyuanzhao.com/static/img/favicon.ico" alt="招聘" loading="lazy" decoding="async" referrerpolicy="no-referrer">实习僧</div>
+</div>
+</div>
+
+<!-- 社区 -->
+<div class="sub-column">
+<h3><i class="fas fa-users"></i> 社区</h3>
+<div class="card-container">
+<div class="card" data-tooltip="知乎 - 有问题，上知乎" onclick="window.open('https://www.zhihu.com/', '_blank')"><img src="https://www.zhihu.com/favicon.ico" alt="知乎" loading="lazy" decoding="async" referrerpolicy="no-referrer">知乎</div>
+<div class="card" data-tooltip="微博 - 随时随地发现新鲜事" onclick="window.open('https://weibo.com/', '_blank')"><img src="https://weibo.com/favicon.ico" alt="微博" loading="lazy" decoding="async" referrerpolicy="no-referrer">微博</div>
+<div class="card" data-tooltip="豆瓣 - 发现好书、好电影、好音乐" onclick="window.open('https://www.douban.com/', '_blank')"><img src="https://www.douban.com/favicon.ico" alt="豆瓣" loading="lazy" decoding="async" referrerpolicy="no-referrer">豆瓣</div>
+<div class="card" data-tooltip="微信网页版 - 扫码登录" onclick="window.open('https://wx.qq.com/', '_blank')"><img src="https://wx.qq.com/favicon.ico" alt="微信" loading="lazy" decoding="async" referrerpolicy="no-referrer">微信网页版</div>
+</div>
+</div>
+
+<!-- 电子书/阅读 -->
+<div class="sub-column">
+<h3><i class="fas fa-book-reader"></i> 电子书/阅读</h3>
+<div class="card-container">
+<div class="card" data-tooltip="微信读书 - 让阅读不再孤单" onclick="window.open('https://weread.qq.com/', '_blank')"><img src="https://weread.qq.com/favicon.ico" alt="微信读书" loading="lazy" decoding="async" referrerpolicy="no-referrer">微信读书</div>
+<div class="card" data-tooltip="当当云阅读 - 电子书在线阅读" onclick="window.open('http://e.dangdang.com/', '_blank')"><img src="http://e.dangdang.com/favicon.ico" alt="当当云阅读" loading="lazy" decoding="async" referrerpolicy="no-referrer">当当云阅读</div>
+<div class="card" data-tooltip="网易蜗牛读书 - 每天免费读书一小时" onclick="window.open('https://du.163.com/', '_blank')"><img src="https://du.163.com/favicon.ico" alt="蜗牛读书" loading="lazy" decoding="async" referrerpolicy="no-referrer">蜗牛读书</div>
+<div class="card" data-tooltip="藏书馆 - 海量电子书免费借阅" onclick="window.open('https://www.csslib.com/', '_blank')"><img src="https://www.csslib.com/favicon.ico" alt="藏书馆" loading="lazy" decoding="async" referrerpolicy="no-referrer">藏书馆</div>
+<div class="card" data-tooltip="鸠摩搜书 - 电子书搜索引擎" onclick="window.open('https://www.jiumodiary.com/', '_blank')"><img src="https://www.jiumodiary.com/favicon.ico" alt="鸠摩搜书" loading="lazy" decoding="async" referrerpolicy="no-referrer">鸠摩搜书</div>
+<div class="card" data-tooltip="好读 - 优质电子书分享网站" onclick="window.open('https://www.haodoo.net/', '_blank')"><img src="https://www.haodoo.net/favicon.ico" alt="好读" loading="lazy" decoding="async" referrerpolicy="no-referrer">好读网</div>
+<div class="card" data-tooltip="国学大师 - 古籍文献在线阅读" onclick="window.open('http://www.guoxuedashi.net/', '_blank')"><img src="http://www.guoxuedashi.net/favicon.ico" alt="国学大师" loading="lazy" decoding="async" referrerpolicy="no-referrer">国学大师</div>
+<div class="card" data-tooltip":"书格 - 古籍数字化图书馆" onclick="window.open('https://new.shuge.org/', '_blank')"><img src="https://new.shuge.org/favicon.ico" alt="书格" loading="lazy" decoding="async" referrerpolicy="no-referrer">书格古籍</div>
+</div>
+</div>
+
+<!-- 资讯阅读 -->
+<div class="sub-column">
+<h3><i class="fas fa-newspaper"></i> 资讯阅读</h3>
+<div class="card-container">
+<div class="card" data-tooltip="36氪 - 让一部分人先看到未来" onclick="window.open('https://36kr.com/', '_blank')"><img src="https://36kr.com/favicon.ico" alt="36氪" loading="lazy" decoding="async" referrerpolicy="no-referrer">36氪</div>
+<div class="card" data-tooltip="虎嗅 - 聚合优质的创新信息与人群" onclick="window.open('https://www.huxiu.com/', '_blank')"><img src="https://www.huxiu.com/favicon.ico" alt="虎嗅" loading="lazy" decoding="async" referrerpolicy="no-referrer">虎嗅</div>
+<div class="card" data-tooltip="澎湃新闻 - 专注时政与思想的媒体平台" onclick="window.open('https://www.thepaper.cn/', '_blank')"><img src="https://www.thepaper.cn/favicon.ico" alt="澎湃新闻" loading="lazy" decoding="async" referrerpolicy="no-referrer">澎湃新闻</div>
+<div class="card" data-tooltip="今日头条 - 你关心的才是头条" onclick="window.open('https://www.toutiao.com/', '_blank')"><img src="https://www.toutiao.com/favicon.ico" alt="今日头条" loading="lazy" decoding="async" referrerpolicy="no-referrer">今日头条</div>
+<div class="card" data-tooltip="网易新闻 - 有态度的新闻门户" onclick="window.open('https://news.163.com/', '_blank')"><img src="https://news.163.com/favicon.ico" alt="网易新闻" loading="lazy" decoding="async" referrerpolicy="no-referrer">网易新闻</div>
+<div class="card" data-tooltip="新浪新闻 - 新闻资讯门户" onclick="window.open('https://news.sina.com.cn/', '_blank')"><img src="https://news.sina.com.cn/favicon.ico" alt="新浪新闻" loading="lazy" decoding="async" referrerpolicy="no-referrer">新浪新闻</div>
+<div class="card" data-tooltip="环球网 - 中国领先的国际资讯门户" onclick="window.open('https://www.huanqiu.com/', '_blank')"><img src="https://www.huanqiu.com/favicon.ico" alt="环球网" loading="lazy" decoding="async" referrerpolicy="no-referrer">环球网</div>
+<div class="card" data-tooltip="观察者网 - 致力于荟萃中外思想者精华" onclick="window.open('https://www.guancha.cn/', '_blank')"><img src="https://www.guancha.cn/favicon.ico" alt="观察者网" loading="lazy" decoding="async" referrerpolicy="no-referrer">观察者网</div>
+<div class="card" data-tooltip="ZAKER - 传递价值资讯" onclick="window.open('https://www.zaker.cn/', '_blank')"><img src="https://www.zaker.cn/favicon.ico" alt="ZAKER" loading="lazy" decoding="async" referrerpolicy="no-referrer">ZAKER</div>
+<div class="card" data-tooltip="IT之家 - IT业界资讯门户" onclick="window.open('https://www.ithome.com/', '_blank')"><img src="https://www.ithome.com/favicon.ico" alt="IT之家" loading="lazy" decoding="async" referrerpolicy="no-referrer">IT之家</div>
+<div class="card" data-tooltip="少数派 - 高效工作品质生活" onclick="window.open('https://sspai.com/', '_blank')"><img src="https://sspai.com/favicon.ico" alt="少数派" loading="lazy" decoding="async" referrerpolicy="no-referrer">少数派</div>
+<div class="card" data-tooltip="Solidot - 奇客的资讯，重要的东西" onclick="window.open('https://www.solidot.org/', '_blank')"><img src="https://www.solidot.org/favicon.ico" alt="Solidot" loading="lazy" decoding="async" referrerpolicy="no-referrer">Solidot</div>
+<div class="card" data-tooltip="微博热搜" onclick="window.open('https://tophub.today/n/KqndgxeLl9', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/s.weibo.com.png_160x160.png" alt="微博热搜" loading="lazy" decoding="async" referrerpolicy="no-referrer">微博热搜</div>
+<div class="card" data-tooltip="百度热搜" onclick="window.open('https://top.baidu.com/board', '_blank')"><img src="https://www.baidu.com/img/baidu_85beaf5496f291521eb75ba38eacbd87.svg" alt="百度热搜" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度热搜</div>
+<div class="card" data-tooltip="知乎热搜" onclick="window.open('https://tophub.today/n/mproPpoq6O', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/zhihu.com.png_160x160.png" alt="知乎热搜" loading="lazy" decoding="async" referrerpolicy="no-referrer">知乎热搜</div>
+<div class="card" data-tooltip="微信热搜" onclick="window.open('https://tophub.today/n/WnBe01o371', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/mp.weixin.qq.com.png_160x160.png" alt="微信热门" loading="lazy" decoding="async" referrerpolicy="no-referrer">微信热搜</div>
+<div class="card" data-tooltip="B站热搜" onclick="window.open('https://tophub.today/n/74KvxwokxM', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/bilibili.com.png_160x160.png" alt="B站热榜" loading="lazy" decoding="async" referrerpolicy="no-referrer">B站热搜</div>
+<div class="card" data-tooltip="抖音热搜" onclick="window.open('https://tophub.today/n/DpQvNABoNE', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/douyin.com.png_160x160.png" alt="抖音热榜" loading="lazy" decoding="async" referrerpolicy="no-referrer">抖音热搜</div>
 </div>
 </div>
 </div>
@@ -633,6 +644,43 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="英文文献查找" onclick="window.open('https://www.ncbi.nlm.nih.gov/pubmed/', '_blank')"><img src="https://pubmed.ncbi.nlm.nih.gov/favicon.ico" alt="PubMed" loading="lazy" decoding="async" referrerpolicy="no-referrer">Pubmed</div>
 <div class="card" data-tooltip="期刊查找" onclick="window.open('https://www.oalib.com/', '_blank')"><img src="https://www.oalib.com/favicon.ico" alt="OALib" loading="lazy" decoding="async" referrerpolicy="no-referrer">OALib</div>
 <div class="card" data-tooltip="国外期刊电子书查找" onclick="window.open('https://libgen.gs/', '_blank')"><img src="https://libgen.gs/img/logo.png" alt="Libgen" loading="lazy" decoding="async" referrerpolicy="no-referrer">Libgen</div>
+<div class="card" data-tooltip="开放获取期刊目录，查找正规OA期刊" onclick="window.open('https://doaj.org/', '_blank')"><img src="https://doaj.org/static/doaj/images/favicon.ico" alt="DOAJ" loading="lazy" decoding="async" referrerpolicy="no-referrer">DOAJ</div>
+<div class="card" data-tooltip="德国比勒费尔德学术搜索引擎，覆盖开放学术资源" onclick="window.open('https://www.base-search.net/', '_blank')"><img src="https://www.base-search.net/favicon.ico" alt="BASE" loading="lazy" decoding="async" referrerpolicy="no-referrer">BASE学术搜索</div>
+<div class="card" data-tooltip="数学、物理、计算机等领域预印本文献库" onclick="window.open('https://arxiv.org/', '_blank')"><img src="https://static.arxiv.org/static/browse/0.3.4/images/icons/favicon.ico" alt="arXiv" loading="lazy" decoding="async" referrerpolicy="no-referrer">arXiv</div>
+<div class="card" data-tooltip="中国科学院科技论文预发布平台" onclick="window.open('https://chinaxiv.org/', '_blank')"><img src="https://chinaxiv.org/favicon.ico" alt="ChinaXiv" loading="lazy" decoding="async" referrerpolicy="no-referrer">ChinaXiv</div>
+<div class="card" data-tooltip="生命科学领域预印本文献平台" onclick="window.open('https://www.biorxiv.org/', '_blank')"><img src="https://www.biorxiv.org/favicon.ico" alt="bioRxiv" loading="lazy" decoding="async" referrerpolicy="no-referrer">bioRxiv</div>
+<div class="card" data-tooltip="开放科研成果、数据和代码归档平台" onclick="window.open('https://zenodo.org/', '_blank')"><img src="https://zenodo.org/favicon.ico" alt="Zenodo" loading="lazy" decoding="async" referrerpolicy="no-referrer">Zenodo</div>
+<div class="card" data-tooltip="免费文献管理工具，适合论文资料整理和引用管理" onclick="window.open('https://www.zotero.org/', '_blank')"><img src="https://www.zotero.org/favicon.ico" alt="Zotero" loading="lazy" decoding="async" referrerpolicy="no-referrer">Zotero</div>
+<div class="card" data-tooltip="万方数据知识服务平台" onclick="window.open('https://www.wanfangdata.com.cn/', '_blank')"><img src="https://www.wanfangdata.com.cn/favicon.ico" alt="万方" loading="lazy" decoding="async" referrerpolicy="no-referrer">万方数据</div>
+<div class="card" data-tooltip="维普期刊，中文期刊资源库" onclick="window.open('https://qikan.cqvip.com/', '_blank')"><img src="https://qikan.cqvip.com/favicon.ico" alt="维普" loading="lazy" decoding="async" referrerpolicy="no-referrer">维普期刊</div>
+<div class="card" data-tooltip="国家哲学社会科学文献中心" onclick="window.open('https://www.nssd.cn/', '_blank')"><img src="https://www.nssd.cn/favicon.ico" alt="社科文献" loading="lazy" decoding="async" referrerpolicy="no-referrer">国家社科文献</div>
+<div class="card" data-tooltip="国家科技图书文献中心" onclick="window.open('https://www.nstl.gov.cn/', '_blank')"><img src="https://www.nstl.gov.cn/favicon.ico" alt="科技图书" loading="lazy" decoding="async" referrerpolicy="no-referrer">国家科技文献</div>
+<div class="card" data-tooltip="中国科技论文在线" onclick="window.open('https://www.paper.edu.cn/', '_blank')"><img src="https://www.paper.edu.cn/favicon.ico" alt="论文在线" loading="lazy" decoding="async" referrerpolicy="no-referrer">科技论文在线</div>
+<div class="card" data-tooltip="Semantic Scholar - AI驱动的学术搜索引擎" onclick="window.open('https://www.semanticscholar.org/', '_blank')"><img src="https://www.semanticscholar.org/favicon.ico" alt="Semantic Scholar" loading="lazy" decoding="async" referrerpolicy="no-referrer">Semantic Scholar</div>
+<div class="card" data-tooltip="掌桥科研 - 中文文献一站式获取" onclick="window.open('https://www.zhangqiaokeyan.com/', '_blank')"><img src="https://www.zhangqiaokeyan.com/favicon.ico" alt="掌桥科研" loading="lazy" decoding="async" referrerpolicy="no-referrer">掌桥科研</div>
+<div class="card" data-tooltip="ResearchGate - 科研人员社交网络" onclick="window.open('https://www.researchgate.net/', '_blank')"><img src="https://www.researchgate.net/favicon.ico" alt="ResearchGate" loading="lazy" decoding="async" referrerpolicy="no-referrer">ResearchGate</div>
+<div class="card" data-tooltip="Connected Papers - 文献关系图谱" onclick="window.open('https://www.connectedpapers.com/', '_blank')"><img src="https://www.connectedpapers.com/favicon.ico" alt="Connected Papers" loading="lazy" decoding="async" referrerpolicy="no-referrer">Connected Papers</div>
+<div class="card" data-tooltip="PubMed Central - 免费全文生物医学文献" onclick="window.open('https://www.ncbi.nlm.nih.gov/pmc/', '_blank')"><img src="https://www.ncbi.nlm.nih.gov/pmc/favicon.ico" alt="PMC" loading="lazy" decoding="async" referrerpolicy="no-referrer">PubMed Central</div>
+<div class="card" data-tooltip="知网研学 - 文献阅读与管理工具" onclick="window.open('https://x.cnki.net/', '_blank')"><img src="https://x.cnki.net/favicon.ico" alt="知网研学" loading="lazy" decoding="async" referrerpolicy="no-referrer">知网研学</div>
+</div>
+</div>
+
+<!-- 论文写作/科研工具 -->
+<div class="sub-column">
+<h3><i class="fas fa-pen-fancy"></i> 论文写作/工具</h3>
+<div class="card-container">
+<div class="card" data-tooltip="Overleaf - 在线LaTeX编辑器" onclick="window.open('https://www.overleaf.com/', '_blank')"><img src="https://www.overleaf.com/favicon.ico" alt="Overleaf" loading="lazy" decoding="async" referrerpolicy="no-referrer">Overleaf</div>
+<div class="card" data-tooltip="EndNote - 文献管理软件" onclick="window.open('https://endnote.com/', '_blank')"><img src="https://endnote.com/favicon.ico" alt="EndNote" loading="lazy" decoding="async" referrerpolicy="no-referrer">EndNote</div>
+<div class="card" data-tooltip="Mendeley - 免费文献管理工具" onclick="window.open('https://www.mendeley.com/', '_blank')"><img src="https://www.mendeley.com/favicon.ico" alt="Mendeley" loading="lazy" decoding="async" referrerpolicy="no-referrer">Mendeley</div>
+<div class="card" data-tooltip="NoteExpress - 中文文献管理工具" onclick="window.open('https://www.inoteexpress.com/', '_blank')"><img src="https://www.inoteexpress.com/favicon.ico" alt="NoteExpress" loading="lazy" decoding="async" referrerpolicy="no-referrer">NoteExpress</div>
+<div class="card" data-tooltip="LaTeX在线公式编辑器" onclick="window.open('https://www.latexlive.com/', '_blank')"><img src="https://www.latexlive.com/favicon.ico" alt="LaTeX公式" loading="lazy" decoding="async" referrerpolicy="no-referrer">LaTeX公式</div>
+<div class="card" data-tooltip="Cite This For Me - 在线参考文献生成" onclick="window.open('https://www.citethisforme.com/', '_blank')"><img src="https://www.citethisforme.com/favicon.ico" alt="Cite" loading="lazy" decoding="async" referrerpolicy="no-referrer">引用生成器</div>
+<div class="card" data-tooltip="中国知网格式参考 - 参考文献格式生成" onclick="window.open('https://kns.cnki.net/kns8s/References', '_blank')"><img src="https://kns.cnki.net/favicon.ico" alt="知网参考文献" loading="lazy" decoding="async" referrerpolicy="no-referrer">参考文献格式</div>
+<div class="card" data-tooltip="论文致谢生成器" onclick="window.open('https://xiexie.yunqian.cn/', '_blank')"><img src="https://xiexie.yunqian.cn/favicon.ico" alt="致谢" loading="lazy" decoding="async" referrerpolicy="no-referrer">论文致谢</div>
+<div class="card" data-tooltip">中国知网期刊导航 - 查找目标投稿期刊" onclick="window.open('https://navi.cnki.net/knavi/', '_blank')"><img src="https://navi.cnki.net/favicon.ico" alt="期刊导航" loading="lazy" decoding="async" referrerpolicy="no-referrer">期刊导航</div>
+<div class="card" data-tooltip="LetPub - 期刊投稿经验与影响因子查询" onclick="window.open('https://www.letpub.com.cn/', '_blank')"><img src="https://www.letpub.com.cn/favicon.ico" alt="LetPub" loading="lazy" decoding="async" referrerpolicy="no-referrer">LetPub期刊查询</div>
+<div class="card" data-tooltip="中国科学院文献情报中心期刊分区" onclick="window.open('https://www.fenqubiao.com/', '_blank')"><img src="https://www.fenqubiao.com/favicon.ico" alt="期刊分区" loading="lazy" decoding="async" referrerpolicy="no-referrer">期刊分区表</div>
+<div class="card" data-tooltip="学术志 - 论文写作与学术成长平台" onclick="window.open('https://www.xueshuzhi.net/', '_blank')"><img src="https://www.xueshuzhi.net/favicon.ico" alt="学术志" loading="lazy" decoding="async" referrerpolicy="no-referrer">学术志</div>
 </div>
 </div>
 
@@ -645,7 +693,7 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="Deepl翻译" onclick="window.open('https://www.deepl.com/', '_blank')"><img src="https://www.deepl.com/favicon.ico" alt="Deepl" loading="lazy" decoding="async" referrerpolicy="no-referrer">Deepl翻译</div>
 <div class="card" data-tooltip="百度翻译" onclick="window.open('https://fanyi.baidu.com/', '_blank')"><img src="https://fanyi.baidu.com/favicon.ico" alt="百度翻译" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度翻译</div>
 <div class="card" data-tooltip="搜狗翻译" onclick="window.open('https://fanyi.sogou.com/', '_blank')"><img src="https://fanyi.sogou.com/favicon.ico" alt="搜狗翻译" loading="lazy" decoding="async" referrerpolicy="no-referrer">搜狗翻译</div>
-<div class="card" data-tooltip="必应翻译" onclick="window.open('https://cn.bing.com/translator?h_text=msn_ctxt&setlang=zh-cn', '_blank')"><img src="https://cn.bing.com/th?id=OTT.7A274AA188550691D09FA80F322A58D2&pid=Trans" alt="必应翻译" loading="lazy" decoding="async" referrerpolicy="no-referrer">必应翻译</div>
+<div class="card" data-tooltip="必应翻译" onclick="window.open('https://cn.bing.com/translator?h_text=msn_ctxt&amp;setlang=zh-cn', '_blank')"><img src="https://cn.bing.com/th?id=OTT.7A274AA188550691D09FA80F322A58D2&pid=Trans" alt="必应翻译" loading="lazy" decoding="async" referrerpolicy="no-referrer">必应翻译</div>
 <div class="card" data-tooltip="彩云小译" onclick="window.open('https://fanyi.caiyunapp.com/', '_blank')"><img src="https://fanyi.caiyunapp.com/favicon.ico" alt="彩云小译" loading="lazy" decoding="async" referrerpolicy="no-referrer">彩云小译</div>
 </div>
 </div>
@@ -666,31 +714,44 @@ s.parentNode.insertBefore(hm, s);
 </div>
 
 <div id="entertainment-links" class="column">
-<!-- 娱乐热搜榜单 -->
-<div class="sub-column">
-<h3><i class="fas fa-fire"></i> <i class="fas fa-search"></i> 热搜热点</h3>
-<div class="card-container">
-<div class="card" data-tooltip="微博热搜" onclick="window.open('https://tophub.today/n/KqndgxeLl9', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/s.weibo.com.png_160x160.png" alt="微博热搜" loading="lazy" decoding="async" referrerpolicy="no-referrer">微博热搜</div>
-<div class="card" data-tooltip="百度热搜" onclick="window.open('https://top.baidu.com/board', '_blank')"><img src="https://www.baidu.com/img/baidu_85beaf5496f291521eb75ba38eacbd87.svg" alt="百度热搜" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度热搜</div>
-<div class="card" data-tooltip="知乎热搜" onclick="window.open('https://tophub.today/n/mproPpoq6O', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/zhihu.com.png_160x160.png" alt="知乎热搜" loading="lazy" decoding="async" referrerpolicy="no-referrer">知乎热搜</div>
-<div class="card" data-tooltip="微信热搜" onclick="window.open('https://tophub.today/n/WnBe01o371', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/mp.weixin.qq.com.png_160x160.png" alt="微信热门" loading="lazy" decoding="async" referrerpolicy="no-referrer">微信热搜</div>
-<div class="card" data-tooltip="B站热搜" onclick="window.open('https://tophub.today/n/74KvxwokxM', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/bilibili.com.png_160x160.png" alt="B站热榜" loading="lazy" decoding="async" referrerpolicy="no-referrer">B站热搜</div>
-<div class="card" data-tooltip="抖音热搜" onclick="window.open('https://tophub.today/n/DpQvNABoNE', '_blank')"><img src="https://file.ipadown.com/tophub/assets/images/media/douyin.com.png_160x160.png" alt="抖音热榜" loading="lazy" decoding="async" referrerpolicy="no-referrer">抖音热搜</div>
-</div>
-</div>
 
 <!-- 视频媒体 -->
 <div class="sub-column">
-<h3><i class="fas fa-tv"></i> <i class="fas fa-wifi"></i> 在线影视</h3>
+<h3><i class="fas fa-tv"></i> 在线影视</h3>
 <div class="card-container">
 <div class="card" data-tooltip="腾讯视频" onclick="window.open('https://v.qq.com/', '_blank')"><img src="https://v.qq.com/favicon.ico" alt="腾讯视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯视频</div>
 <div class="card" data-tooltip="爱奇艺视频" onclick="window.open('https://www.iqiyi.com/', '_blank')"><img src="https://www.iqiyi.com/favicon.ico" alt="爱奇艺" loading="lazy" decoding="async" referrerpolicy="no-referrer">爱奇艺</div>
 <div class="card" data-tooltip="优酷视频主页" onclick="window.open('https://www.youku.com/', '_blank')"><img src="https://www.youku.com/favicon.ico" alt="优酷" loading="lazy" decoding="async" referrerpolicy="no-referrer">优酷</div>
 <div class="card" data-tooltip="芒果TV在线观看" onclick="window.open('https://www.mgtv.com/', '_blank')"><img src="https://www.mgtv.com/favicon.ico" alt="芒果TV" loading="lazy" decoding="async" referrerpolicy="no-referrer">芒果TV</div>
 <div class="card" data-tooltip="哔哩哔哩 (゜-゜)つロ 乾杯~" onclick="window.open('https://www.bilibili.com/', '_blank')"><img src="https://www.bilibili.com/favicon.ico" alt="B站" loading="lazy" decoding="async" referrerpolicy="no-referrer">哔哩哔哩</div>
+<div class="card" data-tooltip="中央广播电视总台旗下视频平台" onclick="window.open('https://www.yangshipin.cn/', '_blank')"><img src="https://www.yangshipin.cn/favicon.ico" alt="央视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">央视频</div>
+<div class="card" data-tooltip="咪咕视频官方平台" onclick="window.open('https://www.miguvideo.com/', '_blank')"><img src="https://www.miguvideo.com/favicon.ico" alt="咪咕视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">咪咕视频</div>
+<div class="card" data-tooltip="电影网官方平台，电影资讯与正版片源" onclick="window.open('https://www.1905.com/', '_blank')"><img src="https://www.1905.com/favicon.ico" alt="1905电影网" loading="lazy" decoding="async" referrerpolicy="no-referrer">1905电影网</div>
+<div class="card" data-tooltip="西瓜视频官方平台" onclick="window.open('https://www.ixigua.com/', '_blank')"><img src="https://www.ixigua.com/favicon.ico" alt="西瓜视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">西瓜视频</div>
+<div class="card" data-tooltip="搜狐视频官方平台" onclick="window.open('https://tv.sohu.com/', '_blank')"><img src="https://tv.sohu.com/favicon.ico" alt="搜狐视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">搜狐视频</div>
+<div class="card" data-tooltip="乐视视频在线观看" onclick="window.open('https://www.le.com/', '_blank')"><img src="https://www.le.com/favicon.ico" alt="乐视视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">乐视视频</div>
+<div class="card" data-tooltip="专注动漫内容的在线观看入口" onclick="window.open('https://www.agedm.io/', '_blank')"><img src="https://www.agedm.io/favicon.ico" alt="AGE动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">AGE动漫</div>
 <div class="card" data-tooltip="抖音短视频" onclick="window.open('https://www.douyin.com/', '_blank')"><img src="https://www.douyin.com/favicon.ico" alt="抖音" loading="lazy" decoding="async" referrerpolicy="no-referrer">抖音</div>
 <div class="card" data-tooltip="快手短视频" onclick="window.open('https://www.kuaishou.com/new-reco', '_blank')"><img src="https://s2-111422.kwimgs.com/kos/nlav111422/ks-web/favicon.ico" alt="快手" loading="lazy" decoding="async" referrerpolicy="no-referrer">快手</div>
 <div class="card" data-tooltip="小红书标记我的生活" onclick="window.open('https://www.xiaohongshu.com/explore', '_blank')"><img src="https://www.xiaohongshu.com/favicon.ico" alt="小红书" loading="lazy" decoding="async" referrerpolicy="no-referrer">小红书</div>
+<div class="card" data-tooltip="豆瓣电影评分、影评和片单" onclick="window.open('https://movie.douban.com/', '_blank')"><img src="https://movie.douban.com/favicon.ico" alt="豆瓣电影" loading="lazy" decoding="async" referrerpolicy="no-referrer">豆瓣电影</div>
+<div class="card" data-tooltip="电影票房、排片和影视资讯" onclick="window.open('https://www.maoyan.com/', '_blank')"><img src="https://www.maoyan.com/favicon.ico" alt="猫眼电影" loading="lazy" decoding="async" referrerpolicy="no-referrer">猫眼电影</div>
+<div class="card" data-tooltip="电影资讯、影人资料和片单推荐" onclick="window.open('https://www.mtime.com/', '_blank')"><img src="https://www.mtime.com/favicon.ico" alt="时光网" loading="lazy" decoding="async" referrerpolicy="no-referrer">时光网</div>
+<div class="card" data-tooltip="全球电影、剧集和演职员资料库" onclick="window.open('https://www.imdb.com/', '_blank')"><img src="https://www.imdb.com/favicon.ico" alt="IMDb" loading="lazy" decoding="async" referrerpolicy="no-referrer">IMDb</div>
+<div class="card" data-tooltip="饭搭子影视在线观影入口" onclick="window.open('https://www.fdzys666.xyz/', '_blank')"><img src="https://www.fdzys666.xyz/favicon.ico" alt="饭搭子影视" loading="lazy" decoding="async" referrerpolicy="no-referrer">饭搭子影视</div>
+<div class="card" data-tooltip="大马猴影视在线影视资源" onclick="window.open('https://www.dmhyy.com/', '_blank')"><img src="https://www.dmhyy.com/favicon.ico" alt="大马猴影视" loading="lazy" decoding="async" referrerpolicy="no-referrer">大马猴影视</div>
+<div class="card" data-tooltip="555电影在线影视入口" onclick="window.open('https://www.55kan7.top/', '_blank')"><img src="https://www.55kan7.top/favicon.ico" alt="555电影" loading="lazy" decoding="async" referrerpolicy="no-referrer">555电影</div>
+<div class="card" data-tooltip="大米星球影视剧集在线观看" onclick="window.open('https://www.dm155.top/', '_blank')"><img src="https://www.dm155.top/favicon.ico" alt="大米星球" loading="lazy" decoding="async" referrerpolicy="no-referrer">大米星球</div>
+<div class="card" data-tooltip="影和指南影视搜索和观影入口" onclick="window.open('https://www.yinghezhinan.com/', '_blank')"><img src="https://www.yinghezhinan.com/favicon.ico" alt="影和指南" loading="lazy" decoding="async" referrerpolicy="no-referrer">影和指南</div>
+<div class="card" data-tooltip="哈哩哈哩影视动漫资源入口" onclick="window.open('https://www.hhkan0.com/', '_blank')"><img src="https://www.hhkan0.com/favicon.ico" alt="哈哩哈哩" loading="lazy" decoding="async" referrerpolicy="no-referrer">哈哩哈哩</div>
+<div class="card" data-tooltip="网飞猫在线影视站" onclick="window.open('https://www.ncat22.com/', '_blank')"><img src="https://www.ncat22.com/favicon.ico" alt="网飞猫" loading="lazy" decoding="async" referrerpolicy="no-referrer">网飞猫</div>
+<div class="card" data-tooltip="看看影视在线观影入口" onclick="window.open('https://www.kkys01.com/', '_blank')"><img src="https://www.kkys01.com/favicon.ico" alt="看看影视" loading="lazy" decoding="async" referrerpolicy="no-referrer">看看影视</div>
+<div class="card" data-tooltip="秒看影视在线播放入口" onclick="window.open('https://www.miaokan.cc/', '_blank')"><img src="https://www.miaokan.cc/favicon.ico" alt="秒看" loading="lazy" decoding="async" referrerpolicy="no-referrer">秒看</div>
+<div class="card" data-tooltip="纪录片之家纪录片资源" onclick="window.open('https://www.05jl.com/', '_blank')"><img src="https://www.05jl.com/wp-includes/images/w-logo-blue-white-bg.png" alt="纪录片之家" loading="lazy" decoding="async" referrerpolicy="no-referrer">纪录片之家</div>
+<div class="card" data-tooltip="人人电影网电影资源入口" onclick="window.open('https://www.rrdynb.com/index.html', '_blank')"><img src="https://www.rrdynb.com/favicon.ico" alt="人人电影网" loading="lazy" decoding="async" referrerpolicy="no-referrer">人人电影网</div>
+<div class="card" data-tooltip="FreeOK影视在线播放" onclick="window.open('http://www.freeokk.pro/', '_blank')"><img src="https://www.freeokk.pro/icon/152x152.png" alt="FreeOK" loading="lazy" decoding="async" referrerpolicy="no-referrer">FreeOK</div>
+<div class="card" data-tooltip="电影港电影资源发布站" onclick="window.open('https://www.dygang.cc/', '_blank')"><img src="https://www.dygang.cc/favicon.ico" alt="电影港" loading="lazy" decoding="async" referrerpolicy="no-referrer">电影港</div>
+<div class="card" data-tooltip="韩剧看看韩剧资源入口" onclick="window.open('https://www.hanjukankan.com/', '_blank')"><img src="https://www.hanjukankan.com/favicon.ico" alt="韩剧看看" loading="lazy" decoding="async" referrerpolicy="no-referrer">韩剧看看</div>
 </div>
 </div>
 
@@ -701,7 +762,53 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="网易云音乐官网" onclick="window.open('https://music.163.com/', '_blank')"><img src="https://s1.music.126.net/style/favicon.ico?v20180823" alt="网易云" loading="lazy" decoding="async" referrerpolicy="no-referrer">网易云音乐</div>
 <div class="card" data-tooltip="QQ音乐网页版" onclick="window.open('https://y.qq.com/', '_blank')"><img src="https://y.qq.com/favicon.ico" alt="QQ音乐" loading="lazy" decoding="async" referrerpolicy="no-referrer">QQ音乐</div>
 <div class="card" data-tooltip="酷我音乐平台" onclick="window.open('https://kuwo.cn/', '_blank')"><img src="https://kuwo.cn/favicon.ico" alt="酷我音乐" loading="lazy" decoding="async" referrerpolicy="no-referrer">酷我音乐</div>
+<div class="card" data-tooltip="酷狗音乐网页版" onclick="window.open('https://www.kugou.com/', '_blank')"><img src="https://www.kugou.com/favicon.ico" alt="酷狗音乐" loading="lazy" decoding="async" referrerpolicy="no-referrer">酷狗音乐</div>
+<div class="card" data-tooltip="咪咕音乐官方平台" onclick="window.open('https://music.migu.cn/v3', '_blank')"><img src="https://music.migu.cn/favicon.ico" alt="咪咕音乐" loading="lazy" decoding="async" referrerpolicy="no-referrer">咪咕音乐</div>
+<div class="card" data-tooltip="千千音乐在线收听" onclick="window.open('https://music.taihe.com/', '_blank')"><img src="https://music.taihe.com/favicon.ico" alt="千千音乐" loading="lazy" decoding="async" referrerpolicy="no-referrer">千千音乐</div>
+<div class="card" data-tooltip="原创音乐基地，翻唱、伴奏和音乐作品分享" onclick="window.open('https://5sing.kugou.com/', '_blank')"><img src="https://5sing.kugou.com/favicon.ico" alt="5sing" loading="lazy" decoding="async" referrerpolicy="no-referrer">5sing</div>
+<div class="card" data-tooltip="音乐发现、歌单和在线播放器" onclick="window.open('https://tunefree.in/', '_blank')"><img src="https://tunefree.in/favicon.ico" alt="TuneFree" loading="lazy" decoding="async" referrerpolicy="no-referrer">TuneFree</div>
 <div class="card" data-tooltip="猫耳FM(MissEvan)" onclick="window.open('https://www.missevan.com/', '_blank')"><img src="https://www.missevan.com/favicon.ico" alt="猫耳FM" loading="lazy" decoding="async" referrerpolicy="no-referrer">猫耳FM</div>
+</div>
+</div>
+
+<!-- 动漫资源 -->
+<div class="sub-column">
+<h3><i class="fas fa-dragon"></i> 动漫资源</h3>
+<div class="card-container">
+<div class="card" data-tooltip="哔哩哔哩番剧专区" onclick="window.open('https://www.bilibili.com/anime/', '_blank')"><img src="https://www.bilibili.com/favicon.ico" alt="B站番剧" loading="lazy" decoding="async" referrerpolicy="no-referrer">B站番剧</div>
+<div class="card" data-tooltip="腾讯动漫官方平台" onclick="window.open('https://ac.qq.com/', '_blank')"><img src="https://ac.qq.com/favicon.ico" alt="腾讯动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯动漫</div>
+<div class="card" data-tooltip="快看漫画官方平台" onclick="window.open('https://www.kuaikanmanhua.com/', '_blank')"><img src="https://www.kuaikanmanhua.com/favicon.ico" alt="快看漫画" loading="lazy" decoding="async" referrerpolicy="no-referrer">快看漫画</div>
+<div class="card" data-tooltip="漫客栈漫画在线阅读平台" onclick="window.open('https://www.mkzhan.com/', '_blank')"><img src="https://www.mkzhan.com/favicon.ico" alt="漫客栈" loading="lazy" decoding="async" referrerpolicy="no-referrer">漫客栈</div>
+<div class="card" data-tooltip="MiFun番剧动漫资源入口" onclick="window.open('https://www.mifun.app/', '_blank')"><img src="https://www.mifun.app/favicon.ico" alt="MiFun" loading="lazy" decoding="async" referrerpolicy="no-referrer">MiFun</div>
+<div class="card" data-tooltip="咕咕番动漫番剧入口" onclick="window.open('https://www.gugu3.com/', '_blank')"><img src="https://www.gugu3.com/favicon.ico" alt="咕咕番" loading="lazy" decoding="async" referrerpolicy="no-referrer">咕咕番</div>
+<div class="card" data-tooltip="次元方舟动漫资源站" onclick="window.open('https://www.cyfz.vip/', '_blank')"><img src="https://www.cyfz.vip/favicon.ico" alt="次元方舟" loading="lazy" decoding="async" referrerpolicy="no-referrer">次元方舟</div>
+<div class="card" data-tooltip="旋风动漫番剧资源入口" onclick="window.open('https://www.xuandm.com/', '_blank')"><img src="https://www.xuandm.com/favicon.ico" alt="旋风动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">旋风动漫</div>
+<div class="card" data-tooltip="ACG饭团动漫资源入口" onclick="window.open('https://www.acgfta.com/', '_blank')"><img src="https://www.acgfta.com/favicon.ico" alt="ACG饭团" loading="lazy" decoding="async" referrerpolicy="no-referrer">ACG饭团</div>
+<div class="card" data-tooltip="AGE动漫番剧在线观看" onclick="window.open('https://www.agedm.vip/', '_blank')"><img src="https://www.agedm.vip/favicon.ico" alt="AGE动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">AGE动漫</div>
+<div class="card" data-tooltip="樱花动漫 - 在线动漫观看平台" onclick="window.open('https://www.yinghua.im/', '_blank')"><img src="https://www.yinghua.im/favicon.ico" alt="樱花动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">樱花动漫</div>
+<div class="card" data-tooltip="风车动漫 - 动漫在线观看" onclick="window.open('https://www.fengchedm.com/', '_blank')"><img src="https://www.fengchedm.com/favicon.ico" alt="风车动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">风车动漫</div>
+<div class="card" data-tooltip="ZzzFun动漫 - 在线动漫观看" onclick="window.open('http://www.zzzfun.one/', '_blank')"><img src="http://www.zzzfun.one/favicon.ico" alt="ZzzFun" loading="lazy" decoding="async" referrerpolicy="no-referrer">ZzzFun动漫</div>
+<div class="card" data-tooltip="OmoFun - 动漫资源平台" onclick="window.open('https://omofuns.xyz/', '_blank')"><img src="https://omofuns.xyz/favicon.ico" alt="OmoFun" loading="lazy" decoding="async" referrerpolicy="no-referrer">OmoFun</div>
+<div class="card" data-tooltip="MX动漫 - 海量动漫资源" onclick="window.open('https://www.mxdm4.com/', '_blank')"><img src="https://www.mxdm4.com/favicon.ico" alt="MX动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">MX动漫</div>
+<div class="card" data-tooltip="哔咪动漫在线番剧入口" onclick="window.open('https://www.bimiacg10.net/', '_blank')"><img src="https://www.bimiacg10.net/favicon.ico" alt="哔咪动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">哔咪动漫</div>
+<div class="card" data-tooltip="M站动漫番剧资源入口" onclick="window.open('https://www.mxdm.xyz/', '_blank')"><img src="https://www.mxdm.xyz/favicon.ico" alt="M站" loading="lazy" decoding="async" referrerpolicy="no-referrer">M站</div>
+<div class="card" data-tooltip="哈哩哈哩动漫番剧入口" onclick="window.open('https://www.halihali5.com/', '_blank')"><img src="https://www.halihali5.com/favicon.ico" alt="哈哩哈哩动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">哈哩哈哩动漫</div>
+<div class="card" data-tooltip="蜜柑计划动漫番组资源" onclick="window.open('https://mikanani.me/', '_blank')"><img src="https://mikanani.me/favicon.ico" alt="蜜柑计划" loading="lazy" decoding="async" referrerpolicy="no-referrer">蜜柑计划</div>
+<div class="card" data-tooltip="布丁动漫番剧资源入口" onclick="window.open('https://buding3.com/', '_blank')"><img src="https://buding3.com/favicon.ico" alt="布丁动漫" loading="lazy" decoding="async" referrerpolicy="no-referrer">布丁动漫</div>
+<div class="card" data-tooltip="包子漫画在线漫画阅读" onclick="window.open('https://baozimh.org/', '_blank')"><img src="https://baozimh.org/favicon.ico" alt="包子漫画" loading="lazy" decoding="async" referrerpolicy="no-referrer">包子漫画</div>
+</div>
+</div>
+
+<!-- 游戏酷站 -->
+<div class="sub-column">
+<h3><i class="fas fa-gamepad"></i> 游戏酷站</h3>
+<div class="card-container">
+<div class="card" data-tooltip="Steam 游戏商店和社区" onclick="window.open('https://store.steampowered.com/', '_blank')"><img src="https://store.steampowered.com/favicon.ico" alt="Steam" loading="lazy" decoding="async" referrerpolicy="no-referrer">Steam</div>
+<div class="card" data-tooltip="TapTap 游戏社区和下载平台" onclick="window.open('https://www.taptap.cn/', '_blank')"><img src="https://www.taptap.cn/favicon.ico" alt="TapTap" loading="lazy" decoding="async" referrerpolicy="no-referrer">TapTap</div>
+<div class="card" data-tooltip="在线小游戏和网页游戏合集" onclick="window.open('https://www.crazygames.com/', '_blank')"><img src="https://www.crazygames.com/favicon.ico" alt="CrazyGames" loading="lazy" decoding="async" referrerpolicy="no-referrer">CrazyGames</div>
+<div class="card" data-tooltip="免费在线小游戏平台" onclick="window.open('https://poki.com/zh', '_blank')"><img src="https://poki.com/favicon.ico" alt="Poki" loading="lazy" decoding="async" referrerpolicy="no-referrer">Poki</div>
+<div class="card" data-tooltip="经典小霸王和街机游戏在线游玩" onclick="window.open('https://www.yikm.net/', '_blank')"><img src="https://www.yikm.net/favicon.ico" alt="小霸王其乐无穷" loading="lazy" decoding="async" referrerpolicy="no-referrer">小霸王</div>
+<div class="card" data-tooltip="4399 在线小游戏" onclick="window.open('https://www.4399.com/', '_blank')"><img src="https://www.4399.com/favicon.ico" alt="4399" loading="lazy" decoding="async" referrerpolicy="no-referrer">4399</div>
 </div>
 </div>
 </div>
@@ -722,6 +829,19 @@ s.parentNode.insertBefore(hm, s);
 </div>
 </div>
 
+<!-- 办公工具 -->
+<div class="sub-column">
+<h3><i class="fas fa-briefcase"></i> 办公工具</h3>
+<div class="card-container">
+<div class="card" data-tooltip="腾讯文档，在线协作文档和表格" onclick="window.open('https://docs.qq.com/', '_blank')"><img src="https://docs.qq.com/favicon.ico" alt="腾讯文档" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯文档</div>
+<div class="card" data-tooltip="金山文档，在线办公协作平台" onclick="window.open('https://www.kdocs.cn/', '_blank')"><img src="https://www.kdocs.cn/favicon.ico" alt="金山文档" loading="lazy" decoding="async" referrerpolicy="no-referrer">金山文档</div>
+<div class="card" data-tooltip="石墨文档，在线文档和表格协作" onclick="window.open('https://shimo.im/', '_blank')"><img src="https://shimo.im/favicon.ico" alt="石墨文档" loading="lazy" decoding="async" referrerpolicy="no-referrer">石墨文档</div>
+<div class="card" data-tooltip="飞书文档，多人协作与知识沉淀" onclick="window.open('https://www.feishu.cn/product/docs', '_blank')"><img src="https://www.feishu.cn/favicon.ico" alt="飞书文档" loading="lazy" decoding="async" referrerpolicy="no-referrer">飞书文档</div>
+<div class="card" data-tooltip="iLovePDF，在线合并、压缩和转换 PDF" onclick="window.open('https://www.ilovepdf.com/zh-cn', '_blank')"><img src="https://www.ilovepdf.com/img/favicons-pdf/favicon-32x32.png" alt="iLovePDF" loading="lazy" decoding="async" referrerpolicy="no-referrer">iLovePDF</div>
+<div class="card" data-tooltip="PDF24 在线 PDF 工具箱" onclick="window.open('https://tools.pdf24.org/zh/', '_blank')"><img src="https://tools.pdf24.org/favicon.ico" alt="PDF24" loading="lazy" decoding="async" referrerpolicy="no-referrer">PDF24工具箱</div>
+</div>
+</div>
+
 <!-- 图片处理 -->
 <div class="sub-column">
 <h3><i class="fas fa-tools"></i> 其他工具</h3>
@@ -730,6 +850,100 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="图片背景消除" onclick="window.open('https://www.remove.bg/zh', '_blank')"><img src="https://www.remove.bg/favicon-32x32.png?v=fc0bfce6e1310f1539afec9729716721" alt="智能抠图" loading="lazy" decoding="async" referrerpolicy="no-referrer">图片背景消除</div>
 <div class="card" data-tooltip="短视频/图集在线去水印解析" onclick="window.open('https://watermark.liumingye.cn/', '_blank')"><img src="https://watermark.liumingye.cn/favicon.png" alt="去水印" loading="lazy" decoding="async" referrerpolicy="no-referrer">短视频去水印</div>
 <div class="card" data-tooltip="在线修剪或剪切任何音频文件" onclick="window.open('https://mp3cut.net/cn/', '_blank')"><img src="https://mp3cut.net//static/i/v3/favicon.svg" alt="音频剪辑" loading="lazy" decoding="async" referrerpolicy="no-referrer">Audio Cutter</div>
+<div class="card" data-tooltip="高质量免费图片素材，可用于设计配图" onclick="window.open('https://unsplash.com/', '_blank')"><img src="https://unsplash.com/favicon.ico" alt="Unsplash" loading="lazy" decoding="async" referrerpolicy="no-referrer">Unsplash</div>
+<div class="card" data-tooltip="图标、插画、3D素材和设计资源库" onclick="window.open('https://iconscout.com/', '_blank')"><img src="https://iconscout.com/favicon.ico" alt="Iconscout" loading="lazy" decoding="async" referrerpolicy="no-referrer">Iconscout</div>
+<div class="card" data-tooltip="可免费下载和自定义颜色的开源插画" onclick="window.open('https://undraw.co/', '_blank')"><img src="https://undraw.co/favicon.ico" alt="unDraw" loading="lazy" decoding="async" referrerpolicy="no-referrer">unDraw</div>
+<div class="card" data-tooltip="免费视频、音乐、音效和模板素材" onclick="window.open('https://mixkit.co/', '_blank')"><img src="https://mixkit.co/favicon.ico" alt="Mixkit" loading="lazy" decoding="async" referrerpolicy="no-referrer">Mixkit</div>
+</div>
+</div>
+
+<!-- 开发工具 -->
+<div class="sub-column">
+<h3><i class="fas fa-laptop-code"></i> 开发工具</h3>
+<div class="card-container">
+<div class="card" data-tooltip="CodeSandbox - 在线代码编辑器" onclick="window.open('https://codesandbox.io/', '_blank')"><img src="https://codesandbox.io/favicon.ico" alt="CodeSandbox" loading="lazy" decoding="async" referrerpolicy="no-referrer">CodeSandbox</div>
+<div class="card" data-tooltip="Replit - 在线协作编程平台" onclick="window.open('https://replit.com/', '_blank')"><img src="https://replit.com/favicon.ico" alt="Replit" loading="lazy" decoding="async" referrerpolicy="no-referrer">Replit</div>
+<div class="card" data-tooltip="StackBlitz - 在线IDE" onclick="window.open('https://stackblitz.com/', '_blank')"><img src="https://stackblitz.com/favicon.ico" alt="StackBlitz" loading="lazy" decoding="async" referrerpolicy="no-referrer">StackBlitz</div>
+<div class="card" data-tooltip="JSFiddle - 在线测试JavaScript" onclick="window.open('https://jsfiddle.net/', '_blank')"><img src="https://jsfiddle.net/favicon.ico" alt="JSFiddle" loading="lazy" decoding="async" referrerpolicy="no-referrer">JSFiddle</div>
+<div class="card" data-tooltip="JSON在线解析校验" onclick="window.open('https://www.json.cn/', '_blank')"><img src="https://www.json.cn/favicon.ico" alt="JSON" loading="lazy" decoding="async" referrerpolicy="no-referrer">JSON解析</div>
+<div class="card" data-tooltip="正则表达式在线测试" onclick="window.open('https://regex101.com/', '_blank')"><img src="https://regex101.com/favicon.ico" alt="正则" loading="lazy" decoding="async" referrerpolicy="no-referrer">Regex101</div>
+<div class="card" data-tooltip="Linux命令查询手册" onclick="window.open('https://wangchujiang.com/linux-command/', '_blank')"><img src="https://wangchujiang.com/linux-command/favicon.ico" alt="Linux" loading="lazy" decoding="async" referrerpolicy="no-referrer">Linux命令</div>
+<div class="card" data-tooltip="Git命令在线学习" onclick="window.open('https://learngitbranching.js.org/', '_blank')"><img src="https://learngitbranching.js.org/favicon.ico" alt="Git学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">Learn Git</div>
+</div>
+</div>
+
+<!-- 网络工具 -->
+<div class="sub-column">
+<h3><i class="fas fa-network-wired"></i> 网络工具</h3>
+<div class="card-container">
+<div class="card" data-tooltip="IP地址查询" onclick="window.open('https://ip.sb/', '_blank')"><img src="https://ip.sb/favicon.ico" alt="IP查询" loading="lazy" decoding="async" referrerpolicy="no-referrer">IP查询</div>
+<div class="card" data-tooltip="在线短链接生成" onclick="window.open('https://www.url.cn/', '_blank')"><img src="https://www.url.cn/favicon.ico" alt="短链接" loading="lazy" decoding="async" referrerpolicy="no-referrer">短链接生成</div>
+<div class="card" data-tooltip="草料二维码生成器" onclick="window.open('https://cli.im/', '_blank')"><img src="https://cli.im/favicon.ico" alt="二维码" loading="lazy" decoding="async" referrerpolicy="no-referrer">二维码生成</div>
+<div class="card" data-tooltip="网站测速工具" onclick="window.open('https://www.itdog.cn/ping/', '_blank')"><img src="https://www.itdog.cn/favicon.ico" alt="测速" loading="lazy" decoding="async" referrerpolicy="no-referrer">服务器测速</div>
+<div class="card" data-tooltip="在线User-Agent解析" onclick="window.open('https://useragent.buyaocha.com/', '_blank')"><img src="https://useragent.buyaocha.com/favicon.ico" alt="UA解析" loading="lazy" decoding="async" referrerpolicy="no-referrer">UA解析</div>
+<div class="card" data-tooltip="网站备案查询" onclick="window.open('https://beian.miit.gov.cn/', '_blank')"><img src="https://beian.miit.gov.cn/favicon.ico" alt="备案查询" loading="lazy" decoding="async" referrerpolicy="no-referrer">备案查询</div>
+</div>
+</div>
+
+<!-- 文件传输 -->
+<div class="sub-column">
+<h3><i class="fas fa-paper-plane"></i> 文件传输</h3>
+<div class="card-container">
+<div class="card" data-tooltip="文叔叔 - 传文件，找文叔叔！最大5G文件" onclick="window.open('https://www.wenshushu.cn/', '_blank')"><img src="https://www.wenshushu.cn/favicon.ico" alt="文叔叔" loading="lazy" decoding="async" referrerpolicy="no-referrer">文叔叔</div>
+<div class="card" data-tooltip="奶牛快传 - 简单安全的大文件传输" onclick="window.open('https://cowtransfer.com/', '_blank')"><img src="https://cowtransfer.com/favicon.ico" alt="奶牛快传" loading="lazy" decoding="async" referrerpolicy="no-referrer">奶牛快传</div>
+<div class="card" data-tooltip="轻松传 - 免费文件传输工具" onclick="window.open('https://easychuan.cn/', '_blank')"><img src="https://easychuan.cn/favicon.ico" alt="轻松传" loading="lazy" decoding="async" referrerpolicy="no-referrer">轻松传</div>
+<div class="card" data-tooltip="PP直连 - 点对点文件传输" onclick="window.open('https://www.ppzhilian.com/', '_blank')"><img src="https://www.ppzhilian.com/favicon.ico" alt="PP直连" loading="lazy" decoding="async" referrerpolicy="no-referrer">PP直连</div>
+<div class="card" data-tooltip="微信文件传输助手网页版" onclick="window.open('https://filehelper.weixin.qq.com/', '_blank')"><img src="https://filehelper.weixin.qq.com/favicon.ico" alt="微信助手" loading="lazy" decoding="async" referrerpolicy="no-referrer">微信传输助手</div>
+</div>
+</div>
+</div>
+<div id="life-links" class="column">
+<!-- 购物 -->
+<div class="sub-column">
+<h3><i class="fas fa-cart-shopping"></i> 购物</h3>
+<div class="card-container">
+<div class="card" data-tooltip="淘宝网 - 淘！我喜欢" onclick="window.open('https://www.taobao.com/', '_blank')"><img src="https://www.taobao.com/favicon.ico" alt="淘宝" loading="lazy" decoding="async" referrerpolicy="no-referrer">淘宝</div>
+<div class="card" data-tooltip="京东 - 多快好省" onclick="window.open('https://www.jd.com/', '_blank')"><img src="https://www.jd.com/favicon.ico" alt="京东" loading="lazy" decoding="async" referrerpolicy="no-referrer">京东</div>
+<div class="card" data-tooltip="拼多多 - 拼着买更便宜" onclick="window.open('https://www.pinduoduo.com/', '_blank')"><img src="https://www.pinduoduo.com/favicon.ico" alt="拼多多" loading="lazy" decoding="async" referrerpolicy="no-referrer">拼多多</div>
+<div class="card" data-tooltip="闲鱼 - 二手闲置交易平台" onclick="window.open('https://www.goofish.com/', '_blank')"><img src="https://www.goofish.com/favicon.ico" alt="闲鱼" loading="lazy" decoding="async" referrerpolicy="no-referrer">闲鱼</div>
+<div class="card" data-tooltip="什么值得买 - 优质商品推荐" onclick="window.open('https://www.smzdm.com/', '_blank')"><img src="https://www.smzdm.com/favicon.ico" alt="什么值得买" loading="lazy" decoding="async" referrerpolicy="no-referrer">什么值得买</div>
+</div>
+</div>
+<!-- 生活服务 -->
+<div class="sub-column">
+<h3><i class="fas fa-truck"></i> 生活服务</h3>
+<div class="card-container">
+<div class="card" data-tooltip="12306 铁路客服中心" onclick="window.open('https://www.12306.cn/', '_blank')"><img src="https://www.12306.cn/favicon.ico" alt="12306" loading="lazy" decoding="async" referrerpolicy="no-referrer">12306</div>
+<div class="card" data-tooltip="去哪儿 - 特价机票、酒店、火车票" onclick="window.open('https://www.qunar.com/', '_blank')"><img src="https://www.qunar.com/favicon.ico" alt="去哪儿" loading="lazy" decoding="async" referrerpolicy="no-referrer">去哪儿</div>
+<div class="card" data-tooltip="携程 - 酒店、机票、火车票预订" onclick="window.open('https://www.ctrip.com/', '_blank')"><img src="https://www.ctrip.com/favicon.ico" alt="携程" loading="lazy" decoding="async" referrerpolicy="no-referrer">携程</div>
+<div class="card" data-tooltip="快递100 - 快递查询" onclick="window.open('https://www.kuaidi100.com/', '_blank')"><img src="https://www.kuaidi100.com/favicon.ico" alt="快递100" loading="lazy" decoding="async" referrerpolicy="no-referrer">快递100</div>
+<div class="card" data-tooltip="美团 - 美食、外卖、酒店、旅游" onclick="window.open('https://www.meituan.com/', '_blank')"><img src="https://www.meituan.com/favicon.ico" alt="美团" loading="lazy" decoding="async" referrerpolicy="no-referrer">美团</div>
+<div class="card" data-tooltip="大众点评 - 发现品质生活" onclick="window.open('https://www.dianping.com/', '_blank')"><img src="https://www.dianping.com/favicon.ico" alt="大众点评" loading="lazy" decoding="async" referrerpolicy="no-referrer">大众点评</div>
+</div>
+</div>
+<!-- 美食 -->
+<div class="sub-column">
+<h3><i class="fas fa-utensils"></i> 美食</h3>
+<div class="card-container">
+<div class="card" data-tooltip="下厨房 - 谁都可以成为美食家" onclick="window.open('https://www.xiachufang.com/', '_blank')"><img src="https://www.xiachufang.com/favicon.ico" alt="下厨房" loading="lazy" decoding="async" referrerpolicy="no-referrer">下厨房</div>
+<div class="card" data-tooltip="香哈菜谱 - 美食菜谱大全" onclick="window.open('https://www.xiangha.com/', '_blank')"><img src="https://www.xiangha.com/favicon.ico" alt="香哈菜谱" loading="lazy" decoding="async" referrerpolicy="no-referrer">香哈菜谱</div>
+<div class="card" data-tooltip="豆果美食 - 发现美食世界" onclick="window.open('https://www.douguo.com/', '_blank')"><img src="https://www.douguo.com/favicon.ico" alt="豆果美食" loading="lazy" decoding="async" referrerpolicy="no-referrer">豆果美食</div>
+</div>
+</div>
+<!-- 金融理财 -->
+<div class="sub-column">
+<h3><i class="fas fa-coins"></i> 金融理财</h3>
+<div class="card-container">
+<div class="card" data-tooltip="支付宝 - 官方登录" onclick="window.open('https://www.alipay.com/', '_blank')"><img src="https://www.alipay.com/favicon.ico" alt="支付宝" loading="lazy" decoding="async" referrerpolicy="no-referrer">支付宝</div>
+<div class="card" data-tooltip="微信支付官网" onclick="window.open('https://pay.weixin.qq.com/', '_blank')"><img src="https://pay.weixin.qq.com/favicon.ico" alt="微信支付" loading="lazy" decoding="async" referrerpolicy="no-referrer">微信支付</div>
+<div class="card" data-tooltip="东方财富网 - 财经门户" onclick="window.open('https://www.eastmoney.com/', '_blank')"><img src="https://www.eastmoney.com/favicon.ico" alt="东方财富" loading="lazy" decoding="async" referrerpolicy="no-referrer">东方财富</div>
+<div class="card" data-tooltip="同花顺 - 股票行情" onclick="window.open('https://www.10jqka.com.cn/', '_blank')"><img src="https://www.10jqka.com.cn/favicon.ico" alt="同花顺" loading="lazy" decoding="async" referrerpolicy="no-referrer">同花顺</div>
+<div class="card" data-tooltip="雪球 - 聪明的投资者都在这里" onclick="window.open('https://xueqiu.com/', '_blank')"><img src="https://xueqiu.com/favicon.ico" alt="雪球" loading="lazy" decoding="async" referrerpolicy="no-referrer">雪球</div>
+<div class="card" data-tooltip="天天基金 - 基金理财平台" onclick="window.open('https://fund.eastmoney.com/', '_blank')"><img src="https://fund.eastmoney.com/favicon.ico" alt="天天基金" loading="lazy" decoding="async" referrerpolicy="no-referrer">天天基金</div>
+<div class="card" data-tooltip="招商银行官网" onclick="window.open('https://www.cmbchina.com/', '_blank')"><img src="https://www.cmbchina.com/favicon.ico" alt="招商银行" loading="lazy" decoding="async" referrerpolicy="no-referrer">招商银行</div>
+<div class="card" data-tooltip="中国工商银行" onclick="window.open('https://www.icbc.com.cn/', '_blank')"><img src="https://www.icbc.com.cn/favicon.ico" alt="工商银行" loading="lazy" decoding="async" referrerpolicy="no-referrer">工商银行</div>
+<div class="card" data-tooltip="个人所得税APP官网" onclick="window.open('https://etax.chinatax.gov.cn/', '_blank')"><img src="https://etax.chinatax.gov.cn/favicon.ico" alt="个税" loading="lazy" decoding="async" referrerpolicy="no-referrer">个人所得税</div>
+<div class="card" data-tooltip="中国银行网上银行" onclick="window.open('https://www.boc.cn/', '_blank')"><img src="https://www.boc.cn/favicon.ico" alt="中国银行" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国银行</div>
 </div>
 </div>
 </div>
