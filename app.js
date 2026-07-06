@@ -52,7 +52,7 @@
             let activePaletteChoice = 'rose';
             let activeBackgroundChoice = 'study';
             let emailLoadPromise = null;
-            let lockedScrollY = 0;
+            let scrollSpyTicking = false;
 
             function storageGet(key) {
                 try {
@@ -118,6 +118,8 @@
             }
 
             function sortDynamicSection(container) {
+                if (!container) return;
+
                 const subColumn = container.closest('.sub-column');
                 if (!subColumn) return;
                 const heading = (subColumn.querySelector('h3')?.textContent || '');
@@ -414,6 +416,107 @@
                 return document.querySelector('.column.active') || document.getElementById('offen-links') || columns[0];
             }
 
+            function getSubColumns(column) {
+                if (!column) {
+                    return [];
+                }
+
+                return Array.from(column.querySelectorAll(':scope > .sub-column'));
+            }
+
+            function getTabLabel(subColumn, index, moduleName) {
+                const headingText = subColumn.querySelector('h3')?.textContent || '';
+                let label = headingText.trim().replace(/\s+/g, ' ') || `分组 ${index + 1}`;
+                if (moduleName) {
+                    if (label.startsWith(moduleName)) {
+                        label = label.slice(moduleName.length).trim();
+                    } else if (label.endsWith(moduleName)) {
+                        label = label.slice(0, -moduleName.length).trim();
+                    }
+                }
+                return label || `分组 ${index + 1}`;
+            }
+
+            function setActiveSubColumn(column, subColumnId) {
+                const subColumns = getSubColumns(column);
+                if (!column || !subColumns.length) {
+                    return;
+                }
+
+                const target = subColumns.find(group => group.id === subColumnId) || subColumns[0];
+
+                column.querySelectorAll('.module-tab').forEach(tab => {
+                    const isActive = tab.dataset.subTarget === target.id;
+                    tab.classList.toggle('active', isActive);
+                    tab.setAttribute('aria-selected', String(isActive));
+                    tab.tabIndex = isActive ? 0 : -1;
+                });
+
+                subColumns.forEach(group => {
+                    const isActive = group === target;
+                    group.classList.toggle('is-tab-hidden', !isActive);
+                    group.setAttribute('aria-hidden', String(!isActive));
+                });
+            }
+
+            function restoreModuleTabs() {
+                columns.forEach(column => {
+                    const activeTab = column.querySelector('.module-tab.active');
+                    if (activeTab) {
+                        setActiveSubColumn(column, activeTab.dataset.subTarget);
+                    }
+                });
+            }
+
+            function setupModuleTabs() {
+                columns.forEach(column => {
+                    const subColumns = getSubColumns(column);
+                    if (subColumns.length <= 1 || column.hasAttribute('data-no-tabs') || column.querySelector(':scope > .module-tabs')) {
+                        return;
+                    }
+
+                    const tabs = document.createElement('div');
+                    tabs.className = 'module-tabs';
+                    tabs.setAttribute('role', 'tablist');
+                    tabs.setAttribute('aria-label', '模块分组');
+
+                    const navLink = document.querySelector(`.nav-link[data-target="${column.id}"]`);
+                    const moduleName = navLink ? navLink.textContent.trim() : '';
+                    if (moduleName) {
+                        const label = document.createElement('span');
+                        label.className = 'module-label';
+                        label.innerHTML = navLink.innerHTML.trim();
+                        tabs.appendChild(label);
+                        const sep = document.createElement('span');
+                        sep.className = 'module-sep';
+                        sep.textContent = '|';
+                        tabs.appendChild(sep);
+                    }
+
+                    subColumns.forEach((subColumn, index) => {
+                        if (!subColumn.id) {
+                            subColumn.id = `${column.id || 'module'}-sub-${index + 1}`;
+                        }
+
+                        const tab = document.createElement('button');
+                        tab.type = 'button';
+                        tab.className = 'module-tab';
+                        tab.dataset.subTarget = subColumn.id;
+                        tab.textContent = getTabLabel(subColumn, index, moduleName);
+                        tab.setAttribute('role', 'tab');
+                        tab.setAttribute('aria-controls', subColumn.id);
+                        tab.addEventListener('click', () => setActiveSubColumn(column, subColumn.id));
+
+                        subColumn.setAttribute('role', 'tabpanel');
+                        subColumn.setAttribute('tabindex', '0');
+                        tabs.appendChild(tab);
+                    });
+
+                    column.insertBefore(tabs, subColumns[0]);
+                    setActiveSubColumn(column, subColumns[0].id);
+                });
+            }
+
             function resetColumnFilters(column) {
                 if (!column) {
                     return;
@@ -426,39 +529,45 @@
 
             function filterCards() {
                 const query = searchInput?.value.trim().toLowerCase() || '';
-                const column = activeColumn();
+                const isSearching = Boolean(query);
+                document.body.classList.toggle('searching', isSearching);
 
                 if (!query) {
                     columns.forEach(resetColumnFilters);
+                    restoreModuleTabs();
                     return;
                 }
 
-                let visibleCount = 0;
-                column.querySelectorAll('.sub-column').forEach(group => {
-                    let groupVisible = 0;
+                columns.forEach(column => {
+                    let columnVisible = 0;
 
-                    group.querySelectorAll('.card').forEach(card => {
-                        const searchableText = [
-                            card.textContent,
-                            card.dataset.tooltip,
-                            card.getAttribute('aria-label')
-                        ].join(' ').toLowerCase();
-                        const isMatch = searchableText.includes(query);
+                    getSubColumns(column).forEach(group => {
+                        let groupVisible = 0;
+                        group.setAttribute('aria-hidden', 'false');
 
-                        card.classList.toggle('is-hidden', !isMatch);
-                        if (isMatch) {
-                            groupVisible += 1;
-                            visibleCount += 1;
-                        }
+                        group.querySelectorAll('.card').forEach(card => {
+                            const searchableText = [
+                                card.textContent,
+                                card.dataset.tooltip,
+                                card.getAttribute('aria-label')
+                            ].join(' ').toLowerCase();
+                            const isMatch = searchableText.includes(query);
+
+                            card.classList.toggle('is-hidden', !isMatch);
+                            if (isMatch) {
+                                groupVisible += 1;
+                                columnVisible += 1;
+                            }
+                        });
+
+                        group.classList.toggle('is-empty', groupVisible === 0);
                     });
 
-                    group.classList.toggle('is-empty', groupVisible === 0);
+                    column.classList.toggle('search-empty', columnVisible === 0);
                 });
-
-                column.classList.toggle('search-empty', visibleCount === 0);
             }
 
-            function setActiveColumn(targetId, shouldScroll = true) {
+            function markActiveColumn(targetId) {
                 const target = document.getElementById(targetId);
                 if (!target) {
                     return;
@@ -473,19 +582,54 @@
                     link.classList.toggle('active', isActive);
                     link.toggleAttribute('aria-current', isActive);
                 });
+            }
 
-                filterCards();
-
-                if (targetId === 'offen-links') {
-                    target.querySelectorAll('.card-container').forEach(sortDynamicSection);
+            function smoothScrollTo(target) {
+                if (reducedMotion.matches) {
+                    target.scrollIntoView({ block: 'start' });
+                    return;
                 }
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function setActiveColumn(targetId, shouldScroll = true) {
+                const target = document.getElementById(targetId);
+                if (!target) {
+                    return;
+                }
+
+                markActiveColumn(targetId);
 
                 if (shouldScroll) {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: reducedMotion.matches ? 'auto' : 'smooth'
-                    });
+                    smoothScrollTo(target);
                 }
+            }
+
+            function updateActiveSectionFromScroll() {
+                const threshold = Math.min(window.innerHeight * 0.35, 260);
+                let current = columns[0];
+
+                columns.forEach(column => {
+                    if (column.getBoundingClientRect().top <= threshold) {
+                        current = column;
+                    }
+                });
+
+                if (current?.id) {
+                    markActiveColumn(current.id);
+                }
+            }
+
+            function requestActiveSectionUpdate() {
+                if (scrollSpyTicking) {
+                    return;
+                }
+
+                scrollSpyTicking = true;
+                window.requestAnimationFrame(() => {
+                    scrollSpyTicking = false;
+                    updateActiveSectionFromScroll();
+                });
             }
 
             function performExternalSearch() {
@@ -508,28 +652,11 @@
                     return;
                 }
 
-                lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-                document.body.style.position = 'fixed';
-                document.body.style.top = `-${lockedScrollY}px`;
-                document.body.style.left = '0';
-                document.body.style.right = '0';
-                document.body.style.width = '100%';
                 document.body.classList.add('modal-open');
             }
 
             function unlockPageScroll() {
-                if (!document.body.classList.contains('modal-open')) {
-                    return;
-                }
-
                 document.body.classList.remove('modal-open');
-                document.body.style.position = '';
-                document.body.style.top = '';
-                document.body.style.left = '';
-                document.body.style.right = '';
-                document.body.style.width = '';
-                window.scrollTo(0, lockedScrollY);
-                lockedScrollY = 0;
             }
 
             function showModal(modal) {
@@ -820,7 +947,14 @@
             function bindEvents() {
                 document.addEventListener('click', function(e) {
                     const card = e.target.closest('.card');
-                    if (card) trackCardClick(card);
+                    if (!card) {
+                        return;
+                    }
+
+                    trackCardClick(card);
+                    window.setTimeout(() => {
+                        sortDynamicSection(card.closest('.card-container'));
+                    }, 0);
                 }, { capture: true });
 
                 toggleButton?.addEventListener('click', () => {
@@ -924,7 +1058,10 @@
                     sendFeedback();
                 });
 
-                window.addEventListener('scroll', updateScrollButton, { passive: true });
+                window.addEventListener('scroll', () => {
+                    updateScrollButton();
+                    requestActiveSectionUpdate();
+                }, { passive: true });
                 window.addEventListener('click', event => {
                     if (event.target === aboutModal) {
                         closeAboutModal();
@@ -962,6 +1099,10 @@
                 initDisplayPreferences();
                 initEmailService();
                 enhanceCards();
+                setupModuleTabs();
+                columns.forEach(column => {
+                    column.querySelectorAll('.card-container').forEach(sortDynamicSection);
+                });
                 const customBgInput = document.getElementById('custom-bg-input');
                 if (customBgInput) {
                     customBgInput.addEventListener('change', function() {
@@ -973,6 +1114,7 @@
                 setActiveColumn(activeColumn()?.id || 'offen-links', false);
                 updateSidebarToggle();
                 updateScrollButton();
+                updateActiveSectionFromScroll();
                 updateCountdown();
                 window.setInterval(updateCountdown, 60000);
 
