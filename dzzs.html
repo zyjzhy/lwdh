@@ -1,0 +1,3126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="党课学习与党员转正备考平台 - 党章知识练习、预备党员答辩题库，助力学党章、强党性、备转正">
+    <meta name="keywords" content="党章,党课,党员转正,预备党员答辩,党建,入党考试,党章知识">
+    <title>党课学习 · 党员转正备考平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #c83838;
+            background-image:
+                radial-gradient(ellipse at 50% -10%, rgba(122, 0, 0, 0.55) 0%, transparent 52%),
+                radial-gradient(ellipse at 15% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 42%),
+                radial-gradient(ellipse at 85% 75%, rgba(255, 180, 120, 0.12) 0%, transparent 48%),
+                linear-gradient(180deg, #7a1515 0%, #9e2828 18%, #c83838 45%, #d94848 72%, #e85858 100%);
+            min-height: 100vh;
+            padding: 24px 16px 16px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow:
+                0 24px 64px rgba(0, 0, 0, 0.28),
+                0 0 0 1px rgba(255, 215, 0, 0.18),
+                0 -8px 32px rgba(122, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #7a0000 0%, #b01010 45%, #8b0000 100%);
+            color: white;
+            padding: 36px 30px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.12) 0%, transparent 45%);
+            pointer-events: none;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #ffd700, #ffec8b, #ffd700, transparent);
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        
+        .subtitle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #ffd700;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle .tag-item {
+            opacity: 0.95;
+        }
+
+        .subtitle .tag-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.6);
+            flex-shrink: 0;
+        }
+        
+        .controls {
+            background: linear-gradient(180deg, #fafafa 0%, #f3f4f6 100%);
+            padding: 22px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .controls-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        select, input:not([type="radio"]):not([type="checkbox"]) {
+            padding: 11px 16px;
+            border: 1.5px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.25s ease;
+            flex: 1;
+            min-width: 150px;
+            background: #fff;
+        }
+        
+        select:focus, input:not([type="radio"]):not([type="checkbox"]):focus {
+            border-color: #b01010;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(176, 16, 16, 0.12);
+        }
+        
+        button {
+            padding: 11px 22px;
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(139, 0, 0, 0.25);
+        }
+        
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(139, 0, 0, 0.35);
+        }
+        
+        button#resetBtn {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+        
+        button#resetBtn:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+        }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            max-width: 480px;
+        }
+        
+        .content {
+            min-height: 560px;
+        }
+        
+        .type-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 8px;
+            justify-content: center;
+            align-items: stretch;
+            overflow-x: auto;
+            padding: 4px 2px 2px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .type-nav::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .type-nav-item {
+            position: relative;
+            flex: 1;
+            min-width: 72px;
+            padding: 14px 10px 10px;
+            background: #fff;
+            color: #555;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.25s ease;
+            user-select: none;
+            border: 1.5px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            font-size: 10px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 3px 5px;
+            border-radius: 0 7px 0 6px;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+        }
+
+        .nav-badge-party {
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #fff;
+        }
+
+        .nav-badge-member {
+            background: linear-gradient(135deg, #b45309, #d97706);
+            color: #fff;
+        }
+
+        .nav-label {
+            display: block;
+            white-space: nowrap;
+        }
+        
+        .type-nav-item:hover {
+            border-color: #c01818;
+            color: #8b0000;
+            background: #fff5f5;
+        }
+        
+        .type-nav-item.active {
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+        }
+
+        .type-nav-item.active .nav-badge-party {
+            background: rgba(255, 255, 255, 0.22);
+            color: #ffe4e4;
+        }
+        
+        .type-nav-item.defense-nav.active {
+            background: linear-gradient(135deg, #b45309, #d97706);
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+        }
+
+        .type-nav-item.defense-nav.active .nav-badge-member {
+            background: rgba(255, 255, 255, 0.22);
+            color: #fef3c7;
+        }
+        
+        .type-nav-item.defense-nav:hover:not(.active) {
+            border-color: #d97706;
+            color: #92400e;
+            background: #fffbeb;
+        }
+
+        .type-nav-item.exam-nav.active {
+            background: linear-gradient(135deg, #065f46, #059669);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
+        }
+
+        .type-nav-item.exam-nav:hover:not(.active) {
+            border-color: #059669;
+            color: #065f46;
+            background: #ecfdf5;
+        }
+        
+        .main-content {
+            padding: 28px 32px 36px;
+            background: linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+        
+        #content-area {
+            animation: fadeIn 0.35s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content-heading {
+            color: #8b0000;
+            font-size: 1.45em;
+            margin-bottom: 8px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(139, 0, 0, 0.15);
+        }
+        
+        .content-subheading {
+            margin-top: 28px;
+            margin-bottom: 12px;
+            color: #8b0000;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .content-subheading::before {
+            content: "";
+            width: 4px;
+            height: 18px;
+            background: linear-gradient(180deg, #ffd700, #8b0000);
+            border-radius: 2px;
+        }
+        
+        .question-card {
+            background: #fff;
+            border: 1px solid #ececec;
+            border-left: 4px solid #8b0000;
+            margin: 16px 0;
+            border-radius: 12px;
+            box-shadow: 0 3px 14px rgba(139, 0, 0, 0.07);
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .q-card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 11px 20px;
+            background: linear-gradient(90deg, #fff8f8 0%, #fff 100%);
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .q-card-head-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .q-num {
+            font-size: 12px;
+            font-weight: 700;
+            color: #8b0000;
+            background: rgba(139, 0, 0, 0.08);
+            padding: 3px 10px;
+            border-radius: 10px;
+        }
+
+        .q-type-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .q-type-tag.single { background: #fee2e2; color: #991b1b; }
+        .q-type-tag.multiple { background: #dbeafe; color: #1e40af; }
+        .q-type-tag.judge { background: #d1fae5; color: #065f46; }
+        .q-type-tag.short { background: #fef3c7; color: #92400e; }
+        .q-type-tag.defense { background: #ffedd5; color: #9a3412; }
+
+        .q-card-body {
+            padding: 18px 22px 20px;
+            text-align: left;
+        }
+        
+        .question-card.defense-card {
+            border-left-color: #d97706;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 8px 24px rgba(139, 0, 0, 0.11);
+            transform: translateY(-1px);
+        }
+        
+        .question-card.defense-card:hover {
+            box-shadow: 0 8px 24px rgba(217, 119, 6, 0.13);
+        }
+
+        .question-card.exam-card.submitted.result-correct {
+            border-left-color: #059669;
+            box-shadow: 0 4px 16px rgba(5, 150, 105, 0.12);
+        }
+
+        .question-card.exam-card.submitted.result-wrong {
+            border-left-color: #dc2626;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.12);
+        }
+        
+        .question-text {
+            font-size: 15.5px;
+            margin-bottom: 14px;
+            font-weight: 500;
+            line-height: 1.7;
+            color: #1f2937;
+        }
+        
+        .options {
+            margin: 10px 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: stretch;
+            text-align: left;
+            width: 100%;
+        }
+
+        .exam-options {
+            align-items: stretch;
+        }
+
+        .exam-options.judge-options {
+            max-width: 100%;
+        }
+        
+        .option {
+            padding: 10px 14px;
+            background: #f9fafb;
+            border-radius: 9px;
+            border: 1px solid #eef0f2;
+            border-left: 3px solid #c01818;
+            transition: all 0.2s ease;
+            font-size: 14.5px;
+            line-height: 1.55;
+        }
+        
+        .option:hover {
+            background: #fff5f5;
+            border-color: #fecaca;
+        }
+
+        .option-selectable {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            width: 100%;
+            padding: 10px 14px 10px 12px;
+            background: #f9fafb;
+            border-radius: 9px;
+            border: 1.5px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14.5px;
+            line-height: 1.6;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .option-selectable span {
+            flex: 1 1 auto;
+            min-width: 0;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .option-selectable.option-long {
+            align-items: flex-start;
+        }
+
+        .option-selectable.option-long input {
+            margin-top: 3px;
+        }
+        
+        .option-selectable:hover {
+            background: #fff;
+            border-color: #c01818;
+        }
+
+        .option-selectable input[type="radio"],
+        .option-selectable input[type="checkbox"] {
+            margin: 0;
+            flex: 0 0 auto;
+            flex-shrink: 0;
+            accent-color: #8b0000;
+            width: 16px;
+            height: 16px;
+            min-width: 0;
+            max-width: 16px;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .option-selectable.selected {
+            background: #fff5f5;
+            border-color: #c01818;
+        }
+
+        .option-selectable.correct-pick {
+            background: #ecfdf5;
+            border-color: #34d399;
+        }
+
+        .option-selectable.wrong-pick {
+            background: #fef2f2;
+            border-color: #f87171;
+        }
+
+        .option-selectable.missed-answer {
+            background: #f0fdf4;
+            border-color: #86efac;
+            border-style: dashed;
+        }
+
+        .exam-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .exam-chip.total {
+            background: #fff5f5;
+            color: #8b0000;
+            border: 1px solid rgba(139, 0, 0, 0.15);
+        }
+
+        .exam-chip.objective {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .exam-chip.subjective {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        button.btn-exam-start {
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #fff;
+            border: none;
+            padding: 14px 48px;
+            font-size: 17px;
+            font-weight: 700;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.32);
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 8px;
+        }
+
+        button.btn-exam-start:hover {
+            box-shadow: 0 8px 28px rgba(139, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .exam-entry-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: stretch;
+            margin-top: 4px;
+        }
+
+        button.btn-exam-entry-exit {
+            background: #fff;
+            color: #6b7280;
+            border: 1.5px solid #d1d5db;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            box-shadow: none;
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        button.btn-exam-entry-exit:hover {
+            background: #f9fafb;
+            color: #374151;
+            border-color: #9ca3af;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .exam-entry-actions .btn-exam-start {
+            flex: 1;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .exam-entry {
+            text-align: center;
+            padding: 40px 32px 48px;
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid rgba(139, 0, 0, 0.1);
+            box-shadow: 0 6px 24px rgba(139, 0, 0, 0.07);
+            max-width: 640px;
+            margin: 20px auto 8px;
+        }
+
+        .exam-entry-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #ffd700;
+            font-size: 32px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(139, 0, 0, 0.28);
+        }
+
+        .exam-entry h2 {
+            color: #8b0000;
+            font-size: 1.65em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .exam-entry-desc {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .exam-entry-rules {
+            text-align: left;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 28px;
+        }
+
+        .exam-entry-rules h3 {
+            color: #8b0000;
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .exam-entry-rules ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .exam-entry-rules li {
+            position: relative;
+            padding: 6px 0 6px 18px;
+            color: #4b5563;
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        .exam-entry-rules li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #c01818;
+        }
+
+        .exam-entry-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .exam-score-panel {
+            display: none;
+            margin-bottom: 22px;
+            padding: 22px 26px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fffbeb, #fff);
+            border: 1px solid #fcd34d;
+            text-align: center;
+        }
+
+        .exam-score-panel.visible {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .exam-score-panel .score-big {
+            font-size: 2.8em;
+            font-weight: 800;
+            color: #8b0000;
+            line-height: 1.2;
+        }
+
+        .exam-score-panel .score-detail {
+            color: #6b7280;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .exam-score-panel .score-breakdown {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .exam-score-panel .score-chip {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .exam-score-panel .score-auto-note {
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            color: #92400e;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .exam-answer-reveal {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-radius: 9px;
+            font-size: 14.5px;
+            line-height: 1.75;
+            display: none;
+        }
+
+        .exam-answer-reveal.visible {
+            display: block;
+        }
+
+        .exam-answer-reveal.correct {
+            background: #ecfdf5;
+            border: 1px solid #6ee7b7;
+            color: #065f46;
+        }
+
+        .exam-answer-reveal.wrong {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+        }
+
+        .exam-answer-reveal.reference {
+            background: #eff6ff;
+            border: 1px solid #93c5fd;
+            color: #1e40af;
+        }
+
+        .exam-answer-reveal .reveal-label {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .short-textarea {
+            width: 100%;
+            min-height: 88px;
+            margin-top: 8px;
+            padding: 12px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 9px;
+            font-size: 14px;
+            font-family: inherit;
+            line-height: 1.6;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        .short-textarea:focus {
+            border-color: #8b0000;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+        }
+
+        .short-hint {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 8px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, #fff5f5, #fff);
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin: 28px 0 8px;
+            border: 1px solid rgba(139, 0, 0, 0.15);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #8b0000;
+            line-height: 1.2;
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        .highlight {
+            background: linear-gradient(180deg, transparent 40%, #ffe066 40%);
+            padding: 0 2px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+        
+        .answer {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.25s ease;
+            text-align: center;
+            color: #b45309;
+            font-size: 13px;
+        }
+        
+        .answer .a-text {
+            display: none;
+            font-weight: 400;
+            font-size: 14.5px;
+            line-height: 1.75;
+        }
+        
+        .answer .a-toggle {
+            font-size: 13px;
+        }
+        
+        .answer .a-collapse {
+            display: none;
+        }
+        
+        .answer.expanded .a-text {
+            display: inline;
+        }
+        
+        .answer.expanded .a-toggle {
+            display: none;
+        }
+        
+        .answer.expanded .a-collapse {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            opacity: 0.55;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .answer.expanded {
+            background: #ecfdf5;
+            border-color: #6ee7b7;
+            color: #065f46;
+            text-align: left;
+            padding: 14px 18px;
+        }
+        
+        .answer.expanded.short {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        
+        .welcome-section {
+            text-align: center;
+            padding: 48px 32px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f3f4f6;
+        }
+        
+        .welcome-section h2 {
+            color: #8b0000;
+            margin-bottom: 16px;
+            font-size: 1.5em;
+        }
+        
+        .welcome-section p {
+            color: #6b7280;
+            line-height: 1.8;
+            max-width: 480px;
+            margin: 0 auto 24px;
+        }
+        
+        .welcome-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .welcome-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            background: #fff5f5;
+            color: #8b0000;
+            border: 1px solid rgba(139, 0, 0, 0.12);
+        }
+        
+        .welcome-tag.gold {
+            background: #fffbeb;
+            color: #92400e;
+            border-color: rgba(217, 119, 6, 0.2);
+        }
+        
+        .site-footer {
+            max-width: 1060px;
+            margin: 14px auto 0;
+            text-align: center;
+            padding: 16px;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 考试模式：隐藏站点导航，沉浸式答题 */
+        body.exam-mode {
+            padding: 0;
+        }
+
+        body.exam-mode .container {
+            max-width: none;
+            min-height: 100vh;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.exam-mode header,
+        body.exam-mode .controls,
+        body.exam-mode .site-footer {
+            display: none !important;
+        }
+
+        body.exam-mode .content {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.exam-mode .main-content {
+            flex: 1;
+            padding: 0;
+            background: #eef0f2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.exam-mode #content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .exam-page-header {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #7a0000 0%, #b01010 50%, #8b0000 100%);
+            color: #fff;
+            padding: 14px 28px;
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            grid-template-areas:
+                "brand timer actions"
+                "stats timer actions";
+            gap: 6px 16px;
+            align-items: center;
+            border-bottom: 3px solid #ffd700;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        body.exam-mode .exam-page-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+
+        .exam-page-header--no-timer {
+            grid-template-columns: 1fr auto;
+            grid-template-areas:
+                "brand actions"
+                "stats actions";
+        }
+
+        .exam-page-header--entry {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                "brand"
+                "stats";
+        }
+
+        .exam-page-header--no-actions {
+            grid-template-columns: 1fr auto;
+            grid-template-areas:
+                "brand timer"
+                "stats timer";
+        }
+
+        .exam-page-header--no-actions.exam-page-header--no-timer {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                "brand"
+                "stats";
+        }
+
+        .exam-header-top {
+            display: contents;
+        }
+
+        .exam-page-header-brand {
+            grid-area: brand;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .exam-header-timer {
+            grid-area: timer;
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            min-width: 100px;
+        }
+
+        .exam-header-stats,
+        .exam-header-subtitle {
+            grid-area: stats;
+            min-width: 0;
+        }
+
+        .exam-header-subtitle {
+            font-size: 12px;
+            opacity: 0.85;
+            line-height: 1.4;
+        }
+
+        .exam-header-actions {
+            grid-area: actions;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            align-self: center;
+        }
+
+        .exam-timer-label {
+            font-size: 11px;
+            opacity: 0.85;
+            letter-spacing: 1px;
+        }
+
+        .exam-timer-value {
+            font-size: 22px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            color: #ffd700;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .exam-header-timer.urgent {
+            border-color: rgba(251, 191, 36, 0.6);
+            background: rgba(180, 83, 9, 0.25);
+        }
+
+        .exam-header-timer.urgent .exam-timer-value {
+            color: #fde68a;
+        }
+
+        .exam-header-timer.critical {
+            border-color: rgba(248, 113, 113, 0.7);
+            background: rgba(127, 29, 29, 0.45);
+            animation: timerPulse 1s ease-in-out infinite;
+        }
+
+        .exam-header-timer.critical .exam-timer-value {
+            color: #fca5a5;
+        }
+
+        @keyframes timerPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.75; }
+        }
+
+        .exam-timer-done {
+            font-size: 14px;
+            font-weight: 700;
+            color: #86efac;
+            padding: 8px 16px;
+        }
+
+        .exam-page-header-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            font-weight: 800;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 215, 0, 0.35);
+        }
+
+        .exam-page-header h2 {
+            font-size: 1.15em;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .btn-exam-header-exit {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: none;
+            white-space: nowrap;
+        }
+
+        .btn-exam-header-exit:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-exam-header-regen {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.45);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: none;
+            white-space: nowrap;
+        }
+
+        .btn-exam-header-regen:hover {
+            background: rgba(255, 215, 0, 0.28);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .exam-header-stats {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .exam-stat-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .exam-stat-pill.sub {
+            background: rgba(251, 191, 36, 0.18);
+            border-color: rgba(253, 224, 71, 0.35);
+        }
+
+        .exam-page-body {
+            flex: 1;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        body.exam-mode .exam-page-body {
+            padding: 92px 28px 32px;
+        }
+
+        body.exam-mode .exam-page-body--entry {
+            padding: 32px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        body.exam-mode.exam-has-footer .exam-page-body {
+            padding-bottom: calc(44px + env(safe-area-inset-bottom, 0px));
+        }
+
+        body.exam-mode.exam-footer-expanded .exam-page-body {
+            padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+        }
+
+        body.exam-mode.exam-footer-submitted .exam-page-body {
+            padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        }
+
+        body.exam-mode .exam-page-body .exam-score-panel + .content-subheading {
+            margin-top: 0;
+        }
+
+        .exam-page-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            border-top: none;
+        }
+
+        .exam-page-footer:not(.submitted) {
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            padding: 0;
+        }
+
+        .exam-page-footer:not(.submitted)::before {
+            display: none;
+        }
+
+        .exam-footer-actions {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            align-items: stretch;
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .exam-footer-sheet {
+            position: relative;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .exam-footer-sheet::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8b0000, #ffd700, #c01818, #ffd700, #8b0000);
+            opacity: 0.85;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .exam-footer-handle {
+            display: block;
+            width: 40px;
+            height: 4px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #e5e7eb, #cbd5e1, #e5e7eb);
+        }
+
+        .exam-footer-toggle-arrow {
+            display: block;
+            width: 9px;
+            height: 9px;
+            margin-top: 3px;
+            border-right: 2px solid #c01818;
+            border-bottom: 2px solid #c01818;
+            transform: rotate(-135deg);
+            transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s, opacity 0.2s;
+            opacity: 0.8;
+            box-sizing: border-box;
+        }
+
+        .exam-footer-toggle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 8px 0 6px;
+            min-height: 0;
+            cursor: pointer;
+            gap: 4px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .exam-page-footer:not(.submitted):not(.expanded) .exam-footer-actions {
+            display: none;
+        }
+
+        .exam-page-footer:not(.submitted):not(.expanded) .exam-footer-toggle {
+            padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+        }
+
+        .exam-page-footer:not(.submitted).expanded .exam-footer-toggle {
+            padding: 6px 0 4px;
+        }
+
+        .exam-page-footer:not(.submitted).expanded .exam-footer-sheet {
+            padding: 0 28px calc(12px + env(safe-area-inset-bottom, 0px));
+        }
+
+        .exam-page-footer:not(.submitted).expanded .exam-footer-actions {
+            display: flex;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .exam-page-footer.expanded .exam-footer-toggle-arrow {
+            transform: rotate(45deg);
+            border-color: #8b0000;
+            opacity: 1;
+        }
+
+        .exam-footer-toggle:active .exam-footer-toggle-arrow {
+            opacity: 1;
+        }
+
+        .exam-footer-toggle:hover,
+        .exam-footer-toggle:active,
+        .exam-footer-toggle:focus,
+        .exam-footer-toggle:focus-visible {
+            background: transparent;
+            outline: none;
+            box-shadow: none;
+        }
+
+        button.btn-exam-footer-regen {
+            background: #fff;
+            color: #8b0000;
+            border: 1.5px solid rgba(139, 0, 0, 0.2);
+            padding: 12px 16px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(139, 0, 0, 0.08);
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        button.btn-exam-footer-regen:hover {
+            background: linear-gradient(180deg, #fff5f5 0%, #ffe4e4 100%);
+            border-color: #8b0000;
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.14);
+        }
+
+        button.btn-exam-footer-exit {
+            background: #fff;
+            color: #4b5563;
+            border: 1.5px solid #d1d5db;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        button.btn-exam-footer-exit:hover {
+            background: linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%);
+            color: #374151;
+            border-color: #9ca3af;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .exam-page-footer.submitted {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 14px 28px;
+            padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+            background: linear-gradient(180deg, #f0fdf4 0%, #fff 100%);
+            border-top-color: #86efac;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .exam-footer-hint {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .exam-footer-hint strong {
+            color: #065f46;
+        }
+
+        button.btn-exam-submit-full {
+            background: linear-gradient(135deg, #8b0000 0%, #c01818 50%, #a01010 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(139, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        button.btn-exam-submit-full:hover:not(:disabled) {
+            box-shadow: 0 6px 22px rgba(139, 0, 0, 0.4);
+            transform: translateY(-1px);
+        }
+
+        button.btn-exam-submit-full:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (min-width: 769px) {
+            .exam-footer-actions button {
+                flex: 1;
+            }
+            .exam-footer-actions .btn-exam-submit-full {
+                flex: 1.3;
+            }
+        }
+
+        /* 自定义弹窗 */
+        .app-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: modalFadeIn 0.2s ease;
+        }
+
+        .app-modal-overlay[hidden] {
+            display: none !important;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .app-modal {
+            background: #fff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: modalSlideIn 0.25s ease;
+            border: 1px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .app-modal-header {
+            padding: 20px 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-modal-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .app-modal-icon.warn {
+            background: linear-gradient(135deg, #b45309, #d97706);
+        }
+
+        .app-modal-header h3 {
+            margin: 0;
+            font-size: 1.1em;
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .app-modal-body {
+            padding: 16px 24px 24px;
+            color: #4b5563;
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        .app-modal-actions {
+            display: flex;
+            gap: 10px;
+            padding: 0 24px 20px;
+            justify-content: flex-end;
+        }
+
+        .app-modal-btn {
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+        }
+
+        .app-modal-btn.cancel {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+        }
+
+        .app-modal-btn.cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .app-modal-btn.confirm {
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(139, 0, 0, 0.25);
+        }
+
+        .app-modal-btn.confirm:hover {
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.35);
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        body.exam-mode .exam-entry {
+            margin: 0 auto;
+            max-width: 680px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 16px 10px 12px; }
+            .container { border-radius: 12px; }
+            h1 { font-size: 1.65em; letter-spacing: 0.5px; }
+            header { padding: 28px 20px 24px; }
+            .subtitle { font-size: 12px; letter-spacing: 1.5px; gap: 8px; }
+            .controls { padding: 16px 14px; }
+            .main-content { padding: 18px 14px 24px; }
+            .content-heading { font-size: 1.25em; }
+            .content-subheading { font-size: 1em; margin-top: 22px; }
+            .question-card { margin: 12px 0; border-radius: 10px; }
+            .q-card-head { padding: 10px 14px; }
+            .q-card-body { padding: 14px 16px 16px; }
+            .question-text { font-size: 15px; line-height: 1.65; }
+            .option, .option-selectable { font-size: 14px; padding: 11px 12px; }
+            .option-selectable { min-height: 44px; }
+            .stats { gap: 20px; padding: 16px 14px; }
+            .stat-number { font-size: 1.8em; }
+            .welcome-section { padding: 32px 20px; }
+            .welcome-section h2 { font-size: 1.25em; }
+            .type-nav-item { min-width: 60px; font-size: 13px; padding: 13px 8px 9px; }
+            .nav-badge { font-size: 9px; padding: 2px 4px; }
+            .exam-entry { padding: 32px 20px 40px; margin: 0; }
+            .exam-entry h2 { font-size: 1.4em; }
+            .exam-entry-rules { padding: 14px 16px; }
+            .exam-score-panel { padding: 18px 16px; }
+            .exam-score-panel .score-big { font-size: 2.2em; }
+            .exam-score-panel .score-detail { font-size: 13px; }
+        }
+
+        @media (max-width: 576px) {
+            body { padding: 0; }
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+                border: none;
+            }
+            header { padding: 24px 16px 20px; }
+            h1 { font-size: 1.35em; margin-bottom: 10px; }
+            .subtitle { font-size: 11px; letter-spacing: 1px; gap: 6px; }
+            .controls { padding: 14px 12px; }
+            .controls-inner { gap: 14px; }
+            .filter-group {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .search-box {
+                grid-column: 1 / -1;
+                min-width: 0 !important;
+                max-width: none !important;
+                width: 100%;
+            }
+            #searchBtn, #resetBtn {
+                width: auto !important;
+                padding: 11px 14px;
+                font-size: 14px;
+            }
+            .type-nav {
+                justify-content: flex-start;
+                gap: 6px;
+                margin: 0 -4px;
+                padding: 2px 4px 4px;
+            }
+            .type-nav-item {
+                flex: 0 0 auto;
+                min-width: 52px;
+                font-size: 12px;
+                padding: 12px 5px 8px;
+            }
+            .main-content { padding: 14px 12px 20px; }
+            .content-heading {
+                font-size: 1.15em;
+                padding-bottom: 10px;
+            }
+            .content-subheading {
+                font-size: 0.95em;
+                margin-top: 18px;
+                margin-bottom: 10px;
+                flex-wrap: wrap;
+            }
+            .question-card {
+                margin: 10px 0;
+                border-left-width: 3px;
+            }
+            .q-card-head { padding: 9px 12px; gap: 6px; }
+            .q-card-head-left { gap: 6px; flex-wrap: wrap; }
+            .q-num, .q-type-tag { font-size: 10px; padding: 2px 8px; }
+            .q-card-body { padding: 12px 14px 14px; }
+            .question-text { font-size: 14.5px; margin-bottom: 12px; }
+            .option-selectable {
+                padding: 12px 12px 12px 10px;
+                font-size: 14px;
+                gap: 10px;
+                border-radius: 8px;
+            }
+            .option-selectable input[type="radio"],
+            .option-selectable input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                max-width: 18px;
+            }
+            .answer { padding: 10px 14px; font-size: 14px; }
+            .answer.expanded { padding: 12px 14px; }
+            .answer.expanded.short { max-height: 220px; }
+            .stats {
+                gap: 12px 20px;
+                padding: 14px 12px;
+                margin: 20px 0 6px;
+            }
+            .stat-item { flex: 1 1 40%; min-width: 80px; }
+            .stat-number { font-size: 1.6em; }
+            .stat-label { font-size: 12px; }
+            .site-footer {
+                font-size: 11px;
+                padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+                line-height: 1.6;
+            }
+            .welcome-section {
+                padding: 28px 16px;
+                border-radius: 10px;
+            }
+            .welcome-section h2 { font-size: 1.15em; }
+            .welcome-section p { font-size: 14px; }
+
+            /* 考试页顶栏 */
+            .exam-page-header {
+                grid-template-columns: 1fr auto;
+                grid-template-areas:
+                    "brand timer"
+                    "stats stats"
+                    "actions actions";
+                padding: 10px 12px;
+                gap: 8px;
+            }
+            .exam-page-header--no-timer {
+                grid-template-areas:
+                    "brand brand"
+                    "stats stats"
+                    "actions actions";
+            }
+            .exam-page-header--entry {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "brand"
+                    "stats";
+            }
+            .exam-page-header--no-actions {
+                grid-template-areas:
+                    "brand timer"
+                    "stats stats";
+            }
+            .exam-page-header--no-actions.exam-page-header--no-timer {
+                grid-template-areas:
+                    "brand brand"
+                    "stats stats";
+            }
+            .exam-page-header-brand { gap: 8px; }
+            .exam-page-header-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+                border-radius: 7px;
+            }
+            .exam-page-header h2 { font-size: 0.95em; letter-spacing: 0.5px; }
+            .exam-header-stats {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 6px;
+                padding-bottom: 1px;
+            }
+            .exam-header-stats::-webkit-scrollbar { display: none; }
+            .exam-stat-pill {
+                font-size: 11px;
+                padding: 3px 8px;
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
+            .exam-header-subtitle { font-size: 11px; }
+            .exam-header-timer {
+                min-width: 76px;
+                padding: 4px 10px;
+                border-radius: 8px;
+            }
+            .exam-timer-label { font-size: 10px; letter-spacing: 0.5px; }
+            .exam-timer-value { font-size: 17px; letter-spacing: 1px; }
+            .exam-header-actions {
+                width: 100%;
+                gap: 8px;
+            }
+            .exam-header-actions button {
+                flex: 1;
+                padding: 10px 10px;
+                font-size: 13px;
+                text-align: center;
+            }
+            .exam-timer-done {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+
+            /* 考试内容区 */
+            body.exam-mode .exam-page-body {
+                padding: 110px 12px 24px;
+            }
+            body.exam-mode .exam-page-body--entry {
+                padding: 20px 12px;
+                min-height: 100vh;
+            }
+            body.exam-mode.exam-has-footer .exam-page-body {
+                padding-bottom: calc(38px + env(safe-area-inset-bottom, 0px));
+            }
+            body.exam-mode.exam-footer-expanded .exam-page-body {
+                padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+            }
+            body.exam-mode.exam-footer-submitted .exam-page-body {
+                padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+            }
+            body.exam-mode .exam-page-body .content-subheading {
+                margin-top: 8px;
+            }
+            body.exam-mode .exam-page-body .exam-score-panel + .content-subheading {
+                margin-top: 0;
+            }
+            .exam-entry-actions {
+                gap: 10px;
+            }
+            button.btn-exam-entry-exit,
+            .exam-entry-actions .btn-exam-start {
+                flex: 1;
+                max-width: none;
+                padding: 13px 16px;
+                font-size: 15px;
+                justify-content: center;
+                text-align: center;
+            }
+            .exam-entry {
+                padding: 24px 16px 32px;
+                border-radius: 12px;
+                border: 1px solid rgba(139, 0, 0, 0.08);
+                box-shadow: none;
+            }
+            .exam-entry-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 26px;
+                border-radius: 14px;
+                margin-bottom: 16px;
+            }
+            .exam-entry h2 { font-size: 1.25em; }
+            .exam-entry-desc { font-size: 13px; margin-bottom: 18px; }
+            .exam-entry-chips { gap: 6px; margin-bottom: 20px; }
+            .exam-entry-rules { padding: 12px 14px; margin-bottom: 22px; }
+            .exam-entry-rules li { font-size: 13px; padding: 5px 0 5px 16px; }
+            .exam-score-panel { padding: 16px 14px; border-radius: 12px; }
+            .exam-score-panel .score-big { font-size: 2em; }
+            .exam-score-panel .score-detail {
+                font-size: 12px;
+                line-height: 1.6;
+            }
+            .exam-score-panel .score-breakdown { gap: 8px; margin-top: 12px; }
+            .exam-score-panel .score-chip { font-size: 12px; padding: 5px 10px; }
+            .exam-answer-reveal { font-size: 13.5px; padding: 12px 14px; }
+            .short-textarea { font-size: 14px; padding: 10px 12px; }
+
+            /* 考试底栏：移动端圆角与紧凑按钮 */
+            .exam-footer-sheet {
+                border-radius: 14px 14px 0 0;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            }
+            .exam-page-footer:not(.submitted):not(.expanded) .exam-footer-sheet {
+                border-radius: 12px 12px 0 0;
+            }
+            .exam-page-footer:not(.submitted).expanded .exam-footer-sheet {
+                padding: 0 12px calc(12px + env(safe-area-inset-bottom, 0px));
+            }
+            .exam-footer-actions {
+                gap: 8px;
+            }
+            .exam-footer-actions button {
+                flex: 1;
+                min-width: 0;
+                padding: 11px 4px;
+                font-size: 12px;
+                border-radius: 8px;
+            }
+            .exam-footer-actions .btn-exam-footer-regen,
+            .exam-footer-actions .btn-exam-footer-exit {
+                background: #fff;
+            }
+            .exam-footer-actions .btn-exam-submit-full {
+                background: linear-gradient(135deg, #8b0000 0%, #c01818 50%, #a01010 100%);
+            }
+            .exam-page-footer.submitted {
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+            }
+            .exam-footer-hint {
+                text-align: center;
+                font-size: 12px;
+                line-height: 1.5;
+            }
+            .exam-page-footer.submitted .btn-exam-footer-exit {
+                width: 100%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            /* 弹窗 */
+            .app-modal-overlay {
+                align-items: flex-end;
+                padding: 0;
+            }
+            .app-modal {
+                max-width: none;
+                border-radius: 16px 16px 0 0;
+                animation: modalSlideUp 0.28s ease;
+            }
+            @keyframes modalSlideUp {
+                from { opacity: 0; transform: translateY(100%); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .app-modal-header { padding: 18px 20px 0; }
+            .app-modal-body { padding: 14px 20px 20px; font-size: 14px; }
+            .app-modal-actions {
+                flex-direction: column-reverse;
+                padding: 0 20px calc(18px + env(safe-area-inset-bottom, 0px));
+                gap: 8px;
+            }
+            .app-modal-btn {
+                width: 100%;
+                padding: 13px 20px;
+                font-size: 15px;
+            }
+        }
+
+        @media (hover: none) {
+            .question-card:hover,
+            .option-selectable:hover,
+            button:hover {
+                transform: none;
+            }
+            .question-card:hover {
+                box-shadow: 0 3px 14px rgba(139, 0, 0, 0.07);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>党课学习 · 党员转正备考平台</h1>
+            <p class="subtitle">
+                <span class="tag-item">学党章</span>
+                <span class="tag-dot"></span>
+                <span class="tag-item">强党性</span>
+                <span class="tag-dot"></span>
+                <span class="tag-item">备转正</span>
+            </p>
+        </header>
+        
+        <div class="controls">
+            <div class="controls-inner">
+                <div class="filter-group">
+                    <input type="text" id="searchInput" class="search-box" placeholder="搜索题目关键词…">
+                    <button id="searchBtn">搜索</button>
+                    <button id="resetBtn">重置</button>
+                </div>
+                <div class="type-nav">
+                    <span class="type-nav-item active" data-section="all" onclick="showSection('all')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">全部</span></span>
+                    <span class="type-nav-item" data-section="single" onclick="showSection('single')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">单选</span></span>
+                    <span class="type-nav-item" data-section="multiple" onclick="showSection('multiple')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">多选</span></span>
+                    <span class="type-nav-item" data-section="judge" onclick="showSection('judge')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">判断</span></span>
+                    <span class="type-nav-item" data-section="short" onclick="showSection('short')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">简答</span></span>
+                    <span class="type-nav-item exam-nav" data-section="exam" onclick="showExamEntry()"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">考试</span></span>
+                    <span class="type-nav-item defense-nav" data-section="defense" onclick="showSection('defense')"><span class="nav-badge nav-badge-member">党员</span><span class="nav-label">答辩</span></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="main-content">
+                <div id="content-area">
+                    <div class="welcome-section">
+                        <h2>👋 欢迎使用党章知识学习与测试系统</h2>
+                        <p>请选择上方题型分类查看，或使用搜索功能查找特定题目</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="site-footer">
+        <p>党课学习 · 党员转正备考平台 · 党章题目依据《中国共产党章程》（2022年修订）</p>
+    </footer>
+
+    <div class="app-modal-overlay" id="appModalOverlay" hidden>
+        <div class="app-modal" role="dialog" aria-modal="true" aria-labelledby="appModalTitle">
+            <div class="app-modal-header">
+                <div class="app-modal-icon" id="appModalIcon">!</div>
+                <h3 id="appModalTitle">提示</h3>
+            </div>
+            <div class="app-modal-body" id="appModalMessage"></div>
+            <div class="app-modal-actions">
+                <button type="button" class="app-modal-btn cancel" id="appModalCancel">取消</button>
+                <button type="button" class="app-modal-btn confirm" id="appModalConfirm">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 党章知识题目数据
+        const questionsData = {
+            single: [
+                { id: 1, text: "中国共产党是中国工人阶级的先锋队，同时是（    ）的先锋队，是中国特色社会主义事业的领导核心，代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。", options: ["A.中国各族人民", "B.中国人民和中华民族", "C.中国社会各阶层", "D.全国人民"], answer: "B" },
+                { id: 2, text: "中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是（    ）事业的领导核心，代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。", options: ["A.有中国特色社会主义", "B.中国社会主义建设", "C.中国改革开放", "D.中国特色社会主义"], answer: "D" },
+                { id: 3, text: "党的最高理想和最终目标是实现（    ）。", options: ["A.共产主义", "B.共产主义社会制度", "C.发达的社会主义", "D.社会主义现代化强国"], answer: "A" },
+                { id: 4, text: "马克思列宁主义揭示了（    ）的规律，它的基本原理是正确的，具有强大的生命力。", options: ["A.人类社会历史发展", "B.社会主义建设", "C.社会主义发展", "D.人类改造客观世界"], answer: "A" },
+                { id: 5, text: "中国共产党人追求的共产主义最高理想，只有在社会主义社会（    ）的基础上才能实现。", options: ["A.充分民主", "B.充分发展和高度发达", "C.人人平等", "D.充分发展和人人平等"], answer: "B" },
+                { id: 6, text: "坚持（    ）的基本原理，走中国人民自愿选择的适合中国国情的道路，中国的社会主义事业必将取得最终的胜利。", options: ["A.马克思主义", "B.马克思列宁主义", "C.毛泽东思想", "D.邓小平理论"], answer: "B" },
+                { id: 7, text: "毛泽东思想是马克思列宁主义在中国的运用和发展，是被实践证明了的关于（    ）的正确的理论原则和经验总结，是中国共产党集体智慧的结晶。", options: ["A.中国革命武装斗争", "B.中国社会主义建设", "C.中国新民主义革命", "D.中国革命和建设"], answer: "D" },
+                { id: 8, text: "在毛泽东思想指引下，中国共产党领导全国各族人民，经过长期的反对帝国主义、封建主义、官僚资本主义的革命斗争，取得了新民主主义革命的胜利，建立了（    ）的中华人民共和国；新中国成立以后，顺利地进行了社会主义改造，完成了从新民主主义到社会主义的过渡，确立了社会主义基本制度，发展了社会主义的经济、政治和文化。", options: ["A.工农民主专政", "B.无产阶级专政", "C.人民民主专政", "D.全体人民联合专政"], answer: "C" },
+                { id: 9, text: "在毛泽东思想指引下，中国共产党领导全国各族人民，经过长期的反对帝国主义、封建主义、官僚资本主义的革命斗争，取得了新民主主义革命的胜利，建立了人民民主专政的中华人民共和国；新中国成立以后，顺利地进行了社会主义改造，完成了（    ）的过渡，确立了社会主义基本制度，发展了社会主义的经济、政治和文化。", options: ["A.新民主主义革命到社会主义建设", "B.新民主主义到社会主义", "C.新民主主义到社会主义初级阶段", "D.社会主义到共产主义"], answer: "B" },
+                { id: 10, text: "十一届三中全会以来，以邓小平同志为主要代表的中国共产党人，总结新中国成立以来正反两方面的经验，解放思想，实事求是，实现全党工作中心向（    ）的转移，实行改革开放，开辟了社会主义事业发展的新时期，逐步形成了建设中国特色社会主义的路线、方针、政策，阐明了在中国建设社会主义、巩固和发展社会主义的基本问题，创立了邓小平理论。", options: ["A.经济建设", "B.社会主义建设", "C.民主法制建设", "D.政治建设"], answer: "A" },
+                { id: 11, text: "（    ）是马克思列宁主义的基本原理同当代中国实践和时代特征相结合的产物，是毛泽东思想在新的历史条件下的继承和发展，是马克思主义在中国发展的新阶段，是当代中国的马克思主义，是中国共产党集体智慧的结晶，引导着我国社会主义现代化事业不断前进。", options: ["A.邓小平理论", "B.'三个代表'重要思想", "C.科学发展观", "D.有中国特色社会主义理论"], answer: "A" },
+                { id: 12, text: "十八大以来，以习近平同志为主要代表的中国共产党人，顺应时代发展，从理论和实践结合上系统回答了新时代坚持和发展什么样的中国特色社会主义、怎样坚持和发展中国特色社会主义这个重大时代课题，创立了（    ）。", options: ["A.邓小平理论", "B.习近平新时代中国特色社会主义思想", "C.'三个代表'重要思想", "D.科学发展观"], answer: "B" },
+                { id: 13, text: "我国正处于并将长期处于（    ）。", options: ["A.社会主义过渡时期", "B.社会主义发达阶段", "C.社会主义初级阶段", "D.共产主义初级阶段"], answer: "C" },
+                { id: 14, text: "在现阶段，我国社会的主要矛盾是（    ）之间的矛盾。", options: ["A.生产力和生产关系", "B.经济基础和上层建筑", "C.人民日益增长的物质文化需要同落后的社会生产", "D.人民日益增长的美好生活需要和不平衡不充分的发展"], answer: "D" },
+                { id: 15, text: "必须坚持和完善（    ）、多种所有制经济共同发展的基本经济制度，坚持和完善按劳分配为主体、多种分配方式并存的分配制度，鼓励一部分地区和一部分人先富起来，逐步消灭贫穷，达到共同富裕，在生产发展和社会财富增长的基础上不断满足人民日益增长的美好生活需要，促进人的全面发展。", options: ["A.国有制为主体", "B.公有制为主体", "C.全民所有制为主体", "D.集体所有制为主体"], answer: "B" },
+                { id: 16, text: "必须坚持和完善公有制为主体、多种所有制经济共同发展的基本经济制度，坚持和完善（    ）、多种分配方式并存的分配制度，鼓励一部分地区和一部分人先富起来，逐步消灭贫穷，达到共同富裕，在生产发展和社会财富增长的基础上不断满足人民日益增长的美好生活需要，促进人的全面发展。", options: ["A.按要素分配为主体", "B.按贡献分配为主体", "C.按效益分配为主体", "D.按劳分配为主体"], answer: "D" },
+                { id: 17, text: "（    ）是我们党执政兴国的第一要务。", options: ["A.发展", "B.稳定", "C.改革", "D.建设"], answer: "A" },
+                { id: 18, text: "必须按照中国特色社会主义事业'五位一体'（    ），统筹推进经济建设、政治建设、文化建设、社会建设、生态文明建设，协调推进全面建成小康社会、全面深化改革、全面依法治国、全面从严治党。", options: ["A.战略布局", "B.战略目标", "C.总体布局", "D.目标要求"], answer: "C" },
+                { id: 19, text: "在新世纪新时代，经济和社会发展的战略目标是，到建党一百年时，全面建成小康社会；到新中国成立一百年时，全面建成（    ）。", options: ["A.发达国家水平", "B.社会主义现代化强国", "C.中等发达国家水平", "D.准发达国家水平"], answer: "B" },
+                { id: 20, text: "发展是我们党执政兴国的第一要务。必须坚持（    ）的发展思想，坚持创新、协调、绿色、开放、共享的发展理念。", options: ["A.生产力标准", "B.全面协调可持续", "C.以人民为中心", "D.马克思主义"], answer: "C" },
+                { id: 21, text: "在社会主义现代化建设的整个过程中，必须坚持（    ），反对资产阶级自由化。", options: ["A.改革开放", "B.四项基本原则", "C.全面发展", "D.人民民主专政"], answer: "B" },
+                { id: 22, text: "全党同志要倍加珍惜、长期坚持和不断发展党历经艰辛开创的这条道路、这个理论体系、这个制度、这个文化，高举中国特色社会主义伟大旗帜，坚定道路自信、理论自信、制度自信、文化自信，贯彻党的基本理论、基本路线、（    ），为实现推进现代化建设、完成祖国统一、维护世界和平与促进共同发展这三大历史任务，实现'两个一百年'奋斗目标、实现中华民族伟大复兴的中国梦而奋斗。", options: ["A.基本经验", "B.基本方略", "C.基本纲领", "D.基本道路"], answer: "B" },
+                { id: 23, text: "坚持（    ），是我们的强国之路。", options: ["A.改革开放", "B.四项基本原则", "C.全面发展", "D.马克思主义"], answer: "A" },
+                { id: 24, text: "要从根本上改革束缚生产力发展的经济体制，坚持和完善（    ）；与此相适应，要进行政治体制改革和其他领域的改革。", options: ["A.社会主义市场经济体制", "B.社会主义市场经济管理体制", "C.社会主义政治体制", "D.统分结合的双层经营体制"], answer: "A" },
+                { id: 25, text: "要坚持（    ）的基本国策，吸收和借鉴人类社会创造的一切文明成果。", options: ["A.全面开放", "B.对外开放", "C.社会开放", "D.民主政治"], answer: "B" },
+                { id: 26, text: "坚持党的领导、人民当家作主、依法治国有机统一，走中国特色社会主义政治发展道路，扩大社会主义民主，建设（    ），建设社会主义法治国家，巩固人民民主专政，建设社会主义政治文明。", options: ["A.中国特色社会主义法制体系", "B.社会主义法制", "C.中国特色社会主义法治体系", "D.社会主义法治"], answer: "C" },
+                { id: 27, text: "牢牢掌握意识形态工作领导权，不断巩固（    ）在意识形态领域的指导地位，巩固全党全国人民团结奋斗的共同思想基础。", options: ["A.马克思主义", "B.社会主义核心价值观", "C.社会主义荣辱观", "D.中国特色社会主义理论体系"], answer: "A" },
+                { id: 28, text: "建设社会主义精神文明，实行（    ）和以德治国相结合，提高全民族的思想道德素质和科学文化素质，为改革开放和社会主义现代化建设提供强大的思想保证、精神动力和智力支持，建设社会主义文化强国。", options: ["A.依法执政", "B.依规治党", "C.依宪治国", "D.依法治国"], answer: "D" },
+                { id: 29, text: "加强社会主义核心价值体系建设，坚持马克思主义指导思想，树立中国特色社会主义共同理想，弘扬以爱国主义为核心的（    ）和以改革创新为核心的时代精神，培育和践行社会主义核心价值观，倡导社会主义荣辱观，增强民族自尊、自信和自强精神，抵御资本主义和封建主义腐朽思想的侵蚀，扫除各种社会丑恶现象，努力使我国人民成为有理想、有道德、有文化、有纪律的人民。", options: ["A.民族精神", "B.革命精神", "C.优秀传统文化", "D.传统文化"], answer: "A" },
+                { id: 30, text: "按照民主法治、公平正义、诚信友爱、充满活力、安定有序、人与自然和谐相处的总要求和共同建设、共同享有的原则，以保障和改善民生为重点，解决好人民最关心、最直接、最现实的利益问题，使发展成果更多更公平惠及全体人民，不断增强人民群众（    ），努力形成全体人民各尽其能、各得其所而又和谐相处的局面。", options: ["A.幸福感", "B.获得感", "C.安全感", "D.快乐感"], answer: "B" },
+                { id: 31, text: "树立尊重自然、顺应自然、保护自然的生态文明理念，增强（    ）的意识，坚持节约资源和保护环境的基本国策，坚持节约优先、保护优先、自然恢复为主的方针，坚持生产发展、生活富裕、生态良好的文明发展道路。", options: ["A.绿色环保", "B.人人爱护环境", "C.生态政治", "D.绿水青山就是金山银山"], answer: "D" },
+                { id: 32, text: "着力建设资源节约型、环境友好型社会，实行最严格的（    ），形成节约资源和保护环境的空间格局、产业结构、生产方式、生活方式，为人民创造良好生产生活环境，实现中华民族永续发展。", options: ["A.耕地保护制度", "B.环境保护制度", "C.生态环境保护制度", "D.湿地保护制度"], answer: "C" },
+                { id: 33, text: "按照'（    ）'的方针，促进香港、澳门长期繁荣稳定，完成祖国统一的大业。", options: ["A.一个国家、多种制度", "B.一个国家、两种制度", "C.一个国家、一种制度", "D.和平统一"], answer: "B" },
+                { id: 34, text: "中国共产党坚持独立自主的和平外交政策，坚持（    ）道路，坚持互利共赢的开放战略，统筹国内国际两个大局，积极发展对外关系，努力为我国的改革开放和现代化建设争取有利的国际环境。", options: ["A.和谐发展", "B.共同发展", "C.和平发展", "D.独立发展"], answer: "C" },
+                { id: 35, text: "不断发展我国同周边国家的（    ）关系，加强同发展中国家的团结与合作。", options: ["A.睦邻友好", "B.睦邻合作", "C.睦邻伙伴", "D.睦邻协作"], answer: "A" },
+                { id: 36, text: "遵循（    ）原则，推进'一带一路'建设。", options: ["A.共商共建共享", "B.协商共建", "C.互助互利", "D.协作共赢"], answer: "A" },
+                { id: 37, text: "坚持立党为公、执政为民，发扬党的优良传统和作风，不断提高党的领导水平和执政水平，提高拒腐防变和抵御风险的能力，不断增强自我净化、自我完善、自我革新、自我提高能力，不断增强党的阶级基础和扩大党的群众基础，不断提高党的创造力、凝聚力、战斗力，建设学习型、（    ）、创新型的马克思主义执政党，使我们党始终走在时代前列，成为领导全国人民沿着中国特色社会主义道路不断前进的坚强核心。", options: ["A.科学型", "B.制度型", "C.服务型", "D.和谐型"], answer: "C" },
+                { id: 38, text: "党的建设必须坚决实现以下五项基本要求：第一，坚持党的基本路线。第二，坚持解放思想，实事求是，与时俱进，求真务实。第三，坚持全心全意为人民服务。第四，坚持民主集中制。第五，（    ）。", options: ["A.坚持全面从严治党", "B.坚持从严管党治党", "C.坚持党的基本纲领", "D.坚持一切从实际出发"], answer: "B" },
+                { id: 39, text: "（    ）、党同人民群众联系问题是关系党生死存亡的问题。", options: ["A.民主问题", "B.思想政治工作问题", "C.党风问题", "D.作风问题"], answer: "C" },
+                { id: 40, text: "中国共产党的宗旨是（    ）。", options: ["A.理论联系实际", "B.坚持把群众利益放在第一位", "C.全心全意为人民服务", "D.密切联系群众"], answer: "C" },
+                { id: 41, text: "（    ）既是党的根本组织原则，也是群众路线在党的生活中的运用。", options: ["A.民主集中制", "B.少数服从多数", "C.集体领导", "D.集体领导和个人分工"], answer: "A" },
+                { id: 42, text: "必须充分发扬（    ），尊重党员主体地位，保障党员民主权利，发挥各级党组织和广大党员的积极性创造性。", options: ["A.群众首创精神", "B.党内民主", "C.社会主义民主", "D.实事求是"], answer: "B" },
+                { id: 43, text: "必须实行正确的（    ），牢固树立政治意识、大局意识、核心意识、看齐意识，坚定维护以习近平同志为核心的党中央权威和集中统一领导，保证全党的团结统一和行动一致，保证党的决定得到迅速有效的贯彻执行。", options: ["A.决策", "B.民主", "C.集中", "D.纪律"], answer: "C" },
+                { id: 44, text: "我们党的最大政治优势是（    ），党执政后的最大危险是脱离群众。", options: ["A.理论联系实际", "B.思想政治工作", "C.批评与自我批评", "D.密切联系群众"], answer: "D" },
+                { id: 45, text: "党在自己的政治生活中正确地开展（    ），在原则问题上进行思想斗争，坚持真理，修正错误。", options: ["A.批评和自我批评", "B.批评教育", "C.政治斗争", "D.组织斗争"], answer: "A" },
+                { id: 46, text: "党必须（    ），制定和执行正确的路线、方针、政策，做好党的组织工作和宣传教育工作，发挥全体党员的先锋模范作用。", options: ["A.发扬党内民主", "B.实行民主的科学的决策", "C.坚持群众路线", "D.坚持思想路线"], answer: "B" },
+                { id: 47, text: "党必须按照（    ）的原则，在同级各种组织中发挥领导核心作用。", options: ["A.总揽全局、统筹兼顾", "B.总揽全局、民主协调", "C.总揽全局、协调各方", "D.集中领导、民主协商"], answer: "C" },
+                { id: 48, text: "党必须在（    ）的范围内活动。", options: ["A.党纲和党章", "B.政治生活准则", "C.党内法规", "D.宪法和法律"], answer: "D" },
+                { id: 49, text: "（    ）是中国特色社会主义最本质的特征，是中国特色社会主义制度的最大优势。", options: ["A.人民本位", "B.中国共产党的领导", "C.公有制", "D.按劳分配"], answer: "B" },
+                { id: 50, text: "年满十八岁的中国工人、农民、军人、知识分子和（    ），承认党的纲领和章程，愿意参加党的一个组织并在其中积极工作、执行党的决议和按期交纳党费的，可以申请加入中国共产党。", options: ["A.其他社会主义建设者", "B.其他社会阶层的劳动者", "C.其他革命", "D.其他社会阶层的先进分子"], answer: "D" },
+                { id: 51, text: "中国共产党党员是中国工人阶级的（    ）的先锋战士。", options: ["A.有共产主义理想", "B.有社会主义觉悟", "C.有共产主义觉悟", "D.有共产主义道德"], answer: "C" },
+                { id: 52, text: "中国共产党党员必须（    ），不惜牺牲个人的一切，为实现共产主义奋斗终身。", options: ["A.贯彻落实党的基本路线", "B.全心全意为人民服务", "C.投身社会主义建设", "D.加强党性修养"], answer: "B" },
+                { id: 53, text: "中国共产党党员永远是劳动人民的普通一员。除了（    ）规定范围内的个人利益和工作职权以外，所有共产党员都不得谋求任何私利和特权。", options: ["A.宪法和法律", "B.法律和政策", "C.党规党法", "D.党内准则条例"], answer: "B" },
+                { id: 54, text: "党章规定党员必须履行（    ）义务。", options: ["A.四项", "B.六项", "C.八项", "D.十项"], answer: "C" },
+                { id: 55, text: "认真学习马克思列宁主义、毛泽东思想、邓小平理论、'三个代表'重要思想、科学发展观、习近平新时代中国特色社会主义思想，学习党的路线、方针、政策和决议，学习党的基本知识，学习科学、文化、法律和业务知识，努力提高（    ）的本领。", options: ["A.为人民服务", "B.经济建设", "C.发展市场经济", "D.劳动致富"], answer: "A" },
+                { id: 56, text: "贯彻执行党的基本路线和各项方针、政策，带头参加改革开放和社会主义现代化建设，带动群众为经济发展和社会进步艰苦奋斗，在生产、工作、学习和社会生活中起（    ）。", options: ["A.领导骨干作用", "B.先锋模范作用", "C.战斗堡垒作用", "D.示范带动作用"], answer: "B" },
+                { id: 57, text: "党员必须切实开展批评和自我批评，勇于揭露和纠正违反党的原则的言行和工作中的缺点、错误，坚决同（    ）作斗争。", options: ["A.'左'右倾错误", "B.资产阶级思想", "C.自由主义", "D.消极腐败现象"], answer: "D" },
+                { id: 58, text: "发扬社会主义新风尚，带头实践社会主义核心价值观和社会主义荣辱观，提倡（    ），弘扬中华民族传统美德，为了保护国家和人民的利益，在一切困难和危险的时刻挺身而出，英勇斗争，不怕牺牲。", options: ["A.共产主义道德", "B.共产主义理想", "C.社会主义道德", "D.社会主义信念"], answer: "A" },
+                { id: 59, text: "党章规定党员享有（    ）权利。", options: ["A.四项", "B.六项", "C.八项", "D.十项"], answer: "C" },
+                { id: 60, text: "下列（    ）不是党员应享有的权利。", options: ["A.参加党的有关会议，阅读党的有关文件，接受党的教育和培养", "B.对党的工作提出建议和倡议", "C.行使表决权、选举权，有被选举权", "D.行使行政裁决权"], answer: "D" },
+                { id: 61, text: "党员在党组织讨论决定对党员的党纪处分或作出鉴定时，本人有权参加和进行申辩，（    ）可以为他作证和辩护。", options: ["A.其他人", "B.其他党员", "C.有关人员", "D.党组织"], answer: "B" },
+                { id: 62, text: "党员对党的决议和政策如有不同意见，在坚决执行的前提下，可以声明保留，并且可以把自己的意见向（    ）提出。", options: ["A.党的上级组织", "B.同级其他组织", "C.党中央", "D.党的上级组织直至中央"], answer: "D" },
+                { id: 63, text: "党员享有向党的上级组织直至中央提出请求、申诉和控告，并要求（    ）给以负责的答复的权利。", options: ["A.党的上级组织", "B.有关组织", "C.所在党组织", "D.党的上级组织有关人员"], answer: "B" },
+                { id: 64, text: "发展党员，必须把政治标准放在首位，必须经过党的支部，坚持（    ）的原则。", options: ["A.集中吸收", "B.广泛吸收", "C.个别吸收", "D.统一吸收"], answer: "C" },
+                { id: 65, text: "申请入党的人，要填写入党志愿书，要有（    ）正式党员作介绍人，要经过支部大会通过和上级党组织批准，并且经过预备期的考察，才能成为正式党员。", options: ["A.一名", "B.两名", "C.三名", "D.四名"], answer: "B" },
+                { id: 66, text: "申请入党的人，要填写入党志愿书，要有两名正式党员作介绍人，要经过（    ）通过和上级党组织批准，并且经过预备期的考察，才能成为正式党员。", options: ["A.党小组会", "B.支部大会", "C.党支部委员会", "D.党员代表大会"], answer: "B" },
+                { id: 67, text: "介绍人要认真了解申请人的思想、品质、经历和工作表现，向他解释（    ），说明党员的条件、义务和权利，并向党组织作出负责的报告。", options: ["A.党的纲领和党的章程", "B.党的组织原则", "C.党的性质和奋斗目标", "D.党的基本理论"], answer: "A" },
+                { id: 68, text: "党的支部委员会对申请入党的人，要注意征求（    ）的意见，进行严格的审查，认为合格后再提交支部大会讨论。", options: ["A.党内群众", "B.党外有关群众", "C.党内外群众", "D.党内外有关群众"], answer: "D" },
+                { id: 69, text: "预备党员的预备期为（    ）。", options: ["A.三个月", "B.半年", "C.一年", "D.二年"], answer: "C" },
+                { id: 70, text: "现行党章是（    ）通过。", options: ["A.2022.10.22", "B.2023.10.22", "C.2022.07.01", "D.2023.07.01"], answer: "A" },
+                { id: 71, text: "预备党员预备期满，党的支部应当及时讨论他能否转为正式党员。认真履行党员义务，具备党员条件的，应当按期转为正式党员；需要继续考察和教育的，可以延长预备期，但不能超过（    ）；不履行党员义务，不具备党员条件的，应当取消预备党员资格。", options: ["A.三个月", "B.半年", "C.一年", "D.二年"], answer: "C" },
+                { id: 72, text: "党员的党龄，从（    ）之日算起。", options: ["A.支部大会通过成为入党对象", "B.支部大会通过成为预备党员", "C.预备期满转为正式党员", "D.上级组织批准成为预备党员"], answer: "C" },
+                { id: 73, text: "党员要求退党，应当经（    ）讨论后宣布除名，并报上级党组织备案。", options: ["A.党员代表大会", "B.支部大会", "C.支部委员会", "D.党小组会"], answer: "B" },
+                { id: 74, text: "党员如果没有正当理由，连续（    ）不参加党的组织生活，或不交纳党费，或不做党所分配的工作，就被认为是自行脱党。", options: ["A.三个月", "B.六个月", "C.一年", "D.二年"], answer: "B" },
+                { id: 75, text: "党是根据自己的（    ），按照民主集中制组织起来的统一整体。", options: ["A.理想和信念", "B.目标和任务", "C.纲领和章程", "D.纲领和路线"], answer: "C" },
+                { id: 76, text: "党章对民主集中制的基本原则概括了（    ）。", options: ["A.四条", "B.五条", "C.六条", "D.八条"], answer: "C" },
+                { id: 77, text: "下列哪个党组织的领导机关不由选举产生（    ）。", options: ["A.党支部", "B.党总支", "C.党的基层委员会", "D.党组"], answer: "D" },
+                { id: 78, text: "党的最高领导机关，是党的全国代表大会和它所产生的（    ）。", options: ["A.中央委员会", "B.中央政治局", "C.中央政治局常务委员会", "D.中央书记处"], answer: "A" },
+                { id: 79, text: "党的各级委员会实行集体领导和（    ）相结合的制度。", options: ["A.个人分工负责", "B.民主集中", "C.发扬民主", "D.合理分工负责"], answer: "A" },
+                { id: 80, text: "党的各级代表大会的代表和委员会的选举，要体现选举人的意志。选举采用（    ）的方式。", options: ["A.记名投票", "B.无记名投票", "C.举手表决", "D.口头表决"], answer: "B" },
+                { id: 81, text: "党的地方各级代表大会和基层代表大会的选举，如果发生（    ）的情况，上一级党的委员会在调查核实后，应作出选举无效和采取相应措施的决定，并报再上一级党的委员会审查批准，正式宣布执行。", options: ["A.违反选举法", "B.违反宪法", "C.违反选举规定", "D.违反党章"], answer: "D" },
+                { id: 82, text: "党的中央和地方各级委员会在必要时召集（    ），讨论和决定需要及时解决的重大问题。", options: ["A.代表大会", "B.代表会议", "C.全委会议", "D.民主生活会"], answer: "B" },
+                { id: 83, text: "凡是成立党的新组织，或是撤销党的原有组织，必须由（    ）决定。", options: ["A.同级代表大会", "B.同级代表会议", "C.同级党的委员会", "D.上级党组织"], answer: "D" },
+                { id: 84, text: "有关（    ）问题，只有党中央有权作出决定，各部门、各地方的党组织可以向中央提出建议，但不得擅自作出决定和对外发表主张。", options: ["A.党的政策", "B.全国性的重大政策", "C.政治体制改革", "D.社会发展规划"], answer: "B" },
+                { id: 85, text: "党组织讨论决定问题，必须执行（    ）的原则。决定重要问题，要进行表决。对于少数人的不同意见，应当认真考虑。", options: ["A.少数服从多数", "B.民主集中制", "C.集体领导", "D.发扬民主"], answer: "A" },
+                { id: 86, text: "党的全国代表大会每（    ）举行一次，由中央委员会召集。", options: ["A.二年", "B.三年", "C.四年", "D.五年"], answer: "D" },
+                { id: 87, text: "中央委员会认为有必要，或者有（    ）以上的省一级组织提出要求，全国代表大会可以提前举行；如无非常情况，不得延期举行。", options: ["A.二分之一", "B.三分之一", "C.三分之二", "D.四分之一"], answer: "B" },
+                { id: 88, text: "全国代表大会代表的名额和选举办法，由（    ）决定。", options: ["A.中央委员会", "B.中央政治局", "C.全国党的代表会议", "D.中央书记处"], answer: "A" },
+                { id: 89, text: "党的全国代表会议调整和增选中央委员及候补中央委员的数额，不得超过党的全国代表大会选出的中央委员及候补中央委员各自总数的（    ）。", options: ["A.二分之一", "B.三分之一", "C.四分之一", "D.五分之一"], answer: "D" },
+                { id: 90, text: "中央委员会委员和候补委员必须有（    ）以上的党龄。", options: ["A.三年", "B.四年", "C.五年", "D.六年"], answer: "C" },
+                { id: 91, text: "中央委员会委员和候补委员的名额，由（    ）决定。", options: ["A.全国代表大会", "B.全国代表会议", "C.中央委员会", "D.中央政治局"], answer: "A" },
+                { id: 92, text: "中央委员会全体会议由（    ）召集，每年至少举行一次。", options: ["A.中央委员会", "B.中央政治局", "C.中央政治局常务委员会", "D.中央书记处"], answer: "B" },
+                { id: 93, text: "（    ）向中央委员会全体会议报告工作，接受监督。", options: ["A.中央委员会", "B.中央政治局", "C.中央政治局常务委员会", "D.中央书记处"], answer: "B" },
+                { id: 94, text: "在全国代表大会闭会期间，（    ）执行全国代表大会的决议，领导党的全部工作，对外代表中国共产党。", options: ["A.中央委员会", "B.中央政治局", "C.中央政治局常务委员会", "D.中央书记处"], answer: "A" },
+                { id: 95, text: "中央政治局和它的常务委员会在中央委员会全体会议闭会期间，行使（    ）的职权。", options: ["A.全国党的代表大会", "B.全国党的代表会议", "C.中央委员会", "D.中央纪律检查委员会"], answer: "C" },
+                { id: 96, text: "（    ）是中央政治局和它的常务委员会的办事机构；成员由中央政治局常务委员会提名，中央委员会全体会议通过。", options: ["A.全国党的代表大会", "B.中央委员会", "C.中央书记处", "D.中央纪律检查委员会"], answer: "C" },
+                { id: 97, text: "中央书记处成员由（    ）提名，中央委员会全体会议通过。", options: ["A.全国党的代表大会", "B.中央委员会", "C.中央政治局", "D.中央政治局常务委员会"], answer: "D" },
+                { id: 98, text: "党的中央军事委员会组成人员由中央委员会决定，中央军事委员会实行（    ）。", options: ["A.军委负责制", "B.主席负责制", "C.首长制", "D.个人分工负责制"], answer: "B" },
+                { id: 99, text: "中国人民解放军的党组织，根据（    ）的指示进行工作。", options: ["A.中央委员会", "B.中央政治局", "C.中央政治局常务委员会", "D.中央军事委员会"], answer: "A" },
+                { id: 100, text: "党的省、自治区、直辖市的代表大会，设区的市和自治州的代表大会，县（旗）、自治县、不设区的市和市辖区的代表大会，每（    ）举行一次。", options: ["A.二年", "B.三年", "C.四年", "D.五年"], answer: "D" },
+                { id: 101, text: "党的省、自治区、直辖市、设区的市和自治州的委员会，每届任期五年。这些委员会的委员和候补委员必须有（    ）以上的党龄。", options: ["A.三年", "B.四年", "C.五年", "D.六年"], answer: "C" },
+                { id: 102, text: "党的地方各级代表大会代表的名额和选举办法，由（    ）决定，并报上一级党的委员会批准。", options: ["A.党的地方各级代表大会", "B.党的地方各级代表会议", "C.同级党的委员会", "D.同级党的委员会常务委员会"], answer: "C" },
+                { id: 103, text: "党的县（旗）、自治县、不设区的市和市辖区的委员会，每届任期五年。这些委员会的委员和候补委员必须有（    ）以上的党龄。", options: ["A.二年", "B.三年", "C.四年", "D.五年"], answer: "B" },
+                { id: 104, text: "党的地方各级委员会的委员和候补委员的名额，分别由（    ）决定。", options: ["A.党的地方各级代表大会", "B.上一级党的委员会", "C.同级党的委员会", "D.同级党的委员会常务委员会"], answer: "B" },
+                { id: 105, text: "党的地方各级委员会全体会议，每年至少召开（    ）。", options: ["A.一次", "B.两次", "C.三次", "D.四次"], answer: "B" },
+                { id: 106, text: "（    ），在委员会全体会议闭会期间，行使委员会职权；在下届代表大会开会期间，继续主持经常工作，直到新的常务委员会产生为止。", options: ["A.党的地方各级党员代表会议", "B.党的地方各级委员会", "C.党的地方各级委员会常务委员会", "D.党的基层委员会"], answer: "C" },
+                { id: 107, text: "企业、农村、机关、学校、科研院所、街道社区、社会团体、社会中介组织、人民解放军连队和其他基层单位，凡是有正式党员（    ）以上的，都应当成立党的基层组织。", options: ["A.三人", "B.四人", "C.五人", "D.六人"], answer: "A" },
+                { id: 108, text: "基层委员会由党员大会或代表大会选举产生，总支部委员会和支部委员会由（    ）选举产生。", options: ["A.党员大会", "B.党员代表大会", "C.党员代表会议", "D.基层委员会"], answer: "A" },
+                { id: 109, text: "党的基层委员会每届任期（    ）。", options: ["A.两年至三年", "B.三年至四年", "C.两年至四年", "D.三年至五年"], answer: "D" },
+                { id: 110, text: "总支部委员会、支部委员会每届任期（    ）。", options: ["A.两年或三年", "B.三年或四年", "C.四年或五年", "D.三年至五年"], answer: "D" },
+                { id: 111, text: "党的基层组织是党在社会基层组织中的（    ），是党的全部工作和战斗力的基础。", options: ["A.桥梁", "B.纽带", "C.战斗堡垒", "D.先锋战士"], answer: "C" },
+                { id: 112, text: "党章规定党的基层组织的基本任务有（    ）。", options: ["A.四项", "B.六项", "C.八项", "D.十项"], answer: "C" },
+                { id: 113, text: "街道、乡、镇党的基层委员会和村、社区党组织，（    ）本地区的工作和基层社会治理，支持和保证行政组织、经济组织和群众自治组织充分行使职权。", options: ["A.领导", "B.协调", "C.监督", "D.指导"], answer: "A" },
+                { id: 114, text: "非公有制经济组织中党的基层组织，贯彻党的方针政策，（    ）企业遵守国家的法律法规，领导工会、共青团等群团组织，团结凝聚职工群众，维护各方的合法权益，促进企业健康发展。", options: ["A.领导和监督", "B.引导和监督", "C.保证和监督", "D.教育和引导"], answer: "B" },
+                { id: 115, text: "实行行政领导人负责制的事业单位中党的基层组织，发挥（    ）。", options: ["A.领导核心作用", "B.政治核心作用", "C.保证监督作用", "D.战斗堡垒作用"], answer: "D" },
+                { id: 116, text: "（    ）是党的事业的骨干，是人民的公仆。", options: ["A.党员", "B.党员领导干部", "C.领导干部", "D.党的干部"], answer: "D" },
+                { id: 117, text: "党按照德才兼备、（    ）的原则选拔干部，坚持五湖四海、任人唯贤，反对任人唯亲，坚持事业为上、公道正派，努力实现干部队伍革命化、年轻化、知识化、专业化。", options: ["A.以德为主", "B.以德为先", "C.群众满意", "D.注重政绩"], answer: "B" },
+                { id: 118, text: "党的各级领导干部必须正确行使人民赋予的权力，坚持原则，依法办事，清正廉洁，勤政为民，以身作则，艰苦朴素，密切联系群众，坚持党的群众路线，自觉地接受党和群众的批评和监督，加强道德修养，（    ）、重品行、作表率，做到自重、自省、自警、自励，反对官僚主义，反对任何滥用职权、谋求私利的行为。", options: ["A.讲原则", "B.讲纪律", "C.讲党性", "D.讲学习"], answer: "C" },
+                { id: 119, text: "党的各级领导干部必须坚持和维护党的（    ），有民主作风，有全局观念，善于团结同志，包括团结同自己有不同意见的同志一道工作。", options: ["A.群众路线", "B.党的纪律", "C.民主集中制", "D.民主制度"], answer: "C" },
+                { id: 120, text: "党员干部要善于同（    ）合作共事，尊重他们，虚心学习他们的长处。", options: ["A.党员群众", "B.党外干部", "C.少数民族干部", "D.民主党派干部"], answer: "B" },
+                { id: 121, text: "党的纪律是党的各级组织和全体党员必须遵守的（    ），是维护党的团结统一、完成党的任务的保证。", options: ["A.行为规范", "B.行为规则", "C.党纪党规", "D.政治准则"], answer: "B" },
+                { id: 122, text: "运用监督执纪'四种形态'，让'红红脸、出出汗'成为常态，党纪处分、组织调整成为管党治党的重要手段，严重违纪、严重触犯刑律的党员必须（    ）。", options: ["A.给予党纪处分", "B.给予行政处分", "C.撤销党内职务", "D.开除党籍"], answer: "D" },
+                { id: 123, text: "党内严格禁止用违反（    ）的手段对待党员，严格禁止打击报复和诬告陷害。", options: ["A.党纲和党章", "B.党章和宪法", "C.党章和国家法律", "D.宪法和法律"], answer: "C" },
+                { id: 124, text: "留党察看最长不超过（    ）。", options: ["A.半年", "B.一年", "C.两年", "D.三年"], answer: "C" },
+                { id: 125, text: "（    ）是党内的最高处分。", options: ["A.严重警告", "B.撤销党内职务", "C.留党察看", "D.开除党籍"], answer: "D" },
+                { id: 126, text: "对党员的纪律处分，必须经过（    ）讨论决定，报党的基层委员会批准。", options: ["A.党员大会", "B.党员代表大会", "C.支部大会", "D.支部委员会"], answer: "C" },
+                { id: 127, text: "对党的中央委员会和地方各级委员会的委员、候补委员，给以撤销党内职务、留党察看或开除党籍的处分，必须由本人所在的委员会全体会议（    ）以上的多数决定。", options: ["A.二分之一", "B.三分之一", "C.三分之二", "D.四分之一"], answer: "C" },
+                { id: 128, text: "严重触犯刑律的中央委员会委员、候补委员，由（    ）决定开除其党籍。", options: ["A.中央委员会", "B.中央政治局", "C.中央政治局常务委员会", "D.中央书记处"], answer: "B" },
+                { id: 129, text: "严重触犯刑律的地方各级委员会委员、候补委员，由（    ）决定开除其党籍。", options: ["A.上级委员会", "B.上级委员会常务委员会", "C.同级委员会", "D.同级委员会常务委员会"], answer: "D" },
+                { id: 130, text: "如果本人对处分决定不服，可以提出（    ），有关党组织必须负责处理或者迅速转递，不得扣压。", options: ["A.建议", "B.申诉", "C.申辩", "D.上诉"], answer: "B" },
+                { id: 131, text: "对于严重违犯党的纪律、本身又不能纠正的（    ），上一级党的委员会在查明核实后，应根据情节严重的程度，作出进行改组或予以解散的决定，并报再上一级党的委员会审查批准，正式宣布执行。", options: ["A.党的基层委员会", "B.总支部委员会", "C.支部委员会", "D.党组织"], answer: "D" },
+                { id: 132, text: "党的各级纪律检查委员会每届任期和（    ）相同。", options: ["A.上级纪律检查委员会", "B.上级党的委员会", "C.同级党的委员会", "D.同级委员会常务委员会"], answer: "C" },
+                { id: 133, text: "党的地方各级纪律检查委员会和基层纪律检查委员会在（    ）和上级纪律检查委员会双重领导下进行工作。", options: ["A.上级党的委员会", "B.上级党的委员会常务委员会", "C.同级党的委员会", "D.同级党的委员会常务委员会"], answer: "C" },
+                { id: 134, text: "（    ）是设立纪律检查委员会，还是设立纪律检查委员，由它的上一级党组织根据具体情况决定。", options: ["A.党的地方委员会", "B.党的基层委员会", "C.总支部委员会", "D.支部委员会"], answer: "B" },
+                { id: 135, text: "党的中央纪律检查委员会在党的（    ）领导下进行工作。", options: ["A.全国代表大会", "B.中央委员会", "C.中央政治局", "D.中央政治局常务委员会"], answer: "B" },
+                { id: 136, text: "上级党的纪律检查委员会加强对下级纪律检查委员会的（    ）。", options: ["A.指导", "B.协调", "C.监督", "D.领导"], answer: "D" },
+                { id: 137, text: "党的各级纪律检查委员会是党内监督（    ）。", options: ["A.领导机关", "B.专责机关", "C.指导机关", "D.协调机关"], answer: "B" },
+                { id: 138, text: "党的中央纪律检查委员会全体会议，选举常务委员会和书记、副书记，并报（    ）批准。", options: ["A.全国代表大会", "B.党的中央委员会", "C.中央政治局", "D.中央政治局常务委员会"], answer: "B" },
+                { id: 139, text: "党的地方各级纪律检查委员会全体会议，选举常务委员会和书记、副书记，并由同级党的委员会通过，报（    ）批准。", options: ["A.上级党的委员会", "B.上级党的纪律检查委员会", "C.同级党的代表大会", "D.同级党的代表会议"], answer: "A" },
+                { id: 140, text: "党的总支部委员会和支部委员会设（    ）。", options: ["A.纪律检查委员会", "B.纪律检查组", "C.纪律检查组组长", "D.纪律检查委员"], answer: "D" },
+                { id: 141, text: "纪律检查组组长（    ）驻在部门党的领导组织的有关会议。", options: ["A.参加", "B.列席", "C.旁听", "D.主持"], answer: "A" },
+                { id: 142, text: "党的地方各级纪律检查委员会和基层纪律检查委员会，如果对（    ）处理案件的决定有不同意见，可以请求上一级纪律检查委员会予以复查；如果发现同级党的委员会或它的成员有违犯党的纪律的情况，在同级党的委员会不给予解决或不给予正确解决的时候，有权向上级纪律检查委员会提出申诉，请求协助处理。", options: ["A.上级党的委员会", "B.同级党的委员会", "C.同级党的委员会常务委员会", "D.基层委员会"], answer: "B" },
+                { id: 143, text: "党的中央纪律检查委员会在党的（    ）领导下进行工作。", options: ["A.全国代表大会", "B.中央委员会", "C.中央政治局", "D.中央政治局常务委员会"], answer: "A" },
+                { id: 144, text: "党组的成员，由（    ）决定。", options: ["A.上级党组织", "B.党员代表大会", "C.同级领导班子", "D.批准成立党组的党组织"], answer: "D" },
+                { id: 145, text: "党组必须服从（    ）领导。", options: ["A.上级党组织", "B.党员代表大会", "C.同级领导班子", "D.批准它成立的党组织"], answer: "D" },
+                { id: 146, text: "中国共产主义青年团是中国共产党领导的先进青年的（    ），是广大青年在实践中学习中国特色社会主义和共产主义的学校，是党的助手和后备军。", options: ["A.社会组织", "B.群众组织", "C.社会团体组织", "D.群团组织"], answer: "D" },
+                { id: 147, text: "共青团中央委员会受（    ）领导。", options: ["A.共青团全国代表大会", "B.共青团全国代表会议", "C.党中央委员会", "D.中央政治局"], answer: "C" },
+                { id: 148, text: "共青团的地方各级组织受（    ）领导，同时受共青团上级组织领导。", options: ["A.上级团代表大会", "B.同级团代表大会", "C.同级党的委员会", "D.同级党的委员会常务委员会"], answer: "C" },
+                { id: 149, text: "中国共产党的（    ）是中国共产党的象征和标志。", options: ["A.党章党徽", "B.党徽", "C.党旗", "D.党徽党旗"], answer: "D" },
+                { id: 150, text: "中国共产党党徽为镰刀和（    ）组成的图案。", options: ["A.斧头", "B.火炬", "C.五星", "D.锤头"], answer: "D" }
+            ],
+            multiple: [
+                { id: 1, text: "中国共产党以（    ）作为自己的行动指南。", options: ["A.习近平新时代中国特色社会主义思想", "B.三个代表重要思想", "C.科学发展观", "D.邓小平理论", "E.马克思列宁主义", "F.毛泽东思想"], answer: "ABCDEF" },
+                { id: 2, text: "中国共产党始终代表（    ）。", options: ["A.中国先进生产力的发展要求", "B.中国先进文化的前进方向", "C.中国最广大人民的根本利益", "D.中国广大社会阶层的根本利益"], answer: "ABC" },
+                { id: 3, text: "加强和规范党内政治生活，增强党内政治生活的（    ），发展积极健康的党内政治文化，营造风清气正的良好政治生态。", options: ["A.政治性", "B.时代性", "C.原则性", "D.战斗性"], answer: "ABCD" },
+                { id: 4, text: "改革开放以来我们取得一切成绩和进步的根本原因，归结起来就是：（    ）。", options: ["A.开辟了中国特色社会主义道路", "B.形成了中国特色社会主义理论体系", "C.确立了中国特色社会主义制度", "D.发展了中国特色社会主义文化"], answer: "ABCD" },
+                { id: 5, text: "全党同志要倍加珍惜、长期坚持和不断发展党历经艰辛开创的这条道路、这个理论体系、这个制度、这个文化，高举中国特色社会主义伟大旗帜，坚定道路自信、理论自信、制度自信、文化自信，贯彻党的基本理论、基本路线、基本方略，为实现（    ）、维护世界和平与促进共同发展这三大历史任务，实现'两个一百年'奋斗目标、实现中华民族伟大复兴的中国梦而奋斗。", options: ["A.全面建成小康社会", "B.推进现代化建设", "C.完成祖国统一", "D.社会主义和谐"], answer: "BC" },
+                { id: 6, text: "我国社会主义建设的根本任务，是（    ）。", options: ["A.实现社会主义民主政治", "B.进一步解放生产力，发展生产力", "C.逐步实现社会主义现代化", "D.并且为此而改革生产关系和上层建筑中不适应生产力发展的方面和环节"], answer: "BCD" },
+                { id: 7, text: "各项工作都要把（    ），作为总的出发点和检验标准，尊重劳动、尊重知识、尊重人才、尊重创造，做到发展为了人民、发展依靠人民、发展成果由人民共享。", options: ["A.有利于发展社会主义社会的生产力", "B.有利于社会主义国家改革开放", "C.有利于提高人民的生活水平", "D.有利于增强社会主义国家的综合国力"], answer: "ACD" },
+                { id: 8, text: "中国共产党在社会主义初级阶段的基本路线是：领导和团结全国各族人民，（    ），自力更生，艰苦创业，为把我国建设成为富强民主文明和谐美丽的社会主义现代化强国而奋斗。", options: ["A.以经济建设为中心", "B.坚持四项基本原则", "C.坚持改革开放", "D.坚持以人为本的全面发展"], answer: "ABC" },
+                { id: 9, text: "毫不动摇地巩固和发展公有制经济，毫不动摇地（    ）非公有制经济发展。", options: ["A.指导", "B.鼓励", "C.支持", "D.引导"], answer: "BCD" },
+                { id: 10, text: "促进（    ）同步发展，建设社会主义新农村，走中国特色新型工业化道路，建设创新型国家和世界科技强国。", options: ["A.新型工业化", "B.信息化", "C.城镇化", "D.农业现代化"], answer: "ABCD" },
+                { id: 11, text: "坚持（    ）有机统一，走中国特色社会主义政治发展道路，扩大社会主义民主，建设中国特色社会主义法治体系，建设社会主义法治国家，巩固人民民主专政，建设社会主义政治文明。", options: ["A.党的领导", "B.人民当家作主", "C.依法执政", "D.依法治国"], answer: "ABD" },
+                { id: 12, text: "建设社会主义精神文明，实行依法治国和以德治国相结合，提高全民族的（    ），为改革开放和社会主义现代化建设提供强大的思想保证、精神动力和智力支持，建设社会主义文化强国。", options: ["A.民主法制素质", "B.思想道德素质", "C.科学文化素质", "D.思想作风素质"], answer: "BC" },
+                { id: 13, text: "树立尊重自然、顺应自然、保护自然的生态文明理念，增强绿水青山就是金山银山的意识，坚持节约资源和保护环境的基本国策，坚持（    ）为主的方针，坚持生产发展、生活富裕、生态良好的文明发展道路。", options: ["A.节约优先", "B.保护优先", "C.自然恢复", "D.绿色环保"], answer: "ABC" },
+                { id: 14, text: "中国共产党坚持对人民解放军和其他人民武装力量的绝对领导，贯彻习近平强军思想，加强人民解放军的建设，坚持政治建军、改革强军、科技兴军、依法治军，建设一支听党指挥、能打胜仗、作风优良的人民军队，切实保证人民解放军有效履行新时代军队使命任务，充分发挥人民解放军在（    ）中的作用。", options: ["A.巩固国防", "B.保卫祖国", "C.全面建设小康社会", "D.参加社会主义现代化建设"], answer: "ABD" },
+                { id: 15, text: "中国共产党维护和发展（    ）和谐的社会主义民族关系，积极培养、选拔少数民族干部，帮助少数民族和民族地区发展经济、文化和社会事业，铸牢中华民族共同体意识，实现各民族共同团结奋斗、共同繁荣发展。", options: ["A.平等", "B.团结", "C.互助", "D.友好"], answer: "ABC" },
+                { id: 16, text: "中国共产党同全国各民族工人、农民、知识分子团结在一起，同各民主党派、无党派人士、各民族的爱国力量团结在一起，进一步发展和壮大由全体（    ）组成的最广泛的爱国统一战线。", options: ["A.社会主义劳动者", "B.社会主义事业的建设者", "C.拥护社会主义的爱国者", "D.拥护祖国统一和致力于中华民族伟大复兴的爱国者"], answer: "ABCD" },
+                { id: 17, text: "中国共产党在互相尊重主权和领土完整、（    ）、和平共处五项原则的基础上，发展我国同世界各国的关系。", options: ["A.互不侵犯", "B.互不干涉内政", "C.互相尊重", "D.平等互利"], answer: "ABD" },
+                { id: 18, text: "中国共产党要领导全国各族人民实现'两个一百年'奋斗目标、实现中华民族伟大复兴的中国梦，必须紧密围绕党的基本路线，坚持党要管党、全面从严治党，加强党的（    ），以改革创新精神全面推进党的建设新的伟大工程，以党的政治建设为统领，全面推进党的政治建设、思想建设、组织建设、作风建设、纪律建设，把制度建设贯穿其中，深入推进反腐败斗争，全面提高党的建设科学化水平。", options: ["A.执政能力建设", "B.长期执政能力建设", "C.先进性建设", "D.纯洁性建设"], answer: "BCD" },
+                { id: 19, text: "中国共产党按照（    ）的原则，发展我党同各国共产党和其他政党的关系。", options: ["A.独立自主", "B.完全平等", "C.互相尊重", "D.互不干涉内部事务"], answer: "ABCD" },
+                { id: 20, text: "党的思想路线是（    ），在实践中检验真理和发展真理。", options: ["A.解放思想", "B.一切从实际出发", "C.实事求是", "D.理论联系实际"], answer: "BCD" },
+                { id: 21, text: "党在自己的工作中实行群众路线，（    ），把党的正确主张变为群众的自觉行动。", options: ["A.一切为了群众", "B.一切依靠群众", "C.从群众中来", "D.到群众中去"], answer: "ABCD" },
+                { id: 22, text: "强化管党治党主体责任和监督责任，加强对（    ）特别是主要领导干部的监督，不断完善党内监督体系。", options: ["A.党的领导机关", "B.党员领导干部", "C.全体党员", "D.领导班子"], answer: "AB" },
+                { id: 23, text: "在习近平新时代中国特色社会主义思想指导下，中国共产党领导全国各族人民，统揽伟大斗争、（    ），推动中国特色社会主义进入了新时代。", options: ["A.伟大实践", "B.伟大工程", "C.伟大事业", "D.伟大梦想"], answer: "BCD" },
+                { id: 24, text: "党要适应改革开放和社会主义现代化建设的要求，坚持（    ），加强和改善党的领导。", options: ["A.科学执政", "B.民主执政", "C.依宪执政", "D.依法执政"], answer: "ABD" },
+                { id: 25, text: "党必须加强对（    ）等群团组织的领导，使它们保持和增强政治性、先进性、群众性，充分发挥作用。", options: ["A.工会", "B.共产主义青年团", "C.妇女联合会", "D.学术团体"], answer: "ABC" },
+                { id: 26, text: "在特殊情况下，党的（    ）可以直接接收党员。", options: ["A.中央委员会", "B.省委员会", "C.自治区委员会", "D.直辖市委员会"], answer: "ABCD" },
+                { id: 27, text: "预备党员的权利，除了没有（    ）以外，同正式党员一样。", options: ["A.申辩权", "B.表决权", "C.选举权", "D.被选举权"], answer: "BCD" },
+                { id: 28, text: "（    ），全党各个组织和全体党员服从党的全国代表大会和中央委员会是民主集中制的'四个服从'原则。", options: ["A.党员个人服从党的组织", "B.少数服从多数", "C.下级组织服从上级组织", "D.全党服从中央"], answer: "ABC" },
+                { id: 29, text: "党的上下级组织之间要（    ）。", options: ["A.互相监督", "B.互通情报", "C.互相促进", "D.互相支持"], answer: "ABD" },
+                { id: 30, text: "凡属重大问题都要按照（    ）的原则，由党的委员会集体讨论，作出决定；委员会成员要根据集体的决定和分工，切实履行自己的职责。", options: ["A.集体领导", "B.民主集中", "C.个别酝酿", "D.会议决定"], answer: "ABCD" },
+                { id: 31, text: "选举人有（    ）的权利。任何组织和个人不得以任何方式强迫选举人选举或不选举某个人。", options: ["A.了解候选人情况", "B.要求改变候选人", "C.不选任何一个候选人", "D.另选他人"], answer: "ABCD" },
+                { id: 32, text: "党的全国代表大会的职权是：听取和审查中央委员会的报告；审查中央纪律检查委员会的报告；讨论并决定党的重大问题；（    ）。", options: ["A.修改党的章程", "B.修改宪法和法律", "C.选举中央委员会", "D.选举中央纪律检查委员会"], answer: "ACD" },
+                { id: 33, text: "党的（    ），由中央委员会全体会议选举。", options: ["A.中央政治局", "B.中央政治局常务委员会", "C.中央委员会总书记", "D.中央书记处"], answer: "ABC" },
+                { id: 34, text: "中央委员会总书记负责召集（    ）会议，并主持中央书记处的工作。", options: ["A.中央委员会", "B.中央政治局", "C.中央政治局常务委员会", "D.中央书记处"], answer: "BC" },
+                { id: 35, text: "党的地方各级代表大会的职权是：（    ）。", options: ["A.听取和审查同级委员会的报告", "B.听取和审查同级纪律检查委员会的报告", "C.讨论本地区范围内的重大问题并作出决议", "D.选举同级党的委员会，选举同级党的纪律检查委员会"], answer: "ACD" },
+                { id: 36, text: "党的地方各级委员会在代表大会闭会期间，执行（    ）的决议，领导本地方的工作，定期向上级党的委员会报告工作。", options: ["A.上级委员会", "B.上级党组织的指示", "C.同级党的代表大会", "D.同级党的代表会议"], answer: "BC" },
+                { id: 37, text: "党的地方各级委员会全体会议，选举（    ），并报上级党的委员会批准。", options: ["A.常务委员会", "B.书记", "C.副书记", "D.纪律委员会"], answer: "ABC" },
+                { id: 38, text: "党的基层组织，根据工作需要和党员人数，经上级党组织批准，分别设立党的（    ）。", options: ["A.基层委员会", "B.总支部委员会", "C.支部委员会", "D.党小组"], answer: "ABC" },
+                { id: 39, text: "党的基层组织要对党员进行（    ）和服务，提高党员素质，增强党性。", options: ["A.教育", "B.培训", "C.管理", "D.监督"], answer: "ACD" },
+                { id: 40, text: "党重视（    ）和监督干部，特别是培养、选拔优秀年轻干部。", options: ["A.教育", "B.培训", "C.选拔", "D.考核"], answer: "ABCD" },
+                { id: 41, text: "党重视培养、选拔（    ）。", options: ["A.女干部", "B.发达地区干部", "C.欠发达地区干部", "D.少数民族干部"], answer: "AD" },
+                { id: 42, text: "强化管党治党（    ），加强对党的领导机关和党员领导干部特别是主要领导干部的监督，不断完善党内监督体系。", options: ["A.主体责任", "B.政治责任", "C.监督责任", "D.廉政责任"], answer: "AC" },
+                { id: 43, text: "对党员的纪律处分有五种：警告、（    ）、开除党籍。", options: ["A.降职", "B.严重警告", "C.撤销党内职务", "D.留党察看"], answer: "BCD" },
+                { id: 44, text: "党员在留党察看期间没有（    ）。", options: ["A.表决权", "B.批评权", "C.选举权", "D.被选举权"], answer: "ACD" },
+                { id: 45, text: "党的各级纪律检查委员会的主要任务是：（    ）。", options: ["A.查处违法案件", "B.维护党的章程和其他党内法规", "C.检查党的路线、方针、政策和决议的执行情况", "D.协助党的委员会推进全面从严治党、加强党风建设和组织协调反腐败工作"], answer: "BCD" },
+                { id: 46, text: "在中央和地方国家机关、（    ）和其他非党组织的领导机关中，可以成立党组。", options: ["A.人民团体", "B.社会团体", "C.经济组织", "D.文化组织"], answer: "ACD" },
+                { id: 47, text: "党组的任务，主要是负责贯彻执行党的路线、方针、政策；加强对本单位党的建设的领导，履行全面从严治党责任（    ）。", options: ["A.讨论和决定本单位的重大问题、做好干部管理工作", "B.讨论和决定基层党组织设置调整和发展党员、处分党员等重要事项", "C.团结党外干部和群众，完成党和国家交给的任务", "D.领导机关和直属单位党组织的工作"], answer: "ABCD" },
+                { id: 48, text: "要实施科教兴国战略、人才强国战略、（    ）、军民融合发展战略，充分发挥科学技术作为第一生产力的作用，充分发挥创新作为引领发展第一动力的作用，依靠科技进步，提高劳动者素质，促进国民经济更高质量、更有效率、更加公平、更可持续发展。", options: ["A.创新驱动发展战略", "B.乡村振兴战略", "C.区域协调发展战略", "D.可持续发展战略"], answer: "ABCD" },
+                { id: 49, text: "党要坚决支持共青团根据广大青年的特点和需要，生动活泼、富于创造性地进行工作，充分发挥团的（    ）。", options: ["A.战斗堡垒作用", "B.保证监督作用", "C.突击队作用", "D.联系广大青年的桥梁作用"], answer: "CD" },
+                { id: 50, text: "团的县级和县级以下各级委员会书记，企业事业单位的团委员会书记，是党员的，可以列席（    ）的会议。", options: ["A.上级党的委员会", "B.同级党的委员会", "C.同级常务委员会", "D.同级领导班子"], answer: "BC" },
+                { id: 51, text: "必须实行正确的集中，牢固树立（    ），坚定维护以习近平同志为核心的党中央权威和集中统一领导，保证全党的团结统一和行动一致，保证党的决定得到迅速有效的贯彻执行。", options: ["A.政治意识", "B.大局意识", "C.核心意识", "D.看齐意识"], answer: "ABCD" },
+                { id: 52, text: "新形势下，党面临的执政考验、（    ）是长期的、复杂的、严峻的，精神懈怠危险、能力不足危险、脱离群众危险、消极腐败危险更加尖锐地摆在全党面前。", options: ["A.改革开放考验", "B.市场经济考验", "C.意识形态考验", "D.外部环境考验"], answer: "ABD" },
+                { id: 53, text: "新形势下，党面临的执政考验、改革开放考验、市场经济考验、外部环境考验是长期的、复杂的、严峻的，精神懈怠危险、（    ）更加尖锐地摆在全党面前。", options: ["A.能力不足危险", "B.脱离群众危险", "C.消极腐败危险", "D.西化分化危险"], answer: "ABC" },
+                { id: 54, text: "中国共产党坚持对人民解放军和其他人民武装力量的绝对领导，贯彻习近平强军思想，加强人民解放军的建设，坚持（    ），建设一支听党指挥、能打胜仗、作风优良的人民军队，切实保证人民解放军有效履行新时代军队使命任务，充分发挥人民解放军在巩固国防、保卫祖国和参加社会主义现代化建设中的作用。", options: ["A.政治建军", "B.改革强军", "C.科技兴军", "D.依法治军"], answer: "ABCD" },
+                { id: 55, text: "党的各级领导干部必须信念坚定、（    ），模范地履行党员的各项义务，并且必须具备领导干部的六项基本条件。", options: ["A.为民服务", "B.勤政务实", "C.敢于担当", "D.清正廉洁"], answer: "ABCD" }
+            ],
+            judge: [
+                { id: 1, text: "党章总纲强调，要全面深化改革，完善和发展中国特色社会主义制度，推进国家治理体系和治理能力现代化。", answer: "√" },
+                { id: 2, text: "我国正处于并将长期处于社会主义初级阶段。这是在原本经济文化落后的中国建设社会主义现代化不可逾越的历史阶段，需要上百年的时间。", answer: "√" },
+                { id: 3, text: "党章总纲强调，要以改革创新精神全面推进党的建设新的伟大工程，整体推进党的思想建设、组织建设、作风建设、制度建设，纪律建设，全面提高党的建设科学化水平。", answer: "×" },
+                { id: 4, text: "党员个人服从党的组织，少数服从多数，下级组织服从上级组织，全党服从中央是民主集中制的'四个服从'原则。", answer: "×" },
+                { id: 5, text: "凡属重大问题都要按照集体领导、分工负责、个别酝酿、会议决定的原则，由党的委员会集体讨论，作出决定。", answer: "×" },
+                { id: 6, text: "发展是我们党执政兴国的第一要务。必须坚持以人民为中心的发展思想，坚持创新、协调、绿色、开放、共享的发展理念。", answer: "√" },
+                { id: 7, text: "现阶段，我国社会的主要矛盾是改革生产关系和上层建筑中不适应生产力发展的矛盾。", answer: "×" },
+                { id: 8, text: "国有企业党委（党组）发挥领导作用，把方向、管大局、保落实，依照规定讨论和决定企业重大事项。", answer: "√" },
+                { id: 9, text: "中国共产党在领导社会主义事业中，必须坚持以经济建设为中心，其他各项工作都服从和服务于这个中心。", answer: "√" },
+                { id: 10, text: "在国际事务中，坚持正确义利观，维护我国的独立和主权，反对霸权主义和强权政治，维护世界和平，促进人类进步，推动构建人类命运共同体，推动建设持久和平、共同繁荣的和谐世界。", answer: "√" },
+                { id: 11, text: "党必须按照总揽全局、统筹兼顾的原则，在同级各种组织中发挥领导核心作用。", answer: "×" },
+                { id: 12, text: "党员的党龄，从上级组织批准成为预备党员之日算起。", answer: "×" },
+                { id: 13, text: "党的各级委员会实行集体领导和个人分工负责相结合的制度。", answer: "√" },
+                { id: 14, text: "坚持总体国家安全观，坚决维护国家主权、安全、发展利益。", answer: "√" },
+                { id: 15, text: "坚持惩前毖后、治病救人，执纪必严、违纪必究，抓早抓小、防微杜渐，按照错误性质和情节轻重，给以批评教育直至纪律处分。", answer: "√" },
+                { id: 16, text: "党的地方委员会是设立纪律检查委员会，还是设立纪律检查委员，由它的上一级党组织根据具体情况决定。", answer: "×" },
+                { id: 17, text: "党的市（地、州、盟）和县（市、区、旗）委员会建立巡视制度。", answer: "×" },
+                { id: 18, text: "必须按照中国特色社会主义事业'四个全面'战略布局，协调推进全面建设小康社会、全面深化改革、全面依法治国、全面从严治党。", answer: "×" },
+                { id: 19, text: "民主集中制是民主基础上的集中和集中指导下的民主。", answer: "×" },
+                { id: 20, text: "党在自己的工作中实行群众路线，一切为了群众，一切依靠群众，从群众中来，到群众中去，把党的正确主张变为群众的自觉行动。", answer: "√" },
+                { id: 21, text: "党的各级领导机关，除它们派出的代表机关和在非党组织中的党组外，都由同级党委任命产生。", answer: "×" },
+                { id: 22, text: "党的中央和省、自治区、直辖市委员会实行巡视制度，在一届任期内，对所管理的地方、部门、企事业单位党组织实现巡视全覆盖。", answer: "√" },
+                { id: 23, text: "预备党员的权利，除了没有选举权和被选举权以外，其他也同正式党员一样。", answer: "×" },
+                { id: 24, text: "各级党和国家机关中党的基层组织，协助行政负责人完成任务，改进工作，对包括行政负责人在内的每个党员进行教育、管理、监督，不领导本单位的业务工作。", answer: "√" },
+                { id: 25, text: "党的地方各级委员会全体会议，每年至少召开一次。", answer: "×" },
+                { id: 26, text: "发挥市场在资源配置中的基础性作用，更好发挥政府作用，建立完善的宏观调控体系。", answer: "×" },
+                { id: 27, text: "党员要求退党，应当经所在支部上级党委讨论宣布除名后备案。", answer: "×" },
+                { id: 28, text: "党支部是党的基础组织，担负直接教育党员、管理党员、监督党员和组织群众、宣传群众、凝聚群众、服务群众的职责。", answer: "√" },
+                { id: 29, text: "中国共产主义青年团是中国共产党领导的先进青年的群众组织。", answer: "×" },
+                { id: 30, text: "党组要发挥领导核心作用。", answer: "√" },
+                { id: 31, text: "促进新型工业化、信息化、城镇化、农业现代化同步发展，建设社会主义新农村，走中国特色新型工业化道路，建设创新型国家和军事强国。", answer: "×" },
+                { id: 32, text: "运用监督执纪'四种形态'，让'红红脸、出出汗'成为常态，党纪处分、组织调整成为管党治党的重要手段，严重违纪、严重触犯刑律的党员必须开除党籍。", answer: "√" },
+                { id: 33, text: "自觉遵守党的纪律，首先是党的政治纪律和廉洁纪律，模范遵守国家的法律法规，严格保守党和国家的秘密，执行党的决定，服从组织分配，积极完成党的任务。", answer: "×" },
+                { id: 34, text: "坚持依规治党、标本兼治，坚持把纪律挺在前面，加强组织性纪律性，在党的纪律面前人人平等。", answer: "√" },
+                { id: 35, text: "深入推进党风廉政建设和反腐败斗争，以行贿受贿一起查的态度惩治腐败，构建不敢腐、不能腐、不想腐的有效机制。", answer: "×" }
+            ],
+            short: [
+                { id: 1, text: "请写出入党誓词的内容。", answer: "我志愿加入中国共产党，拥护党的纲领，遵守党的章程，履行党员义务，执行党的决定，严守党的纪律，保守党的秘密，对党忠诚，积极工作，为共产主义奋斗终身，随时准备为党和人民牺牲一切，永不叛党。" },
+                { id: 2, text: "党员必须履行哪些义务？", answer: "（一）认真学习马克思列宁主义、毛泽东思想、邓小平理论、'三个代表'重要思想、科学发展观、习近平新时代中国特色社会主义思想，学习党的路线、方针、政策和决议，学习党的基本知识和党的历史，学习科学、文化、法律和业务知识，努力提高为人民服务的本领。<br>（二）增强'四个意识'、坚定'四个自信'、做到'两个维护'，贯彻执行党的基本路线和各项方针、政策，带头参加改革开放和社会主义现代化建设，带动群众为经济发展和社会进步艰苦奋斗，在生产、工作、学习和社会生活中起先锋模范作用。<br>（三）坚持党和人民的利益高于一切，个人利益服从党和人民的利益，吃苦在前，享受在后，克己奉公，多做贡献。<br>（四）自觉遵守党的纪律，首先是党的政治纪律和政治规矩，模范遵守国家的法律法规，严格保守党和国家的秘密，执行党的决定，服从组织分配，积极完成党的任务。<br>（五）维护党的团结和统一，对党忠诚老实，言行一致，坚决反对一切派别组织和小集团活动，反对阳奉阴违的两面派行为和一切阴谋诡计。<br>（六）切实开展批评和自我批评，勇于揭露和纠正违反党的原则的言行和工作中的缺点、错误，坚决同消极腐败现象作斗争。<br>（七）密切联系群众，向群众宣传党的主张，遇事同群众商量，及时向党反映群众的意见和要求，维护群众的正当利益。<br>（八）发扬社会主义新风尚，带头实践社会主义核心价值观和社会主义荣辱观，提倡共产主义道德，弘扬中华民族传统美德，为了保护国家和人民的利益，在一切困难和危险的时刻挺身而出，英勇斗争，不怕牺牲。" },
+                { id: 3, text: "党员享有哪些权利？", answer: "（一）参加党的有关会议，阅读党的有关文件，接受党的教育和培训。<br>（二）在党的会议上和党报党刊上，参加关于党的政策问题的讨论。<br>（三）对党的工作提出建议和倡议。<br>（四）在党的会议上有根据地批评党的任何组织和任何党员，向党负责地揭发、检举党的任何组织和任何党员违法乱纪的事实，要求处分违法乱纪的党员，要求罢免或撤换不称职的干部。<br>（五）行使表决权、选举权，有被选举权。<br>（六）在党组织讨论决定对党员的党纪处分或作出鉴定时，本人有权参加和进行申辩，其他党员可以为他作证和辩护。<br>（七）对党的决议和政策如有不同意见，在坚决执行的前提下，可以声明保留，并且可以把自己的意见向党的上级组织直至中央提出。<br>（八）向党的上级组织直至中央提出请求、申诉和控告，并要求有关组织给以负责的答复。" },
+                { id: 4, text: "中国共产党的性质是什么?", answer: "中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心，代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。" },
+                { id: 5, text: "中国共产党的行动指南是什么?", answer: "中国共产党以马克思列宁主义、毛泽东思想、邓小平理论、'三个代表'重要思想、科学发展观、习近平新时代中国特色社会主义思想作为自己的行动指南。" },
+                { id: 6, text: "党在社会初级阶段的基本路线是什么?", answer: "领导和团结全国各族人民，以经济建设为中心，坚持四项基本原则，坚持改革开放，自力更生，艰苦创业，为把我国建设成为富强、民主、文明和谐美丽的社会主义现代化国家而奋斗。" },
+                { id: 7, text: "党的建设必须坚决实现哪些基本要求？", answer: "第一，坚持党的基本路线。<br>第二，坚持解放思想，实事求是，与时俱进，求真务实。<br>第三，坚持新时代党的组织路线。<br>第四，坚持全心全意为人民服务。<br>第五，坚持民主集中制。<br>第六，坚持从严管党治党。" },
+                { id: 8, text: "中国共产党的初心使命是什么？", answer: "中国共产党自成立以来，始终把为中国人民谋幸福、为中华民族谋复兴作为自己的初心使命，历经百年奋斗，从根本上改变了中国人民的前途命运，开辟了实现中华民族伟大复兴的正确道路，展示了马克思主义的强大生命力，深刻影响了世界历史进程，锻造了走在时代前列的中国共产党。" },
+                { id: 9, text: "'四个意识'、'四个自信'、'两个维护'是什么？", answer: "'四个意识'是指政治意识、大局意识、核心意识、看齐意识。<br>'四个自信'包括道路自信、理论自信、制度自信、文化自信。<br>'两个维护'指的是坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导。" },
+                { id: 10, text: "党的纪律包括哪些方面？对党员的纪律处分有哪些？", answer: "党的纪律主要包括政治纪律、组织纪律、廉洁纪律、群众纪律、工作纪律、生活纪律。<br>对党员的纪律处分有五种：警告、严重警告、撤销党内职务、留党察看、开除党籍。" }
+            ],
+            defense: [
+                { id: 1, text: "请简要说说党的性质和根本宗旨是什么？", answer: "党的性质：中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心，代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。<br>根本宗旨：全心全意为人民服务。" },
+                { id: 2, text: "新时代党的使命任务是什么，结合自身谈谈理解。", answer: "新时代党的使命任务是：团结带领全国各族人民全面建成社会主义现代化强国、实现第二个百年奋斗目标，以中国式现代化全面推进中华民族伟大复兴。<br>结合自身：作为经济学院学生，我理解「中国式现代化」包含共同富裕、高质量发展等内涵。我的使命就是在专业学习中打下扎实基础，将来用经济学知识服务国家战略，在区域经济发展、普惠金融等领域贡献力量。" },
+                { id: 3, text: "党章中规定的党员权利和义务，你重点牢记了哪些？", answer: "义务方面，我重点牢记：① 认真学习党的创新理论及科学文化知识；② 密切联系群众，维护群众正当利益；③ 发挥先锋模范作用；④ 自觉遵守党的纪律。<br>权利方面，我牢记：① 参加党的会议、阅读党的文件、接受党的教育培训；② 对党的工作提出建议和倡议；③ 行使表决权、选举权和被选举权。" },
+                { id: 4, text: "谈谈你对「两个维护」的认识。", answer: "「两个维护」即坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导。我理解，一个国家、一个政党必须有坚强的领导核心，这是党从百年奋斗历程中总结出的宝贵经验。作为党员，我要在思想上高度认同、政治上坚决维护、行动上紧跟追随，不折不扣落实党中央决策部署。" },
+                { id: 5, text: "近期重点学习了哪些党内重要会议精神，有哪些体会？", answer: "近期我重点学习了党的二十届三中全会精神。全会强调进一步全面深化改革、推进中国式现代化。我的体会是：改革永远在路上，作为经济学院学生，尤其要关注经济体制改革的方向，比如构建全国统一大市场、完善市场经济基础制度等。这让我更加明确，学习经济学不仅要掌握理论，更要为国家改革发展建言献策、贡献力量。" },
+                { id: 6, text: "结合预备期成长经历，谈谈你的入党动机是否更加纯粹？", answer: "更加纯粹了。最初入党更多是追求进步、想成为优秀组织的一员；经过预备期学习和实践，我深刻认识到，入党不是「镀金」，而是「担责」。无论是参与志愿服务时的获得感，还是学习党史时被先辈精神震撼，都让我坚定了「为人民服务」不只是口号，而是要用一生去践行的承诺。" },
+                { id: 7, text: "如何理解党员要做到「在党言党、在党忧党、在党为党」？", answer: "「在党言党」：要宣传党的主张，积极传播正能量，不说损害党的形象的话。<br>「在党忧党」：要有忧患意识，关心党的建设，对党内不良风气敢于批评、敢于斗争。<br>「在党为党」：要立足岗位为党工作，用实际行动为党旗增辉。对我而言，就是要在学习、生活中处处维护党的形象，用实际行动为党组织争光。" },
+                { id: 8, text: "面对网络上各类舆情和不实言论，作为党员你会如何应对？", answer: "第一，保持清醒头脑，不盲从、不信谣、不传谣。第二，主动核实信息来源，用事实和理性分析辨别真伪。第三，对身边人传播的不实信息，我会善意提醒，必要时引用权威信息澄清。第四，在组织需要时，敢于亮剑发声，维护网络清朗空间。" },
+                { id: 9, text: "你认为一名合格党员最重要的品质是什么？", answer: "我认为是「忠诚与担当」。忠诚于党的信仰和事业，在任何情况下都不动摇；同时要有担当精神，平常时候看得出来、关键时刻站得出来、危急关头豁得出来。忠诚是底色，担当是本色，二者缺一不可。" },
+                { id: 10, text: "谈谈你对党性修养的理解，预备期内你是如何锤炼党性的？", answer: "党性修养是党员的自我教育、自我改造和自我完善。预备期内，我从三方面锤炼：一是理论学习，系统学习党章和党的创新理论；二是实践锻炼，积极参与志愿服务和支部活动，在服务群众中强化宗旨意识；三是自我反思，坚持写思想汇报，对照党员标准找差距，不断修正自己。" },
+                { id: 11, text: "作为经济学院党员，如何将经济专业知识与服务师生、服务社会结合起来？", answer: "一是利用专业知识为同学服务，比如辅导计量经济学、统计学等课程，帮助同学攻克学习难点；二是参与社会实践，利用专业知识开展金融防诈骗宣传、社区经济调研等；三是关注国家经济政策，结合所学进行解读分享，引导大家理性看待经济现象。" },
+                { id: 12, text: "预备期间你参与了哪些志愿服务、党建活动或集体工作，具体做了什么？", answer: "（提示：请根据个人经历替换）例如：参加了迎新志愿服务，服务时长20小时；参与支部组织的「红色金融史」主题党日活动，负责资料整理；在学院运动会中担任志愿者，负责后勤保障；还参与了社区防诈骗宣讲，用专业所学为老年人普及防诈骗知识。" },
+                { id: 13, text: "在日常学习、工作中，你是如何发挥党员先锋模范作用的？", answer: "一是学习上做标杆，保持良好成绩，带头遵守课堂纪律；二是工作中主动担当，在班级事务和支部工作中不推诿、不敷衍；三是生活中关心同学，主动帮助有困难的同学；四是积极参与集体活动，以实际行动带动周围同学。" },
+                { id: 14, text: "当个人利益和集体利益发生冲突时，你会如何选择？", answer: "我会以集体利益为重。党的宗旨是全心全意为人民服务，党员应当有牺牲小我、成就大我的觉悟。比如，如果班级工作需要占用我的学习时间，我会合理统筹，优先完成集体工作，再挤出个人时间弥补学习。这不是放弃个人利益，而是在更高层次上实现个人价值。" },
+                { id: 15, text: "你如何带动身边同学/同事共同进步、营造优良风气？", answer: "一是以身作则，用自身行动树立标杆，比如课堂不玩手机、按时完成作业；二是主动分享，将学习资料、竞赛信息等与同学共享；三是团结互助，对学业或生活有困难的同学伸出援手；四是正面引导，发现消极情绪或不良风气时，及时沟通疏导，传递正能量。" },
+                { id: 16, text: "谈谈你对「担当作为」的理解，举例说说你践行担当的小事。", answer: "「担当作为」就是不推诿、不逃避，在需要的时候挺身而出。比如，有一次小组作业临近汇报时，负责PPT的同学临时请假，我主动接手连夜完成PPT修改和整合，确保小组顺利汇报。事情虽小，但我理解这就是党员应有的担当——在别人推的时候你上，在别人等的时候你做。" },
+                { id: 17, text: "对照党员标准，客观说说自身存在的缺点与不足，以及整改计划。", answer: "不足：一是理论深度不够，对经典原著研读偏少；二是做事有时急躁，追求效率但细节把控不够；三是实践能力还需加强，将专业知识转化为服务本领的能力有待提高。<br>整改：每月精读一篇重要文献并做笔记；做事前先列清单、逐项落实，培养细致习惯；每学期至少参与一次社会调研或专业实践活动。" },
+                { id: 18, text: "回顾预备期，党组织的培养让你最大的收获和改变是什么？", answer: "最大的收获是「身份意识的觉醒」。以前我更多把自己看作普通学生，现在时刻牢记自己是一名党员，言行举止都要以更高标准要求自己。最大的改变是学会了「先想他人、再想自己」，参与志愿服务和支部工作让我真正体会到，奉献本身就是一种获得。" },
+                { id: 19, text: "若顺利转为正式党员，你在思想、学习、工作上有哪些新规划？", answer: "思想方面：持续深化理论学习，每年系统学习一个专题；学习方面：争取学业成绩保持前列，同时带动身边同学共同进步；工作方面：积极承担支部工作和社会实践，至少参与一项服务社会的调研项目；长远目标是毕业后用经济专业知识服务基层或投身国家战略领域。" },
+                { id: 20, text: "如果此次未能按期转正，你会如何看待、后续如何努力？", answer: "我会坦然接受组织的决定。这说明我离正式党员标准还有差距，组织是在对我负责。我会认真对照反馈意见，逐条改进不足，继续以预备党员的标准要求自己，在下一考察期更加努力，争取早日达到组织要求。" },
+                { id: 21, text: "结合自身预备期经历，谈谈你对党员先锋模范作用的理解，日常中你是如何践行的？", answer: "理解：先锋模范作用不是挂在嘴边的口号，而是在日常学习、工作、生活中，事事走在前、干在先，用行动感染和带动他人。<br>践行：学习上主动分享笔记和复习资料；生活中带头打扫宿舍卫生、遵守作息制度；集体活动中主动承担任务；同学遇到困难时第一时间伸出援手。" },
+                { id: 22, text: "近期学习了哪些党的创新理论或时政内容，简单说说你的学习感悟？", answer: "近期学习了「新质生产力」相关内容。感悟是：高质量发展需要新的生产力理论来指导，而新质生产力的核心是创新。作为经济学院学生，我认识到未来经济发展更加依赖科技创新、高素质人才和制度创新，这激励我更加注重跨学科学习，提升创新能力，为服务高质量发展做好准备。" },
+                { id: 23, text: "作为经济学院的一员，你认为学生党员该如何结合专业特色发挥党员作用？", answer: "一是做经济政策的「宣传员」，用通俗语言向同学和群众解读国家经济政策；二是做基层调研的「先行者」，深入社区、乡村了解经济运行实情；三是做学术风气的「引领者」，坚守学术诚信，抵制学术不端；四是做服务社会的「实践者」，用金融、财税等知识帮助中小企业或普通群众解决实际问题。" },
+                { id: 24, text: "对照党员标准，你觉得自己目前还有哪些差距？打算如何改进？", answer: "见第17题。" },
+                { id: 25, text: "请简述一名共产党员的基本义务。", answer: "见第3题「义务」部分。" },
+                { id: 26, text: "在班级、学院集体活动或志愿服务中，你印象最深的经历是什么，有哪些收获？", answer: "（提示：请根据个人经历填充）例如：印象最深的是参与社区防诈骗宣讲。我发现很多老年人缺乏基础金融知识，容易被骗，而我所学的专业知识能够真正帮到他们。那次经历让我真切体会到「学有所用、服务群众」的价值，也坚定了我用专业回馈社会的决心。" },
+                { id: 27, text: "如果遇到身边同学/同事出现消极言论、不当想法，你会怎么做？", answer: "首先，不简单粗暴地批评或对立，而是先倾听，了解对方为什么会有这样的想法。其次，用事实和理性分析进行引导，帮助对方看清问题本质。如果涉及原则性错误，我会明确表明立场、及时纠正。最后，持续关注对方状态，用正能量感染带动，而非说教。" },
+                { id: 28, text: "谈谈你对「从思想上、行动上完全入党」这句话的理解。", answer: "「思想上入党」是根本，就是要真正信仰党的理论、宗旨和目标，不是口头表态；「行动上入党」是体现，要用实际行动践行入党誓词。二者统一，缺一不可。光有思想没有行动是空谈，光有行动没有思想是盲干。只有实现两者的统一，才算真正成为一名合格党员。" },
+                { id: 29, text: "回顾整个预备期，党组织的培养教育让你最大的改变是什么？", answer: "最大的改变是「从被动参与到主动担当」的转变。以前参加支部活动，我更多是按通知到场、按布置做事；经过这一年的培养，我开始主动思考「我能为组织做什么」「我能在集体中承担什么角色」。比如从听别人讲党课，到自己主动查阅资料、在支部学习会上分享心得；从被安排志愿服务岗位，到主动发起助学帮扶。这种从「要我做」到「我要做」的转变，是我预备期最深刻的变化，也让我真正体会到党员的责任不是分配的，而是自觉的。" }
+            ]
+        };
+
+        const sections = [
+            { id: 'single', name: '党课单选题', prefix: '一、', emoji: '📝' },
+            { id: 'multiple', name: '党课多选题', prefix: '二、', emoji: '📋' },
+            { id: 'judge', name: '党课判断题', prefix: '三、', emoji: '✅' },
+            { id: 'short', name: '党课简答题', prefix: '四、', emoji: '📖' }
+        ];
+
+        const defenseSection = { id: 'defense', name: '党员转正答辩题', prefix: '五、', emoji: '🎤' };
+
+        const typeLabels = {
+            single: '单选题', multiple: '多选题', judge: '判断题', short: '简答题', defense: '转正答辩题'
+        };
+
+        const EXAM_COUNTS = { single: 20, multiple: 15, judge: 15, short: 5 };
+        const EXAM_DURATION_SEC = 60 * 60;
+
+        let currentExam = null;
+        let examTimerInterval = null;
+
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function pickRandom(type, count) {
+            const pool = questionsData[type];
+            return shuffleArray(pool).slice(0, Math.min(count, pool.length))
+                .map(q => ({ type, question: q }));
+        }
+
+        function buildExamPaper() {
+            const paper = [
+                ...pickRandom('single', EXAM_COUNTS.single),
+                ...pickRandom('multiple', EXAM_COUNTS.multiple),
+                ...pickRandom('judge', EXAM_COUNTS.judge),
+                ...pickRandom('short', EXAM_COUNTS.short)
+            ];
+            return paper.map((item, idx) => ({ ...item, examIdx: idx }));
+        }
+
+        function getOptionLetter(opt) {
+            const m = opt.match(/^([A-F])[.、．\s]/);
+            return m ? m[1] : opt.charAt(0);
+        }
+
+        function normalizeMultiAnswer(s) {
+            return (s || '').toUpperCase().split('').filter(c => /[A-F]/.test(c)).sort().join('');
+        }
+
+        function checkExamAnswer(type, userAns, correctAns) {
+            if (type === 'single') return userAns === correctAns;
+            if (type === 'multiple') return normalizeMultiAnswer(userAns) === normalizeMultiAnswer(correctAns);
+            if (type === 'judge') return userAns === correctAns;
+            return null;
+        }
+
+        function animateContentArea() {
+            const contentArea = document.getElementById('content-area');
+            contentArea.style.animation = 'none';
+            contentArea.offsetHeight;
+            contentArea.style.animation = '';
+        }
+
+        function scrollToTop() {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            const examBody = document.querySelector('.exam-page-body');
+            if (examBody) examBody.scrollTop = 0;
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) mainContent.scrollTop = 0;
+        }
+
+        function setActiveNav(section) {
+            document.querySelectorAll('.type-nav-item').forEach(item => {
+                item.classList.toggle('active', item.getAttribute('data-section') === section);
+            });
+        }
+
+        function clearExamFooterState() {
+            document.body.classList.remove('exam-has-footer', 'exam-footer-expanded', 'exam-footer-submitted');
+        }
+
+        function setExamMode(on) {
+            document.body.classList.toggle('exam-mode', on);
+        }
+
+        function renderExamPageHeader(opts = {}) {
+            const { subtitle, showStats, showTimer, showRegenerate, hideActions, exitHandler = 'exitExam()' } = opts;
+
+            const statsHtml = showStats
+                ? `<div class="exam-header-stats">
+                    <span class="exam-stat-pill">单选 ${EXAM_COUNTS.single}道</span>
+                    <span class="exam-stat-pill">多选 ${EXAM_COUNTS.multiple}道</span>
+                    <span class="exam-stat-pill">判断 ${EXAM_COUNTS.judge}道</span>
+                    <span class="exam-stat-pill">简答 ${EXAM_COUNTS.short}道</span>
+                </div>`
+                : (subtitle ? `<div class="exam-header-subtitle">${subtitle}</div>` : '');
+
+            const timerHtml = showTimer
+                ? `<div class="exam-header-timer" id="examTimerBox">
+                        <span class="exam-timer-label">剩余时间</span>
+                        <span class="exam-timer-value" id="examTimer">60:00</span>
+                    </div>`
+                : '';
+
+            const regenBtn = showRegenerate
+                ? `<button type="button" class="btn-exam-header-regen" onclick="regenerateExam()">↻ 重新抽题</button>`
+                : '';
+
+            const actionsHtml = hideActions ? '' : `<div class="exam-header-actions">
+                    ${regenBtn}
+                    <button type="button" class="btn-exam-header-exit" onclick="${exitHandler}">✕ 退出</button>
+                </div>`;
+
+            const headerClass = [
+                'exam-page-header',
+                !showTimer ? 'exam-page-header--no-timer' : '',
+                hideActions && subtitle && !showStats ? 'exam-page-header--entry' : '',
+                hideActions && (showStats || showTimer) ? 'exam-page-header--no-actions' : ''
+            ].filter(Boolean).join(' ');
+
+            return `<div class="${headerClass}">
+                <div class="exam-header-top">
+                    <div class="exam-page-header-brand">
+                        <div class="exam-page-header-icon">考</div>
+                        <h2>党课模拟考试</h2>
+                    </div>
+                    ${timerHtml}
+                </div>
+                ${statsHtml}
+                ${actionsHtml}
+            </div>`;
+        }
+
+        function stopExamTimer() {
+            if (examTimerInterval) {
+                clearInterval(examTimerInterval);
+                examTimerInterval = null;
+            }
+        }
+
+        function updateExamTimerDisplay() {
+            const timerEl = document.getElementById('examTimer');
+            const timerBox = document.getElementById('examTimerBox');
+            if (!timerEl || !timerBox || !currentExam?.endTime) return;
+            const remaining = Math.max(0, currentExam.endTime - Date.now());
+            const m = Math.floor(remaining / 60000);
+            const s = Math.floor((remaining % 60000) / 1000);
+            timerEl.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            timerBox.classList.toggle('urgent', remaining > 0 && remaining <= 5 * 60 * 1000);
+            timerBox.classList.toggle('critical', remaining > 0 && remaining <= 60 * 1000);
+        }
+
+        function startExamTimer() {
+            if (!currentExam || currentExam.submitted) return;
+            stopExamTimer();
+            updateExamTimerDisplay();
+            examTimerInterval = setInterval(() => {
+                if (!currentExam || currentExam.submitted) {
+                    stopExamTimer();
+                    return;
+                }
+                updateExamTimerDisplay();
+                if (Date.now() >= currentExam.endTime) {
+                    stopExamTimer();
+                    submitExam(true);
+                }
+            }, 1000);
+        }
+
+        function createExamSession() {
+            return {
+                submitted: false,
+                questions: buildExamPaper(),
+                endTime: Date.now() + EXAM_DURATION_SEC * 1000
+            };
+        }
+
+        let modalResolve = null;
+
+        function showConfirmModal(title, message, options = {}) {
+            return new Promise(resolve => {
+                modalResolve = resolve;
+                const overlay = document.getElementById('appModalOverlay');
+                const icon = document.getElementById('appModalIcon');
+                const cancelBtn = document.getElementById('appModalCancel');
+                document.getElementById('appModalTitle').textContent = title;
+                document.getElementById('appModalMessage').textContent = message;
+                icon.textContent = options.icon || '!';
+                icon.className = 'app-modal-icon' + (options.warn ? ' warn' : '');
+                document.getElementById('appModalConfirm').textContent = options.confirmText || '确定';
+                cancelBtn.textContent = options.cancelText || '取消';
+                cancelBtn.style.display = options.hideCancel ? 'none' : '';
+                overlay.hidden = false;
+                document.body.classList.add('modal-open');
+                cancelBtn.focus();
+            });
+        }
+
+        function closeModal(result) {
+            document.getElementById('appModalOverlay').hidden = true;
+            document.body.classList.remove('modal-open');
+            if (modalResolve) {
+                modalResolve(result);
+                modalResolve = null;
+            }
+        }
+
+        function initModal() {
+            const overlay = document.getElementById('appModalOverlay');
+            document.getElementById('appModalConfirm').addEventListener('click', () => closeModal(true));
+            document.getElementById('appModalCancel').addEventListener('click', () => closeModal(false));
+            overlay.addEventListener('click', e => {
+                if (e.target === overlay) closeModal(false);
+            });
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && !overlay.hidden) closeModal(false);
+            });
+        }
+
+        async function exitToMain() {
+            if (currentExam && !(await confirmLeaveExam())) return;
+            stopExamTimer();
+            clearExamFooterState();
+            setExamMode(false);
+            currentExam = null;
+            setActiveNav('all');
+            animateContentArea();
+            document.getElementById('content-area').innerHTML = generateAllQuestionsHTML();
+            scrollToTop();
+        }
+
+        async function confirmLeaveExam() {
+            if (!currentExam) return true;
+            const msg = currentExam.submitted
+                ? '确定要退出考试吗？'
+                : '确定要退出考试吗？当前作答进度将不会保存。';
+            return showConfirmModal('退出考试', msg, { warn: true, confirmText: '退出', cancelText: '继续作答' });
+        }
+
+        async function showSection(section) {
+            if (section !== 'exam' && currentExam) {
+                if (!(await confirmLeaveExam())) return;
+            }
+            if (section !== 'exam') {
+                stopExamTimer();
+                clearExamFooterState();
+                setExamMode(false);
+            }
+            setActiveNav(section);
+            animateContentArea();
+            currentExam = null;
+            const contentArea = document.getElementById('content-area');
+            if (section === 'exam') {
+                showExamEntry(false);
+                return;
+            }
+            if (section === 'all') {
+                contentArea.innerHTML = generateAllQuestionsHTML();
+            } else if (section === 'defense') {
+                contentArea.innerHTML = generateQuestionTypeHTML('defense', defenseSection.name, questionsData.defense);
+            } else {
+                const s = sections.find(x => x.id === section);
+                if (s) contentArea.innerHTML = generateQuestionTypeHTML(section, s.name, questionsData[section]);
+            }
+            scrollToTop();
+        }
+
+        async function showExamEntry(updateNav) {
+            if (updateNav !== false && currentExam) {
+                if (!(await confirmLeaveExam())) return;
+            }
+            stopExamTimer();
+            setActiveNav('exam');
+            animateContentArea();
+            currentExam = null;
+            clearExamFooterState();
+            setExamMode(true);
+            renderExamEntry();
+        }
+
+        function renderExamEntry() {
+            const total = EXAM_COUNTS.single + EXAM_COUNTS.multiple + EXAM_COUNTS.judge + EXAM_COUNTS.short;
+            const gradable = EXAM_COUNTS.single + EXAM_COUNTS.multiple + EXAM_COUNTS.judge;
+            document.getElementById('content-area').innerHTML =
+                `<div class="exam-page-body exam-page-body--entry">
+                <div class="exam-entry">
+                    <div class="exam-entry-icon">考</div>
+                    <h2>欢迎参加党课模拟考试</h2>
+                    <p class="exam-entry-desc">系统将从党课题库中随机抽取试题，客观题自动判分，简答题提交后显示参考答案。</p>
+                    <div class="exam-entry-chips">
+                        <span class="exam-chip total">共 ${total} 题</span>
+                        <span class="exam-chip objective">客观题 ${gradable} 道</span>
+                        <span class="exam-chip subjective">简答题 ${EXAM_COUNTS.short} 道</span>
+                    </div>
+                    <div class="exam-entry-rules">
+                        <h3>考试说明</h3>
+                        <ul>
+                            <li>单选题 ${EXAM_COUNTS.single} 道、多选题 ${EXAM_COUNTS.multiple} 道、判断题 ${EXAM_COUNTS.judge} 道，提交后自动比对正确答案</li>
+                            <li>简答题 ${EXAM_COUNTS.short} 道，可自由作答，提交后显示参考答案，不计入自动得分</li>
+                            <li>作答完毕请点击「提交答卷」查看成绩与解析</li>
+                            <li>考试时长 60 分钟，到时系统将自动提交答卷</li>
+                            <li>考试过程中请勿刷新页面，退出将不保存作答进度</li>
+                        </ul>
+                    </div>
+                    <div class="exam-entry-actions">
+                        <button type="button" class="btn-exam-start" onclick="beginExam()">▶ 开始考试</button>
+                        <button type="button" class="btn-exam-entry-exit" onclick="exitToMain()">✕ 退出</button>
+                    </div>
+                </div>
+                </div>`;
+            scrollToTop();
+        }
+
+        function beginExam() {
+            setActiveNav('exam');
+            setExamMode(true);
+            animateContentArea();
+            currentExam = createExamSession();
+            renderExamPage();
+        }
+
+        async function exitExam() {
+            if (!(await confirmLeaveExam())) return;
+            stopExamTimer();
+            clearExamFooterState();
+            showExamEntry(false);
+        }
+
+        async function regenerateExam() {
+            if (currentExam && !currentExam.submitted) {
+                const ok = await showConfirmModal(
+                    '重新抽题',
+                    '重新抽题将清空当前作答并重置倒计时，确定继续吗？',
+                    { warn: true, confirmText: '重新抽题', cancelText: '取消' }
+                );
+                if (!ok) return;
+            }
+            currentExam = createExamSession();
+            renderExamPage();
+        }
+
+        function renderExamPage() {
+            const submitted = currentExam.submitted;
+            clearExamFooterState();
+            document.body.classList.add('exam-has-footer');
+
+            let html = renderExamPageHeader({
+                showStats: true,
+                showTimer: !submitted,
+                hideActions: true
+            });
+            html += `<div class="exam-page-body">`;
+            html += `<div class="exam-score-panel" id="examScorePanel"></div>`;
+
+            let sectionType = null;
+            let sectionNum = 0;
+            currentExam.questions.forEach((item, idx) => {
+                if (item.type !== sectionType) {
+                    sectionType = item.type;
+                    sectionNum++;
+                    const prefix = ['一', '二', '三', '四'][sectionNum - 1] || '';
+                    const count = currentExam.questions.filter(q => q.type === item.type).length;
+                    html += `<h3 class="content-subheading">${prefix}、${typeLabels[item.type]} <span style="font-weight:500;color:#9ca3af;font-size:0.9em;">(${count} 题)</span></h3>`;
+                }
+                html += renderExamQuestionCard(item, idx);
+            });
+            html += `</div>`;
+
+            if (!submitted) {
+                html += `<div class="exam-page-footer" id="examFooter">
+                    <div class="exam-footer-sheet">
+                        <button type="button" class="exam-footer-toggle" onclick="toggleExamFooter()" aria-expanded="false" aria-label="展开操作栏">
+                            <span class="exam-footer-handle"></span>
+                            <span class="exam-footer-toggle-arrow"></span>
+                        </button>
+                        <div class="exam-footer-actions">
+                            <button type="button" class="btn-exam-footer-regen" onclick="regenerateExam()">↻ 重新抽题</button>
+                            <button type="button" class="btn-exam-submit-full" id="submitExamBtn" onclick="submitExam()">✓ 提交答卷</button>
+                            <button type="button" class="btn-exam-footer-exit" onclick="exitExam()">✕ 退出</button>
+                        </div>
+                    </div>
+                </div>`;
+            } else {
+                html += `<div class="exam-page-footer submitted">
+                    <span class="exam-footer-hint"><strong>答卷已提交</strong> · 可继续查看解析</span>
+                    <button type="button" class="btn-exam-footer-exit" onclick="exitExam()">✕ 退出</button>
+                </div>`;
+            }
+
+            document.getElementById('content-area').innerHTML = html;
+            if (!submitted) {
+                syncExamFooterLayout();
+                startExamTimer();
+            }
+            scrollToTop();
+        }
+
+        function syncExamFooterLayout() {
+            const footer = document.getElementById('examFooter');
+            if (!footer) return;
+            const expanded = footer.classList.contains('expanded');
+            document.body.classList.toggle('exam-footer-expanded', expanded);
+            updateExamFooterToggleState(expanded);
+        }
+
+        let examFooterResizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(examFooterResizeTimer);
+            examFooterResizeTimer = setTimeout(syncExamFooterLayout, 120);
+        });
+
+        function updateExamFooterToggleState(expanded) {
+            const toggle = document.querySelector('.exam-footer-toggle');
+            if (toggle) {
+                toggle.setAttribute('aria-expanded', String(expanded));
+                toggle.setAttribute('aria-label', expanded ? '收起操作栏' : '展开操作栏');
+            }
+        }
+
+        function toggleExamFooter() {
+            const footer = document.getElementById('examFooter');
+            if (!footer) return;
+            const expanded = footer.classList.toggle('expanded');
+            document.body.classList.toggle('exam-footer-expanded', expanded);
+            updateExamFooterToggleState(expanded);
+        }
+
+        function renderExamQuestionCard(item, idx) {
+            const { type, question: q } = item;
+            const disabled = currentExam.submitted ? 'disabled' : '';
+            let body = `<div class="question-text">${q.text}</div>`;
+
+            if (type === 'single' && q.options) {
+                body += `<div class="options exam-options">`;
+                q.options.forEach(opt => {
+                    const letter = getOptionLetter(opt);
+                    body += `<label class="option-selectable option-long" data-letter="${letter}">
+                        <input type="radio" name="exam-${idx}" value="${letter}" ${disabled}>
+                        <span>${opt}</span>
+                    </label>`;
+                });
+                body += `</div>`;
+            } else if (type === 'multiple' && q.options) {
+                body += `<div class="options exam-options">`;
+                q.options.forEach(opt => {
+                    const letter = getOptionLetter(opt);
+                    body += `<label class="option-selectable option-long" data-letter="${letter}">
+                        <input type="checkbox" name="exam-${idx}" value="${letter}" ${disabled}>
+                        <span>${opt}</span>
+                    </label>`;
+                });
+                body += `<p class="short-hint">多选题可选择多个选项</p></div>`;
+            } else if (type === 'judge') {
+                body += `<div class="options exam-options judge-options">
+                    <label class="option-selectable" data-letter="√">
+                        <input type="radio" name="exam-${idx}" value="√" ${disabled}><span>正确 (√)</span>
+                    </label>
+                    <label class="option-selectable" data-letter="×">
+                        <input type="radio" name="exam-${idx}" value="×" ${disabled}><span>错误 (×)</span>
+                    </label>
+                </div>`;
+            } else if (type === 'short') {
+                body += `<textarea class="short-textarea" name="exam-short-${idx}" placeholder="可在此作答（不作自动比对，提交后查看参考答案）" ${disabled}></textarea>
+                <p class="short-hint">简答题不计入自动得分，提交后显示参考答案</p>`;
+            }
+
+            body += `<div class="exam-answer-reveal" id="exam-reveal-${idx}"></div>`;
+
+            return `<div class="question-card exam-card" id="exam-card-${idx}" data-exam-idx="${idx}" data-type="${type}">
+                <div class="q-card-head">
+                    <div class="q-card-head-left">
+                        <span class="q-num">第 ${idx + 1} 题</span>
+                        <span class="q-type-tag ${type}">${typeLabels[type]}</span>
+                    </div>
+                </div>
+                <div class="q-card-body">${body}</div>
+            </div>`;
+        }
+
+        function getUserExamAnswer(idx, type) {
+            if (type === 'multiple') {
+                const checked = document.querySelectorAll(`input[name="exam-${idx}"]:checked`);
+                return normalizeMultiAnswer(Array.from(checked).map(el => el.value).join(''));
+            }
+            if (type === 'short') return null;
+            const sel = document.querySelector(`input[name="exam-${idx}"]:checked`);
+            return sel ? sel.value : '';
+        }
+
+        function submitExam(isAutoSubmit) {
+            if (!currentExam || currentExam.submitted) return;
+            stopExamTimer();
+
+            let correct = 0, wrong = 0, unanswered = 0;
+            const breakdown = { single: { c: 0, t: 0 }, multiple: { c: 0, t: 0 }, judge: { c: 0, t: 0 } };
+
+            currentExam.questions.forEach((item, idx) => {
+                const { type, question: q } = item;
+                const card = document.getElementById(`exam-card-${idx}`);
+                const reveal = document.getElementById(`exam-reveal-${idx}`);
+                card.classList.add('submitted');
+
+                document.querySelectorAll(`#exam-card-${idx} input, #exam-card-${idx} textarea`).forEach(inp => { inp.disabled = true; });
+
+                if (type === 'short') {
+                    reveal.className = 'exam-answer-reveal visible reference';
+                    reveal.innerHTML = `<span class="reveal-label">参考答案</span>${q.answer}`;
+                    return;
+                }
+
+                breakdown[type].t++;
+                const userAns = getUserExamAnswer(idx, type);
+                const isCorrect = userAns && checkExamAnswer(type, userAns, q.answer);
+
+                if (!userAns) {
+                    unanswered++;
+                    card.classList.add('result-wrong');
+                    reveal.className = 'exam-answer-reveal visible wrong';
+                    reveal.innerHTML = `<span class="reveal-label">未作答 · 正确答案：${formatCorrectAnswer(type, q.answer)}</span>`;
+                    highlightExamOptions(idx, type, '', q.answer, false);
+                } else if (isCorrect) {
+                    correct++;
+                    breakdown[type].c++;
+                    card.classList.add('result-correct');
+                    reveal.className = 'exam-answer-reveal visible correct';
+                    reveal.innerHTML = `<span class="reveal-label">回答正确</span>你的答案：${formatCorrectAnswer(type, userAns)}`;
+                } else {
+                    wrong++;
+                    card.classList.add('result-wrong');
+                    reveal.className = 'exam-answer-reveal visible wrong';
+                    reveal.innerHTML = `<span class="reveal-label">回答错误</span>你的答案：${formatCorrectAnswer(type, userAns) || '未选'}<br>正确答案：${formatCorrectAnswer(type, q.answer)}`;
+                }
+
+                highlightExamOptions(idx, type, userAns, q.answer, isCorrect);
+            });
+
+            currentExam.submitted = true;
+            const gradable = correct + wrong + unanswered;
+            const pct = gradable ? Math.round(correct / gradable * 100) : 0;
+            const autoNote = isAutoSubmit ? '<div class="score-auto-note">考试时间已到，系统已自动提交答卷</div>' : '';
+            const panel = document.getElementById('examScorePanel');
+            panel.className = 'exam-score-panel visible';
+            panel.innerHTML = `
+                ${autoNote}
+                <div class="score-big">${correct} / ${gradable}</div>
+                <div class="score-detail">客观题正确率 ${pct}% · 答对 ${correct} 题 · 答错 ${wrong} 题 · 未答 ${unanswered} 题 · 简答题 ${EXAM_COUNTS.short} 道请对照参考答案</div>
+                <div class="score-breakdown">
+                    <span class="score-chip">单选 ${breakdown.single.c}/${breakdown.single.t}</span>
+                    <span class="score-chip">多选 ${breakdown.multiple.c}/${breakdown.multiple.t}</span>
+                    <span class="score-chip">判断 ${breakdown.judge.c}/${breakdown.judge.t}</span>
+                </div>`;
+            const submitBtn = document.getElementById('submitExamBtn');
+            if (submitBtn) submitBtn.disabled = true;
+            const footer = document.querySelector('.exam-page-footer');
+            if (footer) {
+                footer.className = 'exam-page-footer submitted';
+                footer.innerHTML = `<span class="exam-footer-hint"><strong>答卷已提交</strong> · 可继续查看解析</span>
+                    <button type="button" class="btn-exam-footer-exit" onclick="exitExam()">✕ 退出</button>`;
+            }
+            document.body.classList.remove('exam-footer-expanded');
+            document.body.classList.add('exam-footer-submitted');
+            const timerBox = document.getElementById('examTimerBox');
+            if (timerBox) {
+                timerBox.outerHTML = '<span class="exam-timer-done">已交卷</span>';
+            }
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function formatCorrectAnswer(type, ans) {
+            if (type === 'multiple') return ans.split('').join('、');
+            return ans;
+        }
+
+        function highlightExamOptions(idx, type, userAns, correctAns, isCorrect) {
+            const card = document.getElementById(`exam-card-${idx}`);
+            const labels = card.querySelectorAll('.option-selectable');
+            const correctSet = new Set(type === 'multiple' ? correctAns.split('') : [correctAns]);
+            const userSet = new Set(type === 'multiple' ? userAns.split('') : userAns ? [userAns] : []);
+
+            labels.forEach(label => {
+                const letter = label.getAttribute('data-letter');
+                if (userSet.has(letter)) label.classList.add(isCorrect ? 'correct-pick' : 'wrong-pick');
+                if (!isCorrect && correctSet.has(letter) && !userSet.has(letter)) label.classList.add('missed-answer');
+            });
+        }
+
+        function toggleAnswer(el) {
+            el.classList.toggle('expanded');
+        }
+
+        function renderQuestionCard(type, q, highlightTerm, displayNum) {
+            const hl = t => highlightTerm ? highlightText(t, highlightTerm) : t;
+            const num = displayNum !== undefined ? displayNum : q.id;
+            const cardClass = type === 'defense' ? 'question-card defense-card' : 'question-card';
+            let html = `<div class="${cardClass}">`;
+            html += `<div class="q-card-head"><div class="q-card-head-left">
+                <span class="q-num">第 ${num} 题</span>
+                <span class="q-type-tag ${type}">${typeLabels[type] || type}</span>
+            </div></div>`;
+            html += `<div class="q-card-body"><div class="question-text">${hl(q.text)}</div>`;
+            if (type !== 'judge' && type !== 'short' && type !== 'defense' && q.options) {
+                html += '<div class="options">';
+                q.options.forEach(o => { html += `<div class="option">${hl(o)}</div>`; });
+                html += '</div>';
+            }
+            const isLongAnswer = type === 'short' || type === 'defense';
+            const answerText = isLongAnswer ? q.answer : '正确答案: ' + q.answer;
+            const shortClass = isLongAnswer ? ' short' : '';
+            html += `<div class="answer${shortClass}" onclick="toggleAnswer(this)"><span class="a-text">${answerText}</span><span class="a-toggle">▶ 点击展开答案</span><span class="a-collapse">▲ 收起答案</span></div>`;
+            html += `</div></div>`;
+            return html;
+        }
+
+        function generateQuestionTypeHTML(type, title, questions) {
+            let html = `<h2 class="content-heading">${title} <span style="font-size:0.75em;font-weight:500;color:#6b7280;">共 ${questions.length} 题</span></h2>`;
+            questions.forEach(q => { html += renderQuestionCard(type, q); });
+            return html;
+        }
+
+        function generateAllQuestionsHTML() {
+            let html = `<h2 class="content-heading">党课全部题目</h2>`;
+            let total = 0;
+            const counts = {};
+            sections.forEach(s => {
+                const qs = questionsData[s.id];
+                total += qs.length;
+                counts[s.id] = qs.length;
+                html += `<h3 class="content-subheading">${s.prefix}${s.name.replace('党课', '')} <span style="font-weight:500;color:#9ca3af;font-size:0.9em;">(${qs.length} 题)</span></h3>`;
+                qs.forEach(q => { html += renderQuestionCard(s.id, q); });
+            });
+            html += `<div class="stats">`;
+            html += `<div class="stat-item"><div class="stat-number">${total}</div><div class="stat-label">党课题总数</div></div>`;
+            sections.forEach(s => {
+                html += `<div class="stat-item"><div class="stat-number">${counts[s.id]}</div><div class="stat-label">${s.name.replace('党课', '')}</div></div>`;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        async function searchQuestions() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!searchTerm) { showSection('all'); return; }
+            if (currentExam && !(await confirmLeaveExam())) return;
+            stopExamTimer();
+            clearExamFooterState();
+            setExamMode(false);
+            
+            let results = [];
+            const typesToSearch = ['single', 'multiple', 'judge', 'short', 'defense'];
+            typesToSearch.forEach(typeId => {
+                questionsData[typeId].forEach(question => {
+                    if (fuzzyMatch(question.text.toLowerCase(), searchTerm)) {
+                        results.push({ type: typeId, question: question });
+                    }
+                });
+            });
+            
+            // 搜索时清除导航高亮
+            currentExam = null;
+            document.querySelectorAll('.type-nav-item').forEach(item => item.classList.remove('active'));
+            
+            function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+            const contentArea = document.getElementById('content-area');
+            if (results.length === 0) {
+                contentArea.innerHTML = `<div style="text-align: center; padding: 50px;"><h3 style="color:#8b0000;">搜索结果</h3><p>未找到包含「${esc(searchTerm)}」的题目</p><p style="color:#6b7280;">尝试使用更简单的关键词或检查拼写</p></div>`;
+                scrollToTop();
+                return;
+            }
+            
+            let html = `<h2 class="content-heading">搜索结果 <span style="font-size:0.75em;font-weight:500;color:#6b7280;">共 ${results.length} 条</span></h2><p style="color:#6b7280;margin-bottom:8px;">关键词：<span class="highlight">${esc(searchTerm)}</span></p>`;
+            const typeNames = { single: '党课单选题', multiple: '党课多选题', judge: '党课判断题', short: '党课简答题', defense: '党员转正答辩题' };
+            const grouped = {};
+            results.forEach(r => {
+                (grouped[typeNames[r.type]] = grouped[typeNames[r.type]] || []).push(r);
+            });
+            Object.keys(grouped).forEach(tn => {
+                html += `<h3 class="content-subheading">${tn}</h3>`;
+                grouped[tn].forEach(r => { html += renderQuestionCard(r.type, r.question, searchTerm); });
+            });
+            contentArea.innerHTML = html;
+            scrollToTop();
+        }
+
+        function fuzzyMatch(text, searchTerm) {
+            if (!searchTerm) return true;
+            const sc = Array.from(searchTerm), tc = Array.from(text);
+            let si = 0;
+            for (let i = 0; i < tc.length && si < sc.length; i++) {
+                if (tc[i] === sc[si]) si++;
+            }
+            return si === sc.length;
+        }
+
+        function highlightText(text, term) {
+            if (!term) return text;
+            const tc = Array.from(text), sc = Array.from(term);
+            const pos = [];
+            let si = 0;
+            for (let i = 0; i < tc.length && si < sc.length; i++) {
+                if (tc[i] === sc[si]) { pos.push(i); si++; }
+            }
+            return tc.map((c, i) => pos.includes(i) ? `<span class="highlight">${c}</span>` : c).join('');
+        }
+
+        async function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            if (currentExam && !(await confirmLeaveExam())) return;
+            stopExamTimer();
+            clearExamFooterState();
+            setExamMode(false);
+            currentExam = null;
+            showSection('all');
+        }
+
+        function init() {
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            window.addEventListener('pageshow', scrollToTop);
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') scrollToTop();
+            });
+            initModal();
+            document.getElementById('searchBtn').addEventListener('click', searchQuestions);
+            document.getElementById('resetBtn').addEventListener('click', resetFilters);
+            document.getElementById('searchInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') searchQuestions();
+            });
+            document.getElementById('content-area').addEventListener('change', function(e) {
+                if (e.target.matches('.exam-options input')) {
+                    const label = e.target.closest('.option-selectable');
+                    if (!label || currentExam?.submitted) return;
+                    if (e.target.type === 'radio') {
+                        label.closest('.exam-options').querySelectorAll('.option-selectable').forEach(l => l.classList.remove('selected'));
+                    }
+                    label.classList.toggle('selected', e.target.checked);
+                }
+            });
+            showSection('all');
+        }
+
+        init();
+    </script>
+</body>
+</html>

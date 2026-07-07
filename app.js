@@ -14,6 +14,7 @@
             const contactModal = document.getElementById('contact-author-modal');
             const settingsModal = document.getElementById('settings-modal');
             const scrollTopBtn = document.getElementById('scroll-to-top');
+            const commonRecommendationContainer = document.getElementById('common-recommendations');
             const feedbackForm = document.getElementById('feedback-form');
             const feedbackStatus = document.getElementById('feedback-status');
             const feedbackButton = contactModal?.querySelector('.modal-footer button');
@@ -31,11 +32,11 @@
             const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
             const themeOrder = ['auto', 'light', 'dark'];
             const paletteOrder = ['rose', 'ocean', 'forest', 'violet', 'sunset', 'graphite', 'aurora', 'peach', 'mint'];
-            const backgroundOrder = ['study', 'none', 'desk', 'sky', 'green', 'campus', 'peak', 'library', 'coast', 'window', 'notebook', 'nightdesk', 'mountain', 'forest', 'night', 'autumn', 'sunset', 'ocean', 'cat', 'dog', 'bunny', 'panda', 'custom'];
+            const backgroundOrder = ['study', 'none', 'desk', 'sky', 'green', 'campus', 'peak', 'library', 'coast', 'window', 'notebook', 'nightdesk', 'mountain', 'forest', 'night', 'autumn', 'sunset', 'ocean', 'lantern', 'mist', 'ridge', 'starry', 'space', 'sunrise', 'meadow', 'custom'];
             const bgRotateModeKey = 'zz-nav-bg-rotate-mode';
             const dailyBgIndexKey = 'zz-nav-daily-bg-index';
             const dailyBgDateKey = 'zz-nav-daily-bg-date';
-            const rotateBackgrounds = ['study', 'desk', 'sky', 'green', 'campus', 'peak', 'library', 'coast', 'window', 'notebook', 'nightdesk', 'mountain', 'forest', 'night', 'autumn', 'sunset', 'ocean', 'cat', 'dog', 'bunny', 'panda'];
+            const rotateBackgrounds = ['study', 'desk', 'sky', 'green', 'campus', 'peak', 'library', 'coast', 'window', 'notebook', 'nightdesk', 'mountain', 'forest', 'night', 'autumn', 'sunset', 'ocean', 'lantern', 'mist', 'ridge', 'starry', 'space', 'sunrise', 'meadow'];
             const weeklyBgIndexKey = 'zz-nav-weekly-bg-index';
             const weeklyBgWeekKey = 'zz-nav-weekly-bg-week';
 
@@ -80,6 +81,7 @@
 
             // === 使用频率追踪 ===
             const CLICK_COUNT_KEY = 'zz-nav-click-counts';
+            const COMMON_RECOMMENDATION_LIMIT = 20;
 
             function getClickCounts() {
                 try {
@@ -102,7 +104,25 @@
                 return label || '';
             }
 
+            function getCardLabel(card) {
+                const label = card.querySelector('.card-label')?.textContent || card.textContent || '';
+                return label.trim().replace(/\s+/g, ' ');
+            }
+
+            function getCardGroupTitle(card) {
+                return (card.closest('.sub-column')?.querySelector('h3')?.textContent || '').trim();
+            }
+
+            function isCampusServiceCard(card) {
+                return getCardGroupTitle(card).includes('校园服务');
+            }
+
+            function isPinnedCommonRecommendation(card) {
+                return card.closest('#common-recommendations') && card.dataset.commonPinned === 'true';
+            }
+
             function trackCardClick(card) {
+                if (isCampusServiceCard(card) || isPinnedCommonRecommendation(card)) return;
                 const id = getCardIdentifier(card);
                 if (!id) return;
                 const counts = getClickCounts();
@@ -117,13 +137,75 @@
                 return counts[id] || 0;
             }
 
+            function getFrequentRecommendationCards() {
+                const counts = getClickCounts();
+                const seen = new Set();
+
+                return Array.from(document.querySelectorAll('.card'))
+                    .filter(card => !card.closest('#common-recommendations'))
+                    .filter(card => !isCampusServiceCard(card))
+                    .map(card => {
+                        const id = getCardIdentifier(card);
+                        return {
+                            card,
+                            id,
+                            count: id ? counts[id] || 0 : 0
+                        };
+                    })
+                    .filter(item => {
+                        if (!item.id || item.count <= 0 || seen.has(item.id)) {
+                            return false;
+                        }
+
+                        seen.add(item.id);
+                        return true;
+                    })
+                    .sort((a, b) => b.count - a.count || getCardLabel(a.card).localeCompare(getCardLabel(b.card), 'zh-Hans-CN'))
+                    .slice(0, COMMON_RECOMMENDATION_LIMIT);
+            }
+
+            function createFrequentRecommendationCard(sourceCard, clickCount) {
+                const clone = sourceCard.cloneNode(true);
+                const label = getCardLabel(clone);
+                clone.removeAttribute('id');
+                clone.classList.add('frequent-recommendation-card');
+                clone.dataset.frequentClone = 'true';
+
+                clone.querySelectorAll('.frequent-count').forEach(badge => badge.remove());
+
+                const badge = document.createElement('span');
+                badge.className = 'frequent-count';
+                badge.textContent = `${clickCount}`;
+                badge.setAttribute('aria-hidden', 'true');
+                clone.appendChild(badge);
+
+                clone.setAttribute('aria-label', `${label}，已点击 ${clickCount} 次`);
+                return clone;
+            }
+
+            function renderCommonRecommendations() {
+                if (!commonRecommendationContainer) return;
+
+                const pinnedCards = Array.from(commonRecommendationContainer.querySelectorAll('[data-common-pinned="true"]'));
+                commonRecommendationContainer
+                    .querySelectorAll('.frequent-recommendation-card')
+                    .forEach(card => card.remove());
+
+                getFrequentRecommendationCards().forEach(({ card, count }) => {
+                    commonRecommendationContainer.appendChild(createFrequentRecommendationCard(card, count));
+                });
+
+                pinnedCards.forEach(card => commonRecommendationContainer.appendChild(card));
+            }
+
             function sortDynamicSection(container) {
                 if (!container) return;
+                if (container.id === 'common-recommendations') return;
 
                 const subColumn = container.closest('.sub-column');
                 if (!subColumn) return;
                 const heading = (subColumn.querySelector('h3')?.textContent || '');
-                if (heading.includes('学校') || heading.includes('私用')) return;
+                if (heading.includes('学校') || heading.includes('校园') || heading.includes('私用')) return;
 
                 const cards = Array.from(container.querySelectorAll(':scope > .card'));
                 cards.sort((a, b) => {
@@ -251,6 +333,8 @@
                     icon.className = `fas ${themeIcon(activeThemeChoice, resolved)}`;
                     button.setAttribute('aria-label', `当前${themeLabel(activeThemeChoice)}模式，点击切换主题`);
                     button.title = `当前${themeLabel(activeThemeChoice)}模式`;
+                    var label = button.querySelector('.sidebar-label');
+                    if (label) label.textContent = themeLabel(activeThemeChoice);
                 });
 
                 themeOptionButtons.forEach(button => {
@@ -403,11 +487,11 @@
             function initDisplayPreferences() {
                 initTheme();
                 applyPalette(storageGet(paletteKey) || 'rose', false);
-                const customBg = storageGet('zz-nav-custom-bg');
+                var customBg = storageGet('zz-nav-custom-bg');
                 setCustomBackground(customBg);
-                const savedBackground = storageGet(backgroundKey) || 'study';
-                applyBackground(savedBackground === 'custom' && !customBg ? 'study' : savedBackground, false);
-                const sel = document.getElementById('bg-rotate-mode');
+                var savedBg = customBg ? 'custom' : (storageGet(backgroundKey) || 'study');
+                applyBackground(savedBg, false);
+                var sel = document.getElementById('bg-rotate-mode');
                 if (sel) sel.value = getBgRotateMode();
                 window.setTimeout(advanceBgByMode, 1000);
             }
@@ -954,6 +1038,7 @@
                     trackCardClick(card);
                     window.setTimeout(() => {
                         sortDynamicSection(card.closest('.card-container'));
+                        renderCommonRecommendations();
                     }, 0);
                 }, { capture: true });
 
@@ -1061,6 +1146,7 @@
                 window.addEventListener('scroll', () => {
                     updateScrollButton();
                     requestActiveSectionUpdate();
+                    sessionStorage.setItem('zz-nav-scroll', window.scrollY);
                 }, { passive: true });
                 window.addEventListener('click', event => {
                     if (event.target === aboutModal) {
@@ -1096,9 +1182,12 @@
             }
 
             function init() {
+                if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+                var savedScroll = sessionStorage.getItem('zz-nav-scroll');
                 initDisplayPreferences();
                 initEmailService();
                 enhanceCards();
+                renderCommonRecommendations();
                 setupModuleTabs();
                 columns.forEach(column => {
                     column.querySelectorAll('.card-container').forEach(sortDynamicSection);
@@ -1117,6 +1206,12 @@
                 updateActiveSectionFromScroll();
                 updateCountdown();
                 window.setInterval(updateCountdown, 60000);
+
+                if (savedScroll) {
+                    window.setTimeout(function () {
+                        window.scrollTo({ top: parseInt(savedScroll, 10), behavior: 'smooth' });
+                    }, 100);
+                }
 
                 if (announcement && storageGet(announcementKey) !== 'seen') {
                     window.setTimeout(() => showModal(announcement), 300);

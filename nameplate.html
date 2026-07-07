@@ -1,0 +1,2348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>🏷️ 会议名牌打印工具 · 实时预览</title>
+  <style>
+    /* ========== 全局变量 ========== */
+    :root {
+      --bg: #ece8e0;
+      --card-bg: #ffffff;
+      --text: #1e1e1e;
+      --text-light: #6b6358;
+      --primary: #2c4b6b;
+      --primary-hover: #1e3d5a;
+      --accent: #b08950;
+      --accent-light: #c9a36a;
+      --border: #ddd6ca;
+      --shadow: 0 2px 6px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+      --radius: 12px;
+      /* 预览区将动态注入的样式变量 */
+      --preview-font-size: 180px;
+      --preview-font-family: 'Noto Serif SC', 'Times New Roman', '宋体', serif;
+      --preview-font-weight: 700;
+      --badge-fold-distance: 60mm;
+      --badge-horizontal-offset: 0mm;
+      --paper-guide-top-gap: 10mm;
+      --paper-guide-bottom-gap: 20mm;
+      --paper-guide-left-gap: 10mm;
+      --paper-guide-right-gap: 10mm;
+      --paper-height: 297mm;
+      --paper-half-height: 148.5mm;
+      --badge-half-center-distance: 37mm;
+      --badge-name-offset: calc(var(--badge-fold-distance) - var(--badge-half-center-distance));
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 15px 16px 10px;
+    }
+
+    body > :has(.ball-inner img[src^="chrome-extension://nmhndbemnmmigjooiafblchoegecmkhh/"]),
+    .ball-inner:has(img[src^="chrome-extension://nmhndbemnmmigjooiafblchoegecmkhh/"]) {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    .ball-inner img[src^="chrome-extension://nmhndbemnmmigjooiafblchoegecmkhh/"],
+    img[src^="chrome-extension://nmhndbemnmmigjooiafblchoegecmkhh/"] {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    .app {
+      max-width: 1260px;
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ========== 控制面板 ========== */
+    .control-panel {
+      flex: 1 1 570px;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      height: calc(100vh - 60px);
+      min-height: 700px;
+    }
+
+    .app-title {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
+      flex-shrink: 0;
+      border-bottom: 2px solid var(--accent);
+    }
+    .app-title h1 {
+      font-size: 1.1rem;
+      line-height: 1.3;
+      color: var(--primary);
+      letter-spacing: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .title-help {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      background: #faf9f6;
+      color: var(--accent);
+      font-size: 0.75rem;
+      line-height: 18px;
+      text-align: center;
+      cursor: help;
+      flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .title-help:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .title-help::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 10px);
+      transform: translateX(-50%);
+      width: 260px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #2c3a4b;
+      color: #f0ece6;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      font-weight: 400;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease;
+      z-index: 20;
+    }
+    .title-help:hover::after,
+    .title-help:focus::after {
+      opacity: 1;
+    }
+
+    .top-settings {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      flex: 1.4;
+      min-height: 0;
+    }
+
+    .top-settings > .card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .control-panel > .card + .card {
+      border-top: 2px solid var(--accent);
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .dot {
+      width: 8px; height: 8px;
+      border-radius: 3px;
+      background: var(--accent);
+    }
+
+    .names-textarea {
+      width: 100%;
+      height: 90px;
+      min-height: 90px;
+      max-height: 150px;
+      padding: 10px 12px;
+      border: 2px solid #e6dfd1;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      background: #faf9f6;
+      resize: vertical;
+      margin-bottom: 8px;
+      font-family: inherit;
+      line-height: 1.5;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .names-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(44, 75, 107, 0.12);
+      background: #fff;
+    }
+    .btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.58;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 2px 8px rgba(44, 75, 107, 0.25);
+    }
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+    .btn-outline {
+      background: #fff;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-outline:active {
+      transform: translateY(1px);
+    }
+    .btn-sm { padding: 6px 12px; font-size: 0.78rem; }
+    .btn-ghost {
+      background: transparent;
+      color: #b0976e;
+      border: 1px dashed #d9c9a8;
+    }
+    .btn-ghost:hover {
+      background: rgba(176, 151, 110, 0.08);
+      border-style: solid;
+    }
+    .name-list-box {
+      flex: 1.15;
+      min-height: 260px;
+      max-height: 360px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: #fdfdfb;
+      border: 1px solid #ece7db;
+      border-radius: 10px;
+    }
+    .name-list-box::-webkit-scrollbar {
+      width: 5px;
+    }
+    .name-list-box::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .name-list-box::-webkit-scrollbar-thumb {
+      background: #d2cbbd;
+      border-radius: 3px;
+    }
+    .name-item {
+      display: flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-bottom: 1px solid #f5f1e9;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+    .name-item:hover {
+      background: #f8f6f2;
+      transform: translateX(3px);
+    }
+    .name-item:last-child {
+      border-bottom: none;
+    }
+    .name-item .index {
+      width: 24px; height: 24px;
+      background: #ede7dc;
+      border-radius: 50%;
+      font-size: 0.68rem;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .remove-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      font-size: 1.15rem;
+      cursor: pointer;
+      color: #c4b9a2;
+      padding: 2px 6px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s, transform 0.15s;
+      line-height: 1;
+    }
+    .remove-btn:hover {
+      color: #d9534f;
+      background: rgba(217, 83, 79, 0.08);
+      transform: scale(1.25);
+    }
+
+    .setting-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .setting-col {
+      flex: 1;
+      min-width: 118px;
+    }
+    .setting-col label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text-light);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .setting-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .style-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .style-section + .style-section {
+      margin-top: 4px;
+      padding-top: 10px;
+      border-top: 1px solid #ede7db;
+    }
+    .style-section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #b8af98;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .style-section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 10px;
+    }
+    .style-section-grid .setting-col {
+      min-width: 0;
+    }
+    .style-stack::-webkit-scrollbar {
+      width: 5px;
+    }
+    .style-stack::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .style-stack::-webkit-scrollbar-thumb {
+      background: #d2cbbd;
+      border-radius: 3px;
+    }
+    .range-display {
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+    .checkbox-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 10px;
+      margin-top: 4px;
+      border-top: 1px solid #ede7db;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 1rem;
+      color: var(--text-light);
+      cursor: pointer;
+      user-select: none;
+    }
+    .checkbox-label input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    select {
+      width: 100%;
+      padding: 6px 10px;
+      border: 2px solid #e6dfd1;
+      border-radius: 10px;
+      background: #faf9f6;
+      font-family: inherit;
+      font-size: 0.82rem;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2388837a'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    select:hover {
+      border-color: #d0c8b8;
+    }
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(44, 75, 107, 0.12);
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 4px;
+      padding: 0;
+      border: none;
+      border-radius: 2px;
+      background: #ddd6ca;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #8a8276;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background: var(--primary);
+      transform: scale(1.18);
+      box-shadow: 0 0 0 4px rgba(44, 75, 107, 0.15);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #8a8276;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, transform 0.15s;
+    }
+    input[type="range"]::-moz-range-thumb:hover {
+      background: var(--primary);
+      transform: scale(1.18);
+    }
+    input[type="range"]:focus {
+      outline: none;
+    }
+    input[type="range"]:focus::-webkit-slider-thumb {
+      box-shadow: 0 0 0 4px rgba(44, 75, 107, 0.2);
+    }
+    input[type="range"]:focus::-moz-range-thumb {
+      box-shadow: 0 0 0 4px rgba(44, 75, 107, 0.2);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .action-buttons .btn {
+      flex: 1;
+      justify-content: center;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      min-width: 128px;
+    }
+
+    /* ========== 预览面板 ========== */
+    .preview-panel {
+      flex: 0.8 1 390px;
+      min-width: 340px;
+      max-width: 580px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 60px);
+      min-height: 700px;
+    }
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 0 2px;
+    }
+    .preview-header h2 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+    }
+    .zoom-badge {
+      background: #f2ede3;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+    }
+    .preview-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: #d0ccc6;
+      border-radius: 8px;
+      padding: 16px 12px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 0;
+      max-height: 100%;
+    }
+    .preview-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .preview-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .preview-scroll::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.15);
+      border-radius: 3px;
+    }
+    .preview-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(0,0,0,0.25);
+    }
+
+    #previewContent {
+      width: max-content;
+      min-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      margin: 0 auto;
+    }
+
+    .preview-page-wrap {
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .page-sim {
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 28px rgba(0,0,0,0.07);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 2px;
+      transition: box-shadow 0.25s ease;
+    }
+    .page-number {
+      display: none;
+    }
+    .separator {
+      display: none;
+    }
+
+    .badge-half {
+      flex: 0 0 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      overflow: visible;
+    }
+    .badge-gap {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 0;
+      pointer-events: none;
+    }
+    .badge-text-frame {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-origin: center center;
+      transform: translate(var(--badge-horizontal-offset), var(--badge-name-offset));
+    }
+    .badge-text-frame.top-text {
+      transform: translate(
+        var(--badge-horizontal-offset),
+        calc(var(--badge-name-offset) * -1)
+      );
+    }
+    .badge-text {
+      font-size: var(--preview-font-size);
+      font-family: var(--preview-font-family);
+      font-weight: var(--preview-font-weight);
+      line-height: 1;
+      text-align: center;
+      word-break: break-word;
+      color: #1e1e1e;
+      display: block;
+      width: 100%;
+      transform-origin: center center;
+    }
+    .top-text .badge-text {
+      transform: rotate(180deg);
+    }
+
+    .page-jump {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text-light);
+      font-size: 0.82rem;
+    }
+    .page-jump span {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .preview-page-jump {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #eee7dc;
+      flex-shrink: 0;
+    }
+    .page-jump input {
+      width: 60px;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+      font: inherit;
+      font-size: 0.82rem;
+      background: #faf9f6;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .page-jump input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(44, 75, 107, 0.12);
+    }
+    .page-nav-btn {
+      border: 0;
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 1.3rem;
+      line-height: 1;
+      padding: 4px 8px;
+      border-radius: 8px;
+      transition: background 0.12s;
+    }
+    .page-nav-btn:hover:not(:disabled) {
+      background: rgba(44, 75, 107, 0.08);
+    }
+    .page-nav-btn:disabled {
+      color: #d2cbc0;
+      cursor: default;
+    }
+    .dialog-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 30, 30, 0.32);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9998;
+      padding: 16px;
+      animation: fadeIn 0.15s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .dialog-backdrop.is-open {
+      display: flex;
+    }
+    .confirm-dialog {
+      width: min(360px, 100%);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 18px 42px rgba(0,0,0,0.15);
+      padding: 20px;
+      animation: dialogSlide 0.18s ease;
+    }
+    @keyframes dialogSlide {
+      from { opacity: 0; transform: scale(0.95) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .confirm-dialog h3 {
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      letter-spacing: 0;
+    }
+    .confirm-dialog p {
+      color: var(--text-light);
+      font-size: 0.86rem;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+    .dialog-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .badge {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .fold-line {
+      display: none;
+    }
+    .show-midline .fold-line {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: #e74c3c;
+      opacity: 0.55;
+      z-index: 2;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .show-grid .page-sim {
+      background-image:
+        linear-gradient(to right, rgba(52, 152, 219, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(52, 152, 219, 0.1) 1px, transparent 1px);
+      background-size: 20mm 20mm;
+      background-position: center center;
+    }
+    .corner-mark {
+      display: none;
+    }
+    .corner-mark::before, .corner-mark::after {
+      content: '';
+      position: absolute;
+      background: #b7a98b;
+    }
+    .corner-mark.tl { top: 5px; left: 5px; }
+    .corner-mark.tr { top: 5px; right: 5px; }
+    .corner-mark.bl { bottom: 5px; left: 5px; }
+    .corner-mark.br { bottom: 5px; right: 5px; }
+    .corner-mark::before { width: 6px; height: 1px; top: 0; left: 0; }
+    .corner-mark::after { width: 1px; height: 6px; top: 0; left: 0; }
+
+    .paper-tick {
+      display: none;
+      position: absolute;
+      z-index: 6;
+      pointer-events: none;
+    }
+    .show-paper-ticks .paper-tick {
+      display: block;
+    }
+    .paper-tick.horizontal {
+      left: 0;
+      right: 0;
+      height: 0;
+      border-top: 0.3mm dashed #000;
+    }
+    .paper-tick.vertical {
+      top: 0;
+      bottom: 0;
+      width: 0;
+      border-left: 0.3mm dashed #000;
+    }
+    .paper-tick.top-half-top {
+      top: var(--paper-guide-top-gap);
+    }
+    .paper-tick.top-half-bottom {
+      top: calc(var(--paper-half-height) - var(--paper-guide-bottom-gap));
+    }
+    .paper-tick.bottom-half-top {
+      top: calc(var(--paper-half-height) + var(--paper-guide-bottom-gap));
+    }
+    .paper-tick.bottom-half-bottom {
+      top: calc(var(--paper-height) - var(--paper-guide-top-gap));
+    }
+    .paper-tick.left-guide {
+      left: var(--paper-guide-left-gap);
+    }
+    .paper-tick.right-guide {
+      right: var(--paper-guide-right-gap);
+    }
+
+    .empty-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 48px 20px;
+      color: #c4bca8;
+      user-select: none;
+    }
+    .empty-message .empty-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f5f2eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    .empty-message .empty-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #b8af98;
+    }
+    .empty-message .empty-hint {
+      font-size: 0.74rem;
+      color: #d2cabc;
+      text-align: center;
+      max-width: 200px;
+    }
+
+    .empty-preview {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 64px 20px;
+      color: #bdb49e;
+      user-select: none;
+      width: 100%;
+      flex: 1;
+    }
+    .empty-preview .empty-icon-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #f5f2eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .empty-preview .empty-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #b8af98;
+    }
+
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast {
+      background: #2c3a4b;
+      color: #f0ece6;
+      padding: 12px 24px;
+      border-radius: 28px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      animation: toastFade 2.8s forwards;
+      pointer-events: auto;
+    }
+    @keyframes toastFade {
+      0% { opacity: 0; transform: translateY(-16px); }
+      10% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(12px); }
+    }
+
+    @media (max-width: 860px) {
+      body {
+        padding: 12px;
+      }
+      .control-panel,
+      .preview-panel {
+        max-width: none;
+        min-width: 0;
+        width: 100%;
+      }
+      .setting-grid {
+        grid-template-columns: 1fr;
+      }
+      .top-settings {
+        grid-template-columns: 1fr;
+      }
+      .style-section-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========== 打印样式 ========== */
+    @media print {
+      @page { size: A4; margin: 0; }
+      @page a4-landscape { size: A4 landscape; margin: 0; }
+      @page a4-portrait { size: A4 portrait; margin: 0; }
+      body * {
+        visibility: hidden !important;
+      }
+      .app,
+      .preview-panel,
+      .preview-scroll,
+      #previewContent,
+      .preview-page-wrap,
+      .preview-page-wrap * {
+        visibility: visible !important;
+      }
+      embed,
+      object,
+      iframe,
+      [src^="chrome-extension://"],
+      img[src^="chrome-extension://"],
+      .ball-inner,
+      pdf-viewer,
+      print-preview-app,
+      #pdf-embed,
+      .fixed-embed {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        max-width: 0 !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+      }
+      body {
+        background: white;
+        padding: 0;
+        margin: 0;
+        display: block !important;
+        width: auto !important;
+        min-height: 0 !important;
+      }
+      .control-panel,
+      .app-title,
+      .preview-header,
+      .zoom-badge,
+      .toast-container,
+      .dialog-backdrop,
+      .separator,
+      .page-number,
+      .preview-page-jump,
+      .corner-mark,
+      .fold-line,
+      .empty-preview {
+        display: none !important;
+      }
+      html {
+        width: 100% !important;
+        min-height: 0 !important;
+      }
+      .app {
+        display: block !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+      .preview-panel {
+        display: block !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        flex: none !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        background: transparent !important;
+      }
+      .preview-scroll {
+        background: white !important;
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        border-radius: 0 !important;
+      }
+      #previewContent {
+        display: block !important;
+        width: auto !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+      body.print-a4landscape .preview-page-wrap { page: a4-landscape; }
+      body.print-a4portrait .preview-page-wrap { page: a4-portrait; }
+      body.print-a4landscape .app,
+      body.print-a4landscape .preview-panel,
+      body.print-a4landscape .preview-scroll,
+      body.print-a4landscape #previewContent,
+      body.print-a4landscape .preview-page-wrap {
+        width: 297mm !important;
+      }
+      body.print-a4portrait .app,
+      body.print-a4portrait .preview-panel,
+      body.print-a4portrait .preview-scroll,
+      body.print-a4portrait #previewContent,
+      body.print-a4portrait .preview-page-wrap {
+        width: 210mm !important;
+      }
+      .preview-page-wrap {
+        max-width: none !important;
+        height: auto !important;
+        transform: none !important;
+        overflow: visible !important;
+        margin: 0 !important;
+        break-after: page;
+        page-break-after: always;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .preview-page-wrap:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+      .page-sim {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        transform: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        background: white !important;
+      }
+      .badge {
+        background-image: none !important;
+      }
+      .badge-text {
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- 左侧控制面板 -->
+  <div class="control-panel">
+    <div class="app-title">
+      <h1>会议名牌打印工具 <span class="title-help" tabindex="0" data-tip="批量录入姓名，实时预览 A4 名牌版面，支持多种尺寸规格（A4横版/竖版、小号批量）与字体样式。预览和导出使用同一版面，字号与位置会实时更新。可导出 PDF 或直接打印。">?</span></h1>
+    </div>
+    <div class="top-settings">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> 姓名</div>
+        <textarea id="batchInput" class="names-textarea" placeholder="每行一个姓名，也可用逗号分隔"></textarea>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-outline btn-sm" id="btnBatch">导入</button>
+          <button class="btn btn-ghost btn-sm" id="btnSample">示例</button>
+          <button class="btn btn-ghost btn-sm" style="margin-left:auto;" id="btnClearAll">清空</button>
+        </div>
+        <div class="card-title" style="margin-top:10px;"><span class="dot"></span> 列表 (<span id="nameCount">0</span>)</div>
+        <div class="name-list-box" id="nameListBox">
+          <div class="empty-message">
+            <div class="empty-icon">👤</div>
+            <div class="empty-title">名单为空</div>
+            <div class="empty-hint">在上方输入姓名，点击「导入」即可添加</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> 名牌样式</div>
+        <div class="style-stack">
+
+          <div class="style-section">
+            <div class="style-section-title">版面</div>
+            <div class="setting-col">
+              <label>尺寸规格</label>
+              <select id="sizeSelect">
+                <option value="a4landscape">🖼️ A4横版 (对折105mm高)</option>
+                <option value="a4portrait" selected>📄 A4竖版 (对折148.5mm高)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="style-section">
+            <div class="style-section-title">文字</div>
+            <div class="setting-col" style="margin-bottom:6px">
+              <label>字体大小</label>
+              <input type="range" id="fontSizeSlider" min="20" max="250" value="180" step="1">
+              <div class="range-display" id="fontSizeDisplay">180px</div>
+            </div>
+            <div class="style-section-grid">
+              <div class="setting-col">
+                <label>字体风格</label>
+                <select id="fontSelect">
+                  <option value="serif">宋体/衬线</option>
+                  <option value="sans">黑体/无衬线</option>
+                  <option value="kaiti" selected>楷体</option>
+                  <option value="fangsong">仿宋</option>
+                  <option value="yahei">微软雅黑</option>
+                  <option value="dengxian">等线</option>
+                  <option value="xingkai">华文行楷</option>
+                  <option value="lisu">华文隶书</option>
+                  <option value="youyuan">幼圆</option>
+                  <option value="stxihei">华文细黑</option>
+                  <option value="lishu">隶书</option>
+                  <option value="weiti">魏体</option>
+                </select>
+              </div>
+              <div class="setting-col">
+                <label>文字粗细</label>
+                <select id="weightSelect">
+                  <option value="700">粗体</option>
+                  <option value="400">常规</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="style-section">
+            <div class="style-section-title">位置</div>
+            <div class="style-section-grid">
+              <div class="setting-col">
+                <label>距中距离</label>
+                <input type="range" id="foldDistanceSlider" min="0" max="120" value="60" step="1">
+                <div class="range-display" id="foldDistanceDisplay">60mm</div>
+              </div>
+              <div class="setting-col">
+                <label>左右偏移</label>
+                <input type="range" id="sideDistanceSlider" min="-80" max="80" value="0" step="1">
+                <div class="range-display" id="sideDistanceDisplay">0mm</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="style-section" id="tickSettingsSection">
+            <div class="style-section-title">打印刻度</div>
+            <div class="style-section-grid">
+              <div class="setting-col">
+                <label>上折线(距上)</label>
+                <input type="range" id="tickTopSlider" min="0" max="148" value="10" step="1">
+                <div class="range-display" id="tickTopDisplay">10mm</div>
+              </div>
+              <div class="setting-col">
+                <label>下折线(距下)</label>
+                <input type="range" id="tickBottomSlider" min="0" max="148" value="20" step="1">
+                <div class="range-display" id="tickBottomDisplay">20mm</div>
+              </div>
+              <div class="setting-col">
+                <label>左折线(距左)</label>
+                <input type="range" id="tickLeftSlider" min="0" max="210" value="10" step="1">
+                <div class="range-display" id="tickLeftDisplay">10mm</div>
+              </div>
+              <div class="setting-col">
+                <label>右折线(距右)</label>
+                <input type="range" id="tickRightSlider" min="0" max="210" value="10" step="1">
+                <div class="range-display" id="tickRightDisplay">10mm</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkbox-row">
+            <div class="style-section-title">显示辅助</div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;">
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkMidline" checked> 中线
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkGrid" checked> 网格线
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkPrintTicks"> 打印刻度线
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="action-buttons">
+        <button class="btn btn-ghost" id="btnResetStyle" type="button">恢复默认</button>
+        <button class="btn btn-outline" id="btnDownload" type="button">下载 PDF</button>
+        <button class="btn btn-primary" id="btnPrint" title="Ctrl+P">🖨️ 打印</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 右侧预览面板 -->
+  <div class="preview-panel">
+    <div class="preview-header">
+      <h2>📐 打印预览</h2>
+      <span class="zoom-badge" id="sizeLabel">A4竖版</span>
+    </div>
+    <div class="preview-scroll" id="previewScroll">
+      <div class="empty-preview" id="emptyPreview">
+        <div class="empty-icon-ring">🏷️</div>
+        <div class="empty-title">暂无预览</div>
+      </div>
+      <div id="previewContent"></div>
+    </div>
+    <div class="page-jump preview-page-jump">
+      <button class="page-nav-btn" id="btnPrevPage" type="button">‹</button>
+      <input type="number" id="pageJumpInput" min="1" value="1">
+      <span>/ 共<span id="pageTotal">0</span>页</span>
+      <button class="page-nav-btn" id="btnNextPage" type="button">›</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<div class="dialog-backdrop" id="confirmDialog" aria-hidden="true">
+  <div class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <h3 id="confirmTitle">确认删除</h3>
+    <p id="confirmMessage"></p>
+    <div class="dialog-actions">
+      <button class="btn btn-outline btn-sm" id="btnCancelDelete" type="button">取消</button>
+      <button class="btn btn-primary btn-sm" id="btnConfirmDelete" type="button">删除</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    // DOM 元素
+    const $ = (id) => document.getElementById(id);
+    const batchInput = $('batchInput');
+    const btnBatch = $('btnBatch'), btnSample = $('btnSample');
+    const btnClearAll = $('btnClearAll'), btnResetStyle = $('btnResetStyle'), btnDownload = $('btnDownload'), btnPrint = $('btnPrint');
+    const btnPrevPage = $('btnPrevPage'), btnNextPage = $('btnNextPage'), pageJumpInput = $('pageJumpInput'), pageTotal = $('pageTotal');
+    const nameListBox = $('nameListBox'), nameCount = $('nameCount');
+    const previewContent = $('previewContent'), previewScroll = $('previewScroll'), emptyPreview = $('emptyPreview');
+    const fontSizeSlider = $('fontSizeSlider'), fontSizeDisplay = $('fontSizeDisplay');
+    const sizeSelect = $('sizeSelect'), fontSelect = $('fontSelect'), weightSelect = $('weightSelect');
+    const foldDistanceSlider = $('foldDistanceSlider'), foldDistanceDisplay = $('foldDistanceDisplay');
+    const sideDistanceSlider = $('sideDistanceSlider'), sideDistanceDisplay = $('sideDistanceDisplay');
+    const tickTopSlider = $('tickTopSlider'), tickTopDisplay = $('tickTopDisplay');
+    const tickBottomSlider = $('tickBottomSlider'), tickBottomDisplay = $('tickBottomDisplay');
+    const tickLeftSlider = $('tickLeftSlider'), tickLeftDisplay = $('tickLeftDisplay');
+    const tickRightSlider = $('tickRightSlider'), tickRightDisplay = $('tickRightDisplay');
+    const sizeLabel = $('sizeLabel'), toastContainer = $('toastContainer');
+    const confirmDialog = $('confirmDialog'), confirmMessage = $('confirmMessage');
+    const btnCancelDelete = $('btnCancelDelete'), btnConfirmDelete = $('btnConfirmDelete');
+    const chkMidline = $('chkMidline'), chkGrid = $('chkGrid'), chkPrintTicks = $('chkPrintTicks');
+
+    // 状态
+    let nameList = [];
+    let currentFontSize = 180;
+    let currentSizeMode = 'a4portrait';
+    let currentFont = 'kaiti';
+    let currentWeight = '700';
+    let currentFoldDistance = 60;
+    let currentSideDistance = 0;
+    let currentTickTopPos = 10;
+    let currentTickBottomPos = 20;
+    let currentTickLeftPos = 10;
+    let currentTickRightPos = 10;
+    let currentPreviewPage = 1;
+    let pendingDeleteIndex = null;
+    let pendingAction = null;
+
+    const defaultStyle = {
+      fontSize: 180,
+      sizeMode: 'a4portrait',
+      font: 'kaiti',
+      weight: '700',
+      foldDistance: 60,
+      sideDistance: 0,
+      tickTopPos: 10,
+      tickBottomPos: 20,
+      tickLeftPos: 10,
+      tickRightPos: 10,
+      showMidline: true,
+      showGrid: true,
+      showPrintTicks: false
+    };
+
+    // 尺寸配置
+    const PX_PER_MM = 96 / 25.4;
+    const sizeConfig = {
+      a4landscape: { paperW: 297, paperH: 210, badgeW: 297, badgeH: 105, label: 'A4横版' },
+      a4portrait: { paperW: 210, paperH: 297, badgeW: 210, badgeH: 148.5, label: 'A4竖版' }
+    };
+
+    // 字体映射
+    const fontMap = {
+      serif: '"Noto Serif SC", "Times New Roman", "宋体", "Songti SC", serif',
+      sans: '"PingFang SC", "Microsoft YaHei", "Noto Sans SC", "黑体", sans-serif',
+      kaiti: '"KaiTi", "STKaiti", "Kaiti SC", "楷体", serif',
+      fangsong: '"FangSong", "STFangsong", "FangSong_GB2312", "仿宋", serif',
+      yahei: '"Microsoft YaHei", "PingFang SC", "微软雅黑", sans-serif',
+      dengxian: '"DengXian", "等线", "PingFang SC", sans-serif',
+      xingkai: '"Xingkai SC", "华文行楷", "STXingkai", cursive',
+      lisu: '"LiSu", "华文隶书", "STLiti", cursive',
+      youyuan: '"YouYuan", "幼圆", "STYouYuan", sans-serif',
+      stxihei: '"STXihei", "华文细黑", "PingFang SC", sans-serif',
+      lishu: '"LiSu", "隶书", serif',
+      weiti: '"WeiTi", "魏体", "STWeiti", serif'
+    };
+
+    // 初始化
+    function init() {
+      // 加载存储的数据
+      try {
+        const saved = localStorage.getItem('badge_names');
+        if (saved) nameList = JSON.parse(saved).filter(n => typeof n === 'string' && n.trim());
+      } catch (e) { nameList = []; }
+      if (!Array.isArray(nameList)) nameList = [];
+
+      // 加载设置
+      const savedSize = localStorage.getItem('badge_size');
+      if (savedSize && sizeConfig[savedSize]) {
+        currentSizeMode = savedSize;
+        sizeSelect.value = currentSizeMode;
+      }
+      const savedFont = localStorage.getItem('badge_font');
+      if (savedFont && fontMap[savedFont]) {
+        currentFont = savedFont;
+        fontSelect.value = currentFont;
+      }
+      const savedWeight = localStorage.getItem('badge_weight');
+      if (savedWeight === '400' || savedWeight === '700') {
+        currentWeight = savedWeight;
+        weightSelect.value = currentWeight;
+      }
+      const savedFS = localStorage.getItem('badge_fontsize');
+      if (savedFS) {
+        const fs = parseInt(savedFS, 10);
+        if (fs >= 20 && fs <= 250) {
+          currentFontSize = fs;
+          fontSizeSlider.value = fs;
+          fontSizeDisplay.textContent = fs + 'px';
+        }
+      }
+      loadRangeSetting('badge_fold_distance', 0, 120, (value) => {
+        currentFoldDistance = value;
+        foldDistanceSlider.value = value;
+        foldDistanceDisplay.textContent = value + 'mm';
+      });
+      loadRangeSetting('badge_horizontal_offset', -80, 80, (value) => {
+        currentSideDistance = value;
+        sideDistanceSlider.value = value;
+        sideDistanceDisplay.textContent = value + 'mm';
+      });
+      loadRangeSetting('badge_guide_top_gap', 0, 297, (value) => { currentTickTopPos = value; });
+      loadRangeSetting('badge_guide_bottom_gap', 0, 297, (value) => { currentTickBottomPos = value; });
+      loadRangeSetting('badge_guide_left_gap', 0, 297, (value) => { currentTickLeftPos = value; });
+      loadRangeSetting('badge_guide_right_gap', 0, 297, (value) => { currentTickRightPos = value; });
+      const savedMidline = localStorage.getItem('badge_show_midline');
+      chkMidline.checked = savedMidline === null ? true : savedMidline === 'true';
+      const savedGrid = localStorage.getItem('badge_show_grid');
+      chkGrid.checked = savedGrid === null ? true : savedGrid === 'true';
+      const savedPrintTicks = localStorage.getItem('badge_show_print_ticks');
+      chkPrintTicks.checked = savedPrintTicks === null ? false : savedPrintTicks === 'true';
+      const tickSection = $('tickSettingsSection');
+      if (tickSection) tickSection.style.display = chkPrintTicks.checked ? '' : 'none';
+
+      // 注入 CSS 变量，实现实时样式变化
+      updateTickControls(true);
+      updateCSSVariables();
+      updateUI();
+      bindEvents();
+    }
+
+    // 更新根 CSS 变量，使所有 .badge-text 实时响应
+    function updateCSSVariables() {
+      const root = document.documentElement;
+      root.style.setProperty('--preview-font-size', currentFontSize + 'px');
+      root.style.setProperty('--preview-font-family', fontMap[currentFont] || fontMap.serif);
+      root.style.setProperty('--preview-font-weight', currentWeight);
+      root.style.setProperty('--badge-fold-distance', currentFoldDistance + 'mm');
+      root.style.setProperty('--badge-horizontal-offset', currentSideDistance + 'mm');
+      root.style.setProperty('--paper-guide-top-gap', currentTickBottomPos + 'mm');
+      root.style.setProperty('--paper-guide-bottom-gap', currentTickTopPos + 'mm');
+      root.style.setProperty('--paper-guide-left-gap', currentTickLeftPos + 'mm');
+      root.style.setProperty('--paper-guide-right-gap', currentTickRightPos + 'mm');
+    }
+
+    function loadRangeSetting(key, min, max, applyValue) {
+      const saved = localStorage.getItem(key);
+      if (!saved) return;
+      const value = parseInt(saved, 10);
+      if (Number.isFinite(value) && value >= min && value <= max) applyValue(value);
+    }
+
+    function formatPosition(value) {
+      return value + 'mm';
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function updateTickControls(shouldClamp = false) {
+      const cfg = sizeConfig[currentSizeMode];
+      const horizontalMax = cfg.paperW;
+      const verticalMax = Math.floor(cfg.paperH / 2);
+      if (shouldClamp) {
+        currentTickTopPos = clamp(currentTickTopPos, 0, verticalMax);
+        currentTickBottomPos = clamp(currentTickBottomPos, 0, verticalMax);
+        currentTickLeftPos = clamp(currentTickLeftPos, 0, horizontalMax);
+        currentTickRightPos = clamp(currentTickRightPos, 0, horizontalMax);
+      }
+      tickTopSlider.max = verticalMax;
+      tickBottomSlider.max = verticalMax;
+      tickLeftSlider.max = horizontalMax;
+      tickRightSlider.max = horizontalMax;
+      tickTopSlider.value = currentTickTopPos;
+      tickBottomSlider.value = currentTickBottomPos;
+      tickLeftSlider.value = currentTickLeftPos;
+      tickRightSlider.value = currentTickRightPos;
+      tickTopDisplay.textContent = formatPosition(currentTickTopPos);
+      tickBottomDisplay.textContent = formatPosition(currentTickBottomPos);
+      tickLeftDisplay.textContent = formatPosition(currentTickLeftPos);
+      tickRightDisplay.textContent = formatPosition(currentTickRightPos);
+    }
+
+    function updatePrintModeClass() {
+      document.body.classList.remove('print-a4landscape', 'print-a4portrait');
+      document.body.classList.add(`print-${currentSizeMode}`);
+    }
+
+    // 中线 / 网格线切换
+    function updateOverlayClasses() {
+      previewContent.classList.toggle('show-midline', chkMidline.checked);
+      previewContent.classList.toggle('show-grid', chkGrid.checked);
+      previewContent.classList.toggle('show-paper-ticks', chkPrintTicks.checked);
+    }
+
+    // 保存状态
+    function saveState() {
+      localStorage.setItem('badge_names', JSON.stringify(nameList));
+      localStorage.setItem('badge_size', currentSizeMode);
+      localStorage.setItem('badge_font', currentFont);
+      localStorage.setItem('badge_weight', currentWeight);
+      localStorage.setItem('badge_fontsize', currentFontSize);
+      localStorage.setItem('badge_fold_distance', currentFoldDistance);
+      localStorage.setItem('badge_horizontal_offset', currentSideDistance);
+      localStorage.setItem('badge_guide_top_gap', currentTickTopPos);
+      localStorage.setItem('badge_guide_bottom_gap', currentTickBottomPos);
+      localStorage.setItem('badge_guide_left_gap', currentTickLeftPos);
+      localStorage.setItem('badge_guide_right_gap', currentTickRightPos);
+      localStorage.setItem('badge_show_midline', chkMidline.checked);
+      localStorage.setItem('badge_show_grid', chkGrid.checked);
+      localStorage.setItem('badge_show_print_ticks', chkPrintTicks.checked);
+    }
+
+    // Toast 消息
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.textContent = msg;
+      toastContainer.appendChild(t);
+      setTimeout(() => t.remove(), 2800);
+    }
+
+    // 添加姓名
+    function addNames(namesArr) {
+      let added = 0;
+      namesArr.forEach(n => {
+        let name = n.trim().replace(/\s+/g, ' ');
+        if (name.length === 2 && !name.includes(' ')) {
+          name = name[0] + '\u3000' + name[1];
+        }
+        if (name && !nameList.includes(name)) {
+          nameList.push(name);
+          added++;
+        }
+      });
+      if (added) showToast(`✅ 已添加 ${added} 个姓名`);
+      else showToast('ℹ️ 姓名已存在或为空');
+      saveState();
+      updateUI();
+    }
+
+    // 删除姓名
+    function removeName(index) {
+      const removed = nameList.splice(index, 1)[0];
+      showToast(`已移除：${removed}`);
+      saveState();
+      updateUI();
+    }
+
+    function openDeleteConfirm(index) {
+      pendingDeleteIndex = index;
+      const name = nameList[index] || '';
+      confirmMessage.textContent = `确定要删除“${name}”吗？删除后该姓名不会出现在预览和导出的 PDF 中。`;
+      confirmDialog.classList.add('is-open');
+      confirmDialog.setAttribute('aria-hidden', 'false');
+      btnCancelDelete.focus();
+    }
+
+    function closeDeleteConfirm() {
+      pendingDeleteIndex = null;
+      pendingAction = null;
+      confirmDialog.classList.remove('is-open');
+      confirmDialog.setAttribute('aria-hidden', 'true');
+    }
+
+    function confirmDeleteName() {
+      if (pendingDeleteIndex !== null) {
+        const idx = pendingDeleteIndex;
+        pendingDeleteIndex = null;
+        if (nameList[idx]) removeName(idx);
+      } else if (pendingAction && pendingAction.type === 'clearAll') {
+        pendingAction = null;
+        nameList = [];
+        saveState();
+        updateUI();
+        showToast('已清空');
+      }
+      closeDeleteConfirm();
+    }
+
+    // 清空全部
+    function clearAll() {
+      if (!nameList.length) return showToast('列表已空');
+      pendingAction = { type: 'clearAll' };
+      confirmMessage.textContent = `确定清空全部 ${nameList.length} 个姓名吗？清空后所有姓名将从预览和导出中移除。`;
+      confirmDialog.classList.add('is-open');
+      confirmDialog.setAttribute('aria-hidden', 'false');
+      btnCancelDelete.focus();
+    }
+
+    function resetStyleDefaults() {
+      currentFontSize = defaultStyle.fontSize;
+      currentSizeMode = defaultStyle.sizeMode;
+      currentFont = defaultStyle.font;
+      currentWeight = defaultStyle.weight;
+      currentFoldDistance = defaultStyle.foldDistance;
+      currentSideDistance = defaultStyle.sideDistance;
+      currentTickTopPos = defaultStyle.tickTopPos;
+      currentTickBottomPos = defaultStyle.tickBottomPos;
+      currentTickLeftPos = defaultStyle.tickLeftPos;
+      currentTickRightPos = defaultStyle.tickRightPos;
+      sizeSelect.value = currentSizeMode;
+      fontSizeSlider.value = currentFontSize;
+      fontSizeDisplay.textContent = currentFontSize + 'px';
+      fontSelect.value = currentFont;
+      weightSelect.value = currentWeight;
+      foldDistanceSlider.value = currentFoldDistance;
+      foldDistanceDisplay.textContent = currentFoldDistance + 'mm';
+      sideDistanceSlider.value = currentSideDistance;
+      sideDistanceDisplay.textContent = currentSideDistance + 'mm';
+      updateTickControls(true);
+      chkMidline.checked = defaultStyle.showMidline;
+      chkGrid.checked = defaultStyle.showGrid;
+      chkPrintTicks.checked = defaultStyle.showPrintTicks;
+      const tickSection = $('tickSettingsSection');
+      if (tickSection) tickSection.style.display = chkPrintTicks.checked ? '' : 'none';
+
+      updateCSSVariables();
+      updateUI();
+      goToPreviewPage(currentPreviewPage, 'auto');
+      saveState();
+      showToast('已恢复名牌样式默认设置');
+    }
+
+    // 更新整个界面（姓名列表 + 预览结构）
+    function updateUI() {
+      updateNameList();
+      rebuildPreview();   // 名字或尺寸变化时重建 DOM
+      nameCount.textContent = nameList.length;
+      sizeLabel.textContent = sizeConfig[currentSizeMode].label;
+      // 同时更新 CSS 变量（样式变化时不重建，但此处也保证一致性）
+      updateCSSVariables();
+      updatePrintModeClass();
+    }
+
+    // 更新姓名列表
+    function updateNameList() {
+      nameListBox.innerHTML = nameList.length ? '' :
+        '<div class="empty-message">' +
+        '<div class="empty-icon">👤</div>' +
+        '<div class="empty-title">名单为空</div>' +
+        '<div class="empty-hint">在上方输入姓名，点击「导入」即可添加</div>' +
+        '</div>';
+      nameList.forEach((name, idx) => {
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerHTML = `
+          <span class="index">${idx+1}</span>
+          <span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(name)}</span>
+          <button class="remove-btn" data-index="${idx}">×</button>
+        `;
+        nameListBox.appendChild(div);
+      });
+      // 绑定删除事件
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(btn.dataset.index, 10);
+          openDeleteConfirm(idx);
+        });
+      });
+    }
+
+    function getTotalPages() {
+      if (!nameList.length) return 0;
+      return nameList.length;
+    }
+
+    function clampPreviewPage(page) {
+      const total = getTotalPages();
+      if (!total) return 1;
+      const parsed = parseInt(page, 10);
+      const next = Number.isFinite(parsed) ? parsed : currentPreviewPage;
+      return Math.min(Math.max(next, 1), total);
+    }
+
+    function updatePageJumpState() {
+      const total = getTotalPages();
+      currentPreviewPage = total ? clampPreviewPage(currentPreviewPage) : 1;
+      pageTotal.textContent = total;
+      pageJumpInput.disabled = total === 0;
+      pageJumpInput.min = 1;
+      pageJumpInput.max = Math.max(total, 1);
+      pageJumpInput.value = total ? currentPreviewPage : 1;
+      btnPrevPage.disabled = total <= 1 || currentPreviewPage <= 1;
+      btnNextPage.disabled = total <= 1 || currentPreviewPage >= total;
+    }
+
+    function goToPreviewPage(page, behavior = 'smooth') {
+      const total = getTotalPages();
+      if (!total) {
+        updatePageJumpState();
+        return;
+      }
+      currentPreviewPage = clampPreviewPage(page);
+      updatePageJumpState();
+      const pages = previewContent.querySelectorAll('.preview-page-wrap');
+      const target = pages[currentPreviewPage - 1];
+      if (target) {
+        const containerRect = previewScroll.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        const centeredTop = previewScroll.scrollTop
+          + targetRect.top
+          - containerRect.top
+          - ((previewScroll.clientHeight - target.offsetHeight) / 2);
+        const centeredLeft = previewScroll.scrollLeft
+          + targetRect.left
+          - containerRect.left
+          - ((previewScroll.clientWidth - target.offsetWidth) / 2);
+        previewScroll.scrollTo({
+          top: Math.max(0, centeredTop),
+          left: Math.max(0, centeredLeft),
+          behavior
+        });
+      }
+    }
+
+    function syncCurrentPageFromScroll() {
+      const pages = [...previewContent.querySelectorAll('.preview-page-wrap')];
+      if (!pages.length) {
+        updatePageJumpState();
+        return;
+      }
+      const containerRect = previewScroll.getBoundingClientRect();
+      const containerCenter = containerRect.top + (previewScroll.clientHeight / 2);
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+      pages.forEach((page, index) => {
+        const pageRect = page.getBoundingClientRect();
+        const pageCenter = pageRect.top + (pageRect.height / 2);
+        const distance = Math.abs(pageCenter - containerCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+      currentPreviewPage = closestIndex + 1;
+      updatePageJumpState();
+    }
+
+    // 重建预览 DOM（仅名字/尺寸变化时调用）
+    function rebuildPreview() {
+      previewContent.innerHTML = '';
+      if (!nameList.length) {
+        emptyPreview.style.display = 'flex';
+        previewContent.style.display = 'none';
+        updatePageJumpState();
+        return;
+      }
+      emptyPreview.style.display = 'none';
+      previewContent.style.display = '';
+
+      const cfg = sizeConfig[currentSizeMode];
+      const scale = getPreviewScale(cfg.paperW, cfg.paperH);
+
+      nameList.forEach((name, idx) => {
+        const page = createPreviewPage(cfg.paperW, cfg.paperH, idx);
+        const badgeContainer = document.createElement('div');
+        badgeContainer.style.width = cfg.badgeW + 'mm';
+        badgeContainer.style.height = cfg.badgeH + 'mm';
+        badgeContainer.appendChild(createBadgeElement(name, cfg.badgeW, cfg.badgeH));
+        page.appendChild(badgeContainer);
+        previewContent.appendChild(createScaledPage(page, cfg.paperW, cfg.paperH, scale));
+        if (idx < nameList.length - 1) previewContent.appendChild(createSeparator());
+      });
+      updatePageJumpState();
+      updateOverlayClasses();
+    }
+
+    function getPreviewScale(paperWMM, paperHMM) {
+      const availableW = Math.max(previewContent.clientWidth || 640, 320) - 24;
+      const availableH = Math.max(previewScroll.clientHeight || 720, 320) - 28;
+      const realPaperW = paperWMM * PX_PER_MM;
+      const realPaperH = paperHMM * PX_PER_MM;
+      return Math.min(availableW / realPaperW, availableH / realPaperH, 0.78);
+    }
+
+    // 屏幕预览只缩放外层，内部页面始终保持真实打印尺寸
+    function createScaledPage(page, wMM, hMM, scale) {
+      const wrap = document.createElement('div');
+      wrap.className = 'preview-page-wrap';
+      wrap.style.width = (wMM * PX_PER_MM * scale) + 'px';
+      wrap.style.height = (hMM * PX_PER_MM * scale) + 'px';
+      page.style.transform = `scale(${scale})`;
+      page.style.transformOrigin = 'top left';
+      wrap.appendChild(page);
+      return wrap;
+    }
+
+    // 创建预览纸张
+    function createPreviewPage(wMM, hMM, index) {
+      const page = document.createElement('div');
+      page.className = 'page-sim';
+      page.style.width = wMM + 'mm';
+      page.style.height = hMM + 'mm';
+      page.style.setProperty('--paper-height', hMM + 'mm');
+      page.style.setProperty('--paper-half-height', (hMM / 2) + 'mm');
+      const num = document.createElement('span');
+      num.className = 'page-number';
+      num.textContent = `第 ${index+1} 页`;
+      page.appendChild(num);
+      [
+        ['horizontal', 'top-half-top'],
+        ['horizontal', 'top-half-bottom'],
+        ['horizontal', 'bottom-half-top'],
+        ['horizontal', 'bottom-half-bottom'],
+        ['vertical', 'left-guide'],
+        ['vertical', 'right-guide']
+      ].forEach(parts => {
+        const tick = document.createElement('span');
+        tick.className = `paper-tick ${parts.join(' ')}`;
+        page.appendChild(tick);
+      });
+      return page;
+    }
+
+    // 创建分隔线
+    function createSeparator() {
+      const sep = document.createElement('div');
+      sep.className = 'separator';
+      return sep;
+    }
+
+    // 创建名牌元素（样式通过 CSS 变量控制）
+    function createBadgeElement(name, wMM, hMM) {
+      const badge = document.createElement('div');
+      badge.className = 'badge';
+      badge.style.aspectRatio = wMM + '/' + hMM;
+      badge.style.setProperty('--badge-half-center-distance', (hMM / 4) + 'mm');
+      badge.innerHTML = `
+        <div class="badge-half">
+          <span class="badge-text-frame top-text"><span class="badge-text">${escapeHtml(name)}</span></span>
+        </div>
+        <div class="badge-gap"><div class="fold-line"></div></div>
+        <div class="badge-half">
+          <span class="badge-text-frame"><span class="badge-text">${escapeHtml(name)}</span></span>
+        </div>
+      `;
+      return badge;
+    }
+
+    // 转义 HTML
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function getExportCss(cfg) {
+      return `
+        :root {
+          --preview-font-size: ${currentFontSize}px;
+          --preview-font-family: ${fontMap[currentFont] || fontMap.serif};
+          --preview-font-weight: ${currentWeight};
+          --badge-fold-distance: ${currentFoldDistance}mm;
+          --badge-horizontal-offset: ${currentSideDistance}mm;
+          --paper-guide-top-gap: ${currentTickBottomPos}mm;
+          --paper-guide-bottom-gap: ${currentTickTopPos}mm;
+          --paper-guide-left-gap: ${currentTickLeftPos}mm;
+          --paper-guide-right-gap: ${currentTickRightPos}mm;
+          --paper-height: ${cfg.paperH}mm;
+          --paper-half-height: ${cfg.paperH / 2}mm;
+          --badge-half-center-distance: ${cfg.badgeH / 4}mm;
+          --badge-name-offset: calc(var(--badge-fold-distance) - var(--badge-half-center-distance));
+        }
+        * { box-sizing: border-box; }
+        html, body {
+          margin: 0;
+          padding: 0;
+          background: #fff;
+          font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+        }
+        @page { size: ${cfg.paperW}mm ${cfg.paperH}mm; margin: 0; }
+        .pdf-page {
+          width: ${cfg.paperW}mm;
+          height: ${cfg.paperH}mm;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          break-after: page;
+          page-break-after: always;
+          background: #fff;
+        }
+        .pdf-page:last-child {
+          break-after: auto;
+          page-break-after: auto;
+        }
+        .page-sim {
+          width: ${cfg.paperW}mm;
+          height: ${cfg.paperH}mm;
+          background: #fff !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          transform: none !important;
+          margin: 0;
+        }
+        .badge {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+        }
+        .badge-half {
+          flex: 0 0 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 0;
+          overflow: visible;
+        }
+        .badge-gap {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          height: 0;
+          pointer-events: none;
+        }
+        .badge-text-frame {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transform-origin: center center;
+          transform: translate(var(--badge-horizontal-offset), var(--badge-name-offset));
+        }
+        .badge-text-frame.top-text {
+          transform: translate(var(--badge-horizontal-offset), calc(var(--badge-name-offset) * -1));
+        }
+        .badge-text {
+          font-size: var(--preview-font-size);
+          font-family: var(--preview-font-family);
+          font-weight: var(--preview-font-weight);
+          line-height: 1;
+          text-align: center;
+          word-break: break-word;
+          color: #000;
+          display: block;
+          width: 100%;
+          transform-origin: center center;
+        }
+        .top-text .badge-text { transform: rotate(180deg); }
+        .page-number,
+        .separator,
+        .corner-mark,
+        .fold-line,
+        embed,
+        object,
+        iframe,
+        [src^="chrome-extension://"],
+        .ball-inner {
+          display: none !important;
+          visibility: hidden !important;
+        }
+        .paper-tick {
+          display: ${chkPrintTicks.checked ? 'block' : 'none'};
+          position: absolute;
+          z-index: 6;
+          pointer-events: none;
+        }
+        .paper-tick.horizontal {
+          left: 0;
+          right: 0;
+          height: 0;
+          border-top: 0.3mm dashed #000;
+        }
+        .paper-tick.vertical {
+          top: 0;
+          bottom: 0;
+          width: 0;
+          border-left: 0.3mm dashed #000;
+        }
+        .paper-tick.top-half-top { top: var(--paper-guide-top-gap); }
+        .paper-tick.top-half-bottom { top: calc(var(--paper-half-height) - var(--paper-guide-bottom-gap)); }
+        .paper-tick.bottom-half-top { top: calc(var(--paper-half-height) + var(--paper-guide-bottom-gap)); }
+        .paper-tick.bottom-half-bottom { top: calc(var(--paper-height) - var(--paper-guide-top-gap)); }
+        .paper-tick.left-guide { left: var(--paper-guide-left-gap); }
+        .paper-tick.right-guide { right: var(--paper-guide-right-gap); }
+      `;
+    }
+
+    function clonePageForExport(page) {
+      const clone = page.cloneNode(true);
+      clone.style.transform = 'none';
+      clone.style.transformOrigin = 'top left';
+      clone.querySelectorAll('.page-number, .separator, embed, object, iframe, [src^="chrome-extension://"], .ball-inner').forEach(el => el.remove());
+      return clone;
+    }
+
+    function getExportPagesHtml(cfg) {
+      return [...previewContent.querySelectorAll('.page-sim')]
+        .map(page => `<div class="pdf-page">${clonePageForExport(page).outerHTML}</div>`)
+        .join('');
+    }
+
+    function buildPrintDocument() {
+      const cfg = sizeConfig[currentSizeMode];
+      return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>会议名牌打印</title>
+  <style>${getExportCss(cfg)}</style>
+</head>
+<body>${getExportPagesHtml(cfg)}</body>
+</html>`;
+    }
+
+    function printIsolated() {
+      if (!nameList.length) return showToast('请先添加姓名');
+      const frame = document.createElement('iframe');
+      frame.setAttribute('aria-hidden', 'true');
+      frame.style.position = 'fixed';
+      frame.style.right = '0';
+      frame.style.bottom = '0';
+      frame.style.width = '0';
+      frame.style.height = '0';
+      frame.style.border = '0';
+      frame.style.opacity = '0';
+      document.body.appendChild(frame);
+
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      doc.open();
+      doc.write(buildPrintDocument());
+      doc.close();
+
+      const cleanup = () => {
+        window.setTimeout(() => frame.remove(), 800);
+      };
+      frame.contentWindow.addEventListener('afterprint', cleanup, { once: true });
+      window.setTimeout(() => {
+        frame.contentWindow.focus();
+        frame.contentWindow.print();
+        window.setTimeout(cleanup, 60000);
+      }, 180);
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+
+    async function renderPageToJpeg(page, cfg) {
+      const baseW = Math.round(cfg.paperW * PX_PER_MM);
+      const baseH = Math.round(cfg.paperH * PX_PER_MM);
+      const scale = 2;
+      const width = baseW * scale;
+      const height = baseH * scale;
+      const pageHtml = clonePageForExport(page).outerHTML;
+      const xhtml = `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${baseW}px;height:${baseH}px;overflow:hidden;transform:scale(${scale});transform-origin:top left;">
+        <style>${getExportCss(cfg)} .pdf-page{display:block;width:${baseW}px;height:${baseH}px;break-after:auto;page-break-after:auto;}</style>
+        <div class="pdf-page">${pageHtml}</div>
+      </div>`;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+        <foreignObject width="${width}" height="${height}">${xhtml}</foreignObject>
+      </svg>`;
+      const img = await loadImage('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg));
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+      return {
+        width,
+        height,
+        bytes: base64ToBytes(canvas.toDataURL('image/jpeg', 0.96).split(',')[1])
+      };
+    }
+
+    function base64ToBytes(base64) {
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    }
+
+    function concatBytes(parts, totalLength) {
+      const output = new Uint8Array(totalLength);
+      let offset = 0;
+      parts.forEach(part => {
+        output.set(part, offset);
+        offset += part.length;
+      });
+      return output;
+    }
+
+    function createPdfBytes(images, cfg) {
+      const encoder = new TextEncoder();
+      const parts = [];
+      const offsets = [];
+      let offset = 0;
+      const add = (chunk) => {
+        const bytes = typeof chunk === 'string' ? encoder.encode(chunk) : chunk;
+        parts.push(bytes);
+        offset += bytes.length;
+      };
+      const beginObj = (id) => {
+        offsets[id] = offset;
+        add(`${id} 0 obj\n`);
+      };
+      const pageW = (cfg.paperW * 72 / 25.4).toFixed(3);
+      const pageH = (cfg.paperH * 72 / 25.4).toFixed(3);
+      let nextObj = 3;
+      const objectMap = images.map(() => ({
+        page: nextObj++,
+        content: nextObj++,
+        image: nextObj++
+      }));
+      const maxObj = nextObj - 1;
+
+      add('%PDF-1.4\n');
+      beginObj(1);
+      add('<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+      beginObj(2);
+      add(`<< /Type /Pages /Kids [${objectMap.map(item => `${item.page} 0 R`).join(' ')}] /Count ${images.length} >>\nendobj\n`);
+
+      images.forEach((image, index) => {
+        const ids = objectMap[index];
+        beginObj(ids.page);
+        add(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW} ${pageH}] /Resources << /XObject << /Im${index} ${ids.image} 0 R >> >> /Contents ${ids.content} 0 R >>\nendobj\n`);
+        beginObj(ids.content);
+        const stream = `q\n${pageW} 0 0 ${pageH} 0 0 cm\n/Im${index} Do\nQ\n`;
+        add(`<< /Length ${encoder.encode(stream).length} >>\nstream\n${stream}endstream\nendobj\n`);
+        beginObj(ids.image);
+        add(`<< /Type /XObject /Subtype /Image /Width ${image.width} /Height ${image.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${image.bytes.length} >>\nstream\n`);
+        add(image.bytes);
+        add('\nendstream\nendobj\n');
+      });
+
+      const xrefOffset = offset;
+      add(`xref\n0 ${maxObj + 1}\n0000000000 65535 f \n`);
+      for (let i = 1; i <= maxObj; i++) {
+        add(`${String(offsets[i]).padStart(10, '0')} 00000 n \n`);
+      }
+      add(`trailer\n<< /Size ${maxObj + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`);
+      return concatBytes(parts, offset);
+    }
+
+    async function downloadPdf() {
+      if (!nameList.length) return showToast('请先添加姓名');
+      const oldText = btnDownload.textContent;
+      btnDownload.disabled = true;
+      btnDownload.textContent = '生成中...';
+      try {
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        const cfg = sizeConfig[currentSizeMode];
+        const pages = [...previewContent.querySelectorAll('.page-sim')];
+        const images = [];
+        for (const page of pages) {
+          images.push(await renderPageToJpeg(page, cfg));
+        }
+        const pdfBytes = createPdfBytes(images, cfg);
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `会议名牌_${new Date().toISOString().slice(0, 10)}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast('PDF 已开始下载');
+      } catch (err) {
+        console.error(err);
+        showToast('PDF 生成失败，请改用打印');
+      } finally {
+        btnDownload.disabled = false;
+        btnDownload.textContent = oldText;
+      }
+    }
+
+    // 绑定事件
+    function bindEvents() {
+      btnBatch.addEventListener('click', () => {
+        const raw = batchInput.value.trim();
+        if (!raw) return showToast('请粘贴姓名列表');
+        const names = raw.split(/[\n\r,，]+/).filter(n => n.trim());
+        addNames(names);
+        batchInput.value = '';
+      });
+      batchInput.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          btnBatch.click();
+        }
+      });
+      btnSample.addEventListener('click', () => {
+        const samples = ['张振国', '李雅琴', '王浩然', '陈思羽', '刘明哲', '赵若兰', '周博文', '吴雨桐'];
+        addNames(samples);
+      });
+      btnClearAll.addEventListener('click', clearAll);
+      btnResetStyle.addEventListener('click', resetStyleDefaults);
+      btnDownload.addEventListener('click', downloadPdf);
+      btnCancelDelete.addEventListener('click', closeDeleteConfirm);
+      btnConfirmDelete.addEventListener('click', confirmDeleteName);
+      confirmDialog.addEventListener('click', (e) => {
+        if (e.target === confirmDialog) closeDeleteConfirm();
+      });
+
+      // 样式实时变化：只更新 CSS 变量，无需重建 DOM
+      fontSizeSlider.addEventListener('input', () => {
+        currentFontSize = parseInt(fontSizeSlider.value, 10);
+        fontSizeDisplay.textContent = currentFontSize + 'px';
+        updateCSSVariables();
+        saveState();
+      });
+      fontSelect.addEventListener('change', () => {
+        currentFont = fontSelect.value;
+        updateCSSVariables();
+        saveState();
+      });
+      weightSelect.addEventListener('change', () => {
+        currentWeight = weightSelect.value;
+        updateCSSVariables();
+        saveState();
+      });
+      foldDistanceSlider.addEventListener('input', () => {
+        currentFoldDistance = parseInt(foldDistanceSlider.value, 10);
+        foldDistanceDisplay.textContent = currentFoldDistance + 'mm';
+        updateCSSVariables();
+        saveState();
+      });
+      sideDistanceSlider.addEventListener('input', () => {
+        currentSideDistance = parseInt(sideDistanceSlider.value, 10);
+        sideDistanceDisplay.textContent = currentSideDistance + 'mm';
+        updateCSSVariables();
+        saveState();
+      });
+      tickTopSlider.addEventListener('input', () => {
+        currentTickTopPos = parseInt(tickTopSlider.value, 10);
+        tickTopDisplay.textContent = formatPosition(currentTickTopPos);
+        updateCSSVariables();
+        saveState();
+      });
+      tickBottomSlider.addEventListener('input', () => {
+        currentTickBottomPos = parseInt(tickBottomSlider.value, 10);
+        tickBottomDisplay.textContent = formatPosition(currentTickBottomPos);
+        updateCSSVariables();
+        saveState();
+      });
+      tickLeftSlider.addEventListener('input', () => {
+        currentTickLeftPos = parseInt(tickLeftSlider.value, 10);
+        tickLeftDisplay.textContent = formatPosition(currentTickLeftPos);
+        updateCSSVariables();
+        saveState();
+      });
+      tickRightSlider.addEventListener('input', () => {
+        currentTickRightPos = parseInt(tickRightSlider.value, 10);
+        tickRightDisplay.textContent = formatPosition(currentTickRightPos);
+        updateCSSVariables();
+        saveState();
+      });
+      chkMidline.addEventListener('change', () => {
+        updateOverlayClasses();
+        saveState();
+      });
+      chkGrid.addEventListener('change', () => {
+        updateOverlayClasses();
+        saveState();
+      });
+      chkPrintTicks.addEventListener('change', () => {
+        updateOverlayClasses();
+        const tickSection = $('tickSettingsSection');
+        if (tickSection) tickSection.style.display = chkPrintTicks.checked ? '' : 'none';
+        saveState();
+      });
+
+      // 尺寸变化需要重建预览（因为纸张比例改变）
+      sizeSelect.addEventListener('change', () => {
+        currentSizeMode = sizeSelect.value;
+        sizeLabel.textContent = sizeConfig[currentSizeMode].label;
+        updateTickControls(true);
+        updateCSSVariables();
+        updatePrintModeClass();
+        rebuildPreview();
+        goToPreviewPage(currentPreviewPage, 'auto');
+        saveState();
+      });
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          rebuildPreview();
+          goToPreviewPage(currentPreviewPage, 'auto');
+        }, 120);
+      });
+
+      btnPrevPage.addEventListener('click', () => {
+        goToPreviewPage(currentPreviewPage - 1);
+      });
+      btnNextPage.addEventListener('click', () => {
+        goToPreviewPage(currentPreviewPage + 1);
+      });
+      pageJumpInput.addEventListener('change', () => {
+        goToPreviewPage(pageJumpInput.value);
+      });
+      pageJumpInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          pageJumpInput.blur();
+          goToPreviewPage(pageJumpInput.value);
+        }
+      });
+      let scrollSyncTimer;
+      previewScroll.addEventListener('scroll', () => {
+        window.clearTimeout(scrollSyncTimer);
+        scrollSyncTimer = window.setTimeout(syncCurrentPageFromScroll, 80);
+      });
+
+      // 打印 / 导出 PDF
+      btnPrint.addEventListener('click', () => {
+        if (!nameList.length) return showToast('请先添加姓名');
+        showToast('🖨️ 正在打开干净打印页');
+        printIsolated();
+      });
+
+      // 快捷键提示
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && confirmDialog.classList.contains('is-open')) {
+          closeDeleteConfirm();
+          return;
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+          e.preventDefault();
+          if (nameList.length === 0) {
+            showToast('请先添加姓名再打印');
+          } else {
+            printIsolated();
+          }
+        }
+      });
+    }
+
+    // 启动应用
+    init();
+  })();
+</script>
+</body>
+</html>
