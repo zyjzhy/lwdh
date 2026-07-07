@@ -6,6 +6,7 @@
             const toggleButton = document.getElementById('toggle-sidebar');
             const searchInput = document.getElementById('search-input');
             const searchButton = document.getElementById('search-button');
+            const searchHistoryContainer = document.getElementById('search-history');
             const searchTabs = Array.from(document.querySelectorAll('#search-tabs button'));
             const navLinks = Array.from(document.querySelectorAll('#sidebar a[data-target], .nav-link[data-target]'));
             const columns = Array.from(document.querySelectorAll('.column'));
@@ -28,6 +29,7 @@
             const themeKey = 'zz-nav-theme-mode';
             const paletteKey = 'zz-nav-palette-mode';
             const backgroundKey = 'zz-nav-background-mode';
+            const searchHistoryKey = 'zz-nav-search-history';
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
             const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
             const themeOrder = ['auto', 'light', 'dark'];
@@ -52,8 +54,50 @@
             let activeThemeChoice = 'auto';
             let activePaletteChoice = 'rose';
             let activeBackgroundChoice = 'study';
+            let searchHistoryItems = [];
             let emailLoadPromise = null;
             let scrollSpyTicking = false;
+
+            function iconHref(name) {
+                return `#icon-${name}`;
+            }
+
+            function setSvgIcon(icon, name) {
+                if (!icon) return;
+                let use = icon.querySelector('use');
+                if (!use) {
+                    use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+                    icon.appendChild(use);
+                }
+                use.setAttribute('href', iconHref(name));
+            }
+
+            function createSvgIcon(name, extraClass = '') {
+                const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                icon.classList.add('svg-icon');
+                extraClass.split(/\s+/).filter(Boolean).forEach(className => icon.classList.add(className));
+                icon.setAttribute('aria-hidden', 'true');
+                icon.setAttribute('focusable', 'false');
+                setSvgIcon(icon, name);
+                return icon;
+            }
+
+            function ensureSvgIcon(container, name, extraClass = '') {
+                let icon = container.querySelector('.svg-icon');
+                if (!icon) {
+                    icon = createSvgIcon(name, extraClass);
+                    container.prepend(icon);
+                } else {
+                    extraClass.split(/\s+/).filter(Boolean).forEach(className => icon.classList.add(className));
+                    setSvgIcon(icon, name);
+                }
+                return icon;
+            }
+
+            function svgIconMarkup(name, extraClass = '') {
+                const className = ['svg-icon', ...extraClass.split(/\s+/).filter(Boolean)].join(' ');
+                return `<svg class="${className}" aria-hidden="true" focusable="false"><use href="${iconHref(name)}"></use></svg>`;
+            }
 
             function storageGet(key) {
                 try {
@@ -77,6 +121,89 @@
                 } catch (error) {
                     // 隐私模式下可能禁用 localStorage，忽略即可。
                 }
+            }
+
+            const SEARCH_HISTORY_LIMIT = 10;
+
+            function loadSearchHistory() {
+                try {
+                    const parsed = JSON.parse(storageGet(searchHistoryKey) || '[]');
+                    return Array.isArray(parsed)
+                        ? parsed.filter(item => typeof item === 'string' && item.trim()).slice(0, SEARCH_HISTORY_LIMIT)
+                        : [];
+                } catch (error) {
+                    return [];
+                }
+            }
+
+            function saveSearchHistory() {
+                storageSet(searchHistoryKey, JSON.stringify(searchHistoryItems.slice(0, SEARCH_HISTORY_LIMIT)));
+            }
+
+            function renderSearchHistory() {
+                if (!searchHistoryContainer) return;
+
+                searchHistoryContainer.innerHTML = '';
+                searchHistoryContainer.hidden = searchHistoryItems.length === 0;
+
+                searchHistoryItems.forEach(term => {
+                    const item = document.createElement('div');
+                    item.className = 'search-token';
+
+                    const textButton = document.createElement('button');
+                    textButton.type = 'button';
+                    textButton.className = 'search-token-text';
+                    textButton.textContent = term;
+                    textButton.title = term;
+                    textButton.addEventListener('click', () => {
+                        if (!searchInput) return;
+                        searchInput.value = term;
+                        filterCards();
+                        searchInput.focus();
+                    });
+
+                    const removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.className = 'search-token-remove';
+                    removeButton.setAttribute('aria-label', `删除搜索内容：${term}`);
+                    removeButton.appendChild(createSvgIcon('x'));
+                    removeButton.addEventListener('click', () => {
+                        searchHistoryItems = searchHistoryItems.filter(item => item !== term);
+                        saveSearchHistory();
+                        renderSearchHistory();
+                    });
+
+                    const searchButton = document.createElement('button');
+                    searchButton.type = 'button';
+                    searchButton.className = 'search-token-search';
+                    searchButton.setAttribute('aria-label', `搜索：${term}`);
+                    searchButton.appendChild(createSvgIcon('search'));
+                    searchButton.addEventListener('click', () => {
+                        rememberSearchTerm(term);
+                        openSearchTerm(term);
+                    });
+
+                    item.append(textButton, removeButton, searchButton);
+                    searchHistoryContainer.appendChild(item);
+                });
+            }
+
+            function rememberSearchTerm(term) {
+                const normalized = term.trim().replace(/\s+/g, ' ');
+                if (!normalized) return;
+
+                searchHistoryItems = [
+                    normalized,
+                    ...searchHistoryItems.filter(item => item.toLowerCase() !== normalized.toLowerCase())
+                ].slice(0, SEARCH_HISTORY_LIMIT);
+                saveSearchHistory();
+                renderSearchHistory();
+            }
+
+            function openSearchTerm(term) {
+                const query = term.trim();
+                if (!query) return;
+                window.open(activeEngine + encodeURIComponent(query), '_blank', 'noopener');
             }
 
             // === 使用频率追踪 ===
@@ -286,10 +413,7 @@
                 toggleButton.setAttribute('aria-label', label);
                 toggleButton.setAttribute('aria-expanded', String(!isHidden));
                 toggleButton.title = label;
-                const icon = toggleButton.querySelector('i');
-                if (icon) {
-                    icon.className = isHidden ? 'fas fa-angle-right' : 'fas fa-angle-left';
-                }
+                ensureSvgIcon(toggleButton, isHidden ? 'angle-right' : 'angle-left');
             }
 
             function resolveTheme(choice) {
@@ -307,9 +431,9 @@
 
             function themeIcon(choice, resolved) {
                 if (choice === 'auto') {
-                    return 'fa-wand-magic-sparkles';
+                    return 'wand-magic-sparkles';
                 }
-                return resolved === 'dark' ? 'fa-moon' : 'fa-sun';
+                return resolved === 'dark' ? 'moon' : 'sun';
             }
 
             function applyTheme(choice = 'auto', shouldSave = true) {
@@ -324,13 +448,7 @@
                 }
 
                 themeCycleButtons.forEach(button => {
-                    let icon = button.querySelector('i');
-                    if (!icon) {
-                        icon = document.createElement('i');
-                        icon.setAttribute('aria-hidden', 'true');
-                        button.prepend(icon);
-                    }
-                    icon.className = `fas ${themeIcon(activeThemeChoice, resolved)}`;
+                    ensureSvgIcon(button, themeIcon(activeThemeChoice, resolved));
                     button.setAttribute('aria-label', `当前${themeLabel(activeThemeChoice)}模式，点击切换主题`);
                     button.title = `当前${themeLabel(activeThemeChoice)}模式`;
                     var label = button.querySelector('.sidebar-label');
@@ -724,7 +842,10 @@
                     return;
                 }
 
-                window.open(activeEngine + encodeURIComponent(query), '_blank', 'noopener');
+                rememberSearchTerm(query);
+                openSearchTerm(query);
+                searchInput.value = '';
+                filterCards();
             }
 
             function hasOpenModal() {
@@ -823,7 +944,7 @@
                 const fromName = document.getElementById('from_name')?.value.trim() || '匿名用户';
                 const replyTo = document.getElementById('reply_to')?.value.trim()
                     || `no-reply@${location.hostname || 'local.zz-nav'}`;
-                const originalButtonHtml = '<i class="fas fa-paper-plane feedback-button-icon"></i> 发送反馈';
+                const originalButtonHtml = `${svgIconMarkup('paper-plane', 'feedback-button-icon')} 发送反馈`;
 
                 if (!message) {
                     setFeedbackStatus('请先填写反馈内容。', 'error');
@@ -839,7 +960,7 @@
 
                 if (feedbackButton) {
                     feedbackButton.disabled = true;
-                    feedbackButton.innerHTML = '<i class="fas fa-spinner fa-pulse feedback-button-icon"></i> 发送中...';
+                    feedbackButton.innerHTML = `${svgIconMarkup('spinner', 'feedback-button-icon icon-spin')} 发送中...`;
                 }
                 setFeedbackStatus('正在发送反馈...', 'neutral');
 
@@ -1160,7 +1281,7 @@
             }
 
             function hashText(value) {
-                return Array.from(value || '猪猪导航').reduce((hash, char) => {
+                return Array.from(value || '知径').reduce((hash, char) => {
                     return (hash * 31 + char.codePointAt(0)) >>> 0;
                 }, 7);
             }
@@ -1442,6 +1563,8 @@
                 columns.forEach(column => {
                     column.querySelectorAll('.card-container').forEach(sortDynamicSection);
                 });
+                searchHistoryItems = loadSearchHistory();
+                renderSearchHistory();
                 const customBgInput = document.getElementById('custom-bg-input');
                 if (customBgInput) {
                     customBgInput.addEventListener('change', function() {
