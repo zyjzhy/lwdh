@@ -882,23 +882,273 @@
             function updateCountdown() {
                 const now = new Date();
 
+                const getDaysInMonth = (year, monthIndex) => new Date(year, monthIndex + 1, 0).getDate();
+                const getValidCountdownDate = (year, monthIndex, day) => {
+                    if (day > getDaysInMonth(year, monthIndex)) {
+                        return null;
+                    }
+                    return new Date(year, monthIndex, day);
+                };
                 const getDaysLeft = (monthIndex, day) => {
-                    const year = now > new Date(now.getFullYear(), monthIndex, day)
-                        ? now.getFullYear() + 1
-                        : now.getFullYear();
-                    const target = new Date(year, monthIndex, day);
+                    let year = now.getFullYear();
+                    let target = getValidCountdownDate(year, monthIndex, day);
+                    while (!target || now > target) {
+                        year += 1;
+                        target = getValidCountdownDate(year, monthIndex, day);
+                    }
                     return Math.max(0, Math.ceil((target - now) / 86400000));
                 };
 
-                const kaoyan = document.getElementById('kaoyan');
-                const kaogong = document.getElementById('kaogong');
+                var kaoyan = document.getElementById('kaoyan');
+                var kaogong = document.getElementById('kaogong');
+
+                var cd1Month = parseInt(storageGet('zz-nav-cd1-month') || '11', 10);
+                var cd1Day = parseInt(storageGet('zz-nav-cd1-day') || '22', 10);
+                var cd2Month = parseInt(storageGet('zz-nav-cd2-month') || '11', 10);
+                var cd2Day = parseInt(storageGet('zz-nav-cd2-day') || '1', 10);
 
                 if (kaoyan) {
-                    kaoyan.textContent = getDaysLeft(11, 22);
+                    kaoyan.textContent = getDaysLeft(cd1Month, cd1Day);
                 }
                 if (kaogong) {
-                    kaogong.textContent = getDaysLeft(11, 1);
+                    kaogong.textContent = getDaysLeft(cd2Month, cd2Day);
                 }
+
+                var cd1Label = document.querySelector('.countdown-container:first-child .countdown-days');
+                var cd2Label = document.querySelector('.countdown-container:last-child .countdown-days');
+                if (cd1Label) {
+                    cd1Label.textContent = storageGet('zz-nav-cd1-name') || '考研倒计时';
+                }
+                if (cd2Label) {
+                    cd2Label.textContent = storageGet('zz-nav-cd2-name') || '考公倒计时';
+                }
+            }
+
+            function initCountdownSettings() {
+                var openCustomSelect = null;
+
+                function getReferenceYear(monthIndex) {
+                    var now = new Date();
+                    var thisYearDate = new Date(now.getFullYear(), monthIndex, 1);
+                    return now > thisYearDate ? now.getFullYear() + 1 : now.getFullYear();
+                }
+
+                function getDaysInMonth(monthIndex) {
+                    return new Date(getReferenceYear(monthIndex), monthIndex + 1, 0).getDate();
+                }
+
+                function clearOptions(select) {
+                    while (select.firstChild) {
+                        select.removeChild(select.firstChild);
+                    }
+                }
+
+                function fillMonthOptions(monthSelect) {
+                    clearOptions(monthSelect);
+                    for (var i = 1; i <= 12; i++) {
+                        monthSelect.appendChild(new Option(i + '月', String(i - 1)));
+                    }
+                }
+
+                function fillDayOptions(daySelect, monthIndex, preferredDay) {
+                    var dayCount = getDaysInMonth(monthIndex);
+                    var safeDay = Math.min(Math.max(parseInt(preferredDay, 10) || 1, 1), dayCount);
+                    clearOptions(daySelect);
+                    for (var i = 1; i <= dayCount; i++) {
+                        daySelect.appendChild(new Option(i + '日', String(i)));
+                    }
+                    daySelect.value = String(safeDay);
+                    return safeDay;
+                }
+
+                function refreshCustomSelect(select) {
+                    if (select && typeof select.customSelectRefresh === 'function') {
+                        select.customSelectRefresh();
+                    }
+                }
+
+                function closeCustomSelect() {
+                    if (openCustomSelect) {
+                        openCustomSelect.close();
+                        openCustomSelect = null;
+                    }
+                }
+
+                function handleCustomSelectScroll(event) {
+                    if (event.target && event.target.closest && event.target.closest('.custom-select-menu')) {
+                        return;
+                    }
+                    closeCustomSelect();
+                }
+
+                function enhanceCustomSelect(select) {
+                    if (!select || select.customSelectRefresh) {
+                        return;
+                    }
+
+                    var wrapper = document.createElement('div');
+                    var button = document.createElement('button');
+                    var menu = document.createElement('ul');
+                    var menuId = select.id + '-menu';
+
+                    wrapper.className = 'select-combobox';
+                    button.type = 'button';
+                    button.className = 'custom-select-trigger';
+                    button.setAttribute('aria-haspopup', 'listbox');
+                    button.setAttribute('aria-expanded', 'false');
+                    button.setAttribute('aria-controls', menuId);
+                    menu.className = 'custom-select-menu';
+                    menu.id = menuId;
+                    menu.setAttribute('role', 'listbox');
+                    menu.hidden = true;
+
+                    select.classList.add('native-select-proxy');
+                    select.setAttribute('aria-hidden', 'true');
+                    select.tabIndex = -1;
+                    select.parentNode.insertBefore(wrapper, select);
+                    wrapper.appendChild(select);
+                    wrapper.appendChild(button);
+                    document.body.appendChild(menu);
+
+                    function syncButton() {
+                        var option = select.options[select.selectedIndex];
+                        button.textContent = option ? option.textContent : '';
+                    }
+
+                    function positionMenu() {
+                        var rect = button.getBoundingClientRect();
+                        var preferredMaxHeight = 184;
+                        var viewportPadding = 8;
+                        var spaceBelow = window.innerHeight - rect.bottom - viewportPadding;
+                        var spaceAbove = rect.top - viewportPadding;
+                        var openAbove = spaceBelow < 132 && spaceAbove > spaceBelow;
+                        var availableSpace = openAbove ? spaceAbove : spaceBelow;
+                        var menuHeight = Math.max(112, Math.min(preferredMaxHeight, availableSpace));
+
+                        menu.style.left = rect.left + 'px';
+                        menu.style.width = rect.width + 'px';
+                        menu.style.maxHeight = menuHeight + 'px';
+                        menu.style.top = (openAbove ? rect.top - menuHeight - 6 : rect.bottom + 6) + 'px';
+                    }
+
+                    function buildMenu() {
+                        menu.innerHTML = '';
+                        Array.from(select.options).forEach(function(option) {
+                            var item = document.createElement('li');
+                            item.className = 'custom-select-option';
+                            item.setAttribute('role', 'option');
+                            item.setAttribute('data-value', option.value);
+                            item.setAttribute('aria-selected', option.selected ? 'true' : 'false');
+                            item.textContent = option.textContent;
+                            if (option.selected) {
+                                item.classList.add('active');
+                            }
+                            item.addEventListener('click', function() {
+                                select.value = option.value;
+                                select.dispatchEvent(new Event('change', { bubbles: true }));
+                                closeCustomSelect();
+                                button.focus();
+                            });
+                            menu.appendChild(item);
+                        });
+                    }
+
+                    var api = {
+                        close: function() {
+                            menu.hidden = true;
+                            button.setAttribute('aria-expanded', 'false');
+                        }
+                    };
+
+                    function openMenu() {
+                        if (openCustomSelect && openCustomSelect !== api) {
+                            openCustomSelect.close();
+                        }
+                        buildMenu();
+                        positionMenu();
+                        menu.hidden = false;
+                        button.setAttribute('aria-expanded', 'true');
+                        openCustomSelect = api;
+                        var selectedItem = menu.querySelector('[aria-selected="true"]');
+                        if (selectedItem) {
+                            selectedItem.scrollIntoView({ block: 'nearest' });
+                        }
+                    }
+
+                    button.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        if (menu.hidden) {
+                            openMenu();
+                        } else {
+                            closeCustomSelect();
+                        }
+                    });
+
+                    button.addEventListener('keydown', function(event) {
+                        if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            openMenu();
+                        } else if (event.key === 'Escape') {
+                            closeCustomSelect();
+                        }
+                    });
+
+                    select.addEventListener('change', function() {
+                        syncButton();
+                        buildMenu();
+                    });
+
+                    select.customSelectRefresh = function() {
+                        syncButton();
+                        buildMenu();
+                    };
+
+                    syncButton();
+                    buildMenu();
+                }
+
+                document.querySelectorAll('.cd-date-row').forEach(function(row) {
+                    var monthSelect = row.querySelector('select');
+                    var daySelect = row.querySelectorAll('select')[1];
+                    fillMonthOptions(monthSelect);
+                    if (monthSelect && daySelect) {
+                        monthSelect.addEventListener('change', function() {
+                            var safeDay = fillDayOptions(daySelect, parseInt(monthSelect.value, 10), daySelect.value);
+                            storageSet('zz-nav-' + daySelect.id, String(safeDay));
+                            refreshCustomSelect(daySelect);
+                        });
+                    }
+                });
+
+                function loadOne(prefix, defaultName, defaultMonth, defaultDay) {
+                    var nameEl = document.getElementById(prefix + '-name');
+                    var monthEl = document.getElementById(prefix + '-month');
+                    var dayEl = document.getElementById(prefix + '-day');
+                    var storedMonth = storageGet('zz-nav-' + prefix + '-month');
+                    var storedDay = storageGet('zz-nav-' + prefix + '-day');
+                    var monthValue = Math.min(Math.max(parseInt(storedMonth || defaultMonth, 10), 0), 11);
+                    if (nameEl) nameEl.value = storageGet('zz-nav-' + prefix + '-name') || defaultName;
+                    if (monthEl) monthEl.value = String(monthValue);
+                    if (dayEl) fillDayOptions(dayEl, monthValue, storedDay || defaultDay);
+                }
+
+                loadOne('cd1', '考研倒计时', 11, 22);
+                loadOne('cd2', '考公倒计时', 11, 1);
+
+                document.querySelectorAll('.countdown-setting-item select').forEach(enhanceCustomSelect);
+
+                document.querySelectorAll('.countdown-setting-item input, .countdown-setting-item select').forEach(function(el) {
+                    el.addEventListener('change', function() {
+                        var id = this.id;
+                        var key = 'zz-nav-' + id;
+                        storageSet(key, this.value);
+                        updateCountdown();
+                    });
+                });
+
+                document.addEventListener('click', closeCustomSelect);
+                window.addEventListener('resize', closeCustomSelect);
+                window.addEventListener('scroll', handleCustomSelectScroll, true);
             }
 
             function escapeSvgText(value) {
@@ -1206,6 +1456,7 @@
                 updateActiveSectionFromScroll();
                 updateCountdown();
                 window.setInterval(updateCountdown, 60000);
+                initCountdownSettings();
 
                 if (savedScroll) {
                     window.setTimeout(function () {
