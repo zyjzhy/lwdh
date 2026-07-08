@@ -725,6 +725,11 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
+        #create-desktop-shortcut {
+            bottom: 170px;
+            right: 20px;
+        }
+
         #open-contact-modal {
             bottom: 100px;
             right: 20px;
@@ -2021,12 +2026,101 @@ font-size: 18px;
             overflow-y: hidden;
             scrollbar-width: thin;
             scrollbar-color: color-mix(in srgb, var(--primary-color) 34%, var(--secondary-color)) color-mix(in srgb, var(--surface-muted) 72%, transparent);
-            scroll-snap-type: x proximity;
+            scroll-snap-type: x;
             -webkit-overflow-scrolling: touch;
         }
 
         .search-history[hidden] {
             display: none;
+        }
+
+        .search-history::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .search-history::-webkit-scrollbar-track {
+            background: color-mix(in srgb, var(--surface-muted) 72%, transparent);
+            border-radius: 8px;
+        }
+
+        .search-history::-webkit-scrollbar-thumb {
+            background: color-mix(in srgb, var(--primary-color) 34%, var(--secondary-color));
+            border-radius: 8px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        .search-history::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        .search-feedback {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+            margin: 8px 0 0;
+            padding: 8px 10px;
+            border: 1px solid color-mix(in srgb, var(--secondary-color) 24%, var(--line));
+            border-radius: 9px;
+            color: var(--text-light);
+            background: color-mix(in srgb, var(--surface-strong) 86%, transparent);
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .search-feedback[hidden] {
+            display: none;
+        }
+
+        .search-feedback.is-empty {
+            justify-content: center;
+            padding: 12px;
+            color: var(--text-color);
+            background: color-mix(in srgb, var(--surface-muted) 82%, transparent);
+            border-style: dashed;
+        }
+
+        #search-feedback-text {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #clear-search-filter {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            min-height: 26px;
+            padding: 4px 9px;
+            border: 1px solid color-mix(in srgb, var(--secondary-color) 24%, var(--line));
+            border-radius: 8px;
+            color: var(--secondary-color);
+            background: var(--surface-strong);
+            font: inherit;
+            font-size: 12px;
+            cursor: pointer;
+            transition: color var(--transition), background var(--transition), border-color var(--transition);
+        }
+
+        #clear-search-filter:hover {
+            color: #ffffff;
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        #clear-search-filter .svg-icon {
+            width: 13px;
+            height: 13px;
+            stroke-width: 2.5;
         }
 
         .search-token {
@@ -2040,25 +2134,6 @@ font-size: 18px;
             background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
             box-shadow: 0 2px 7px rgba(15, 23, 42, 0.05);
             scroll-snap-align: start;
-        }
-
-        .search-history::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .search-history::-webkit-scrollbar-track {
-            background: color-mix(in srgb, var(--surface-muted) 72%, transparent);
-            border-radius: 999px;
-        }
-
-        .search-history::-webkit-scrollbar-thumb {
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 999px;
-            border: 2px solid color-mix(in srgb, var(--surface-strong) 82%, transparent);
-        }
-
-        .search-history::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
         }
 
         .search-token-text {
@@ -2477,6 +2552,12 @@ font-size: 18px;
 
         .card.is-hidden,
         .sub-column.is-empty {
+            display: none !important;
+        }
+
+        .column.is-filtered-out,
+        #sidebar a.search-filtered-out,
+        .nav-link.search-filtered-out {
             display: none !important;
         }
 
@@ -3546,28 +3627,34 @@ font-size: 18px;
             }
 
             .card-container {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 8px;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 7px;
             }
 
             .card {
-                min-height: 56px;
-                padding: 9px;
-                font-size: 12px;
-                gap: 8px;
+                min-height: 54px;
+                padding: 8px 6px;
+                font-size: 11px;
+                gap: 6px;
                 word-break: break-word;
             }
 
             .card img {
-                width: 24px;
-                height: 24px;
-                border-radius: 7px;
+                width: 22px;
+                height: 22px;
+                max-width: 22px;
+                border-radius: 6px;
+                padding: 2px;
             }
 
             .floating-button {
                 width: 42px;
                 height: 42px;
                 right: 14px;
+            }
+
+            #create-desktop-shortcut {
+                bottom: 132px;
             }
 
             #open-contact-modal {

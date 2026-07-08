@@ -7,6 +7,9 @@
             const searchInput = document.getElementById('search-input');
             const searchButton = document.getElementById('search-button');
             const searchHistoryContainer = document.getElementById('search-history');
+            const searchFeedback = document.getElementById('search-feedback');
+            const searchFeedbackText = document.getElementById('search-feedback-text');
+            const clearSearchFilterButton = document.getElementById('clear-search-filter');
             const searchTabs = Array.from(document.querySelectorAll('#search-tabs button'));
             const navLinks = Array.from(document.querySelectorAll('#sidebar a[data-target], .nav-link[data-target]'));
             const columns = Array.from(document.querySelectorAll('.column'));
@@ -141,7 +144,9 @@
             }
 
             function renderSearchHistory() {
-                if (!searchHistoryContainer) return;
+                if (!searchHistoryContainer) {
+                    return;
+                }
 
                 searchHistoryContainer.innerHTML = '';
                 searchHistoryContainer.hidden = searchHistoryItems.length === 0;
@@ -186,6 +191,7 @@
                     item.append(textButton, removeButton, searchButton);
                     searchHistoryContainer.appendChild(item);
                 });
+
             }
 
             function rememberSearchTerm(term) {
@@ -291,12 +297,74 @@
                     .slice(0, COMMON_RECOMMENDATION_LIMIT);
             }
 
+            function syncFrequentRecommendationIcon(sourceCard, clone, label) {
+                const sourceImg = sourceCard.querySelector('img');
+                let cloneImg = clone.querySelector('img');
+
+                if (!cloneImg) {
+                    cloneImg = document.createElement('img');
+                    clone.insertBefore(cloneImg, clone.firstChild);
+                }
+
+                cloneImg.loading = 'lazy';
+                cloneImg.decoding = 'async';
+                cloneImg.referrerPolicy = 'no-referrer';
+                cloneImg.alt = sourceImg?.alt || `${label} 图标`;
+                cloneImg.removeAttribute('srcset');
+                cloneImg.classList.remove('fallback-icon');
+                delete cloneImg.dataset.fallbackApplied;
+                delete cloneImg.dataset.originalSrc;
+                cloneImg.addEventListener('error', () => applyFallbackIcon(cloneImg, label));
+
+                if (!sourceImg) {
+                    applyFallbackIcon(cloneImg, label);
+                    return;
+                }
+
+                const sourceCurrentSrc = sourceImg.currentSrc || sourceImg.src || '';
+                const sourceOriginalSrc = sourceImg.dataset.originalSrc || sourceImg.getAttribute('src') || sourceCurrentSrc;
+                const sourceHasRealIcon = sourceCurrentSrc &&
+                    !sourceCurrentSrc.startsWith('data:image/svg+xml') &&
+                    !sourceImg.classList.contains('fallback-icon') &&
+                    !sourceImg.dataset.fallbackApplied;
+
+                if (sourceHasRealIcon) {
+                    cloneImg.src = sourceCurrentSrc;
+                    return;
+                }
+
+                if (sourceImg.dataset.fallbackApplied || !sourceOriginalSrc || sourceOriginalSrc.startsWith('data:image/svg+xml')) {
+                    applyFallbackIcon(cloneImg, label);
+                    return;
+                }
+
+                cloneImg.dataset.originalSrc = sourceOriginalSrc;
+                cloneImg.classList.add('fallback-icon');
+                cloneImg.src = createFallbackIcon(label);
+
+                const probe = new Image();
+                probe.decoding = 'async';
+                probe.referrerPolicy = 'no-referrer';
+                probe.onload = () => {
+                    if (probe.naturalWidth > 0) {
+                        cloneImg.classList.remove('fallback-icon');
+                        cloneImg.src = sourceOriginalSrc;
+                        return;
+                    }
+
+                    applyFallbackIcon(cloneImg, label);
+                };
+                probe.onerror = () => applyFallbackIcon(cloneImg, label);
+                probe.src = sourceOriginalSrc;
+            }
+
             function createFrequentRecommendationCard(sourceCard, clickCount) {
                 const clone = sourceCard.cloneNode(true);
                 const label = getCardLabel(clone);
                 clone.removeAttribute('id');
                 clone.classList.add('frequent-recommendation-card');
                 clone.dataset.frequentClone = 'true';
+                syncFrequentRecommendationIcon(sourceCard, clone, label);
 
                 clone.querySelectorAll('.frequent-count').forEach(badge => badge.remove());
 
@@ -615,7 +683,10 @@
             }
 
             function activeColumn() {
-                return document.querySelector('.column.active') || document.getElementById('offen-links') || columns[0];
+                return document.querySelector('.column.active:not(.is-filtered-out)')
+                    || columns.find(column => !column.classList.contains('is-filtered-out'))
+                    || document.getElementById('offen-links')
+                    || columns[0];
             }
 
             function getSubColumns(column) {
@@ -724,21 +795,50 @@
                     return;
                 }
 
-                column.classList.remove('search-empty');
+                column.classList.remove('search-empty', 'is-filtered-out');
                 column.querySelectorAll('.card.is-hidden').forEach(card => card.classList.remove('is-hidden'));
                 column.querySelectorAll('.sub-column.is-empty').forEach(group => group.classList.remove('is-empty'));
             }
 
-            function filterCards() {
-                const query = searchInput?.value.trim().toLowerCase() || '';
-                const isSearching = Boolean(query);
-                document.body.classList.toggle('searching', isSearching);
+            function setSearchFeedback(query, matchCount, moduleCount) {
+                if (!searchFeedback) return;
 
-                if (!query) {
-                    columns.forEach(resetColumnFilters);
-                    restoreModuleTabs();
+                const isSearching = Boolean(query);
+                searchFeedback.hidden = !isSearching;
+                searchFeedback.classList.toggle('is-empty', isSearching && matchCount === 0);
+
+                if (!searchFeedbackText) return;
+
+                if (!isSearching) {
+                    searchFeedbackText.textContent = '';
                     return;
                 }
+
+                searchFeedbackText.textContent = matchCount > 0
+                    ? `找到 ${matchCount} 个网站，来自 ${moduleCount} 个模块`
+                    : `没有找到与“${query}”匹配的网站`;
+            }
+
+            function clearSearchFilter() {
+                document.body.classList.remove('searching', 'search-has-results', 'search-no-results');
+                columns.forEach(resetColumnFilters);
+                navLinks.forEach(link => link.classList.remove('search-filtered-out'));
+                setSearchFeedback('', 0, 0);
+                restoreModuleTabs();
+            }
+
+            function filterCards() {
+                const rawQuery = searchInput?.value.trim() || '';
+                const query = rawQuery.toLowerCase();
+
+                if (!query) {
+                    clearSearchFilter();
+                    return;
+                }
+
+                let totalVisible = 0;
+                const matchedColumns = [];
+                document.body.classList.add('searching');
 
                 columns.forEach(column => {
                     let columnVisible = 0;
@@ -765,8 +865,27 @@
                         group.classList.toggle('is-empty', groupVisible === 0);
                     });
 
-                    column.classList.toggle('search-empty', columnVisible === 0);
+                    column.classList.remove('search-empty');
+                    column.classList.toggle('is-filtered-out', columnVisible === 0);
+                    if (columnVisible > 0) {
+                        totalVisible += columnVisible;
+                        matchedColumns.push(column);
+                    }
                 });
+
+                navLinks.forEach(link => {
+                    const target = document.getElementById(link.dataset.target);
+                    link.classList.toggle('search-filtered-out', Boolean(target?.classList.contains('is-filtered-out')));
+                });
+
+                document.body.classList.toggle('search-has-results', totalVisible > 0);
+                document.body.classList.toggle('search-no-results', totalVisible === 0);
+                setSearchFeedback(rawQuery, totalVisible, matchedColumns.length);
+
+                const active = document.querySelector('.column.active');
+                if (matchedColumns.length && (!active || active.classList.contains('is-filtered-out'))) {
+                    markActiveColumn(matchedColumns[0].id);
+                }
             }
 
             function markActiveColumn(targetId) {
@@ -809,9 +928,14 @@
 
             function updateActiveSectionFromScroll() {
                 const threshold = Math.min(window.innerHeight * 0.35, 260);
-                let current = columns[0];
+                const visibleColumns = columns.filter(column => !column.classList.contains('is-filtered-out'));
+                let current = visibleColumns[0];
 
-                columns.forEach(column => {
+                if (!current) {
+                    return;
+                }
+
+                visibleColumns.forEach(column => {
                     if (column.getBoundingClientRect().top <= threshold) {
                         current = column;
                     }
@@ -990,6 +1114,30 @@
                     top: 0,
                     behavior: reducedMotion.matches ? 'auto' : 'smooth'
                 });
+            }
+
+            function createDesktopShortcut() {
+                const canonicalLink = document.querySelector('link[rel="canonical"]');
+                const canonicalUrl = canonicalLink?.href || '';
+                const shortcutUrl = location.protocol === 'file:' && canonicalUrl ? canonicalUrl : location.href;
+                const fallbackName = '知径导航';
+                const pageTitle = (document.title || fallbackName).replace(/\s*-\s*.*/, '').trim();
+                const shortcutName = (pageTitle || fallbackName).replace(/[\\/:*?"<>|]/g, '');
+                const shortcutContent = [
+                    '[InternetShortcut]',
+                    `URL=${shortcutUrl}`,
+                    ''
+                ].join('\r\n');
+                const blob = new Blob([shortcutContent], { type: 'application/internet-shortcut' });
+                const objectUrl = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+
+                link.href = objectUrl;
+                link.download = `${shortcutName}.url`;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
             }
 
             function updateScrollButton() {
@@ -1408,7 +1556,6 @@
 
                     trackCardClick(card);
                     window.setTimeout(() => {
-                        sortDynamicSection(card.closest('.card-container'));
                         renderCommonRecommendations();
                     }, 0);
                 }, { capture: true });
@@ -1508,6 +1655,10 @@
                 });
 
                 searchButton?.addEventListener('click', performExternalSearch);
+                clearSearchFilterButton?.addEventListener('click', () => {
+                    clearSearchFilter();
+                    searchInput?.focus();
+                });
 
                 feedbackForm?.addEventListener('submit', event => {
                     event.preventDefault();
@@ -1560,9 +1711,7 @@
                 enhanceCards();
                 renderCommonRecommendations();
                 setupModuleTabs();
-                columns.forEach(column => {
-                    column.querySelectorAll('.card-container').forEach(sortDynamicSection);
-                });
+                renderCommonRecommendations();
                 searchHistoryItems = loadSearchHistory();
                 renderSearchHistory();
                 const customBgInput = document.getElementById('custom-bg-input');
@@ -1603,6 +1752,7 @@
             window.showFeedbackModal = openContactModal;
             window.sendFeedback = sendFeedback;
             window.scrollToTop = scrollToTop;
+            window.createDesktopShortcut = createDesktopShortcut;
 
             try {
                 init();

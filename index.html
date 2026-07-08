@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -227,6 +227,13 @@ s.parentNode.insertBefore(hm, s);
   <symbol id="icon-laptop" viewBox="0 0 24 24">
     <path d="M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z" />
       <path d="M20.054 15.987H3.946" />
+  </symbol>
+  <symbol id="icon-monitor-down" viewBox="0 0 24 24">
+    <rect width="18" height="12" x="3" y="4" rx="2" />
+      <path d="M12 8v6" />
+      <path d="m9.5 11.5 2.5 2.5 2.5-2.5" />
+      <path d="M8 20h8" />
+      <path d="M12 16v4" />
   </symbol>
   <symbol id="icon-laptop-code" viewBox="0 0 24 24">
     <rect width="18" height="12" x="3" y="4" rx="2" ry="2" />
@@ -740,6 +747,9 @@ s.parentNode.insertBefore(hm, s);
 </div>
 
 <!-- 悬浮按钮 -->
+<button id="create-desktop-shortcut" class="floating-button" type="button" onclick="createDesktopShortcut()" aria-label="生成桌面快捷方式" title="生成桌面快捷方式">
+<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-monitor-down"></use></svg>
+</button>
 <button id="open-contact-modal" class="floating-button" type="button" onclick="openContactModal()" aria-label="意见反馈">
 <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-envelope"></use></svg>
 </button>
@@ -770,6 +780,13 @@ s.parentNode.insertBefore(hm, s);
 <button id="search-button" type="button" aria-label="执行搜索"><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-search"></use></svg></button>
 </div>
 <div id="search-history" class="search-history" aria-label="搜索内容记录" hidden></div>
+<div id="search-feedback" class="search-feedback" role="status" aria-live="polite" hidden>
+<span id="search-feedback-text"></span>
+<button id="clear-search-filter" type="button" aria-label="取消本次匹配">
+<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-x"></use></svg>
+<span>取消匹配</span>
+</button>
+</div>
 </div>
 <!-- 考公倒计时 -->
 <div class="countdown-container">
@@ -1354,7 +1371,7 @@ s.parentNode.insertBefore(hm, s);
 <h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-book-open"></use></svg> 国内期刊门户</h3>
 <div class="card-container">
 <div class="card" data-tooltip="中国知网期刊导航，按学科、地区、主办单位查找中文期刊" onclick="window.open('https://navi.cnki.net/knavi/', '_blank')"><img src="https://navi.cnki.net/favicon.ico" alt="知网期刊" loading="lazy" decoding="async" referrerpolicy="no-referrer">知网期刊导航</div>
-<div class="card" data-tooltip="万方数据知识服务平台期刊资源" onclick="window.open('https://sns.wanfangdata.com.cn/', '_blank')"><img src="https://www.wanfangdata.com.cn/favicon.ico" alt="万方期刊" loading="lazy" decoding="async" referrerpolicy="no-referrer">万方期刊</div>
+<div class="card" data-tooltip="万方数据知识服务平台期刊资源" onclick="window.open('https://www.wanfangdata.com.cn/', '_blank')"><img src="https://www.wanfangdata.com.cn/favicon.ico" alt="万方期刊" loading="lazy" decoding="async" referrerpolicy="no-referrer">万方期刊</div>
 <div class="card" data-tooltip="维普中文期刊服务平台" onclick="window.open('https://qikan.cqvip.com/', '_blank')"><img src="https://qikan.cqvip.com/favicon.ico" alt="维普期刊" loading="lazy" decoding="async" referrerpolicy="no-referrer">维普期刊</div>
 <div class="card" data-tooltip="国家哲学社会科学文献中心期刊资源" onclick="window.open('https://www.nssd.cn/', '_blank')"><img src="https://www.nssd.cn/favicon.ico" alt="国家社科文献" loading="lazy" decoding="async" referrerpolicy="no-referrer">国家社科文献</div>
 <div class="card" data-tooltip="国家科技图书文献中心期刊资源" onclick="window.open('https://www.nstl.gov.cn/', '_blank')"><img src="https://www.nstl.gov.cn/favicon.ico" alt="NSTL" loading="lazy" decoding="async" referrerpolicy="no-referrer">NSTL期刊</div>
@@ -1375,26 +1392,38 @@ s.parentNode.insertBefore(hm, s);
 <div class="sub-column">
 <h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-chart-line"></use></svg> 经管社科期刊</h3>
 <div class="card-container">
-<div class="card" data-tooltip="《中国社会科学》杂志社官网" onclick="window.open('http://www.cassjournal.org.cn/', '_blank')"><img src="http://www.cassjournal.org.cn/favicon.ico" alt="中国社会科学" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国社会科学</div>
+<div class="card" data-tooltip="《中国社会科学》杂志社官网" onclick="window.open('https://sscp.cssn.cn/', '_blank')"><img src="https://sscp.cssn.cn/favicon.ico" alt="中国社会科学" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国社会科学</div>
 <div class="card" data-tooltip="《经济研究》官方网站" onclick="window.open('https://erj.ajcass.com/', '_blank')"><img src="https://erj.ajcass.com/favicon.ico" alt="经济研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">经济研究</div>
 <div class="card" data-tooltip="《管理世界》杂志官方网站" onclick="window.open('http://www.mwm.net.cn/', '_blank')"><img src="http://www.mwm.net.cn/favicon.ico" alt="管理世界" loading="lazy" decoding="async" referrerpolicy="no-referrer">管理世界</div>
 <div class="card" data-tooltip="《管理科学学报》官方网站" onclick="window.open('http://jmsc.tju.edu.cn/', '_blank')"><img src="http://jmsc.tju.edu.cn/favicon.ico" alt="管理科学学报" loading="lazy" decoding="async" referrerpolicy="no-referrer">管理科学学报</div>
-<div class="card" data-tooltip="《南开管理评论》官方网站" onclick="window.open('http://www.nankaimr.com/', '_blank')"><img src="http://www.nankaimr.com/favicon.ico" alt="南开管理评论" loading="lazy" decoding="async" referrerpolicy="no-referrer">南开管理评论</div>
+<div class="card" data-tooltip="《南开管理评论》官方网站" onclick="window.open('http://nbr.nankai.edu.cn/', '_blank')"><img src="http://nbr.nankai.edu.cn/favicon.ico" alt="南开管理评论" loading="lazy" decoding="async" referrerpolicy="no-referrer">南开管理评论</div>
 <div class="card" data-tooltip="《中国工业经济》官方网站" onclick="window.open('https://ciejournal.ajcass.com/', '_blank')"><img src="https://ciejournal.ajcass.com/favicon.ico" alt="中国工业经济" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国工业经济</div>
-<div class="card" data-tooltip="《中国农村经济》官方网站" onclick="window.open('https://crecrs.ajcass.com/', '_blank')"><img src="https://crecrs.ajcass.com/favicon.ico" alt="中国农村经济" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国农村经济</div>
+<div class="card" data-tooltip="《中国农村经济》官方网站" onclick="window.open('https://zgncjj.ajcass.com/', '_blank')"><img src="https://zgncjj.ajcass.com/favicon.ico" alt="中国农村经济" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国农村经济</div>
 <div class="card" data-tooltip="《经济学动态》官方网站" onclick="window.open('https://jjxdt.ajcass.com/', '_blank')"><img src="https://jjxdt.ajcass.com/favicon.ico" alt="经济学动态" loading="lazy" decoding="async" referrerpolicy="no-referrer">经济学动态</div>
-<div class="card" data-tooltip="《数量经济技术经济研究》官方网站" onclick="window.open('https://qtecr.ajcass.com/', '_blank')"><img src="https://qtecr.ajcass.com/favicon.ico" alt="数量经济技术经济研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">数量经济技术</div>
+<div class="card" data-tooltip="《世界经济》官方网站" onclick="window.open('https://sjjj.magtech.com.cn/', '_blank')"><img src="https://sjjj.magtech.com.cn/favicon.ico" alt="世界经济" loading="lazy" decoding="async" referrerpolicy="no-referrer">世界经济</div>
+<div class="card" data-tooltip="《世界经济与政治》官方网站" onclick="window.open('http://ejournaliwep.cssn.cn/', '_blank')"><img src="http://ejournaliwep.cssn.cn/favicon.ico" alt="世界经济与政治" loading="lazy" decoding="async" referrerpolicy="no-referrer">世界经济与政治</div>
+<div class="card" data-tooltip="《世界经济研究》期刊页面" onclick="window.open('https://jing.cbpt.cnki.net/', '_blank')"><img src="https://jing.cbpt.cnki.net/favicon.ico" alt="世界经济研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">世界经济研究</div>
+<div class="card" data-tooltip="《世界经济文汇》官方网站" onclick="window.open('http://sjjjwh.magtech.com.cn/CN/0488-6364/home.shtml', '_blank')"><img src="http://sjjjwh.magtech.com.cn/favicon.ico" alt="世界经济文汇" loading="lazy" decoding="async" referrerpolicy="no-referrer">世界经济文汇</div>
+<div class="card" data-tooltip="《国际贸易问题》对外经济贸易大学官方页面" onclick="window.open('https://journal.uibe.edu.cn/qkdh/index.htm', '_blank')"><img src="https://journal.uibe.edu.cn/favicon.ico" alt="国际贸易问题" loading="lazy" decoding="async" referrerpolicy="no-referrer">国际贸易问题</div>
+<div class="card" data-tooltip="《国际经济评论》官方介绍页" onclick="window.open('https://ejournaliwep.cssn.cn/qkjj/gjjjpl/', '_blank')"><img src="https://ejournaliwep.cssn.cn/favicon.ico" alt="国际经济评论" loading="lazy" decoding="async" referrerpolicy="no-referrer">国际经济评论</div>
+<div class="card" data-tooltip="《数量经济技术经济研究》编辑部官网" onclick="window.open('https://www.jqte.net/sljjjsjjyj/ch/index.aspx', '_blank')"><img src="https://www.jqte.net/favicon.ico" alt="数量经济技术经济研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">数量经济技术经济研究</div>
 <div class="card" data-tooltip="《财贸经济》官方网站" onclick="window.open('https://cmjj.ajcass.com/', '_blank')"><img src="https://cmjj.ajcass.com/favicon.ico" alt="财贸经济" loading="lazy" decoding="async" referrerpolicy="no-referrer">财贸经济</div>
-<div class="card" data-tooltip="《农业经济问题》官方网站" onclick="window.open('https://nyjjwt.ajcass.com/', '_blank')"><img src="https://nyjjwt.ajcass.com/favicon.ico" alt="农业经济问题" loading="lazy" decoding="async" referrerpolicy="no-referrer">农业经济问题</div>
-<div class="card" data-tooltip="《中国农村观察》官方网站" onclick="window.open('https://ruraleconomy.ajcass.com/', '_blank')"><img src="https://ruraleconomy.ajcass.com/favicon.ico" alt="中国农村观察" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国农村观察</div>
-<div class="card" data-tooltip="《统计研究》官方网站" onclick="window.open('https://tjyj.stats.gov.cn/', '_blank')"><img src="https://tjyj.stats.gov.cn/favicon.ico" alt="统计研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">统计研究</div>
+<div class="card" data-tooltip="《农业经济问题》官方网站" onclick="window.open('http://www.iaecn.cn/', '_blank')"><img src="http://www.iaecn.cn/favicon.ico" alt="农业经济问题" loading="lazy" decoding="async" referrerpolicy="no-referrer">农业经济问题</div>
+<div class="card" data-tooltip="《中国农村观察》官方网站" onclick="window.open('https://zgncgc.ajcass.com/', '_blank')"><img src="https://zgncgc.ajcass.com/favicon.ico" alt="中国农村观察" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国农村观察</div>
+<div class="card" data-tooltip="《统计研究》官方网站" onclick="window.open('https://tjyj.cbpt.cnki.net/', '_blank')"><img src="https://tjyj.cbpt.cnki.net/favicon.ico" alt="统计研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">统计研究</div>
 <div class="card" data-tooltip="《统计与决策》期刊页面" onclick="window.open('https://tjyjc.cbpt.cnki.net/', '_blank')"><img src="https://tjyjc.cbpt.cnki.net/favicon.ico" alt="统计与决策" loading="lazy" decoding="async" referrerpolicy="no-referrer">统计与决策</div>
-<div class="card" data-tooltip="《数理统计与管理》期刊页面" onclick="window.open('https://sltj.cbpt.cnki.net/', '_blank')"><img src="https://sltj.cbpt.cnki.net/favicon.ico" alt="数理统计与管理" loading="lazy" decoding="async" referrerpolicy="no-referrer">数理统计管理</div>
+<div class="card" data-tooltip="《数理统计与管理》期刊页面" onclick="window.open('https://sltj.cbpt.cnki.net/', '_blank')"><img src="https://sltj.cbpt.cnki.net/favicon.ico" alt="数理统计与管理" loading="lazy" decoding="async" referrerpolicy="no-referrer">数理统计与管理</div>
 <div class="card" data-tooltip="《应用概率统计》官方网站" onclick="window.open('https://aps.ecnu.edu.cn/', '_blank')"><img src="https://aps.ecnu.edu.cn/favicon.ico" alt="应用概率统计" loading="lazy" decoding="async" referrerpolicy="no-referrer">应用概率统计</div>
-<div class="card" data-tooltip="《统计信息论坛》期刊页面" onclick="window.open('https://tjlt.cbpt.cnki.net/', '_blank')"><img src="https://tjlt.cbpt.cnki.net/favicon.ico" alt="统计信息论坛" loading="lazy" decoding="async" referrerpolicy="no-referrer">统计信息论坛</div>
+<div class="card" data-tooltip="《统计与信息论坛》期刊页面" onclick="window.open('https://tjlt.cbpt.cnki.net/', '_blank')"><img src="https://tjlt.cbpt.cnki.net/favicon.ico" alt="统计与信息论坛" loading="lazy" decoding="async" referrerpolicy="no-referrer">统计与信息论坛</div>
 <div class="card" data-tooltip="《财经研究》官方网站" onclick="window.open('https://cjyj.shufe.edu.cn/', '_blank')"><img src="https://cjyj.shufe.edu.cn/favicon.ico" alt="财经研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">财经研究</div>
+<div class="card" data-tooltip="《金融研究》官方网站" onclick="window.open('https://www.jryj.org.cn/', '_blank')"><img src="https://www.jryj.org.cn/favicon.ico" alt="金融研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">金融研究</div>
+<div class="card" data-tooltip="《国际金融研究》官方网站" onclick="window.open('http://www.gjjryj.org.cn/', '_blank')"><img src="http://www.gjjryj.org.cn/favicon.ico" alt="国际金融研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">国际金融研究</div>
+<div class="card" data-tooltip="《金融论坛》期刊页面" onclick="window.open('https://csjr.cbpt.cnki.net/', '_blank')"><img src="https://csjr.cbpt.cnki.net/favicon.ico" alt="金融论坛" loading="lazy" decoding="async" referrerpolicy="no-referrer">金融论坛</div>
+<div class="card" data-tooltip="《证券市场导报》官方网站" onclick="window.open('https://zqscdb.szse.cn/', '_blank')"><img src="https://zqscdb.szse.cn/favicon.ico" alt="证券市场导报" loading="lazy" decoding="async" referrerpolicy="no-referrer">证券市场导报</div>
+<div class="card" data-tooltip="《保险研究》期刊页面" onclick="window.open('https://bxyj.cbpt.cnki.net/', '_blank')"><img src="https://bxyj.cbpt.cnki.net/favicon.ico" alt="保险研究" loading="lazy" decoding="async" referrerpolicy="no-referrer">保险研究</div>
+<div class="card" data-tooltip="《上海金融》期刊页面" onclick="window.open('https://shjr.cbpt.cnki.net/', '_blank')"><img src="https://shjr.cbpt.cnki.net/favicon.ico" alt="上海金融" loading="lazy" decoding="async" referrerpolicy="no-referrer">上海金融</div>
 <div class="card" data-tooltip="《中国管理科学》官方网站" onclick="window.open('https://www.zgglkx.com/', '_blank')"><img src="https://www.zgglkx.com/favicon.ico" alt="中国管理科学" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国管理科学</div>
-<div class="card" data-tooltip="《系统工程理论与实践》官方网站" onclick="window.open('https://www.sysengi.com/', '_blank')"><img src="https://www.sysengi.com/favicon.ico" alt="系统工程理论与实践" loading="lazy" decoding="async" referrerpolicy="no-referrer">系统工程理论</div>
+<div class="card" data-tooltip="《系统工程理论与实践》官方网站" onclick="window.open('https://www.sysengi.com/', '_blank')"><img src="https://www.sysengi.com/favicon.ico" alt="系统工程理论与实践" loading="lazy" decoding="async" referrerpolicy="no-referrer">系统工程理论与实践</div>
 <div class="card" data-tooltip="《心理学报》官方网站" onclick="window.open('https://journal.psych.ac.cn/xlxb/CN/0439-755X/home.shtml', '_blank')"><img src="https://journal.psych.ac.cn/favicon.ico" alt="心理学报" loading="lazy" decoding="async" referrerpolicy="no-referrer">心理学报</div>
 <div class="card" data-tooltip="《地理学报》官方网站" onclick="window.open('http://www.geog.com.cn/', '_blank')"><img src="http://www.geog.com.cn/favicon.ico" alt="地理学报" loading="lazy" decoding="async" referrerpolicy="no-referrer">地理学报</div>
 <div class="card" data-tooltip="《中国图书馆学报》官方网站" onclick="window.open('http://www.jlis.cn/', '_blank')"><img src="http://www.jlis.cn/favicon.ico" alt="中国图书馆学报" loading="lazy" decoding="async" referrerpolicy="no-referrer">中国图书馆学报</div>
@@ -1547,6 +1576,12 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="Bayesian Analysis 官方主页" onclick="window.open('https://projecteuclid.org/journals/bayesian-analysis', '_blank')"><img src="https://projecteuclid.org/favicon.ico" alt="Bayesian Analysis" loading="lazy" decoding="async" referrerpolicy="no-referrer">Bayesian Analysis</div>
 <div class="card" data-tooltip="Journal of Finance 官方主页" onclick="window.open('https://afajof.org/', '_blank')"><img src="https://afajof.org/favicon.ico" alt="Journal of Finance" loading="lazy" decoding="async" referrerpolicy="no-referrer">Journal of Finance</div>
 <div class="card" data-tooltip="Review of Financial Studies 官方主页" onclick="window.open('https://academic.oup.com/rfs', '_blank')"><img src="https://academic.oup.com/favicon.ico" alt="RFS" loading="lazy" decoding="async" referrerpolicy="no-referrer">RFS</div>
+<div class="card" data-tooltip="Journal of Financial Economics 官方主页" onclick="window.open('https://www.sciencedirect.com/journal/journal-of-financial-economics', '_blank')"><img src="https://www.sciencedirect.com/favicon.ico" alt="JFE" loading="lazy" decoding="async" referrerpolicy="no-referrer">JFE</div>
+<div class="card" data-tooltip="Journal of Financial and Quantitative Analysis 官方主页" onclick="window.open('https://www.cambridge.org/core/journals/journal-of-financial-and-quantitative-analysis', '_blank')"><img src="https://www.cambridge.org/favicon.ico" alt="JFQA" loading="lazy" decoding="async" referrerpolicy="no-referrer">JFQA</div>
+<div class="card" data-tooltip="Review of Finance 官方主页" onclick="window.open('https://academic.oup.com/rof', '_blank')"><img src="https://academic.oup.com/favicon.ico" alt="Review of Finance" loading="lazy" decoding="async" referrerpolicy="no-referrer">Review of Finance</div>
+<div class="card" data-tooltip="Journal of Banking & Finance 官方主页" onclick="window.open('https://www.sciencedirect.com/journal/journal-of-banking-and-finance', '_blank')"><img src="https://www.sciencedirect.com/favicon.ico" alt="Journal of Banking & Finance" loading="lazy" decoding="async" referrerpolicy="no-referrer">J Banking Finance</div>
+<div class="card" data-tooltip="Journal of Corporate Finance 官方主页" onclick="window.open('https://www.sciencedirect.com/journal/journal-of-corporate-finance', '_blank')"><img src="https://www.sciencedirect.com/favicon.ico" alt="Journal of Corporate Finance" loading="lazy" decoding="async" referrerpolicy="no-referrer">J Corporate Finance</div>
+<div class="card" data-tooltip="Financial Management 官方主页" onclick="window.open('https://onlinelibrary.wiley.com/journal/1755053x', '_blank')"><img src="https://onlinelibrary.wiley.com/favicon.ico" alt="Financial Management" loading="lazy" decoding="async" referrerpolicy="no-referrer">Financial Management</div>
 <div class="card" data-tooltip="Management Science 官方主页" onclick="window.open('https://pubsonline.informs.org/journal/mnsc', '_blank')"><img src="https://pubsonline.informs.org/favicon.ico" alt="Management Science" loading="lazy" decoding="async" referrerpolicy="no-referrer">Management Science</div>
 <div class="card" data-tooltip="Academy of Management Journal 官方主页" onclick="window.open('https://journals.aom.org/journal/amj', '_blank')"><img src="https://journals.aom.org/favicon.ico" alt="AMJ" loading="lazy" decoding="async" referrerpolicy="no-referrer">AMJ</div>
 <div class="card" data-tooltip="Administrative Science Quarterly 官方主页" onclick="window.open('https://journals.sagepub.com/home/asq', '_blank')"><img src="https://journals.sagepub.com/favicon.ico" alt="ASQ" loading="lazy" decoding="async" referrerpolicy="no-referrer">ASQ</div>
