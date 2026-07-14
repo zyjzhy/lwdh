@@ -155,6 +155,28 @@ s.parentNode.insertBefore(hm, s);
     <path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z" />
       <path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10" />
   </symbol>
+  <symbol id="icon-wechat-like" viewBox="0 0 24 24">
+    <path d="M10.2 4C5.8 4 2.4 6.75 2.4 10.15c0 1.9 1.08 3.6 2.78 4.72l-.72 2.32 2.54-1.24c.96.25 2.04.38 3.2.38 4.4 0 7.8-2.75 7.8-6.18S14.6 4 10.2 4Z" />
+      <path d="M14.85 11.72c3.86.22 6.75 2.55 6.75 5.33 0 1.55-.9 2.95-2.34 3.9l.58 1.86-2.06-1.02c-.86.22-1.8.34-2.8.34-3.02 0-5.6-1.4-6.7-3.42" />
+      <circle cx="7.55" cy="9.55" r="0.68" fill="currentColor" stroke="none" />
+      <circle cx="12.75" cy="9.55" r="0.68" fill="currentColor" stroke="none" />
+      <circle cx="13.62" cy="16.4" r="0.58" fill="currentColor" stroke="none" />
+      <circle cx="17.55" cy="16.4" r="0.58" fill="currentColor" stroke="none" />
+  </symbol>
+  <symbol id="icon-qr-code" viewBox="0 0 24 24">
+    <rect width="5" height="5" x="3" y="3" rx="1" />
+      <rect width="5" height="5" x="16" y="3" rx="1" />
+      <rect width="5" height="5" x="3" y="16" rx="1" />
+      <path d="M21 16h-3a2 2 0 0 0-2 2v3" />
+      <path d="M21 21v.01" />
+      <path d="M12 7v3a2 2 0 0 1-2 2H7" />
+      <path d="M3 12h.01" />
+      <path d="M12 3h.01" />
+      <path d="M12 16v.01" />
+      <path d="M16 12h1" />
+      <path d="M21 12v.01" />
+      <path d="M12 21v-1" />
+  </symbol>
   <symbol id="icon-exclamation-triangle" viewBox="0 0 24 24">
     <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
       <path d="M12 9v4" />
@@ -543,7 +565,7 @@ s.parentNode.insertBefore(hm, s);
 </ul>
 <div class="announcement-note">
 <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-envelope-open-text"></use></svg>
-<p>如果您有任何建议或发现失效链接，欢迎点击右下角邮件图标联系作者反馈。</p>
+<p>如果您有任何建议或发现失效链接，欢迎点击右下角公众号图标关注「张张小栈」。</p>
 </div>
 </div>
 <div class="modal-footer">
@@ -589,44 +611,24 @@ s.parentNode.insertBefore(hm, s);
 </div>
 </div>
 
-<!-- 联系反馈 -->
+<!-- 公众号 -->
 <div id="contact-author-modal" class="modal">
 <div class="modal-content-wrapper">
 <button class="modal-close" type="button" onclick="closeContactModal()" aria-label="关闭">&times;</button>
-<div class="title"><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-envelope"></use></svg> 意见反馈</div>
+<div class="title"><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-wechat-like"></use></svg> 公众号</div>
 <div class="modal-content">
-<form id="feedback-form">
-<div class="feedback-field">
-<label for="message">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-comment-dots"></use></svg>
-留言内容
-</label>
-<textarea id="message" placeholder="请输入您的建议或发现的失效链接..." required></textarea>
+<div class="wechat-panel">
+<div class="wechat-qr-frame">
+<img id="wechat-qr-image" class="wechat-qr-image" src="关注张张小栈.png" alt="张张小栈公众号二维码" tabindex="-1">
 </div>
-<div class="feedback-row">
-<div class="feedback-field">
-<label for="from_name">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-user"></use></svg>
-您的称呼
-</label>
-<input type="text" id="from_name" placeholder="选填">
-</div>
-<div class="feedback-field">
-<label for="reply_to">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-reply"></use></svg>
-联系邮箱
-</label>
-<input type="email" id="reply_to" placeholder="方便我们给您回复">
-</div>
-</div>
-<p class="feedback-hint">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-info-circle"></use></svg> 我们非常重视您的每一条建议！
+<p class="wechat-hint">
+<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-qr-code"></use></svg>
+微信扫码关注，获取导航更新与资源推荐
 </p>
-<div id="feedback-status" role="status" aria-live="polite"></div>
-</form>
+</div>
 </div>
 <div class="modal-footer">
-<button type="submit" form="feedback-form"><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-paper-plane"></use></svg> 提交反馈</button>
+<button type="button" onclick="closeContactModal()"><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-check"></use></svg> 我知道了</button>
 </div>
 </div>
 </div>
@@ -750,8 +752,8 @@ s.parentNode.insertBefore(hm, s);
 <button id="create-desktop-shortcut" class="floating-button" type="button" onclick="createDesktopShortcut()" aria-label="生成桌面快捷方式" title="生成桌面快捷方式">
 <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-monitor-down"></use></svg>
 </button>
-<button id="open-contact-modal" class="floating-button" type="button" onclick="openContactModal()" aria-label="意见反馈">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-envelope"></use></svg>
+<button id="open-contact-modal" class="floating-button" type="button" onclick="openContactModal()" aria-label="公众号" title="公众号">
+<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-wechat-like"></use></svg>
 </button>
 <button id="scroll-to-top" class="floating-button" type="button" onclick="scrollToTop()" aria-label="回到顶部">
 <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-arrow-up"></use></svg>
@@ -833,27 +835,28 @@ s.parentNode.insertBefore(hm, s);
 <div class="sub-column">
 <h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-rocket"></use></svg> 国产AI</h3>
 <div class="card-container">
-<div class="card" data-tooltip="抖音AI工具" onclick="window.open('https://www.doubao.com/', '_blank')"><img src="https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/logo_new.png" alt="豆包" loading="lazy" decoding="async" referrerpolicy="no-referrer">豆包AI</div>
 <div class="card" data-tooltip="DeepSeek" onclick="window.open('https://www.deepseek.com/', '_blank')"><img src="https://www.deepseek.com/favicon.ico" alt="DeepSeek" loading="lazy" decoding="async" referrerpolicy="no-referrer">DeepSeek</div>
+<div class="card" data-tooltip="抖音AI工具" onclick="window.open('https://www.doubao.com/', '_blank')"><img src="https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/logo_new.png" alt="豆包" loading="lazy" decoding="async" referrerpolicy="no-referrer">豆包AI</div>
+<div class="card" data-tooltip="Kimi Chat" onclick="window.open('https://kimi.moonshot.cn/', '_blank')"><img src="https://statics.moonshot.cn/kimi-chat/favicon.ico" alt="Kimi" loading="lazy" decoding="async" referrerpolicy="no-referrer">Kimi Chat</div>
+<div class="card" data-tooltip="阿里AI工具" onclick="window.open('https://tongyi.aliyun.com/qianwen/', '_blank')"><img src="https://img.alicdn.com/imgextra/i1/O1CN01AKUdEM1qP6BQVaYhT_!!6000000005487-2-tps-512-512.png" alt="通义千问" loading="lazy" decoding="async" referrerpolicy="no-referrer">通义千问</div>
+<div class="card" data-tooltip="腾讯AI工具" onclick="window.open('https://yuanbao.tencent.com/', '_blank')"><img src="https://yuanbao.tencent.com/favicon.ico" alt="腾讯元宝" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯元宝</div>
+<div class="card" data-tooltip="百度AI工具" onclick="window.open('https://yiyan.baidu.com/', '_blank')"><img src="https://nlp-eb.cdn.bcebos.com/logo/favicon.ico" alt="文心一言" loading="lazy" decoding="async" referrerpolicy="no-referrer">文心一言</div>
+<div class="card" data-tooltip="清华AI工具" onclick="window.open('https://www.chatglm.cn', '_blank')"><img src="https://www.chatglm.cn/favicon.ico" alt="智谱" loading="lazy" decoding="async" referrerpolicy="no-referrer">智谱清言</div>
+<div class="card" data-tooltip="讯飞AI工具" onclick="window.open('https://xinghuo.xfyun.cn/', '_blank')"><img src="https://xinghuo.xfyun.cn/favicon.ico" alt="星火大模型" loading="lazy" decoding="async" referrerpolicy="no-referrer">讯飞星火</div>
 <div class="card" data-tooltip="新一代 AI 大模型智能体开发平台" onclick="window.open('https://www.coze.cn/', '_blank')"><img src="https://lf-coze-web-cdn.coze.cn/obj/coze-web-cn/obric/coze/favicon.1970.png" alt="扣子" loading="lazy" decoding="async" referrerpolicy="no-referrer">扣子</div>
 <div class="card" data-tooltip="中国团队推出的新一代任务执行型AI助手" onclick="window.open('https://manus.im/', '_blank')"><img src="https://manus.im/favicon.ico" alt="Manus" loading="lazy" decoding="async" referrerpolicy="no-referrer">Manus</div>
+<div class="card" data-tooltip="海螺AI" onclick="window.open('https://hailuoai.com/', '_blank')"><img src="https://hailuoai.com/favicon.ico" alt="海螺" loading="lazy" decoding="async" referrerpolicy="no-referrer">海螺AI</div>
+<div class="card" data-tooltip="天工AI" onclick="window.open('https://www.tiangong.cn/', '_blank')"><img src="https://static.tiangong.cn/wwwsite/logo.ico" alt="天工" loading="lazy" decoding="async" referrerpolicy="no-referrer">天工AI</div>
+<div class="card" data-tooltip="问小白，免费用deepseek" onclick="window.open('https://www.wenxiaobai.com/', '_blank')"><img src="https://www.wenxiaobai.com//new_favicon.ico" alt="文案助手" loading="lazy" decoding="async" referrerpolicy="no-referrer">问小白</div>
+<div class="card" data-tooltip="图片视频创意生产力平台" onclick="window.open('https://klingai.kuaishou.com/', '_blank')"><img src="https://klingai.kuaishou.com/favicon.ico" alt="可灵" loading="lazy" decoding="async" referrerpolicy="no-referrer">可灵AI</div>
 <div class="card" data-tooltip="硅基流动，加速 AGI 普惠人类" onclick="window.open('https://account.siliconflow.cn/', '_blank')"><img src="https://account.siliconflow.cn/favicon.ico" alt="硅基流动" loading="lazy" decoding="async" referrerpolicy="no-referrer">硅基流动</div>
 <div class="card" data-tooltip="飞书 AI 知识问答系统深度集成 DeepSeek R1 满血版大模型" onclick="window.open('https://ask.feishu.cn/', '_blank')"><img src="https://sf1-scmcdn-cn.feishucdn.com/obj/feishu-static/knowledge_ai/app_base_web/favicon.png" alt="飞书AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">飞书知识问答</div>
-<div class="card" data-tooltip="问小白，免费用deepseek" onclick="window.open('https://www.wenxiaobai.com/', '_blank')"><img src="https://www.wenxiaobai.com//new_favicon.ico" alt="文案助手" loading="lazy" decoding="async" referrerpolicy="no-referrer">问小白</div>
-<div class="card" data-tooltip="天工AI" onclick="window.open('https://www.tiangong.cn/', '_blank')"><img src="https://static.tiangong.cn/wwwsite/logo.ico" alt="天工" loading="lazy" decoding="async" referrerpolicy="no-referrer">天工AI</div>
-<div class="card" data-tooltip="海螺AI" onclick="window.open('https://hailuoai.com/', '_blank')"><img src="https://hailuoai.com/favicon.ico" alt="海螺" loading="lazy" decoding="async" referrerpolicy="no-referrer">海螺AI</div>
-<div class="card" data-tooltip="Kimi Chat" onclick="window.open('https://kimi.moonshot.cn/', '_blank')"><img src="https://statics.moonshot.cn/kimi-chat/favicon.ico" alt="Kimi" loading="lazy" decoding="async" referrerpolicy="no-referrer">Kimi Chat</div>
-<div class="card" data-tooltip="讯飞AI工具" onclick="window.open('https://xinghuo.xfyun.cn/', '_blank')"><img src="https://xinghuo.xfyun.cn/favicon.ico" alt="星火大模型" loading="lazy" decoding="async" referrerpolicy="no-referrer">讯飞星火</div>
-<div class="card" data-tooltip="清华AI工具" onclick="window.open('https://www.chatglm.cn', '_blank')"><img src="https://www.chatglm.cn/favicon.ico" alt="智谱" loading="lazy" decoding="async" referrerpolicy="no-referrer">智谱清言</div>
-<div class="card" data-tooltip="阿里AI工具" onclick="window.open('https://tongyi.aliyun.com/qianwen/', '_blank')"><img src="https://img.alicdn.com/imgextra/i1/O1CN01AKUdEM1qP6BQVaYhT_!!6000000005487-2-tps-512-512.png" alt="通义千问" loading="lazy" decoding="async" referrerpolicy="no-referrer">通义千问</div>
-<div class="card" data-tooltip="百度AI工具" onclick="window.open('https://yiyan.baidu.com/', '_blank')"><img src="https://nlp-eb.cdn.bcebos.com/logo/favicon.ico" alt="文心一言" loading="lazy" decoding="async" referrerpolicy="no-referrer">文心一言</div>
-<div class="card" data-tooltip="上海人工智能实验室开源大模型" onclick="window.open('https://intern-ai.org.cn/home', '_blank')"><img src="https://intern-ai.org.cn/logoIcon.png" alt="书生" loading="lazy" decoding="async" referrerpolicy="no-referrer">书生AI</div>
 <div class="card" data-tooltip="知乎AI工具" onclick="window.open('https://zhida.zhihu.com/', '_blank')"><img src="https://pica.zhimg.com/v2-79e835d86b026c7c499de99d49906814.png" alt="知乎" loading="lazy" decoding="async" referrerpolicy="no-referrer">知乎AI</div>
-<div class="card" data-tooltip="腾讯AI工具" onclick="window.open('https://yuanqi.tencent.com/', '_blank')"><img src="https://yuanbao.tencent.com/favicon.ico" alt="腾讯元宝" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯元宝</div>
+<div class="card" data-tooltip="小米AI助手" onclick="window.open('https://aistudio.xiaomimimo.com/#/', '_blank')"><img src="https://aistudio.xiaomimimo.com/favicon.ico" alt="MiMo Studio" loading="lazy" decoding="async" referrerpolicy="no-referrer">MiMo Studio</div>
 <div class="card" data-tooltip="360AI工具" onclick="window.open('https://chat.360.com/', '_blank')"><img src="https://cloud.zhaomi.cn/brain_admin/test/eb65f3f33af14d954ba538755580e040.png" alt="360智脑" loading="lazy" decoding="async" referrerpolicy="no-referrer">360AI</div>
 <div class="card" data-tooltip="CCF联合北京百川智能科技有限公司共同创立的AI工具" onclick="window.open('https://www.baichuan-ai.com/', '_blank')"><img src="https://cdn.baichuan-ai.com/build/_next/static/media/favicon-96x96.b3239d19.png" alt="百川" loading="lazy" decoding="async" referrerpolicy="no-referrer">百小应</div>
+<div class="card" data-tooltip="上海人工智能实验室开源大模型" onclick="window.open('https://intern-ai.org.cn/home', '_blank')"><img src="https://intern-ai.org.cn/logoIcon.png" alt="书生" loading="lazy" decoding="async" referrerpolicy="no-referrer">书生AI</div>
 <div class="card" data-tooltip="中国科学院自动化研究所和武汉人工智能研究院推出新一代多模态大模型" onclick="window.open('https://taichu-web.ia.ac.cn/', '_blank')"><img src="https://taichu-web.ia.ac.cn/favicon.ico" alt="太初" loading="lazy" decoding="async" referrerpolicy="no-referrer">紫东太初</div>
-<div class="card" data-tooltip="图片视频创意生产力平台" onclick="window.open('https://klingai.kuaishou.com/', '_blank')"><img src="https://klingai.kuaishou.com/favicon.ico" alt="可灵" loading="lazy" decoding="async" referrerpolicy="no-referrer">可灵AI</div>
 <div class="card" data-tooltip="智能工具ModelScopeGPT，可一键调用魔搭社区其他AI模型，大小模型协同完成复杂任务。" onclick="window.open('https://www.modelscope.cn/studios/iic/ModelScopeGPT/summary', '_blank')"><img src="https://g.alicdn.com/sail-web/maas/2.6.1/favicon/128.ico" alt="魔搭" loading="lazy" decoding="async" referrerpolicy="no-referrer">魔搭GPT</div>
 <div class="card" data-tooltip="商量科技人工智能助手" onclick="window.open('https://chat.sensetime.com/wb/chat', '_blank')"><img src="https://sensechat-ml.aoss.cn-sh-01.sensecoreapi-oss.cn/chat/prod/wb/favicon_ml.png" alt="商汤" loading="lazy" decoding="async" referrerpolicy="no-referrer">商量AI</div>
 <div class="card" data-tooltip="云知声医学人工智能助手" onclick="window.open('https://shanhai.unisound.com/chat', '_blank')"><img src="https://shanhai.unisound.com/favicon.png" alt="山海" loading="lazy" decoding="async" referrerpolicy="no-referrer">山海AI</div>
@@ -870,117 +873,115 @@ s.parentNode.insertBefore(hm, s);
 <div class="sub-column">
 <h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-globe"></use></svg> 国外AI</h3>
 <div class="card-container">
-<div class="card" data-tooltip="Grok 官方入口" onclick="window.open('https://x.com/', '_blank')"><img src="https://abs.twimg.com/responsive-web/client-web/icon-svg.ea5ff4aa.svg" alt="Grok" loading="lazy" decoding="async" referrerpolicy="no-referrer">Grok</div>
-<div class="card" data-tooltip="微软AI" onclick="window.open('https://copilot.microsoft.com/', '_blank')"><img src="https://copilot.microsoft.com/favicon.ico" alt="Copilot" loading="lazy" decoding="async" referrerpolicy="no-referrer">Copilot</div>
 <div class="card" data-tooltip="openAI" onclick="window.open('https://openai.com/chatgpt/', '_blank')"><img src="https://ai.rcouyi.com/images/model/openai.svg" alt="ChatGPT" loading="lazy" decoding="async" referrerpolicy="no-referrer">chatgpt</div>
 <div class="card" data-tooltip="Google AI" onclick="window.open('https://gemini.google.com/app?hl=zh', '_blank')"><img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="Gemini" loading="lazy" decoding="async" referrerpolicy="no-referrer">Gemini</div>
-<div class="card" data-tooltip="创建虚拟角色对话" onclick="window.open('https://www.ai-character.ai/', '_blank')"><img src="https://claude.ai/favicon.ico" alt="Claude" loading="lazy" decoding="async" referrerpolicy="no-referrer">Character.AI</div>
-<div class="card" data-tooltip="使用 DeepL Write 梦笔生花" onclick="window.open('https://www.deepl.com/zh/write', '_blank')"><img src="https://static.deepl.com/img/logo/deepl-logo-blue.svg" alt="DeepL Write" loading="lazy" decoding="async" referrerpolicy="no-referrer">DeepL Write</div>
-<div class="card" data-tooltip="AI英语语法和拼写检查" onclick="window.open('https://www.grammarly.com/', '_blank')"><img src="https://static-web.grammarly.com/cms/master/public/favicon.ico" alt="Grammarly" loading="lazy" decoding="async" referrerpolicy="no-referrer">Grammarly</div>
-<div class="card" data-tooltip="Napkin AI - The visual AI for business storytelling" onclick="window.open('https://www.napkin.ai', '_blank')"><img src="https://www.napkin.ai/favicon-32x32.png?v=2" alt="Napkin" loading="lazy" decoding="async" referrerpolicy="no-referrer">Napkin</div>
-<div class="card" data-tooltip="AI英德写作润色" onclick="window.open('https://quillbot.com/', '_blank')"><img src="https://quillbot.com/favicon.ico" alt="QuillBot" loading="lazy" decoding="async" referrerpolicy="no-referrer">QuillBot</div>
-<div class="card" data-tooltip="AI图片生成和编辑平台" onclick="window.open('https://playground.com/', '_blank')"><img src="https://playground.com/favicon.ico" alt="Playground" loading="lazy" decoding="async" referrerpolicy="no-referrer">Playground AI</div>
-<div class="card" data-tooltip="AI图片处理工具，支持抠图、放大、清理背景等" onclick="window.open('https://magicstudio.com/', '_blank')"><img src="https://magicstudio.com/favicon.ico" alt="Magic Studio" loading="lazy" decoding="async" referrerpolicy="no-referrer">Magic Studio</div>
-<div class="card" data-tooltip="开放式AI生成接口和图片生成工具" onclick="window.open('https://pollinations.ai/', '_blank')"><img src="https://pollinations.ai/favicon.ico" alt="Pollinations" loading="lazy" decoding="async" referrerpolicy="no-referrer">Pollinations</div>
-<div class="card" data-tooltip="Leonardo.ai - AI艺术创作平台" onclick="window.open('https://leonardo.ai/', '_blank')"><img src="https://leonardo.ai/favicon.ico" alt="Leonardo" loading="lazy" decoding="async" referrerpolicy="no-referrer">Leonardo AI</div>
-<div class="card" data-tooltip="Stable Diffusion Online - AI图像生成" onclick="window.open('https://stablediffusionweb.com/', '_blank')"><img src="https://stablediffusionweb.com/favicon.ico" alt="Stable Diffusion" loading="lazy" decoding="async" referrerpolicy="no-referrer">Stable Diffusion</div>
-<div class="card" data-tooltip="Adobe Firefly - 创意生成式AI" onclick="window.open('https://firefly.adobe.com/', '_blank')"><img src="https://firefly.adobe.com/favicon.ico" alt="Firefly" loading="lazy" decoding="async" referrerpolicy="no-referrer">Adobe Firefly</div>
+<div class="card" data-tooltip="微软AI" onclick="window.open('https://copilot.microsoft.com/', '_blank')"><img src="https://copilot.microsoft.com/favicon.ico" alt="Copilot" loading="lazy" decoding="async" referrerpolicy="no-referrer">Copilot</div>
 <div class="card" data-tooltip="Perplexity AI - AI搜索引擎" onclick="window.open('https://www.perplexity.ai/', '_blank')"><img src="https://www.perplexity.ai/favicon.ico" alt="Perplexity" loading="lazy" decoding="async" referrerpolicy="no-referrer">Perplexity</div>
+<div class="card" data-tooltip="Grok 官方入口" onclick="window.open('https://grok.com/', '_blank')"><img src="https://abs.twimg.com/responsive-web/client-web/icon-svg.ea5ff4aa.svg" alt="Grok" loading="lazy" decoding="async" referrerpolicy="no-referrer">Grok</div>
+<div class="card" data-tooltip="AI英语语法和拼写检查" onclick="window.open('https://www.grammarly.com/', '_blank')"><img src="https://static-web.grammarly.com/cms/master/public/favicon.ico" alt="Grammarly" loading="lazy" decoding="async" referrerpolicy="no-referrer">Grammarly</div>
+<div class="card" data-tooltip="使用 DeepL Write 梦笔生花" onclick="window.open('https://www.deepl.com/zh/write', '_blank')"><img src="https://static.deepl.com/img/logo/deepl-logo-blue.svg" alt="DeepL Write" loading="lazy" decoding="async" referrerpolicy="no-referrer">DeepL Write</div>
+<div class="card" data-tooltip="Adobe Firefly - 创意生成式AI" onclick="window.open('https://firefly.adobe.com/', '_blank')"><img src="https://firefly.adobe.com/favicon.ico" alt="Firefly" loading="lazy" decoding="async" referrerpolicy="no-referrer">Adobe Firefly</div>
+<div class="card" data-tooltip="Leonardo.ai - AI艺术创作平台" onclick="window.open('https://leonardo.ai/', '_blank')"><img src="https://leonardo.ai/favicon.ico" alt="Leonardo" loading="lazy" decoding="async" referrerpolicy="no-referrer">Leonardo AI</div>
+<div class="card" data-tooltip="Stability AI - AI图像生成" onclick="window.open('https://stability.ai/', '_blank')"><img src="https://stability.ai/favicon.ico" alt="Stable Diffusion" loading="lazy" decoding="async" referrerpolicy="no-referrer">Stable Diffusion</div>
 <div class="card" data-tooltip="Suno AI - AI音乐生成" onclick="window.open('https://suno.com/', '_blank')"><img src="https://suno.com/favicon.ico" alt="Suno" loading="lazy" decoding="async" referrerpolicy="no-referrer">Suno AI</div>
 <div class="card" data-tooltip="ElevenLabs - AI语音合成" onclick="window.open('https://elevenlabs.io/', '_blank')"><img src="https://elevenlabs.io/favicon.ico" alt="ElevenLabs" loading="lazy" decoding="async" referrerpolicy="no-referrer">ElevenLabs</div>
 <div class="card" data-tooltip="Hugging Face - AI模型社区" onclick="window.open('https://huggingface.co/', '_blank')"><img src="https://huggingface.co/favicon.ico" alt="HuggingFace" loading="lazy" decoding="async" referrerpolicy="no-referrer">Hugging Face</div>
+<div class="card" data-tooltip="创建虚拟角色对话" onclick="window.open('https://character.ai/', '_blank')"><img src="https://character.ai/favicon.ico" alt="Character.AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">Character.AI</div>
+<div class="card" data-tooltip="AI图片生成和编辑平台" onclick="window.open('https://playground.com/', '_blank')"><img src="https://playground.com/favicon.ico" alt="Playground" loading="lazy" decoding="async" referrerpolicy="no-referrer">Playground AI</div>
+<div class="card" data-tooltip="AI图片处理工具，支持抠图、放大、清理背景等" onclick="window.open('https://magicstudio.com/', '_blank')"><img src="https://magicstudio.com/favicon.ico" alt="Magic Studio" loading="lazy" decoding="async" referrerpolicy="no-referrer">Magic Studio</div>
+<div class="card" data-tooltip="Napkin AI - The visual AI for business storytelling" onclick="window.open('https://www.napkin.ai', '_blank')"><img src="https://www.napkin.ai/favicon-32x32.png?v=2" alt="Napkin" loading="lazy" decoding="async" referrerpolicy="no-referrer">Napkin</div>
+<div class="card" data-tooltip="开放式AI生成接口和图片生成工具" onclick="window.open('https://pollinations.ai/', '_blank')"><img src="https://pollinations.ai/favicon.ico" alt="Pollinations" loading="lazy" decoding="async" referrerpolicy="no-referrer">Pollinations</div>
+<div class="card" data-tooltip="AI英德写作润色" onclick="window.open('https://quillbot.com/', '_blank')"><img src="https://quillbot.com/favicon.ico" alt="QuillBot" loading="lazy" decoding="async" referrerpolicy="no-referrer">QuillBot</div>
 </div>
 </div>
 <div class="sub-column">
 <h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-search"></use></svg> AI搜索</h3>
 <div class="card-container">
 <div class="card" data-tooltip="AI 搜索与问答平台。" onclick="window.open('https://metaso.cn', '_blank')"><img src="https://metaso.cn/favicon.ico" alt="秘塔AI搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">秘塔AI搜索</div>
-<div class="card" data-tooltip="360 纳米 AI 搜索。" onclick="window.open('https://www.n.cn', '_blank')"><img src="https://www.n.cn/favicon.ico" alt="360纳米AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">360纳米AI</div>
 <div class="card" data-tooltip="百度 AI 搜索入口。" onclick="window.open('https://chat.baidu.com/search', '_blank')"><img src="https://chat.baidu.com/favicon.ico" alt="百度AI搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度AI搜索</div>
+<div class="card" data-tooltip="360 纳米 AI 搜索。" onclick="window.open('https://www.n.cn', '_blank')"><img src="https://www.n.cn/favicon.ico" alt="360纳米AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">360纳米AI</div>
 <div class="card" data-tooltip="阿里心流 AI 搜索与问答。" onclick="window.open('https://www.iflow.cn', '_blank')"><img src="https://www.iflow.cn/favicon.ico" alt="阿里心流AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">阿里心流AI</div>
-<div class="card" data-tooltip="AI 搜索与知识问答平台。" onclick="window.open('https://wuya-ai.com', '_blank')"><img src="https://wuya-ai.com/favicon.ico" alt="无涯问知" loading="lazy" decoding="async" referrerpolicy="no-referrer">无涯问知</div>
-<div class="card" data-tooltip="博查 AI 搜索。" onclick="window.open('https://bochaai.com', '_blank')"><img src="https://bochaai.com/favicon.ico" alt="博查AI搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">博查AI搜索</div>
 <div class="card" data-tooltip="抖音 AI 搜索入口。" onclick="window.open('https://www.douyin.com/aisearch', '_blank')"><img src="https://www.douyin.com/favicon.ico" alt="抖音AI搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">抖音AI搜索</div>
+<div class="card" data-tooltip="博查 AI 搜索。" onclick="window.open('https://bochaai.com', '_blank')"><img src="https://bochaai.com/favicon.ico" alt="博查AI搜索" loading="lazy" decoding="async" referrerpolicy="no-referrer">博查AI搜索</div>
 <div class="card" data-tooltip="CSDN AI 技术问答。" onclick="window.open('https://so.csdn.net/chat', '_blank')"><img src="https://so.csdn.net/favicon.ico" alt="C知道" loading="lazy" decoding="async" referrerpolicy="no-referrer">C知道</div>
+<div class="card" data-tooltip="AI 搜索与知识问答平台。" onclick="window.open('https://wuya-ai.com', '_blank')"><img src="https://wuya-ai.com/favicon.ico" alt="无涯问知" loading="lazy" decoding="async" referrerpolicy="no-referrer">无涯问知</div>
 <div class="card" data-tooltip="复旦研发的免费 AI 学术助手，适合搜索相关文献。" onclick="window.open('https://www.wispaper.ai', '_blank')"><img src="https://www.wispaper.ai/favicon.ico" alt="Wispaper" loading="lazy" decoding="async" referrerpolicy="no-referrer">Wispaper</div>
 <div class="card" data-tooltip="小红书点点 AI 应用入口。" onclick="window.open('https://sj.qq.com/appdetail/com.liveverse.diandian', '_blank')"><img src="https://sj.qq.com/favicon.ico" alt="小红书点点" loading="lazy" decoding="async" referrerpolicy="no-referrer">小红书点点</div>
 </div>
 </div>
-<!-- 海外AI -->
-<!-- AI编程 -->
 <div class="sub-column">
-<h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-code"></use></svg> AI编程</h3>
+<h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-code"></use></svg> AI编程开发</h3>
 <div class="card-container">
-<div class="card" data-tooltip="0 代码基础也能使用的 AI 应用开发工具。" onclick="window.open('https://www.codeflying.net', '_blank')"><img src="https://www.codeflying.net/favicon.ico" alt="码上飞" loading="lazy" decoding="async" referrerpolicy="no-referrer">码上飞</div>
-<div class="card" data-tooltip="商汤旗下 AI 助手，覆盖编程与办公场景。" onclick="window.open('https://www.xiaohuanxiong.com/login', '_blank')"><img src="https://www.xiaohuanxiong.com/favicon.ico" alt="商汤小浣熊" loading="lazy" decoding="async" referrerpolicy="no-referrer">商汤小浣熊</div>
-<div class="card" data-tooltip="AI 编程工具与开发工作流助手。" onclick="window.open('https://www.trae.com.cn', '_blank')"><img src="https://www.trae.com.cn/favicon.ico" alt="TRAE编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">TRAE编程</div>
+<div class="card" data-tooltip="Cline - 开源AI编码Agent" onclick="window.open('https://cline.bot/', '_blank')"><img src="https://cline.bot/favicon.ico" alt="Cline" loading="lazy" decoding="async" referrerpolicy="no-referrer">Cline</div>
+<div class="card" data-tooltip="OpenCode - 开源AI编程Agent" onclick="window.open('https://opencode.ai/', '_blank')"><img src="https://opencode.ai/favicon.ico" alt="OpenCode" loading="lazy" decoding="async" referrerpolicy="no-referrer">OpenCode</div>
+<div class="card" data-tooltip="OpenAI Codex - AI编码智能体" onclick="window.open('https://openai.com/codex/', '_blank')"><img src="https://openai.com/favicon.ico" alt="Codex" loading="lazy" decoding="async" referrerpolicy="no-referrer">Codex</div>
+<div class="card" data-tooltip="Claude Code - Anthropic的智能编码系统" onclick="window.open('https://code.claude.com/', '_blank')"><img src="https://code.claude.com/favicon.ico" alt="Claude Code" loading="lazy" decoding="async" referrerpolicy="no-referrer">Claude Code</div>
+<div class="card" data-tooltip="Aider - 终端AI结对编程" onclick="window.open('https://aider.chat/', '_blank')"><img src="https://aider.chat/favicon.ico" alt="Aider" loading="lazy" decoding="async" referrerpolicy="no-referrer">Aider</div>
 <div class="card" data-tooltip="AI 原生代码编辑器，适合项目开发与代码辅助。" onclick="window.open('https://www.cursor.com/cn', '_blank')"><img src="https://www.cursor.com/favicon.ico" alt="Cursor" loading="lazy" decoding="async" referrerpolicy="no-referrer">Cursor</div>
 <div class="card" data-tooltip="AI 编程 IDE 与智能代码助手。" onclick="window.open('https://windsurfai.org/zh', '_blank')"><img src="https://windsurfai.org/favicon.ico" alt="Windsurf" loading="lazy" decoding="async" referrerpolicy="no-referrer">Windsurf</div>
+<div class="card" data-tooltip="GitHub Copilot - AI编程助手" onclick="window.open('https://github.com/features/copilot', '_blank')"><img src="https://github.githubassets.com/favicons/favicon.svg" alt="Copilot" loading="lazy" decoding="async" referrerpolicy="no-referrer">GitHub Copilot</div>
+<div class="card" data-tooltip="Continue - 开源AI编程助手" onclick="window.open('https://continue.dev/', '_blank')"><img src="https://continue.dev/favicon.ico" alt="Continue" loading="lazy" decoding="async" referrerpolicy="no-referrer">Continue</div>
+<div class="card" data-tooltip="OpenClaw - 开源AI智能体框架" onclick="window.open('https://openclaw.ai/', '_blank')"><img src="https://openclaw.ai/favicon.ico" alt="OpenClaw" loading="lazy" decoding="async" referrerpolicy="no-referrer">OpenClaw</div>
+<div class="card" data-tooltip="有道龙虾 - 网易全场景AI Agent" onclick="window.open('https://lobsterai.youdao.com/', '_blank')"><img src="https://lobsterai.youdao.com/favicon.ico" alt="有道龙虾" loading="lazy" decoding="async" referrerpolicy="no-referrer">有道龙虾</div>
+<div class="card" data-tooltip="Devin - AI软件工程师" onclick="window.open('https://devin.ai/', '_blank')"><img src="https://devin.ai/favicon.ico" alt="Devin" loading="lazy" decoding="async" referrerpolicy="no-referrer">Devin</div>
+<div class="card" data-tooltip="豆包MarsCode - 字节跳动AI编程助手" onclick="window.open('https://www.marscode.cn/', '_blank')"><img src="https://www.marscode.cn/favicon.ico" alt="豆包MarsCode" loading="lazy" decoding="async" referrerpolicy="no-referrer">豆包MarsCode</div>
+<div class="card" data-tooltip="百度Comate - 文心快码智能代码助手" onclick="window.open('https://comate.baidu.com/', '_blank')"><img src="https://comate.baidu.com/favicon.ico" alt="百度Comate" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度Comate</div>
 <div class="card" data-tooltip="阿里通义旗下智能编码助手。" onclick="window.open('https://lingma.aliyun.com', '_blank')"><img src="https://lingma.aliyun.com/favicon.ico" alt="通义灵码" loading="lazy" decoding="async" referrerpolicy="no-referrer">通义灵码</div>
 <div class="card" data-tooltip="代码生成、补全与研发辅助工具。" onclick="window.open('https://codegeex.cn', '_blank')"><img src="https://codegeex.cn/favicon.ico" alt="CodeGeeX" loading="lazy" decoding="async" referrerpolicy="no-referrer">CodeGeeX</div>
+<div class="card" data-tooltip="AI 编程工具与开发工作流助手。" onclick="window.open('https://www.trae.com.cn', '_blank')"><img src="https://www.trae.com.cn/favicon.ico" alt="TRAE编程" loading="lazy" decoding="async" referrerpolicy="no-referrer">TRAE编程</div>
+<div class="card" data-tooltip="商汤旗下 AI 助手，覆盖编程与办公场景。" onclick="window.open('https://www.xiaohuanxiong.com/login', '_blank')"><img src="https://www.xiaohuanxiong.com/favicon.ico" alt="商汤小浣熊" loading="lazy" decoding="async" referrerpolicy="no-referrer">商汤小浣熊</div>
 <div class="card" data-tooltip="百度 AI 应用生成与设计工具。" onclick="window.open('https://console.bce.baidu.com/miaoda/design', '_blank')"><img src="https://console.bce.baidu.com/favicon.ico" alt="百度秒哒" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度秒哒</div>
-</div>
-</div>
-<!-- AI办公 -->
-<div class="sub-column">
-<h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-table"></use></svg> AI办公</h3>
-<div class="card-container">
-<div class="card" data-tooltip="用自然语言处理 Excel 表格和数据分析。" onclick="window.open('https://www.chatexcel.com/#/home', '_blank')"><img src="https://www.chatexcel.com/favicon.ico" alt="ChatExcel" loading="lazy" decoding="async" referrerpolicy="no-referrer">ChatExcel</div>
-<div class="card" data-tooltip="WPS 官方 AI 办公助手，覆盖文档、表格和演示。" onclick="window.open('https://ai.wps.cn', '_blank')"><img src="https://ai.wps.cn/favicon.ico" alt="WPS AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">WPS AI</div>
-<div class="card" data-tooltip="OpenBMB 表格智能处理与数据问答工具。" onclick="window.open('https://live.openbmb.org/playground', '_blank')"><img src="https://live.openbmb.org/favicon.ico" alt="模力表格" loading="lazy" decoding="async" referrerpolicy="no-referrer">模力表格</div>
-<div class="card" data-tooltip="OpenAI API Key 管理入口，可用于 Excel 插件配置。" onclick="window.open('https://platform.openai.com/account/api-keys', '_blank')"><img src="https://platform.openai.com/favicon.ico" alt="ChatGPT for Excel" loading="lazy" decoding="async" referrerpolicy="no-referrer">ChatGPT for Excel</div>
+<div class="card" data-tooltip="0 代码基础也能使用的 AI 应用开发工具。" onclick="window.open('https://www.codeflying.net', '_blank')"><img src="https://www.codeflying.net/favicon.ico" alt="码上飞" loading="lazy" decoding="async" referrerpolicy="no-referrer">码上飞</div>
 </div>
 </div>
 <!-- AI创作 -->
 <div class="sub-column">
-<h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-wand-magic-sparkles"></use></svg> AI创作</h3>
+<h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-wand-magic-sparkles"></use></svg> AI创作办公</h3>
 <div class="card-container">
-<div class="card" data-tooltip="腾讯混元 AI 视频生成工具。" onclick="window.open('https://video.hunyuan.tencent.com', '_blank')"><img src="https://video.hunyuan.tencent.com/favicon.ico" alt="腾讯混元视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯混元视频</div>
+<div class="card" data-tooltip="WPS 官方 AI 办公助手，覆盖文档、表格和演示。" onclick="window.open('https://ai.wps.cn', '_blank')"><img src="https://ai.wps.cn/favicon.ico" alt="WPS AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">WPS AI</div>
+<div class="card" data-tooltip="用自然语言处理 Excel 表格和数据分析。" onclick="window.open('https://www.chatexcel.com/#/home', '_blank')"><img src="https://www.chatexcel.com/favicon.ico" alt="ChatExcel" loading="lazy" decoding="async" referrerpolicy="no-referrer">ChatExcel</div>
+<div class="card" data-tooltip="OpenBMB 表格智能处理与数据问答工具。" onclick="window.open('https://live.openbmb.org/playground', '_blank')"><img src="https://live.openbmb.org/favicon.ico" alt="模力表格" loading="lazy" decoding="async" referrerpolicy="no-referrer">模力表格</div>
+<div class="card" data-tooltip="OpenAI API Key 管理入口，可用于 Excel 插件配置。" onclick="window.open('https://platform.openai.com/account/api-keys', '_blank')"><img src="https://platform.openai.com/favicon.ico" alt="ChatGPT for Excel" loading="lazy" decoding="async" referrerpolicy="no-referrer">ChatGPT for Excel</div>
 <div class="card" data-tooltip="抖音剪映旗下 AI 视频与创作工具。" onclick="window.open('https://jimeng.jianying.com/s/flmLrGIkRrU', '_blank')"><img src="https://jimeng.jianying.com/favicon.ico" alt="即梦AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">即梦AI</div>
-<div class="card" data-tooltip="智谱 AI 视频生成工具。" onclick="window.open('https://chatglm.cn/video', '_blank')"><img src="https://chatglm.cn/favicon.ico" alt="智谱清影" loading="lazy" decoding="async" referrerpolicy="no-referrer">智谱清影</div>
+<div class="card" data-tooltip="剪映官方入口，数字人等功能在软件内使用。" onclick="window.open('https://www.capcut.cn', '_blank')"><img src="https://www.capcut.cn/favicon.ico" alt="剪映" loading="lazy" decoding="async" referrerpolicy="no-referrer">剪映</div>
 <div class="card" data-tooltip="阿里通义旗下图像与视频创作工具。" onclick="window.open('https://tongyi.aliyun.com/wanxiang', '_blank')"><img src="https://tongyi.aliyun.com/favicon.ico" alt="通义万相" loading="lazy" decoding="async" referrerpolicy="no-referrer">通义万相</div>
-<div class="card" data-tooltip="百度旗下 AI 视频与内容创作工具。" onclick="window.open('https://aigc.baidu.com/home', '_blank')"><img src="https://aigc.baidu.com/favicon.ico" alt="度加创作工具" loading="lazy" decoding="async" referrerpolicy="no-referrer">度加创作工具</div>
-<div class="card" data-tooltip="AI 视频生成与创意内容制作平台。" onclick="window.open('https://typemovie.art/#/dashboard', '_blank')"><img src="https://typemovie.art/favicon.ico" alt="讯飞绘镜" loading="lazy" decoding="async" referrerpolicy="no-referrer">讯飞绘镜</div>
+<div class="card" data-tooltip="腾讯混元 AI 视频生成工具。" onclick="window.open('https://video.hunyuan.tencent.com', '_blank')"><img src="https://video.hunyuan.tencent.com/favicon.ico" alt="腾讯混元视频" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯混元视频</div>
+<div class="card" data-tooltip="智谱 AI 视频生成工具。" onclick="window.open('https://chatglm.cn/video', '_blank')"><img src="https://chatglm.cn/favicon.ico" alt="智谱清影" loading="lazy" decoding="async" referrerpolicy="no-referrer">智谱清影</div>
 <div class="card" data-tooltip="AI 视频生成工具。" onclick="window.open('https://www.vidu.cn', '_blank')"><img src="https://www.vidu.cn/favicon.ico" alt="Vidu" loading="lazy" decoding="async" referrerpolicy="no-referrer">Vidu</div>
 <div class="card" data-tooltip="海外 AI 视频生成与创意编辑平台。" onclick="window.open('https://runwayml.com', '_blank')"><img src="https://runwayml.com/favicon.ico" alt="Runway" loading="lazy" decoding="async" referrerpolicy="no-referrer">Runway</div>
 <div class="card" data-tooltip="AI 视频生成平台。" onclick="window.open('https://pika.art', '_blank')"><img src="https://pika.art/favicon.ico" alt="Pika" loading="lazy" decoding="async" referrerpolicy="no-referrer">Pika</div>
-<div class="card" data-tooltip="AI 视频和创意生成平台。" onclick="window.open('https://aibrm.com', '_blank')"><img src="https://aibrm.com/favicon.ico" alt="白日梦" loading="lazy" decoding="async" referrerpolicy="no-referrer">白日梦</div>
+<div class="card" data-tooltip="百度旗下 AI 视频与内容创作工具。" onclick="window.open('https://aigc.baidu.com/home', '_blank')"><img src="https://aigc.baidu.com/favicon.ico" alt="度加创作工具" loading="lazy" decoding="async" referrerpolicy="no-referrer">度加创作工具</div>
+<div class="card" data-tooltip="抖音旗下 AI 营销创作平台。" onclick="window.open('https://aic.oceanengine.com', '_blank')"><img src="https://aic.oceanengine.com/favicon.ico" alt="即创" loading="lazy" decoding="async" referrerpolicy="no-referrer">即创</div>
+<div class="card" data-tooltip="AI 视频生成与创意内容制作平台。" onclick="window.open('https://typemovie.art/#/dashboard', '_blank')"><img src="https://typemovie.art/favicon.ico" alt="讯飞绘镜" loading="lazy" decoding="async" referrerpolicy="no-referrer">讯飞绘镜</div>
 <div class="card" data-tooltip="阿里旗下 AI 视频与营销创作方案。" onclick="window.open('https://xunguang.com/solution/#/home', '_blank')"><img src="https://xunguang.com/favicon.ico" alt="寻光" loading="lazy" decoding="async" referrerpolicy="no-referrer">寻光</div>
 <div class="card" data-tooltip="美图旗下视频创作工具。" onclick="window.open('https://www.kaipai.com/home', '_blank')"><img src="https://www.kaipai.com/favicon.ico" alt="开拍" loading="lazy" decoding="async" referrerpolicy="no-referrer">开拍</div>
-<div class="card" data-tooltip="抖音旗下 AI 营销创作平台。" onclick="window.open('https://aic.oceanengine.com', '_blank')"><img src="https://aic.oceanengine.com/favicon.ico" alt="即创" loading="lazy" decoding="async" referrerpolicy="no-referrer">即创</div>
+<div class="card" data-tooltip="AI 视频和创意生成平台。" onclick="window.open('https://aibrm.com', '_blank')"><img src="https://aibrm.com/favicon.ico" alt="白日梦" loading="lazy" decoding="async" referrerpolicy="no-referrer">白日梦</div>
 <div class="card" data-tooltip="AI 视频创作平台，可签到获取金币。" onclick="window.open('https://aigc.jurilu.com/#/register', '_blank')"><img src="https://aigc.jurilu.com/favicon.ico" alt="巨日禄" loading="lazy" decoding="async" referrerpolicy="no-referrer">巨日禄</div>
 <div class="card" data-tooltip="AI 视频生成与内容创作平台。" onclick="window.open('https://aigc.yizhentv.com/invite/register.html', '_blank')"><img src="https://aigc.yizhentv.com/favicon.ico" alt="一帧秒创" loading="lazy" decoding="async" referrerpolicy="no-referrer">一帧秒创</div>
+<div class="card" data-tooltip="腾讯混元 3D 生成工具。" onclick="window.open('https://3d.hunyuan.tencent.com', '_blank')"><img src="https://3d.hunyuan.tencent.com/favicon.ico" alt="腾讯混元3D" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯混元3D</div>
+<div class="card" data-tooltip="AI 3D 模型生成平台。" onclick="window.open('https://www.tripo3d.ai', '_blank')"><img src="https://www.tripo3d.ai/favicon.ico" alt="Tripo3D" loading="lazy" decoding="async" referrerpolicy="no-referrer">Tripo3D</div>
+<div class="card" data-tooltip="AI 3D 模型与材质生成平台。" onclick="window.open('https://www.meshy.ai', '_blank')"><img src="https://www.meshy.ai/favicon.ico" alt="Meshy" loading="lazy" decoding="async" referrerpolicy="no-referrer">Meshy</div>
+<div class="card" data-tooltip="AI 3D 模型生成工具。" onclick="window.open('https://hitem3d.ai', '_blank')"><img src="https://hitem3d.ai/favicon.ico" alt="Hitem3D" loading="lazy" decoding="async" referrerpolicy="no-referrer">Hitem3D</div>
+<div class="card" data-tooltip="AI 图片转模型与建模工具。" onclick="window.open('https://ai.leanplans.com/chat/imgModel', '_blank')"><img src="https://ai.leanplans.com/favicon.ico" alt="立谱智造" loading="lazy" decoding="async" referrerpolicy="no-referrer">立谱智造</div>
 <div class="card" data-tooltip="3D 数字人与视频生成平台。" onclick="window.open('https://www.youyan3d.com/platform', '_blank')"><img src="https://www.youyan3d.com/favicon.ico" alt="有言AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">有言AI</div>
-<div class="card" data-tooltip="面向海外中小企业的 AI 数字人工具。" onclick="window.open('https://www.keevx.com/main/home', '_blank')"><img src="https://www.keevx.com/favicon.ico" alt="Keevx" loading="lazy" decoding="async" referrerpolicy="no-referrer">Keevx</div>
-<div class="card" data-tooltip="剪映官方入口，数字人等功能在软件内使用。" onclick="window.open('https://www.capcut.cn', '_blank')"><img src="https://www.capcut.cn/favicon.ico" alt="剪映" loading="lazy" decoding="async" referrerpolicy="no-referrer">剪映</div>
 <div class="card" data-tooltip="B 站创作工具，包含数字人相关能力。" onclick="window.open('https://member.bilibili.com/york/bilibili-studio/home', '_blank')"><img src="https://member.bilibili.com/favicon.ico" alt="必剪Studio" loading="lazy" decoding="async" referrerpolicy="no-referrer">必剪Studio</div>
 <div class="card" data-tooltip="万兴旗下 AI 数字人工具。" onclick="window.open('https://virbo.wondershare.cn', '_blank')"><img src="https://virbo.wondershare.cn/favicon.ico" alt="万兴播爆" loading="lazy" decoding="async" referrerpolicy="no-referrer">万兴播爆</div>
 <div class="card" data-tooltip="百度智能数字人平台。" onclick="window.open('https://xiling.cloud.baidu.com', '_blank')"><img src="https://xiling.cloud.baidu.com/favicon.ico" alt="百度曦灵" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度曦灵</div>
 <div class="card" data-tooltip="AI 数字人与短视频创作工具。" onclick="window.open('https://app.shanjian.tv', '_blank')"><img src="https://app.shanjian.tv/favicon.ico" alt="闪剪" loading="lazy" decoding="async" referrerpolicy="no-referrer">闪剪</div>
 <div class="card" data-tooltip="AI 数字人工具。" onclick="window.open('https://www.chanjing.cc', '_blank')"><img src="https://www.chanjing.cc/favicon.ico" alt="蝉镜" loading="lazy" decoding="async" referrerpolicy="no-referrer">蝉镜</div>
 <div class="card" data-tooltip="抖音 AI 分身申请入口。" onclick="window.open('https://shuziren.douyin.com/signup', '_blank')"><img src="https://shuziren.douyin.com/favicon.ico" alt="抖音AI分身" loading="lazy" decoding="async" referrerpolicy="no-referrer">抖音AI分身</div>
-<div class="card" data-tooltip="腾讯混元 3D 生成工具。" onclick="window.open('https://3d.hunyuan.tencent.com', '_blank')"><img src="https://3d.hunyuan.tencent.com/favicon.ico" alt="腾讯混元3D" loading="lazy" decoding="async" referrerpolicy="no-referrer">腾讯混元3D</div>
-<div class="card" data-tooltip="AI 3D 模型生成平台。" onclick="window.open('https://www.tripo3d.ai', '_blank')"><img src="https://www.tripo3d.ai/favicon.ico" alt="Tripo3D" loading="lazy" decoding="async" referrerpolicy="no-referrer">Tripo3D</div>
-<div class="card" data-tooltip="AI 3D 模型生成工具。" onclick="window.open('https://hitem3d.ai', '_blank')"><img src="https://hitem3d.ai/favicon.ico" alt="Hitem3D" loading="lazy" decoding="async" referrerpolicy="no-referrer">Hitem3D</div>
-<div class="card" data-tooltip="AI 3D 模型与材质生成平台。" onclick="window.open('https://www.meshy.ai', '_blank')"><img src="https://www.meshy.ai/favicon.ico" alt="Meshy" loading="lazy" decoding="async" referrerpolicy="no-referrer">Meshy</div>
-<div class="card" data-tooltip="AI 图片转模型与建模工具。" onclick="window.open('https://ai.leanplans.com/chat/imgModel', '_blank')"><img src="https://ai.leanplans.com/favicon.ico" alt="立谱智造" loading="lazy" decoding="async" referrerpolicy="no-referrer">立谱智造</div>
+<div class="card" data-tooltip="面向海外中小企业的 AI 数字人工具。" onclick="window.open('https://www.keevx.com/main/home', '_blank')"><img src="https://www.keevx.com/favicon.ico" alt="Keevx" loading="lazy" decoding="async" referrerpolicy="no-referrer">Keevx</div>
+<div class="card" data-tooltip="字节跳动旗下 AI 写作工具。" onclick="window.open('https://www.writingo.net', '_blank')"><img src="https://www.writingo.net/favicon.ico" alt="火山写作" loading="lazy" decoding="async" referrerpolicy="no-referrer">火山写作</div>
 <div class="card" data-tooltip="适合小红书图文等场景的 AI 写作工具。" onclick="window.open('https://turbodesk.xfyun.cn/client-pro', '_blank')"><img src="https://turbodesk.xfyun.cn/favicon.ico" alt="讯飞绘文" loading="lazy" decoding="async" referrerpolicy="no-referrer">讯飞绘文</div>
 <div class="card" data-tooltip="面向小说创作的 AI 写作工具。" onclick="window.open('https://wawawriter.com/app/', '_blank')"><img src="https://wawawriter.com/favicon.ico" alt="蛙蛙写作" loading="lazy" decoding="async" referrerpolicy="no-referrer">蛙蛙写作</div>
-<div class="card" data-tooltip="公文写作与政务材料辅助工具。" onclick="window.open('https://miaobi.xinhuaskl.com', '_blank')"><img src="https://miaobi.xinhuaskl.com/favicon.ico" alt="新华妙笔" loading="lazy" decoding="async" referrerpolicy="no-referrer">新华妙笔</div>
 <div class="card" data-tooltip="百度长文写作与内容生成工具。" onclick="window.open('https://cp.baidu.com', '_blank')"><img src="https://cp.baidu.com/favicon.ico" alt="百度橙篇" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度橙篇</div>
-<div class="card" data-tooltip="清华自然语言处理团队的诗歌生成系统。" onclick="window.open('https://jiuge.thunlp.org', '_blank')"><img src="https://jiuge.thunlp.org/favicon.ico" alt="清华九歌" loading="lazy" decoding="async" referrerpolicy="no-referrer">清华九歌</div>
-<div class="card" data-tooltip="字节跳动旗下 AI 写作工具。" onclick="window.open('https://www.writingo.net', '_blank')"><img src="https://www.writingo.net/favicon.ico" alt="火山写作" loading="lazy" decoding="async" referrerpolicy="no-referrer">火山写作</div>
 <div class="card" data-tooltip="知网 AI 智能写作入口。" onclick="window.open('https://aidoc.cnki.net', '_blank')"><img src="https://aidoc.cnki.net/favicon.ico" alt="知网AI写作" loading="lazy" decoding="async" referrerpolicy="no-referrer">知网AI写作</div>
+<div class="card" data-tooltip="清华自然语言处理团队的诗歌生成系统。" onclick="window.open('https://jiuge.thunlp.org', '_blank')"><img src="https://jiuge.thunlp.org/favicon.ico" alt="清华九歌" loading="lazy" decoding="async" referrerpolicy="no-referrer">清华九歌</div>
+<div class="card" data-tooltip="公文写作与政务材料辅助工具。" onclick="window.open('https://miaobi.xinhuaskl.com', '_blank')"><img src="https://miaobi.xinhuaskl.com/favicon.ico" alt="新华妙笔" loading="lazy" decoding="async" referrerpolicy="no-referrer">新华妙笔</div>
 <div class="card" data-tooltip="人民网公文写作素材与学习栏目。" onclick="window.open('https://cpc.people.com.cn/GB/441049/441870/index.html', '_blank')"><img src="https://cpc.people.com.cn/favicon.ico" alt="写易" loading="lazy" decoding="async" referrerpolicy="no-referrer">写易</div>
-<div class="card" data-tooltip="国务院政策文件库，适合公文材料检索。" onclick="window.open('https://www.gov.cn/zhengce/zhengcewenjianku/index.htm', '_blank')"><img src="https://www.gov.cn/favicon.ico" alt="政策文件库" loading="lazy" decoding="async" referrerpolicy="no-referrer">政策文件库</div>
 <div class="card" data-tooltip="学习强国官方平台。" onclick="window.open('https://www.xuexi.cn', '_blank')"><img src="https://www.xuexi.cn/favicon.ico" alt="学习强国" loading="lazy" decoding="async" referrerpolicy="no-referrer">学习强国</div>
+<div class="card" data-tooltip="国务院政策文件库，适合公文材料检索。" onclick="window.open('https://www.gov.cn/zhengce/zhengcewenjianku/index.htm', '_blank')"><img src="https://www.gov.cn/favicon.ico" alt="政策文件库" loading="lazy" decoding="async" referrerpolicy="no-referrer">政策文件库</div>
 <div class="card" data-tooltip="中国知网工具书与资料检索入口。" onclick="window.open('https://gjzl.cnki.net', '_blank')"><img src="https://gjzl.cnki.net/favicon.ico" alt="知网工具书" loading="lazy" decoding="async" referrerpolicy="no-referrer">知网工具书</div>
-</div>
-</div>
-<!-- AI行业 -->
-<div class="sub-column">
-<h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-scale-balanced"></use></svg> AI行业</h3>
-<div class="card-container">
 <div class="card" data-tooltip="通义旗下法律 AI 助手。" onclick="window.open('https://tongyi.aliyun.com/farui/home', '_blank')"><img src="https://tongyi.aliyun.com/favicon.ico" alt="通义法睿" loading="lazy" decoding="async" referrerpolicy="no-referrer">通义法睿</div>
 <div class="card" data-tooltip="百度法律 AI 问答与辅助工具。" onclick="window.open('https://ailegal.baidu.com', '_blank')"><img src="https://ailegal.baidu.com/favicon.ico" alt="百度法行宝" loading="lazy" decoding="async" referrerpolicy="no-referrer">百度法行宝</div>
 <div class="card" data-tooltip="北大法宝法律 AI 产品入口。" onclick="window.open('https://ai.pkulaw.com/shop', '_blank')"><img src="https://ai.pkulaw.com/favicon.ico" alt="北大法宝AI" loading="lazy" decoding="async" referrerpolicy="no-referrer">北大法宝AI</div>

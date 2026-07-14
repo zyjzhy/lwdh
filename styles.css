@@ -2935,6 +2935,59 @@ font-size: 18px;
             font-size: 12px;
         }
 
+        .wechat-panel {
+            display: grid;
+            justify-items: center;
+            gap: 12px;
+            padding: 0;
+            text-align: center;
+        }
+
+        .wechat-qr-frame {
+            display: grid;
+            place-items: center;
+            width: min(268px, 78vw);
+            padding: 10px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.92)),
+                var(--surface-strong);
+            box-shadow: 0 14px 34px rgba(17, 24, 39, 0.12);
+        }
+
+        .wechat-qr-image {
+            width: min(232px, calc(78vw - 20px));
+            max-width: 100%;
+            aspect-ratio: 1;
+            object-fit: contain;
+            border: 0;
+            border-radius: 10px;
+            background: #ffffff;
+            box-shadow: none;
+        }
+
+        .wechat-qr-image:focus {
+            outline: 3px solid var(--ring);
+            outline-offset: 3px;
+        }
+
+        .wechat-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            max-width: 310px;
+            margin: 0;
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .wechat-hint .svg-icon {
+            color: var(--secondary-color);
+        }
+
         .floating-button {
             width: 46px;
             height: 46px;
@@ -2950,6 +3003,34 @@ font-size: 18px;
             transform: translateY(-3px) scale(1.08);
             background: linear-gradient(135deg, var(--secondary-color), color-mix(in srgb, var(--secondary-color) 70%, var(--accent-color)));
             box-shadow: 0 16px 36px color-mix(in srgb, var(--secondary-color) 25%, rgba(17, 24, 39, 0.2));
+        }
+
+        #contact-author-modal .modal-content-wrapper {
+            max-width: min(390px, calc(100vw - 28px));
+        }
+
+        #contact-author-modal .title {
+            background: linear-gradient(135deg, #16a34a, #2563eb);
+            padding-block: 12px;
+        }
+
+        #contact-author-modal .modal-content {
+            padding: 8px 8px 0;
+            overflow: visible;
+        }
+
+        #contact-author-modal .modal-footer {
+            padding-top: 12px;
+        }
+
+        #contact-author-modal .modal-footer button {
+            min-height: 38px;
+            padding: 10px 12px;
+            background: #16a34a;
+        }
+
+        #contact-author-modal .modal-footer button:hover {
+            background: #15803d;
         }
 
         .floating-button:active {

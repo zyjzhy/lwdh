@@ -1989,54 +1989,6 @@
       return clone;
     }
 
-    function getExportPagesHtml(cfg) {
-      return [...previewContent.querySelectorAll('.page-sim')]
-        .map(page => `<div class="pdf-page">${clonePageForExport(page).outerHTML}</div>`)
-        .join('');
-    }
-
-    function buildPrintDocument() {
-      const cfg = sizeConfig[currentSizeMode];
-      return `<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <title>会议名牌打印</title>
-  <style>${getExportCss(cfg)}</style>
-</head>
-<body>${getExportPagesHtml(cfg)}</body>
-</html>`;
-    }
-
-    function printIsolated() {
-      if (!nameList.length) return showToast('请先添加姓名');
-      const frame = document.createElement('iframe');
-      frame.setAttribute('aria-hidden', 'true');
-      frame.style.position = 'fixed';
-      frame.style.right = '0';
-      frame.style.bottom = '0';
-      frame.style.width = '0';
-      frame.style.height = '0';
-      frame.style.border = '0';
-      frame.style.opacity = '0';
-      document.body.appendChild(frame);
-
-      const doc = frame.contentDocument || frame.contentWindow.document;
-      doc.open();
-      doc.write(buildPrintDocument());
-      doc.close();
-
-      const cleanup = () => {
-        window.setTimeout(() => frame.remove(), 800);
-      };
-      frame.contentWindow.addEventListener('afterprint', cleanup, { once: true });
-      window.setTimeout(() => {
-        frame.contentWindow.focus();
-        frame.contentWindow.print();
-        window.setTimeout(cleanup, 60000);
-      }, 180);
-    }
-
     function loadImage(src) {
       return new Promise((resolve, reject) => {
         const img = new Image();
@@ -2118,7 +2070,7 @@
 
       add('%PDF-1.4\n');
       beginObj(1);
-      add('<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+      add('<< /Type /Catalog /Pages 2 0 R /ViewerPreferences << /PrintScaling /None >> >>\nendobj\n');
       beginObj(2);
       add(`<< /Type /Pages /Kids [${objectMap.map(item => `${item.page} 0 R`).join(' ')}] /Count ${images.length} >>\nendobj\n`);
 
@@ -2144,21 +2096,25 @@
       return concatBytes(parts, offset);
     }
 
+    async function generatePdfBlob() {
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      const cfg = sizeConfig[currentSizeMode];
+      const pages = [...previewContent.querySelectorAll('.page-sim')];
+      const images = [];
+      for (const page of pages) {
+        images.push(await renderPageToJpeg(page, cfg));
+      }
+      const pdfBytes = createPdfBytes(images, cfg);
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    }
+
     async function downloadPdf() {
       if (!nameList.length) return showToast('请先添加姓名');
       const oldText = btnDownload.textContent;
       btnDownload.disabled = true;
       btnDownload.textContent = '生成中...';
       try {
-        await new Promise(resolve => requestAnimationFrame(resolve));
-        const cfg = sizeConfig[currentSizeMode];
-        const pages = [...previewContent.querySelectorAll('.page-sim')];
-        const images = [];
-        for (const page of pages) {
-          images.push(await renderPageToJpeg(page, cfg));
-        }
-        const pdfBytes = createPdfBytes(images, cfg);
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const blob = await generatePdfBlob();
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -2174,6 +2130,104 @@
       } finally {
         btnDownload.disabled = false;
         btnDownload.textContent = oldText;
+      }
+    }
+
+    function printPdfBlob(blob) {
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(blob);
+        const frame = document.createElement('iframe');
+        let cleaned = false;
+        const loadTimer = window.setTimeout(() => {
+          cleanup();
+          reject(new Error('PDF print frame load timeout'));
+        }, 6000);
+
+        const cleanup = () => {
+          if (cleaned) return;
+          cleaned = true;
+          window.clearTimeout(loadTimer);
+          window.setTimeout(() => {
+            frame.remove();
+            URL.revokeObjectURL(url);
+          }, 800);
+        };
+
+        frame.setAttribute('aria-hidden', 'true');
+        frame.style.position = 'fixed';
+        frame.style.left = '0';
+        frame.style.bottom = '0';
+        frame.style.width = '1px';
+        frame.style.height = '1px';
+        frame.style.border = '0';
+        frame.style.opacity = '0.01';
+
+        frame.onload = () => {
+          window.clearTimeout(loadTimer);
+          window.setTimeout(() => {
+            try {
+              const printWindow = frame.contentWindow;
+              if (!printWindow) throw new Error('PDF print frame is unavailable');
+              printWindow.addEventListener('afterprint', cleanup, { once: true });
+              printWindow.focus();
+              printWindow.print();
+              resolve();
+              window.setTimeout(cleanup, 60000);
+            } catch (err) {
+              cleanup();
+              reject(err);
+            }
+          }, 600);
+        };
+
+        frame.onerror = () => {
+          cleanup();
+          reject(new Error('PDF print frame failed to load'));
+        };
+
+        frame.src = url;
+        document.body.appendChild(frame);
+      });
+    }
+
+    function openPdfForManualPrint(blob) {
+      const url = URL.createObjectURL(blob);
+      const opened = window.open(url, '_blank');
+      if (opened) opened.opener = null;
+      if (!opened) {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `会议名牌_${new Date().toISOString().slice(0, 10)}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+      window.setTimeout(() => URL.revokeObjectURL(url), 120000);
+    }
+
+    async function printPdf() {
+      if (!nameList.length) return showToast('请先添加姓名');
+      const oldText = btnPrint.textContent;
+      btnPrint.disabled = true;
+      btnDownload.disabled = true;
+      btnPrint.textContent = '生成中...';
+      try {
+        const blob = await generatePdfBlob();
+        try {
+          await printPdfBlob(blob);
+          showToast('已打开 PDF 打印窗口，请选择 100% / 实际大小');
+        } catch (err) {
+          console.warn(err);
+          openPdfForManualPrint(blob);
+          showToast('已打开 PDF，请在 PDF 窗口中选择 100% / 实际大小打印');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('PDF 生成失败，请先下载 PDF 再打印');
+      } finally {
+        btnPrint.disabled = false;
+        btnDownload.disabled = false;
+        btnPrint.textContent = oldText;
       }
     }
 
@@ -2319,8 +2373,8 @@
       // 打印 / 导出 PDF
       btnPrint.addEventListener('click', () => {
         if (!nameList.length) return showToast('请先添加姓名');
-        showToast('🖨️ 正在打开干净打印页');
-        printIsolated();
+        showToast('正在生成 PDF 打印页');
+        printPdf();
       });
 
       // 快捷键提示
@@ -2334,7 +2388,7 @@
           if (nameList.length === 0) {
             showToast('请先添加姓名再打印');
           } else {
-            printIsolated();
+            printPdf();
           }
         }
       });

@@ -21,7 +21,7 @@
             const commonRecommendationContainer = document.getElementById('common-recommendations');
             const feedbackForm = document.getElementById('feedback-form');
             const feedbackStatus = document.getElementById('feedback-status');
-            const feedbackButton = contactModal?.querySelector('.modal-footer button');
+            const feedbackButton = document.querySelector('button[form="feedback-form"]');
             const aboutButtons = Array.from(document.querySelectorAll('.about-open'));
             const themeCycleButtons = Array.from(document.querySelectorAll('.theme-cycle'));
             const settingsButtons = Array.from(document.querySelectorAll('.settings-open'));
@@ -1032,7 +1032,7 @@
 
             function openContactModal() {
                 showModal(contactModal);
-                window.setTimeout(() => document.getElementById('message')?.focus(), 80);
+                window.setTimeout(() => document.getElementById('wechat-qr-image')?.focus(), 80);
             }
 
             function closeContactModal() {
