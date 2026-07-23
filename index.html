@@ -473,10 +473,106 @@ s.parentNode.insertBefore(hm, s);
 </div>
 </header>
 <div id="scrolling-text">
-<div class="scroll-track">
-<p class="scroll-message">知径 — 学术 · AI · 影音 · 工具，一站直达 ｜ 关注公众号：张张小栈</p>
+    <div class="top-bar-inner">
+        <div class="top-bar-left">
+            <span class="time-hm"><span id="th"></span>:<span id="tm"></span></span>
+            <span class="time-sep">:</span>
+            <span class="time-sec" id="ts"></span>
+            <span class="time-meta"><span class="tm-row1" id="tmRow1"></span></span>
+        </div>
+        <div class="top-bar-center">
+            <span id="topTwText"></span><span class="tw-cursor">|</span>
+        </div>
+        <div class="top-bar-actions">
+            <button class="icon-button about-open" type="button" aria-label="关于本站" title="关于本站">
+                <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-question"></use></svg>
+            </button>
+            <button class="icon-button theme-cycle" type="button" aria-label="切换主题" title="切换主题">
+                <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-circle-half-stroke"></use></svg>
+            </button>
+            <button class="icon-button settings-open" type="button" aria-label="系统设置" title="系统设置">
+                <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-gear"></use></svg>
+            </button>
+        </div>
+    </div>
 </div>
-</div>
+<script>
+(function() {
+    var twEl = document.getElementById('topTwText');
+    var cursor = document.querySelector('.tw-cursor');
+    var fallback = [
+        '努力是奇迹的另一个名字',
+        '求知若饥，虚心若愚',
+        '保持热爱，奔赴山海',
+        '今天也是美好的一天',
+        '做自己喜欢的事',
+        '慢慢来，比较快',
+        '坚持就是胜利',
+        '每一刻都值得珍惜'
+    ];
+    var fi = 0;
+
+    function fetchOne() {
+        return fetch('https://v1.hitokoto.cn/?c=a&c=b&c=c&c=d&c=e&c=f&c=g&c=h&c=i&c=j&c=k&c=l')
+            .then(function(r) { return r.json(); })
+            .then(function(d) { return d && d.hitokoto ? d.hitokoto : Promise.reject(); })
+            .catch(function() { return fallback[fi++ % fallback.length]; });
+    }
+
+    function getPeriod(h) {
+        if (h >= 5 && h < 8) return '凌晨';
+        if (h >= 8 && h < 12) return '上午';
+        if (h >= 12 && h < 14) return '中午';
+        if (h >= 14 && h < 18) return '下午';
+        if (h >= 18 && h < 22) return '晚上';
+        return '深夜';
+    }
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function tick() {
+        var now = new Date();
+        var h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+        document.getElementById('th').textContent = pad(h);
+        document.getElementById('tm').textContent = pad(m);
+        document.getElementById('ts').textContent = pad(s);
+        document.getElementById('tmRow1').textContent = (now.getMonth()+1) + '/' + now.getDate() + ' 周' + ['日','一','二','三','四','五','六'][now.getDay()] + ' ' + getPeriod(h);
+    }
+    tick(); setInterval(tick, 1000);
+
+    function typeText(text) {
+        if (!twEl) return;
+        cursor.style.display = 'inline';
+        var idx = 0;
+        twEl.textContent = '';
+        function type() {
+            if (idx < text.length) {
+                twEl.textContent += text[idx++];
+                setTimeout(type, 80 + Math.random()*60);
+            } else {
+                cursor.style.display = 'none';
+                setTimeout(erase, 3000);
+            }
+        }
+        type();
+    }
+    function erase() {
+        cursor.style.display = 'inline';
+        var text = twEl.textContent;
+        function back() {
+            if (text.length > 0) {
+                text = text.slice(0, -1);
+                twEl.textContent = text;
+                setTimeout(back, 25 + Math.random()*20);
+            } else {
+                setTimeout(function() { fetchOne().then(typeText); }, 500);
+            }
+        }
+        back();
+    }
+    fetchOne().then(typeText);
+})();
+</script>
 <div id="sidebar">
 <div class="sidebar-header">
 <div class="sidebar-brand" aria-hidden="true">
@@ -817,8 +913,9 @@ s.parentNode.insertBefore(hm, s);
 <div class="card" data-tooltip="(校外访问)哈商大新版科研系统" onclick="window.open('https://ky-443.webvpn.hrbcu.edu.cn/userAction!to_login.action', '_blank')"><img src="https://ky-443.webvpn.hrbcu.edu.cn/system/img/favicon.ico" alt="科研入口" loading="lazy" decoding="async" referrerpolicy="no-referrer">(外)新科研系统</div>
 <div class="card" data-tooltip="(校外访问)哈商大OA邮箱系统" onclick="window.open('https://xt-443.webvpn.hrbcu.edu.cn/', '_blank')"><img src="https://xt-443.webvpn.hrbcu.edu.cn/favicon.ico" alt="办公入口" loading="lazy" decoding="async" referrerpolicy="no-referrer">(外)OA邮箱</div>
 <div class="card" data-tooltip="(校外访问)中国知网，可下载" onclick="window.open('https://fsso.cnki.net/', '_blank')"><img src="https://www.cnki.net/favicon.ico" alt="知网入口" loading="lazy" decoding="async" referrerpolicy="no-referrer">(外)中国知网</div>
-<div class="card" data-tooltip="党课学习备考资料" onclick="window.open('dzzs.html', '_blank')"><img src="https://www.hrbcu.edu.cn/favicon.ico" alt="党课学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">党课学习备考</div>
-<div class="card" data-tooltip="名牌制作工具" onclick="window.open('nameplate.html', '_blank')"><img src="https://www.hrbcu.edu.cn/favicon.ico" alt="名牌工具" loading="lazy" decoding="async" referrerpolicy="no-referrer">名牌工具</div>
+<div class="card" data-tooltip="党课学习备考资料" onclick="window.open('dzzs.html', '_blank')"><img src="https://www.hrbcu.edu.cn/favicon.ico" alt="党课学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">党课学习备考<span class="badge-new">NEW</span></div>
+<div class="card" data-tooltip="名牌制作工具" onclick="window.open('nameplate.html', '_blank')"><img src="https://www.hrbcu.edu.cn/favicon.ico" alt="名牌工具" loading="lazy" decoding="async" referrerpolicy="no-referrer">名牌工具<span class="badge-new">NEW</span></div>
+<div class="card" data-tooltip="离线 PDF 工具箱" onclick="window.open('pdf-tools.html', '_blank')"><img src="https://www.hrbcu.edu.cn/favicon.ico" alt="PDF工具" loading="lazy" decoding="async" referrerpolicy="no-referrer">离线PDF工具箱<span class="badge-new">NEW</span></div>
 
 </div>
 </div>
