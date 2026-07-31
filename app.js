@@ -17,6 +17,7 @@
             const announcement = document.getElementById('announcement');
             const contactModal = document.getElementById('contact-author-modal');
             const settingsModal = document.getElementById('settings-modal');
+            const gamesModal = document.getElementById('games-modal');
             const scrollTopBtn = document.getElementById('scroll-to-top');
             const commonRecommendationContainer = document.getElementById('common-recommendations');
             const feedbackForm = document.getElementById('feedback-form');
@@ -973,7 +974,7 @@
             }
 
             function hasOpenModal() {
-                return [aboutModal, announcement, contactModal, settingsModal].some(modal => modal?.classList.contains('show'));
+                return [aboutModal, announcement, contactModal, settingsModal, gamesModal].some(modal => modal?.classList.contains('show'));
             }
 
             function lockPageScroll() {
@@ -1046,6 +1047,15 @@
 
             function closeSettingsModal() {
                 hideModal(settingsModal);
+            }
+
+            function openGamesModal() {
+                showModal(gamesModal);
+                window.setTimeout(() => gamesModal?.querySelector('.modal-close')?.focus(), 80);
+            }
+
+            function closeGamesModal() {
+                hideModal(gamesModal);
             }
 
             function setFeedbackStatus(message, type = 'neutral') {
@@ -1683,6 +1693,9 @@
                     if (event.target === settingsModal) {
                         closeSettingsModal();
                     }
+                    if (event.target === gamesModal) {
+                        closeGamesModal();
+                    }
                 });
                 window.addEventListener('keydown', event => {
                     if (event.key !== 'Escape') {
@@ -1699,6 +1712,9 @@
                     }
                     if (settingsModal?.classList.contains('show')) {
                         closeSettingsModal();
+                    }
+                    if (gamesModal?.classList.contains('show')) {
+                        closeGamesModal();
                     }
                 });
             }
@@ -1749,6 +1765,8 @@
             window.openContactModal = openContactModal;
             window.closeContactModal = closeContactModal;
             window.closeSettingsModal = closeSettingsModal;
+            window.openGamesModal = openGamesModal;
+            window.closeGamesModal = closeGamesModal;
             window.showFeedbackModal = openContactModal;
             window.sendFeedback = sendFeedback;
             window.scrollToTop = scrollToTop;

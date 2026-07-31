@@ -461,6 +461,10 @@ s.parentNode.insertBefore(hm, s);
 <a href="#" data-target="life-links" class="nav-link"><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-shopping-bag"></use></svg> 生活</a>
 </nav>
 <div class="nav-actions" aria-label="快捷操作">
+<button class="games-toggle" type="button" onclick="openGamesModal()" aria-label="益智游戏" title="益智游戏">
+<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-gamepad"></use></svg>
+<span class="games-toggle-label">益智游戏</span>
+</button>
 <button class="icon-button about-open" type="button" aria-label="关于本站" title="关于本站">
 <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-question"></use></svg>
 </button>
@@ -484,6 +488,10 @@ s.parentNode.insertBefore(hm, s);
             <span id="topTwText"></span><span class="tw-cursor">|</span>
         </div>
         <div class="top-bar-actions">
+            <button class="games-toggle" type="button" onclick="openGamesModal()" aria-label="益智游戏" title="益智游戏">
+                <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-gamepad"></use></svg>
+                <span class="games-toggle-label">益智游戏</span>
+            </button>
             <button class="icon-button about-open" type="button" aria-label="关于本站" title="关于本站">
                 <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-question"></use></svg>
             </button>
@@ -839,6 +847,38 @@ s.parentNode.insertBefore(hm, s);
 <div class="modal-footer">
 <button type="button" onclick="closeSettingsModal()">
 <svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-check"></use></svg> 完成
+</button>
+</div>
+</div>
+</div>
+
+<!-- 益智游戏 -->
+<div id="games-modal" class="modal">
+<div class="modal-content-wrapper">
+<button class="modal-close" type="button" onclick="closeGamesModal()" aria-label="关闭">&times;</button>
+<div class="title"><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-gamepad"></use></svg> 益智游戏</div>
+<div class="modal-content">
+<div class="games-grid">
+<a class="game-card" href="https://www.minesweeper.cn/" target="_blank" rel="noopener"><span class="game-emoji">💣</span><span class="game-name">扫雷</span><span class="game-desc">经典推理游戏，数字推理找雷</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/2048" target="_blank" rel="noopener"><span class="game-emoji">🔢</span><span class="game-name">2048</span><span class="game-desc">数字合并挑战大脑极限</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/sudoku" target="_blank" rel="noopener"><span class="game-emoji">🧩</span><span class="game-name">数独</span><span class="game-desc">逻辑填数，锻炼推理能力</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/sliding" target="_blank" rel="noopener"><span class="game-emoji">🔀</span><span class="game-name">数字华容道</span><span class="game-desc">滑动拼图，还原数字顺序</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/sokoban" target="_blank" rel="noopener"><span class="game-emoji">📦</span><span class="game-name">推箱子</span><span class="game-desc">移动箱子到目标位置</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/gomoku" target="_blank" rel="noopener"><span class="game-emoji">⚫</span><span class="game-name">五子棋</span><span class="game-desc">黑白对弈，五子连线获胜</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/chess" target="_blank" rel="noopener"><span class="game-emoji">♟️</span><span class="game-name">中国象棋</span><span class="game-desc">楚河汉界，运筹帷幄</span></a>
+<a class="game-card" href="https://kyletang.work/apps/othello1/index.html" target="_blank" rel="noopener"><span class="game-emoji">⚪</span><span class="game-name">黑白棋</span><span class="game-desc">翻转棋子，抢占棋盘</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/tetris" target="_blank" rel="noopener"><span class="game-emoji">🟦</span><span class="game-name">俄罗斯方块</span><span class="game-desc">消除行数，挑战空间感</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/snake" target="_blank" rel="noopener"><span class="game-emoji">🐍</span><span class="game-name">贪吃蛇</span><span class="game-desc">经典贪吃蛇创意玩法</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/unblockme" target="_blank" rel="noopener"><span class="game-emoji">🚗</span><span class="game-name">华容道滑块</span><span class="game-desc">移动方块让主角脱困</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/cube" target="_blank" rel="noopener"><span class="game-emoji">🎲</span><span class="game-name">3D魔方</span><span class="game-desc">在线还原魔方，训练空间想象</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/maze" target="_blank" rel="noopener"><span class="game-emoji">🧭</span><span class="game-name">迷宫</span><span class="game-desc">随机生成迷宫，寻找出路</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/tangram" target="_blank" rel="noopener"><span class="game-emoji">📐</span><span class="game-name">七巧板</span><span class="game-desc">拼出各种形状，锻炼想象力</span></a>
+<a class="game-card" href="https://gallery.selfboot.cn/zh/games/lasermaze" target="_blank" rel="noopener"><span class="game-emoji">💡</span><span class="game-name">激光反射</span><span class="game-desc">调整反射块照亮目标</span></a>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" onclick="closeGamesModal()">
+<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-check"></use></svg> 关闭
 </button>
 </div>
 </div>

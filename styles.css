@@ -3917,6 +3917,128 @@ font-size: 18px;
             }
         }
 
+        /* ===== 益智游戏 ===== */
+        .top-bar-actions {
+            gap: 6px;
+        }
+
+        .games-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 32px;
+            padding: 0 12px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px color-mix(in srgb, var(--secondary-color) 22%, transparent);
+            transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+        }
+
+        .games-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 16px color-mix(in srgb, var(--secondary-color) 36%, transparent);
+            filter: brightness(1.06);
+        }
+
+        .games-toggle .svg-icon {
+            width: 16px;
+            height: 16px;
+            flex: 0 0 auto;
+        }
+
+        /* 桌面端顶部右侧仅显示益智游戏入口，其余快捷操作仍在侧边栏 */
+        @media (min-width: 981px) {
+            .top-bar-actions {
+                display: flex;
+            }
+
+            .top-bar-actions .icon-button {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .games-toggle {
+                width: 30px;
+                height: 30px;
+                padding: 0;
+                border-radius: 8px;
+                background: color-mix(in srgb, var(--text-color) 6%, transparent);
+                color: var(--text-color);
+                box-shadow: none;
+            }
+
+            .games-toggle:hover {
+                background: color-mix(in srgb, var(--text-color) 14%, transparent);
+            }
+
+            .games-toggle .games-toggle-label {
+                display: none;
+            }
+        }
+
+        /* 益智游戏弹窗 */
+        #games-modal .modal-content-wrapper {
+            max-width: min(680px, calc(100vw - 28px));
+        }
+
+        #games-modal .modal-content {
+            max-height: 62vh;
+            padding: 16px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+            gap: 12px;
+        }
+
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 16px 10px 14px;
+            text-align: center;
+            text-decoration: none;
+            background: var(--surface-muted);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--text-color);
+            transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
+        }
+
+        .game-card:hover {
+            transform: translateY(-2px);
+            border-color: color-mix(in srgb, var(--secondary-color) 42%, var(--line));
+            box-shadow: 0 6px 16px color-mix(in srgb, var(--secondary-color) 16%, transparent);
+            background: var(--surface-strong);
+        }
+
+        .game-card .game-emoji {
+            font-size: 30px;
+            line-height: 1;
+        }
+
+        .game-card .game-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .game-card .game-desc {
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             *,
             *::before,
