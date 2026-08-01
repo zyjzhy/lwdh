@@ -205,10 +205,8 @@
             display: none;
             align-items: center;
             gap: 4px;
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
+            margin-left: auto;
+            flex-shrink: 0;
         }
 
         .top-bar-actions .icon-button {
@@ -3875,15 +3873,15 @@ font-size: 18px;
             .card {
                 min-height: 54px;
                 padding: 8px 6px;
-                font-size: 11px;
+                font-size: clamp(11px, 2.4vw, 14px);
                 gap: 6px;
                 word-break: break-word;
             }
 
             .card img {
-                width: 22px;
-                height: 22px;
-                max-width: 22px;
+                width: clamp(22px, 4.2vw, 28px);
+                height: clamp(22px, 4.2vw, 28px);
+                max-width: clamp(22px, 4.2vw, 28px);
                 border-radius: 6px;
                 padding: 2px;
             }
