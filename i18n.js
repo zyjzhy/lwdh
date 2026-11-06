@@ -147,6 +147,26 @@ const I18N = {
     },
 
     // 设置弹窗
+    wallpapers: {
+      title: "我的壁纸",
+      hint: "最近 6 张，保存在本浏览器。",
+      upload: "上传图片",
+      uploading: "处理中…",
+      empty: "还没有自定义壁纸",
+      dropHint: "上传图片，或将图片拖放到这里。",
+      builtIn: "精选壁纸",
+      active: "使用中",
+      use: "使用壁纸",
+      remove: "删除壁纸",
+      previous: "以前的自定义壁纸",
+      invalid: "图片无法读取，请换一张 JPG、PNG 或 WebP 图片。",
+      tooLarge: "请选择小于 20 MB 的图片。",
+      uploaded: "壁纸已添加，最近 6 张会自动保留。",
+      deleted: "壁纸已删除。",
+      temporary: "当前浏览器未能保存历史，本次壁纸仍可使用。",
+      deleteError: "暂时无法删除这张壁纸，请稍后重试。",
+    },
+
     personal: {
       title: "个性化设置",
       subtitle: "让首页更合你的习惯。",
@@ -511,6 +531,26 @@ const I18N = {
       download: "Download Shortcut",
       downloadAgain: "Download Again",
       downloadStarted: "Download started. Move the file to your desktop when it finishes.",
+    },
+
+    wallpapers: {
+      title: "My Wallpapers",
+      hint: "Your last 6 uploads, saved in this browser.",
+      upload: "Upload Image",
+      uploading: "Processing…",
+      empty: "No custom wallpapers yet",
+      dropHint: "Upload an image or drop one here.",
+      builtIn: "Wallpaper Collection",
+      active: "In use",
+      use: "Use wallpaper",
+      remove: "Delete wallpaper",
+      previous: "Previous custom wallpaper",
+      invalid: "This image could not be read. Try a JPG, PNG or WebP image.",
+      tooLarge: "Choose an image smaller than 20 MB.",
+      uploaded: "Wallpaper added. Your last 6 uploads are kept.",
+      deleted: "Wallpaper deleted.",
+      temporary: "This browser could not save the history. You can still use this wallpaper for now.",
+      deleteError: "This wallpaper could not be deleted. Please try again.",
     },
 
     personal: {

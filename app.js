@@ -547,6 +547,7 @@
                     button.classList.toggle('active', isActive);
                     button.setAttribute('aria-pressed', String(isActive));
                 });
+                window.WallpaperLibrary?.syncActive();
             }
 
             function todayString() {
@@ -634,6 +635,7 @@
 
             function handleCustomBackground(file) {
                 if (!file) return;
+                if (window.WallpaperLibrary) { window.WallpaperLibrary.add(file); return; }
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const dataUrl = e.target.result;
@@ -649,7 +651,7 @@
                 applyPalette(storageGet(paletteKey) || 'rose', false);
                 var customBg = storageGet('zz-nav-custom-bg');
                 setCustomBackground(customBg);
-                var savedBg = customBg ? 'custom' : (storageGet(backgroundKey) || 'none');
+                var savedBg = storageGet(backgroundKey) || (customBg ? 'custom' : 'none');
                 applyBackground(savedBg, false);
                 var sel = document.getElementById('bg-rotate-mode');
                 if (sel) sel.value = getBgRotateMode();
@@ -1824,7 +1826,9 @@
             window.DirectoryTools = {
                 openSettings: openSettingsModal,
                 cloneCard: createFrequentRecommendationCard,
-                refreshRecommendations: renderCommonRecommendations
+                refreshRecommendations: renderCommonRecommendations,
+                setCustomBackground,
+                applyBackground
             };
             try {
                 init();

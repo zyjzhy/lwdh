@@ -52,15 +52,6 @@ html[data-theme="dark"][data-glass="readable"] {
 #settings-modal .bg-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 #settings-modal .bg-btn { padding: 8px; gap: 7px; }
 
-#settings-modal .bg-btn-custom {
-  grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: flex-start;
-  gap: 14px; padding: 12px 16px; text-align: left;
-}
-#settings-modal .bg-btn-custom:not(.active) { border: 2px dashed color-mix(in srgb, var(--secondary-color) 38%, transparent); background-color: var(--glass-control); }
-#settings-modal .bg-btn-custom .bg-preview { order: -1; flex: 0 0 52px; width: 52px; height: 52px; border: 0; border-radius: 10px; }
-#settings-modal .bg-btn-custom .btn-label { font-size: 14px; font-weight: 650; color: var(--ui-ink); }
-#settings-modal .bg-btn-custom .bg-preview .svg-icon { width: 24px; height: 24px; opacity: 1; }
-
 #settings-modal .bg-preview { width: 100%; height: 70px; aspect-ratio: auto; border-radius: 7px; }
 #settings-modal .bg-preview[data-preview-pending] { background-image: linear-gradient(145deg, var(--ui-muted), var(--secondary-soft)); }
 #settings-modal .bg-btn .btn-label { font-size: 12px; }
@@ -73,9 +64,8 @@ html[data-theme="dark"][data-glass="readable"] {
 .glass-sample { display: block; width: 38px; height: 26px; margin-bottom: 3px; border: 1px solid var(--glass-edge); border-radius: 6px; background: color-mix(in srgb, var(--secondary-color) 18%, transparent); box-shadow: var(--glass-inset); }
 [data-glass-mode="airy"] .glass-sample { opacity: .45; }
 [data-glass-mode="readable"] .glass-sample { background-color: var(--ui-surface); }
-#settings-modal .settings-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 28px 22px; margin: 0; border-top: 1px solid var(--glass-shade); background: none; flex-shrink: 0; }
-.settings-footer > span { color: var(--ui-secondary); font-size: 11px; line-height: 1.6; }
-#settings-modal .settings-footer button { width: auto; min-width: 100px; min-height: 42px; padding: 10px 22px; border-radius: 10px; background: var(--secondary-color); color: var(--button-on-accent); }
+#settings-modal .settings-footer { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 16px 28px 22px; margin: 0; border-top: 1px solid var(--glass-shade); background: none; flex-shrink: 0; }
+#settings-modal .settings-footer button { width: min(100%, 320px); min-width: 0; min-height: 42px; padding: 10px 22px; border-radius: 10px; background: var(--secondary-color); color: var(--button-on-accent); }
 .favorite-search-label, .favorite-list-heading h4 { color: var(--ui-ink); font-size: 14px; font-weight: 650; }
 .favorite-search-field { display: flex; align-items: center; gap: 9px; padding: 0 13px; margin-top: 10px; min-height: 46px; background: var(--glass-control); border: 1px solid var(--ui-border); border-radius: 10px; }
 .favorite-search-field .svg-icon { color: var(--ui-secondary); width: 17px; height: 17px; flex-shrink: 0; }
@@ -165,4 +155,46 @@ html[data-theme="dark"] .card-favorite-toggle[aria-pressed="true"] { color: #f2c
 @media (prefers-reduced-motion: reduce) {
   .card-entry, .card-favorite-feedback { transition: none; }
   .card-entry:hover { transform: none; }
+}
+
+/* A compact personal image library sits above the built-in wallpapers. */
+.custom-wallpaper-library { margin-bottom: 26px; padding-bottom: 24px; border-bottom: 1px solid var(--glass-shade); }
+.custom-wallpaper-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 17px; }
+.custom-wallpaper-toolbar > div { flex: 1; min-width: 0; }
+#settings-modal .custom-wallpaper-toolbar h4 { margin: 0; font-size: 16px; font-weight: 700; }
+#settings-modal .custom-wallpaper-toolbar p { margin: 5px 0 0; color: var(--ui-secondary); font-size: 12px; line-height: 1.6; }
+.custom-wallpaper-upload { display: inline-flex; align-items: center; justify-content: center; gap: 7px; flex-shrink: 0; min-height: 40px; padding: 9px 14px; border: 0; border-radius: 10px; background: var(--secondary-color); background-image: var(--glass-glint); color: var(--button-on-accent); font-size: 12px; font-weight: 650; }
+.custom-wallpaper-upload .svg-icon { width: 16px; height: 16px; }
+.custom-wallpaper-upload:hover:not(:disabled) { filter: brightness(1.05); }
+.custom-wallpaper-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }
+.custom-wallpaper-item { position: relative; min-width: 0; }
+.custom-wallpaper-pick { display: block; position: relative; width: 100%; padding: 0; aspect-ratio: 16 / 10; border: 2px solid transparent; border-radius: 12px; background: var(--ui-muted); overflow: hidden; }
+#settings-modal .custom-wallpaper-thumb { display: block; width: 100%; height: 100%; max-height: none; max-width: none; margin: 0; padding: 0; border-radius: 9px; box-shadow: none; object-fit: cover; }
+.custom-wallpaper-pick[aria-pressed="true"] { border-color: var(--primary-color); }
+.custom-wallpaper-active { display: none; position: absolute; bottom: 7px; left: 7px; align-items: center; gap: 4px; padding: 3px 7px; border-radius: 6px; background: #172033; color: #fff; font-size: 10px; line-height: 1.5; }
+.custom-wallpaper-active .svg-icon { width: 11px; height: 11px; }
+.custom-wallpaper-pick[aria-pressed="true"] .custom-wallpaper-active { display: inline-flex; }
+.custom-wallpaper-delete { display: grid; place-items: center; position: absolute; right: 7px; top: 7px; width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%; color: #172033; background: rgb(255 255 255 / 94%); }
+.custom-wallpaper-delete .svg-icon { width: 13px; height: 13px; }
+.custom-wallpaper-delete:hover { color: #a42a46; background: #fff0f3; }
+.custom-wallpaper-name { display: block; margin-top: 7px; color: var(--ui-secondary); font-size: 11px; line-height: 1.6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.custom-wallpaper-empty { display: grid; justify-items: center; gap: 7px; padding: 24px 16px; border: 1px solid var(--ui-border); border-radius: 12px; background: var(--glass-control); text-align: center; }
+.custom-wallpaper-empty > .svg-icon { width: 30px; height: 30px; margin-bottom: 3px; color: var(--secondary-color); }
+#settings-modal .custom-wallpaper-empty p { margin: 0; color: var(--ui-ink); font-size: 13px; font-weight: 600; }
+.custom-wallpaper-empty > span { color: var(--ui-secondary); font-size: 12px; line-height: 1.7; }
+#settings-modal .custom-wallpaper-empty[hidden] { display: none; }
+#settings-modal .custom-wallpaper-status { margin: 12px 0 0; color: var(--ui-secondary); font-size: 12px; line-height: 1.7; }
+.custom-wallpaper-status:empty { display: none; }
+.custom-wallpaper-library.is-dragover { outline: 2px solid var(--primary-color); outline-offset: 8px; border-radius: 8px; }
+@media (hover: hover) and (pointer: fine) {
+  .custom-wallpaper-delete { opacity: 0; }
+  .custom-wallpaper-item:hover .custom-wallpaper-delete, .custom-wallpaper-item:focus-within .custom-wallpaper-delete { opacity: 1; }
+}
+@media (max-width: 600px) {
+  .custom-wallpaper-toolbar { gap: 10px; align-items: flex-start; }
+  #settings-modal .custom-wallpaper-toolbar h4 { font-size: 15px; }
+  #settings-modal .custom-wallpaper-toolbar p { font-size: 11px; }
+  .custom-wallpaper-upload { min-height: 38px; padding: 8px 11px; font-size: 12px; }
+  .custom-wallpaper-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 10px; }
+  .custom-wallpaper-name { font-size: 10px; }
 }
