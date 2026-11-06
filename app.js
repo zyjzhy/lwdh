@@ -16,6 +16,7 @@
             const aboutModal = document.getElementById('about-modal');
             const announcement = document.getElementById('announcement');
             const contactModal = document.getElementById('contact-author-modal');
+            const shortcutModal = document.getElementById('desktop-shortcut-modal');
             const settingsModal = document.getElementById('settings-modal');
             const gamesModal = document.getElementById('games-modal');
             const scrollTopBtn = document.getElementById('scroll-to-top');
@@ -61,6 +62,13 @@
             let searchHistoryItems = [];
             let emailLoadPromise = null;
             let scrollSpyTicking = false;
+            let scrollSaveTimer = 0;
+            let currentActiveColumnId = null;
+            let searchableTextCache = new WeakMap();
+            let iconObserver;
+            let systemThemeListenerBound = false;
+            const modalTriggers = new WeakMap();
+            const translate = (key, fallback) => typeof LangManager !== 'undefined' ? (LangManager.t(key) || fallback) : fallback;
 
             function iconHref(name) {
                 return `#icon-${name}`;
@@ -215,7 +223,7 @@
 
             // === 使用频率追踪 ===
             const CLICK_COUNT_KEY = 'zz-nav-click-counts';
-            const COMMON_RECOMMENDATION_LIMIT = 20;
+            const COMMON_RECOMMENDATION_LIMIT = 10;
 
             function getClickCounts() {
                 try {
@@ -232,6 +240,8 @@
             }
 
             function getCardIdentifier(card) {
+                const nativeHref = card.getAttribute('href');
+                if (nativeHref) return nativeHref;
                 const urlMatch = (card.getAttribute('onclick') || '').match(/window\.open\('([^']+)'/);
                 if (urlMatch) return urlMatch[1];
                 const label = (card.textContent || '').trim().replace(/\s+/g, ' ');
@@ -248,7 +258,7 @@
             }
 
             function isCampusServiceCard(card) {
-                return getCardGroupTitle(card).includes('校园服务');
+                return Boolean(card.closest('[data-campus]'));
             }
 
             function isPinnedCommonRecommendation(card) {
@@ -299,64 +309,15 @@
             }
 
             function syncFrequentRecommendationIcon(sourceCard, clone, label) {
+                const img = clone.querySelector('img');
                 const sourceImg = sourceCard.querySelector('img');
-                let cloneImg = clone.querySelector('img');
-
-                if (!cloneImg) {
-                    cloneImg = document.createElement('img');
-                    clone.insertBefore(cloneImg, clone.firstChild);
-                }
-
-                cloneImg.loading = 'lazy';
-                cloneImg.decoding = 'async';
-                cloneImg.referrerPolicy = 'no-referrer';
-                cloneImg.alt = sourceImg?.alt || `${label} 图标`;
-                cloneImg.removeAttribute('srcset');
-                cloneImg.classList.remove('fallback-icon');
-                delete cloneImg.dataset.fallbackApplied;
-                delete cloneImg.dataset.originalSrc;
-                cloneImg.addEventListener('error', () => applyFallbackIcon(cloneImg, label));
-
-                if (!sourceImg) {
-                    applyFallbackIcon(cloneImg, label);
-                    return;
-                }
-
-                const sourceCurrentSrc = sourceImg.currentSrc || sourceImg.src || '';
-                const sourceOriginalSrc = sourceImg.dataset.originalSrc || sourceImg.getAttribute('src') || sourceCurrentSrc;
-                const sourceHasRealIcon = sourceCurrentSrc &&
-                    !sourceCurrentSrc.startsWith('data:image/svg+xml') &&
-                    !sourceImg.classList.contains('fallback-icon') &&
-                    !sourceImg.dataset.fallbackApplied;
-
-                if (sourceHasRealIcon) {
-                    cloneImg.src = sourceCurrentSrc;
-                    return;
-                }
-
-                if (sourceImg.dataset.fallbackApplied || !sourceOriginalSrc || sourceOriginalSrc.startsWith('data:image/svg+xml')) {
-                    applyFallbackIcon(cloneImg, label);
-                    return;
-                }
-
-                cloneImg.dataset.originalSrc = sourceOriginalSrc;
-                cloneImg.classList.add('fallback-icon');
-                cloneImg.src = createFallbackIcon(label);
-
-                const probe = new Image();
-                probe.decoding = 'async';
-                probe.referrerPolicy = 'no-referrer';
-                probe.onload = () => {
-                    if (probe.naturalWidth > 0) {
-                        cloneImg.classList.remove('fallback-icon');
-                        cloneImg.src = sourceOriginalSrc;
-                        return;
-                    }
-
-                    applyFallbackIcon(cloneImg, label);
-                };
-                probe.onerror = () => applyFallbackIcon(cloneImg, label);
-                probe.src = sourceOriginalSrc;
+                if (!img || !sourceImg) return;
+                img.src = sourceImg.src || createFallbackIcon(label);
+                delete img.dataset.fallbackApplied;
+                img.alt = '';
+                img.dataset.iconSrc = sourceImg.dataset.fallbackApplied ? '' : (sourceImg.dataset.iconSrc || '');
+                img.addEventListener('error', () => applyFallbackIcon(img, label), { once: true });
+                iconObserver?.observe(img);
             }
 
             function createFrequentRecommendationCard(sourceCard, clickCount) {
@@ -369,13 +330,15 @@
 
                 clone.querySelectorAll('.frequent-count').forEach(badge => badge.remove());
 
+                if (clickCount > 0) {
                 const badge = document.createElement('span');
                 badge.className = 'frequent-count';
                 badge.textContent = `${clickCount}`;
                 badge.setAttribute('aria-hidden', 'true');
                 clone.appendChild(badge);
 
-                clone.setAttribute('aria-label', `${label}，已点击 ${clickCount} 次`);
+                }
+                clone.setAttribute('aria-label', label);
                 return clone;
             }
 
@@ -385,13 +348,20 @@
                 const pinnedCards = Array.from(commonRecommendationContainer.querySelectorAll('[data-common-pinned="true"]'));
                 commonRecommendationContainer
                     .querySelectorAll('.frequent-recommendation-card')
-                    .forEach(card => card.remove());
+                    .forEach(card => (card.closest('.card-entry') || card).remove());
 
-                getFrequentRecommendationCards().forEach(({ card, count }) => {
+                let recommendations = getFrequentRecommendationCards();
+                if (!recommendations.length) {
+                    const defaults = ['https://www.deepseek.com/', 'https://www.doubao.com/', 'https://www.kimi.com/', 'https://www.cnki.net/', 'https://www.bilibili.com/', 'https://docs.qq.com/', 'https://github.com/', 'https://www.ilovepdf.com/zh-cn'];
+                    const sources = Array.from(document.querySelectorAll('.column .card')).filter(card => !card.closest('#common-recommendations'));
+                    recommendations = defaults.map(url => sources.find(card => getCardIdentifier(card) === url)).filter(Boolean).map(card => ({ card, count: 0 }));
+                }
+                recommendations.forEach(({ card, count }) => {
                     commonRecommendationContainer.appendChild(createFrequentRecommendationCard(card, count));
                 });
 
-                pinnedCards.forEach(card => commonRecommendationContainer.appendChild(card));
+                pinnedCards.forEach(card => commonRecommendationContainer.appendChild(card.closest('.card-entry') || card));
+                window.PersonalNav?.renderPinned();
             }
 
             function sortDynamicSection(container) {
@@ -403,9 +373,10 @@
                 const heading = (subColumn.querySelector('h3')?.textContent || '');
                 if (heading.includes('学校') || heading.includes('校园') || heading.includes('私用')) return;
 
-                const cards = Array.from(container.querySelectorAll(':scope > .card'));
+                const cards = Array.from(container.querySelectorAll(':scope > .card, :scope > .card-entry'));
+                const link = entry => entry.matches('.card') ? entry : entry.querySelector('.card');
                 cards.sort((a, b) => {
-                    return getCardClickCount(b) - getCardClickCount(a);
+                    return getCardClickCount(link(b)) - getCardClickCount(link(a));
                 });
 
                 cards.forEach(card => container.appendChild(card));
@@ -539,6 +510,8 @@
 
             function initTheme() {
                 applyTheme(storageGet(themeKey) || 'auto', false);
+                if (systemThemeListenerBound) return;
+                systemThemeListenerBound = true;
                 systemDarkMode.addEventListener('change', () => {
                     if (activeThemeChoice === 'auto') {
                         applyTheme('auto', false);
@@ -676,7 +649,7 @@
                 applyPalette(storageGet(paletteKey) || 'rose', false);
                 var customBg = storageGet('zz-nav-custom-bg');
                 setCustomBackground(customBg);
-                var savedBg = customBg ? 'custom' : (storageGet(backgroundKey) || 'study');
+                var savedBg = customBg ? 'custom' : (storageGet(backgroundKey) || 'none');
                 applyBackground(savedBg, false);
                 var sel = document.getElementById('bg-rotate-mode');
                 if (sel) sel.value = getBgRotateMode();
@@ -754,19 +727,8 @@
                     tabs.setAttribute('role', 'tablist');
                     tabs.setAttribute('aria-label', '模块分组');
 
-                    const navLink = document.querySelector(`.nav-link[data-target="${column.id}"]`);
+                    const navLink = document.querySelector(`#sidebar a[data-target="${column.id}"]`);
                     const moduleName = navLink ? navLink.textContent.trim() : '';
-                    if (moduleName) {
-                        const label = document.createElement('span');
-                        label.className = 'module-label';
-                        label.innerHTML = navLink.innerHTML.trim();
-                        tabs.appendChild(label);
-                        const sep = document.createElement('span');
-                        sep.className = 'module-sep';
-                        sep.textContent = '|';
-                        tabs.appendChild(sep);
-                    }
-
                     subColumns.forEach((subColumn, index) => {
                         if (!subColumn.id) {
                             subColumn.id = `${column.id || 'module'}-sub-${index + 1}`;
@@ -777,15 +739,26 @@
                         tab.className = 'module-tab';
                         tab.dataset.subTarget = subColumn.id;
                         tab.textContent = getTabLabel(subColumn, index, moduleName);
+                        tab.id = `${subColumn.id}-tab`;
                         tab.setAttribute('role', 'tab');
                         tab.setAttribute('aria-controls', subColumn.id);
                         tab.addEventListener('click', () => setActiveSubColumn(column, subColumn.id));
 
+                        subColumn.setAttribute('aria-labelledby', tab.id);
                         subColumn.setAttribute('role', 'tabpanel');
                         subColumn.setAttribute('tabindex', '0');
                         tabs.appendChild(tab);
                     });
 
+                    tabs.addEventListener('keydown', event => {
+                        const buttons = Array.from(tabs.querySelectorAll('[role=tab]'));
+                        let index = buttons.indexOf(document.activeElement);
+                        if (index < 0 || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+                        event.preventDefault();
+                        index = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length;
+                        buttons[index].click();
+                        buttons[index].focus();
+                    });
                     column.insertBefore(tabs, subColumns[0]);
                     setActiveSubColumn(column, subColumns[0].id);
                 });
@@ -816,8 +789,8 @@
                 }
 
                 searchFeedbackText.textContent = matchCount > 0
-                    ? `找到 ${matchCount} 个网站，来自 ${moduleCount} 个模块`
-                    : `没有找到与“${query}”匹配的网站`;
+                    ? LangManager.tReplace('search.resultFound', { count: matchCount, modules: moduleCount })
+                    : LangManager.tReplace('search.noResult', { query });
             }
 
             function clearSearchFilter() {
@@ -838,6 +811,7 @@
                 }
 
                 let totalVisible = 0;
+                const matchedUrls = new Set();
                 const matchedColumns = [];
                 document.body.classList.add('searching');
 
@@ -849,17 +823,20 @@
                         group.setAttribute('aria-hidden', 'false');
 
                         group.querySelectorAll('.card').forEach(card => {
-                            const searchableText = [
-                                card.textContent,
-                                card.dataset.tooltip,
-                                card.getAttribute('aria-label')
-                            ].join(' ').toLowerCase();
+                            let searchableText = searchableTextCache.get(card);
+                            if (searchableText === undefined) {
+                                searchableText = [card.textContent, card.dataset.tooltip,
+                                    card.getAttribute('aria-label'), card.dataset.labelOrig,
+                                    card.dataset.tooltipOrig, card.getAttribute('href')].join(' ').toLowerCase();
+                                searchableTextCache.set(card, searchableText);
+                            }
                             const isMatch = searchableText.includes(query);
 
                             card.classList.toggle('is-hidden', !isMatch);
                             if (isMatch) {
                                 groupVisible += 1;
                                 columnVisible += 1;
+                                matchedUrls.add(getCardIdentifier(card));
                             }
                         });
 
@@ -879,6 +856,7 @@
                     link.classList.toggle('search-filtered-out', Boolean(target?.classList.contains('is-filtered-out')));
                 });
 
+                totalVisible = matchedUrls.size;
                 document.body.classList.toggle('search-has-results', totalVisible > 0);
                 document.body.classList.toggle('search-no-results', totalVisible === 0);
                 setSearchFeedback(rawQuery, totalVisible, matchedColumns.length);
@@ -894,6 +872,8 @@
                 if (!target) {
                     return;
                 }
+                if (currentActiveColumnId === targetId) return;
+                currentActiveColumnId = targetId;
 
                 columns.forEach(column => {
                     column.classList.toggle('active', column === target);
@@ -902,7 +882,8 @@
                 navLinks.forEach(link => {
                     const isActive = link.dataset.target === targetId;
                     link.classList.toggle('active', isActive);
-                    link.toggleAttribute('aria-current', isActive);
+                    if (isActive) link.setAttribute('aria-current', 'location');
+                    else link.removeAttribute('aria-current');
                 });
             }
 
@@ -974,7 +955,7 @@
             }
 
             function hasOpenModal() {
-                return [aboutModal, announcement, contactModal, settingsModal, gamesModal].some(modal => modal?.classList.contains('show'));
+                return [aboutModal, announcement, contactModal, shortcutModal, settingsModal, gamesModal].some(modal => modal?.classList.contains('show'));
             }
 
             function lockPageScroll() {
@@ -994,11 +975,14 @@
                     return;
                 }
 
+                modalTriggers.set(modal, document.activeElement);
+                const title = modal.querySelector('.title');
+                if (title) { title.id = `${modal.id}-title`; modal.setAttribute('aria-labelledby', title.id); }
                 lockPageScroll();
-                modal.style.display = 'block';
+                modal.style.display = modal.classList.contains('utility-modal') ? 'grid' : 'block';
                 modal.setAttribute('role', 'dialog');
                 modal.setAttribute('aria-modal', 'true');
-                requestAnimationFrame(() => modal.classList.add('show'));
+                requestAnimationFrame(() => { modal.classList.add('show'); modal.querySelector('.modal-close')?.focus(); });
             }
 
             function hideModal(modal) {
@@ -1007,6 +991,7 @@
                 }
 
                 modal.classList.remove('show');
+                modalTriggers.get(modal)?.focus();
                 window.setTimeout(() => {
                     modal.style.display = 'none';
                     if (!hasOpenModal()) {
@@ -1033,16 +1018,16 @@
 
             function openContactModal() {
                 showModal(contactModal);
-                window.setTimeout(() => document.getElementById('wechat-qr-image')?.focus(), 80);
             }
 
             function closeContactModal() {
                 hideModal(contactModal);
             }
 
-            function openSettingsModal() {
+            function openSettingsModal(section) {
+                window.PersonalNav?.selectSection(typeof section === 'string' ? section : section?.currentTarget?.dataset.openSettings);
                 showModal(settingsModal);
-                window.setTimeout(() => settingsModal?.querySelector('.theme-option.active')?.focus(), 80);
+                window.setTimeout(() => settingsModal?.querySelector('[data-settings-tab][aria-selected="true"]')?.focus(), 80);
             }
 
             function closeSettingsModal() {
@@ -1127,9 +1112,21 @@
             }
 
             function createDesktopShortcut() {
-                const canonicalLink = document.querySelector('link[rel="canonical"]');
-                const canonicalUrl = canonicalLink?.href || '';
-                const shortcutUrl = location.protocol === 'file:' && canonicalUrl ? canonicalUrl : location.href;
+                const localNote = document.getElementById('shortcut-local-note');
+                if (localNote) localNote.hidden = location.protocol !== 'file:';
+                const status = document.getElementById('shortcut-download-status');
+                if (status) status.textContent = '';
+                const downloadLabel = document.querySelector('#download-desktop-shortcut span');
+                if (downloadLabel) downloadLabel.textContent = translate('shortcut.download', '下载快捷方式');
+                showModal(shortcutModal);
+            }
+
+            function closeDesktopShortcutModal() {
+                hideModal(shortcutModal);
+            }
+
+            function downloadDesktopShortcut() {
+                const shortcutUrl = location.href;
                 const fallbackName = '知径导航';
                 const pageTitle = (document.title || fallbackName).replace(/\s*-\s*.*/, '').trim();
                 const shortcutName = (pageTitle || fallbackName).replace(/[\\/:*?"<>|]/g, '');
@@ -1147,7 +1144,11 @@
                 document.body.appendChild(link);
                 link.click();
                 link.remove();
-                window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+                window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+                const status = document.getElementById('shortcut-download-status');
+                if (status) status.textContent = translate('shortcut.downloadStarted', '下载已发起，将文件移到桌面即可使用。');
+                const downloadLabel = document.querySelector('#download-desktop-shortcut span');
+                if (downloadLabel) downloadLabel.textContent = translate('shortcut.downloadAgain', '再次下载');
             }
 
             function updateScrollButton() {
@@ -1155,11 +1156,26 @@
                     return;
                 }
 
-                scrollTopBtn.style.display = window.scrollY > 320 ? 'flex' : 'none';
+                const display = window.scrollY > 320 ? 'flex' : 'none';
+                if (scrollTopBtn.style.display !== display) scrollTopBtn.style.display = display;
+            }
+
+            // 未单独保存日期时沿用原版目标；两侧展示与设置使用同一份日期。
+            function getCountdownTarget(prefix) {
+                const defaults = prefix === 'cd1' ? { month: 11, day: 22 } : { month: 11, day: 1 };
+                const rawMonth = storageGet(`zz-nav-${prefix}-month`);
+                const rawDay = storageGet(`zz-nav-${prefix}-day`);
+                const storedMonth = rawMonth === null || rawMonth.trim() === '' ? NaN : Number(rawMonth);
+                const storedDay = rawDay === null || rawDay.trim() === '' ? NaN : Number(rawDay);
+                const month = Number.isInteger(storedMonth) && storedMonth >= 0 && storedMonth <= 11 ? storedMonth : defaults.month;
+                const maxDay = new Date(2000, month + 1, 0).getDate();
+                const day = Number.isInteger(storedDay) && storedDay >= 1 && storedDay <= maxDay ? storedDay : Math.min(defaults.day, maxDay);
+                return { month, day };
             }
 
             function updateCountdown() {
                 const now = new Date();
+                now.setHours(0, 0, 0, 0);
 
                 const getDaysInMonth = (year, monthIndex) => new Date(year, monthIndex + 1, 0).getDate();
                 const getValidCountdownDate = (year, monthIndex, day) => {
@@ -1175,45 +1191,42 @@
                         year += 1;
                         target = getValidCountdownDate(year, monthIndex, day);
                     }
-                    return Math.max(0, Math.ceil((target - now) / 86400000));
+                    return Math.max(0, Math.round((Date.UTC(target.getFullYear(), monthIndex, day) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000));
                 };
 
                 var kaoyan = document.getElementById('kaoyan');
                 var kaogong = document.getElementById('kaogong');
 
-                var cd1Month = parseInt(storageGet('zz-nav-cd1-month') || '11', 10);
-                var cd1Day = parseInt(storageGet('zz-nav-cd1-day') || '22', 10);
-                var cd2Month = parseInt(storageGet('zz-nav-cd2-month') || '11', 10);
-                var cd2Day = parseInt(storageGet('zz-nav-cd2-day') || '1', 10);
-
-                if (kaoyan) {
-                    kaoyan.textContent = getDaysLeft(cd1Month, cd1Day);
-                }
-                if (kaogong) {
-                    kaogong.textContent = getDaysLeft(cd2Month, cd2Day);
-                }
+                const target1 = getCountdownTarget('cd1');
+                const target2 = getCountdownTarget('cd2');
+                if (kaoyan) kaoyan.textContent = getDaysLeft(target1.month, target1.day);
+                if (kaogong) kaogong.textContent = getDaysLeft(target2.month, target2.day);
+                [target1, target2].forEach((target, index) => {
+                    const container = document.querySelectorAll('.countdown-container')[index];
+                    if (!container) return;
+                    const prefix = index === 0 ? 'cd1' : 'cd2';
+                    const isDefault = storageGet(`zz-nav-${prefix}-month`) === null && storageGet(`zz-nav-${prefix}-day`) === null;
+                    const isEnglish = typeof LangManager !== 'undefined' && LangManager.getLang() === 'en';
+                    container.title = isEnglish
+                        ? `Target: ${target.month + 1}/${target.day}${isDefault ? ' (default, editable)' : ''}`
+                        : `目标日期：${target.month + 1}月${target.day}日${isDefault ? '（默认，可修改）' : ''}`;
+                });
 
                 var cd1Label = document.querySelector('.countdown-container:first-child .countdown-days');
                 var cd2Label = document.querySelector('.countdown-container:last-child .countdown-days');
                 if (cd1Label) {
-                    cd1Label.textContent = storageGet('zz-nav-cd1-name') || '考研倒计时';
+                    cd1Label.textContent = storageGet('zz-nav-cd1-name') || translate('countdown.exam', '自定义目标一');
                 }
                 if (cd2Label) {
-                    cd2Label.textContent = storageGet('zz-nav-cd2-name') || '考公倒计时';
+                    cd2Label.textContent = storageGet('zz-nav-cd2-name') || translate('countdown.civil', '自定义目标二');
                 }
             }
 
             function initCountdownSettings() {
                 var openCustomSelect = null;
 
-                function getReferenceYear(monthIndex) {
-                    var now = new Date();
-                    var thisYearDate = new Date(now.getFullYear(), monthIndex, 1);
-                    return now > thisYearDate ? now.getFullYear() + 1 : now.getFullYear();
-                }
-
                 function getDaysInMonth(monthIndex) {
-                    return new Date(getReferenceYear(monthIndex), monthIndex + 1, 0).getDate();
+                    return new Date(2000, monthIndex + 1, 0).getDate();
                 }
 
                 function clearOptions(select) {
@@ -1399,20 +1412,18 @@
                     }
                 });
 
-                function loadOne(prefix, defaultName, defaultMonth, defaultDay) {
+                function loadOne(prefix, defaultName) {
+                    const target = getCountdownTarget(prefix);
                     var nameEl = document.getElementById(prefix + '-name');
                     var monthEl = document.getElementById(prefix + '-month');
                     var dayEl = document.getElementById(prefix + '-day');
-                    var storedMonth = storageGet('zz-nav-' + prefix + '-month');
-                    var storedDay = storageGet('zz-nav-' + prefix + '-day');
-                    var monthValue = Math.min(Math.max(parseInt(storedMonth || defaultMonth, 10), 0), 11);
                     if (nameEl) nameEl.value = storageGet('zz-nav-' + prefix + '-name') || defaultName;
-                    if (monthEl) monthEl.value = String(monthValue);
-                    if (dayEl) fillDayOptions(dayEl, monthValue, storedDay || defaultDay);
+                    if (monthEl) monthEl.value = String(target.month);
+                    if (dayEl) fillDayOptions(dayEl, target.month, target.day);
                 }
 
-                loadOne('cd1', '考研倒计时', 11, 22);
-                loadOne('cd2', '考公倒计时', 11, 1);
+                loadOne('cd1', translate('countdown.exam', '自定义目标一'));
+                loadOne('cd2', translate('countdown.civil', '自定义目标二'));
 
                 document.querySelectorAll('.countdown-setting-item select').forEach(enhanceCustomSelect);
 
@@ -1421,6 +1432,8 @@
                         var id = this.id;
                         var key = 'zz-nav-' + id;
                         storageSet(key, this.value);
+                        const item = this.closest('.countdown-setting-item');
+                        item.querySelectorAll('input, select').forEach(field => storageSet('zz-nav-' + field.id, field.value));
                         updateCountdown();
                     });
                 });
@@ -1446,22 +1459,9 @@
 
             function createFallbackIcon(label) {
                 const cleanLabel = (label || '网站').trim();
-                const firstChar = Array.from(cleanLabel.replace(/\s+/g, ''))[0] || '站';
-                const hue = hashText(cleanLabel) % 360;
-                const huePair = (hue + 42) % 360;
-                const svg = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-                        <defs>
-                            <linearGradient id="g" x1="10" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="hsl(${hue} 78% 58%)"/>
-                                <stop offset="1" stop-color="hsl(${huePair} 82% 48%)"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="64" height="64" rx="16" fill="url(#g)"/>
-                        <circle cx="49" cy="15" r="10" fill="rgba(255,255,255,.2)"/>
-                        <text x="32" y="40" text-anchor="middle" font-family="Segoe UI, PingFang SC, Microsoft YaHei, sans-serif" font-size="28" font-weight="800" fill="#fff">${escapeSvgText(firstChar)}</text>
-                    </svg>
-                `.replace(/\s+/g, ' ').trim();
+                const firstChar = Array.from(cleanLabel.replace(/\([^)]*\)|NEW|\s+/g, ''))[0] || '站';
+                const hue = [335, 215, 165, 265][hashText(cleanLabel) % 4];
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><defs><linearGradient id="icon-tone" x2="1" y2="1"><stop stop-color="hsl(${hue} 66% 44%)"/><stop offset="1" stop-color="hsl(${hue + 24} 68% 38%)"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#icon-tone)"/><text x="32" y="41" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="30" font-weight="650" fill="#fff">${escapeSvgText(firstChar)}</text></svg>`;
 
                 return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
             }
@@ -1473,88 +1473,118 @@
 
                 img.dataset.fallbackApplied = 'true';
                 img.classList.add('fallback-icon');
-                img.alt = `${label || '网站'} 默认图标`;
+                img.alt = '';
                 img.src = createFallbackIcon(label);
             }
 
             function enhanceCards() {
+                iconObserver = new IntersectionObserver(entries => {
+                    entries.forEach(({ target: img, isIntersecting }) => {
+                        if (!isIntersecting) return;
+                        iconObserver.unobserve(img);
+                        if (img.dataset.iconSrc) img.src = img.dataset.iconSrc;
+                    });
+                }, { rootMargin: '160px' });
                 document.querySelectorAll('.card').forEach(card => {
-                    const textNodes = Array.from(card.childNodes).filter(node => {
-                        return node.nodeType === Node.TEXT_NODE && node.textContent.trim();
-                    });
-
-                    if (!card.querySelector('.card-label') && textNodes.length) {
-                        const labelSpan = document.createElement('span');
-                        labelSpan.className = 'card-label';
-                        labelSpan.textContent = textNodes
-                            .map(node => node.textContent.trim())
-                            .join(' ')
-                            .replace(/\s+/g, ' ');
-                        card.insertBefore(labelSpan, textNodes[textNodes.length - 1]);
-                        textNodes.forEach(node => node.remove());
-                    }
-
-                    const label = card.textContent.trim().replace(/\s+/g, ' ');
-                    card.setAttribute('role', 'link');
-                    card.setAttribute('tabindex', '0');
+                    const textNodes = Array.from(card.childNodes).filter(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+                    const labelSpan = document.createElement('span');
+                    labelSpan.className = 'card-label';
+                    labelSpan.textContent = textNodes.map(node => node.textContent.trim()).join(' ');
+                    card.appendChild(labelSpan);
+                    textNodes.forEach(node => node.remove());
+                    const label = labelSpan.textContent;
                     card.setAttribute('aria-label', card.dataset.tooltip ? `${label}：${card.dataset.tooltip}` : label);
-
-                    if (!card.querySelector('img')) {
-                        const fallbackImg = document.createElement('img');
-                        fallbackImg.loading = 'lazy';
-                        fallbackImg.decoding = 'async';
-                        fallbackImg.referrerPolicy = 'no-referrer';
-                        applyFallbackIcon(fallbackImg, label);
-                        card.insertBefore(fallbackImg, card.firstChild);
-                    }
-
-                    card.querySelectorAll('img').forEach(img => {
-                        const originalSrc = img.getAttribute('src') || '';
-
-                        if (!img.hasAttribute('alt') || !img.getAttribute('alt')) {
-                            img.alt = `${label} 图标`;
-                        }
-                        img.loading = 'lazy';
-                        img.decoding = 'async';
-                        img.referrerPolicy = 'no-referrer';
-                        img.addEventListener('error', () => applyFallbackIcon(img, label));
-
-                        if (img.dataset.fallbackApplied) {
-                            return;
-                        }
-
-                        if (!originalSrc || originalSrc.startsWith('data:image/svg+xml')) {
-                            applyFallbackIcon(img, label);
-                            return;
-                        }
-
-                        img.dataset.originalSrc = originalSrc;
-                        img.classList.add('fallback-icon');
-                        img.src = createFallbackIcon(label);
-
-                        const probe = new Image();
-                        probe.decoding = 'async';
-                        probe.referrerPolicy = 'no-referrer';
-                        probe.onload = () => {
-                            if (probe.naturalWidth > 0) {
-                                img.classList.remove('fallback-icon');
-                                img.src = originalSrc;
-                                return;
-                            }
-
-                            applyFallbackIcon(img, label);
-                        };
-                        probe.onerror = () => applyFallbackIcon(img, label);
-                        probe.src = originalSrc;
-                    });
-
-                    card.addEventListener('keydown', event => {
-                        if (event.key === 'Enter' || event.key === ' ') {
-                            event.preventDefault();
-                            card.click();
-                        }
-                    });
+                    card.title = card.dataset.tooltip || label;
+                    const detail = document.createElement('span');
+                    detail.className = 'card-description';
+                    try {
+                        const url = new URL(card.getAttribute('href'), location.href);
+                        detail.textContent = url.origin === location.origin ? translate('refresh.localTool', '本地工具') : url.hostname.replace(/^www\./, '');
+                    } catch { detail.textContent = ''; }
+                    card.appendChild(detail);
+                    let img = card.querySelector('img');
+                    if (!img) { img = document.createElement('img'); card.prepend(img); }
+                    img.width = 32;
+                    img.height = 32;
+                    img.alt = '';
+                    img.decoding = 'async';
+                    img.referrerPolicy = 'no-referrer';
+                    img.src = createFallbackIcon(label);
+                    img.addEventListener('error', () => applyFallbackIcon(img, label), { once: true });
+                    iconObserver.observe(img);
                 });
+            }
+
+            function setupDirectory() {
+                const descriptions = {
+                    'offen-links': ['refresh.recommendTitle', '常用与校园'],
+                    'AI-links': ['refresh.aiTitle', 'AI 工作台'],
+                    'resources-links': ['refresh.resourcesTitle', '资源与数据'],
+                    'useful-links': ['refresh.learningTitle', '学习与成长'],
+                    'papers-links': ['refresh.papersTitle', '论文与写作'],
+                    'journals-links': ['refresh.journalsTitle', '期刊与出版'],
+                    'entertainment-links': ['refresh.funTitle', '影音与娱乐'],
+                    'tools-links': ['refresh.toolsTitle', '实用工具'],
+                    'life-links': ['refresh.lifeTitle', '日常生活']
+                };
+                columns.forEach(column => {
+                    const [key, title] = descriptions[column.id];
+                    const heading = document.createElement('div');
+                    heading.className = 'section-heading';
+                    const h2 = document.createElement('h2');
+                    h2.id = `${column.id}-heading`;
+                    h2.dataset.i18n = key;
+                    h2.textContent = translate(key, title);
+                    column.setAttribute('aria-labelledby', h2.id);
+                    const count = document.createElement('span');
+                    count.className = 'section-count';
+                    count.dataset.resourceCount = column.id === 'offen-links' ? 21 : column.querySelectorAll('.card').length;
+                    heading.append(h2, count);
+                    column.prepend(heading);
+                });
+                const campus = document.querySelector('#offen-links [data-campus]');
+                campus.dataset.campus = 'true';
+                const cards = Array.from(campus.querySelectorAll('.card'));
+                const container = campus.querySelector('.card-container');
+                container.classList.add('campus-directory');
+                const groups = [
+                    ['refresh.campusPublic', '校园入口', cards.slice(0, 5).concat(cards[11])],
+                    ['refresh.campusInside', '校内系统', cards.slice(5, 11)],
+                    ['refresh.campusOutside', '校外访问', cards.slice(12, 18)],
+                    ['refresh.campusLocal', '本地工具', cards.slice(18)]
+                ];
+                groups.forEach(([key, label, items]) => {
+                    const group = document.createElement('div');
+                    group.className = 'campus-group';
+                    const h4 = document.createElement('h4');
+                    h4.dataset.i18n = key;
+                    h4.textContent = translate(key, label);
+                    const grid = document.createElement('div');
+                    grid.className = 'card-container';
+                    items.forEach(card => grid.appendChild(card));
+                    group.append(h4, grid);
+                    container.appendChild(group);
+                });
+                const note = document.createElement('p');
+                note.className = 'section-note';
+                note.dataset.i18n = 'refresh.campusNote';
+                note.textContent = translate('refresh.campusNote', '校内系统需校园网络；校外访问请先登录学校 VPN。');
+                campus.querySelector('h3').after(note);
+                const recNote = document.createElement('p');
+                recNote.className = 'section-note';
+                recNote.dataset.i18n = 'refresh.recommendNote';
+                recNote.textContent = translate('refresh.recommendNote', '常用网站会根据你的访问记录自动整理，仅保存在当前浏览器。');
+                document.getElementById('common-recommendations').before(recNote);
+                updateDirectoryLabels();
+            }
+
+            function updateDirectoryLabels() {
+                const isEn = typeof LangManager !== 'undefined' && LangManager.getLang() === 'en';
+                document.querySelectorAll('[data-resource-count]').forEach(el => {
+                    const isCampus = el.closest('#offen-links');
+                    el.textContent = `${el.dataset.resourceCount} ${isCampus ? (isEn ? 'campus links' : '个校园入口') : (isEn ? 'links' : '个入口')}`;
+                });
+                document.getElementById('directory-summary').textContent = isEn ? '9 categories · 828 links' : '9 个分类 · 828 个资源入口';
             }
 
             function bindEvents() {
@@ -1666,6 +1696,7 @@
 
                 searchButton?.addEventListener('click', performExternalSearch);
                 clearSearchFilterButton?.addEventListener('click', () => {
+                    if (searchInput) searchInput.value = '';
                     clearSearchFilter();
                     searchInput?.focus();
                 });
@@ -1675,11 +1706,16 @@
                     sendFeedback();
                 });
 
+                function saveScrollPosition() {
+                    try { sessionStorage.setItem('zz-nav-scroll', window.scrollY); } catch {}
+                }
                 window.addEventListener('scroll', () => {
                     updateScrollButton();
                     requestActiveSectionUpdate();
-                    sessionStorage.setItem('zz-nav-scroll', window.scrollY);
+                    window.clearTimeout(scrollSaveTimer);
+                    scrollSaveTimer = window.setTimeout(saveScrollPosition, 180);
                 }, { passive: true });
+                window.addEventListener('pagehide', saveScrollPosition);
                 window.addEventListener('click', event => {
                     if (event.target === aboutModal) {
                         closeAboutModal();
@@ -1690,6 +1726,9 @@
                     if (event.target === contactModal) {
                         closeContactModal();
                     }
+                    if (event.target === shortcutModal) {
+                        closeDesktopShortcutModal();
+                    }
                     if (event.target === settingsModal) {
                         closeSettingsModal();
                     }
@@ -1698,9 +1737,15 @@
                     }
                 });
                 window.addEventListener('keydown', event => {
-                    if (event.key !== 'Escape') {
-                        return;
+                    if (event.key === '/' && !hasOpenModal() && !event.ctrlKey && !event.metaKey && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable) { event.preventDefault(); searchInput?.focus(); }
+                    if (event.key === 'Tab' && hasOpenModal()) {
+                        const modal = document.querySelector('.modal.show');
+                        const items = Array.from(modal.querySelectorAll('button, a[href], input, select, textarea, [tabindex="0"]')).filter(el => !el.disabled && el.getClientRects().length);
+                        const first = items[0], last = items[items.length - 1];
+                        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+                        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
                     }
+                    if (event.key !== 'Escape') return;
                     if (aboutModal?.classList.contains('show')) {
                         closeAboutModal();
                     }
@@ -1709,6 +1754,9 @@
                     }
                     if (contactModal?.classList.contains('show')) {
                         closeContactModal();
+                    }
+                    if (shortcutModal?.classList.contains('show')) {
+                        closeDesktopShortcutModal();
                     }
                     if (settingsModal?.classList.contains('show')) {
                         closeSettingsModal();
@@ -1721,11 +1769,12 @@
 
             function init() {
                 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-                var savedScroll = sessionStorage.getItem('zz-nav-scroll');
+                var savedScroll = null;
+                try { savedScroll = sessionStorage.getItem('zz-nav-scroll'); } catch {}
                 initDisplayPreferences();
                 initEmailService();
                 enhanceCards();
-                renderCommonRecommendations();
+                setupDirectory();
                 setupModuleTabs();
                 renderCommonRecommendations();
                 searchHistoryItems = loadSearchHistory();
@@ -1748,13 +1797,11 @@
 
                 if (savedScroll) {
                     window.setTimeout(function () {
-                        window.scrollTo({ top: parseInt(savedScroll, 10), behavior: 'smooth' });
+                        window.scrollTo({ top: parseInt(savedScroll, 10), behavior: 'instant' });
                     }, 100);
                 }
 
-                if (announcement && storageGet(announcementKey) !== 'seen') {
-                    window.setTimeout(() => showModal(announcement), 300);
-                }
+
 
                 document.body.classList.add('initialized');
             }
@@ -1771,11 +1818,45 @@
             window.sendFeedback = sendFeedback;
             window.scrollToTop = scrollToTop;
             window.createDesktopShortcut = createDesktopShortcut;
+            window.downloadDesktopShortcut = downloadDesktopShortcut;
+            window.closeDesktopShortcutModal = closeDesktopShortcutModal;
 
+            window.DirectoryTools = {
+                openSettings: openSettingsModal,
+                cloneCard: createFrequentRecommendationCard,
+                refreshRecommendations: renderCommonRecommendations
+            };
             try {
                 init();
             } catch (e) {
                 console.warn('Init error:', e);
                 document.body.classList.add('initialized');
             }
+
+            /* 语言切换时更新动态元素 */
+            window.addEventListener('langchange', function() {
+                searchableTextCache = new WeakMap();
+                updateSidebarToggle();
+                initTheme();
+                applyPalette(activePaletteChoice, false);
+                applyBackground(activeBackgroundChoice, false);
+                updateCountdown();
+                renderSearchHistory();
+                renderCommonRecommendations();
+                document.querySelectorAll('.card').forEach(card => {
+                    const label = getCardLabel(card);
+                    card.setAttribute('aria-label', card.dataset.tooltip ? `${label}：${card.dataset.tooltip}` : label);
+                    card.title = card.dataset.tooltip || label;
+                    const img = card.querySelector('img');
+                    if (img?.src.startsWith('data:image/svg+xml')) img.src = createFallbackIcon(label);
+                });
+                // 重新生成模块标签页（标签文字已通过 data-i18n 翻译）
+                columns.forEach(function(column) {
+                    var existingTabs = column.querySelector(':scope > .module-tabs');
+                    if (existingTabs) existingTabs.remove();
+                });
+                setupModuleTabs();
+                updateDirectoryLabels();
+                if (searchInput?.value.trim()) filterCards();
+            });
         })();

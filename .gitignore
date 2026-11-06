@@ -1,0 +1,10 @@
+PRODUCT.md
+AGENTS.md
+work/
+outputs/
+output/
+.playwright-cli/
+*.log
+*.zip
+.DS_Store
+Thumbs.db
