@@ -11,9 +11,9 @@
 <title>知径 - 你的资源导航助手</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2064%2064%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22zj-brand-bg%22%20x1%3D%2210%22%20y1%3D%228%22%20x2%3D%2256%22%20y2%3D%2258%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%23536DFE%22%2F%3E%3Cstop%20offset%3D%220.52%22%20stop-color%3D%22%2322A7B8%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2326C58F%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%22zj-brand-path%22%20x1%3D%2216%22%20y1%3D%2247%22%20x2%3D%2248%22%20y2%3D%2214%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20stop-color%3D%22%23FFFFFF%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23DDFBFF%22%2F%3E%3C%2FlinearGradient%3E%3Cfilter%20id%3D%22zj-brand-soft%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%3CfeDropShadow%20dx%3D%220%22%20dy%3D%223%22%20stdDeviation%3D%223%22%20flood-color%3D%22%230F172A%22%20flood-opacity%3D%220.18%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2256%22%20height%3D%2256%22%20rx%3D%2217%22%20fill%3D%22url(%23zj-brand-bg)%22%2F%3E%3Cpath%20d%3D%22M14%2048C20%2039%2027%2035%2035%2029C41%2024%2045%2019%2049%2013%22%20fill%3D%22none%22%20stroke%3D%22url(%23zj-brand-path)%22%20stroke-width%3D%225.2%22%20stroke-linecap%3D%22round%22%20filter%3D%22url(%23zj-brand-soft)%22%2F%3E%3Cpath%20d%3D%22M16%2047C24%2044%2031%2044%2039%2048%22%20fill%3D%22none%22%20stroke%3D%22%23B7F7D6%22%20stroke-width%3D%223.2%22%20stroke-linecap%3D%22round%22%20opacity%3D%220.96%22%2F%3E%3Ccircle%20cx%3D%2215.5%22%20cy%3D%2247%22%20r%3D%224.4%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M48%2012.5l2.6%205.2%205.8.8-4.2%204.1%201%205.8-5.2-2.8-5.2%202.8%201-5.8-4.2-4.1%205.8-.8%202.8-5.2z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M23%2018h12M23%2025h8.5%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20opacity%3D%220.88%22%2F%3E%3Cpath%20d%3D%22M10%2011c9-5%2024-5%2035%202%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20opacity%3D%220.18%22%2F%3E%3C%2Fsvg%3E">
 <link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="refinement.css">
+<link rel="stylesheet" href="refinement.css?v=about-dialog-1">
 <link rel="stylesheet" href="personal.css?v=wallpaper-library-1">
-<script src="i18n.js?v=wallpaper-library-1"></script>
+<script src="i18n.js?v=about-dialog-1"></script>
 <script src="language.js"></script>
 <script src="card-en-extra.js"></script>
 <script src="card-i18n.js"></script>
@@ -686,41 +686,52 @@ s.parentNode.insertBefore(hm, s);
 </aside>
 
 <!-- 关于本站 -->
-<div id="about-modal" class="modal">
+<div id="about-modal" class="modal utility-modal">
 <div class="modal-content-wrapper">
 <button class="modal-close" type="button" onclick="closeAboutModal()" aria-label="关闭弹窗" data-i18n-title="common.closePopup">&times;</button>
-<div class="title">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-circle-info"></use></svg>
-<span data-i18n="about.title">关于本站</span>
-</div>
 <div class="modal-content">
-<div class="about-panel">
-<p data-i18n="about.intro">
-本站是一个集成了学术工具、AI应用、影音娱乐及常用网站的综合型导航平台。旨在提升您的工作与学习效率。
-</p>
-<p class="disclaimer" data-i18n="about.disclaimer">
-本站所有网站链接均来源于网络收集，仅供学习和参考。链接指向的内容均归原始权利人所有。如有侵权，请联系我们移除。
-</p>
+<header class="about-identity">
+<div class="about-brand"><svg class="about-brand-image" viewBox="0 0 64 64" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="about-dialog-brand-bg" x1="10" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+<stop stop-color="#536DFE"/>
+<stop offset="0.52" stop-color="#22A7B8"/>
+<stop offset="1" stop-color="#26C58F"/>
+</linearGradient>
+<linearGradient id="about-dialog-brand-path" x1="16" y1="47" x2="48" y2="14" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFFFFF"/>
+<stop offset="1" stop-color="#DDFBFF"/>
+</linearGradient>
+<filter id="about-dialog-brand-soft" x="-20%" y="-20%" width="140%" height="140%">
+<feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.18"/>
+</filter>
+</defs>
+<rect x="4" y="4" width="56" height="56" rx="17" fill="url(#about-dialog-brand-bg)"/>
+<path d="M14 48C20 39 27 35 35 29C41 24 45 19 49 13" fill="none" stroke="url(#about-dialog-brand-path)" stroke-width="5.2" stroke-linecap="round" filter="url(#about-dialog-brand-soft)"/>
+<path d="M16 47C24 44 31 44 39 48" fill="none" stroke="#B7F7D6" stroke-width="3.2" stroke-linecap="round" opacity="0.96"/>
+<circle cx="15.5" cy="47" r="4.4" fill="#FFFFFF"/>
+<path d="M48 12.5l2.6 5.2 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.2-4.1 5.8-.8 2.8-5.2z" fill="#FFFFFF"/>
+<path d="M23 18h12M23 25h8.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.88"/>
+<path d="M10 11c9-5 24-5 35 2" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.18"/>
+</svg></div>
+<div><h2 class="title" data-i18n="about.dialogTitle">关于知径</h2><p data-i18n="refresh.footer">把好用的网站，放在顺手的地方。</p></div>
+</header>
+<p class="about-introduction" data-i18n="about.intro">这是一个简洁高效的资源导航网站，致力于帮助同学们快速找到学习、科研和日常所需的各类网站与工具。</p>
+<div class="about-guide">
+<div class="about-guide-row"><span class="about-guide-icon"><svg class="svg-icon" aria-hidden="true"><use href="#icon-star"></use></svg></span><div><h3 data-i18n="about.favoritesTitle">收藏常用网站</h3><p data-i18n="about.favoritesDesc">点击卡片右上角的星标，入口就会固定在常用推荐前面。</p></div></div>
+<div class="about-guide-row"><span class="about-guide-icon"><svg class="svg-icon" aria-hidden="true"><use href="#icon-palette"></use></svg></span><div><h3 data-i18n="about.appearanceTitle">按习惯布置首页</h3><p data-i18n="about.appearanceDesc">在设置中调整壁纸、玻璃质感和倒计时。</p></div></div>
 </div>
-<h4 class="announcement-heading">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-wand-magic-sparkles"></use></svg>
-<span data-i18n="about.recentUpdates">最近更新</span>
-</h4>
-<ul class="announcement-list about-update-list">
-<li data-i18n="about.update1"><span>1</span> 新增"生活"模块：购物、生活服务、美食、金融理财</li>
-<li data-i18n="about.update2"><span>2</span> 补充大量链接：电子书阅读、资讯阅读、开发工具、网络工具</li>
-<li data-i18n="about.update3"><span>3</span> 新增娱乐链接：樱花动漫、风车动漫等动漫追番站点</li>
-<li data-i18n="about.update4"><span>4</span> 新增社区子栏目：知乎、微博、豆瓣、微信网页版</li>
-</ul>
-<div class="announcement-note">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-envelope-open-text"></use></svg>
-<p data-i18n="about.feedbackNote">如果您有任何建议或发现失效链接，欢迎点击右下角公众号图标关注「张张小栈」。</p>
+<p class="about-local-note"><svg class="svg-icon" aria-hidden="true"><use href="#icon-laptop"></use></svg><span data-i18n="about.localData">收藏与个性化设置保存在当前浏览器，换设备不会自动同步。</span></p>
+<div class="about-details">
+<details><summary><span data-i18n="about.recentUpdates">站点更新记录</span><svg class="svg-icon" aria-hidden="true"><use href="#icon-angle-right"></use></svg></summary>
+<ul class="about-history"><li data-i18n="about.update1">新增生活模块：购物、生活服务、美食、金融理财</li><li data-i18n="about.update2">补充电子书阅读、资讯阅读、开发工具和网络工具</li><li data-i18n="about.update3">新增动漫追番相关站点</li><li data-i18n="about.update4">新增社区子栏目</li></ul></details>
+<details><summary><span data-i18n="about.disclaimerTitle">链接与内容说明</span><svg class="svg-icon" aria-hidden="true"><use href="#icon-angle-right"></use></svg></summary>
+<p class="about-legal" data-i18n="about.disclaimer">本站所有网站链接均来源于网络收集，仅供学习和参考。链接指向的内容均归原始权利人所有。如有侵权，请联系我们移除。</p></details>
 </div>
 </div>
 <div class="modal-footer">
-<button type="button" onclick="closeAboutModal()">
-<svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-check"></use></svg> <span data-i18n="common.gotIt">我知道了</span>
-</button>
+<button class="about-confirm" type="button" onclick="closeAboutModal()" data-i18n="common.gotIt">我知道了</button>
+<button class="about-feedback" type="button" onclick="closeAboutModal();openContactModal()"><svg class="svg-icon" aria-hidden="true"><use href="#icon-comment-dots"></use></svg><span data-i18n="about.feedbackAction">反馈建议</span><svg class="svg-icon about-feedback-arrow" aria-hidden="true"><use href="#icon-angle-right"></use></svg></button>
 </div>
 </div>
 </div>
