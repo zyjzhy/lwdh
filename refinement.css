@@ -205,7 +205,7 @@ body.searching .campus-group:not(:has(.card:not(.is-hidden))) { display: none; }
 #open-contact-modal { bottom: 70px; }
 #scroll-to-top { bottom: 20px; }
 /* Existing settings retain their functions with opaque, readable surfaces. */
-.modal { background: rgb(20 18 28 / 38%); backdrop-filter: blur(3px); }
+.modal { background: rgb(20 18 28 / 38%); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
 .modal-content-wrapper { background: var(--ui-surface); color: var(--ui-ink); border: 0; border-radius: 16px; box-shadow: var(--ui-shadow); }
 .modal .title { background: var(--ui-surface); color: var(--ui-ink); border-bottom: 1px solid var(--ui-border); font-size: 18px; }
 .modal .title .svg-icon { color: var(--primary-color); }
@@ -405,7 +405,6 @@ html[data-bg]:not([data-bg="none"]) .column { backdrop-filter: none; -webkit-bac
 .modal .modal-footer button:hover { background: var(--secondary-color); color: var(--button-on-accent); filter: brightness(.96); }
 .modal button.modal-close { width: 36px; height: 36px; min-height: 36px; border-radius: 9px; }
 #topTwText { display: inline-block; max-width: calc(100% - 12px); overflow: hidden; text-overflow: ellipsis; vertical-align: middle; }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .column { background: var(--ui-surface); } }
 @media (hover: hover) and (pointer: fine) {
   #search-tabs button:hover:not(.active) { transform: translateY(-1px); background: var(--ui-surface); color: var(--secondary-color); }
   #sidebar li a:hover:not(.active) { background: var(--ui-surface); color: var(--secondary-color); }
@@ -452,6 +451,10 @@ html[data-bg]:not([data-bg="none"]) .column { backdrop-filter: none; -webkit-bac
 :root {
   --glass-glint: linear-gradient(145deg, rgb(255 255 255 / 50%), rgb(255 255 255 / 10%) 35%, transparent 58%);
   --glass-edge: rgb(255 255 255 / 76%);
+  --choice-edge: rgba(50, 60, 82, .22);
+  --choice-hover-edge: rgba(50, 60, 82, .46);
+  --choice-active-edge: var(--primary-color);
+  --choice-radius: 10px;
   --glass-card: rgb(255 255 255 / 58%);
   --glass-control: rgb(255 255 255 / 54%);
   --glass-dialog: rgb(255 255 255 / 90%);
@@ -462,6 +465,9 @@ html[data-bg]:not([data-bg="none"]) .column { backdrop-filter: none; -webkit-bac
 html[data-theme="dark"] {
   --glass-glint: linear-gradient(145deg, rgb(255 255 255 / 12%), rgb(255 255 255 / 2%) 35%, transparent 58%);
   --glass-edge: rgb(255 255 255 / 24%);
+  --choice-edge: rgba(255, 255, 255, .34);
+  --choice-hover-edge: rgba(255, 255, 255, .56);
+  --choice-active-edge: rgba(255, 255, 255, .46);
   --glass-card: rgb(34 35 44 / 58%);
   --glass-control: rgb(34 35 44 / 54%);
   --glass-dialog: rgb(25 30 44 / 94%);
@@ -490,6 +496,23 @@ html[data-theme="dark"] {
 }
 #sidebar li a.active, #search-tabs button.active, html[data-theme="dark"] #search-tabs button.active {
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 35%), inset 0 -1px 0 rgb(20 30 48 / 16%), 0 3px 8px rgb(20 30 48 / 10%);
+}
+/* Navigation and settings choices share the same outline and interaction tokens. */
+#sidebar li a, html[data-theme="dark"] #sidebar li a {
+  border: 1px solid var(--choice-edge); border-radius: var(--choice-radius);
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+#sidebar li a.active, html[data-theme="dark"] #sidebar li a.active { border-color: var(--choice-active-edge); }
+#sidebar li a:focus-visible, html[data-theme="dark"] #sidebar li a:focus-visible { border-color: var(--choice-hover-edge); }
+@media (hover: hover) and (pointer: fine) {
+  #sidebar li a:hover:not(.active), html[data-theme="dark"] #sidebar li a:hover:not(.active) { border-color: var(--choice-hover-edge); }
+}
+/* Only fixed navigation uses native blur. Its fallback must survive the glass cascade. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  #scrolling-text, body.sidebar-collapsed #scrolling-text,
+  #sidebar, html[data-theme="dark"] #sidebar {
+    background-color: var(--ui-surface);
+  }
 }
 /* Extend the same static glass material to directory and dialog surfaces. */
 .column, .column.active, html[data-theme="dark"] .column, html[data-bg="none"] .column,
@@ -552,8 +575,9 @@ html[data-theme="dark"] {
   }
   header.nav-main nav a { background-image: var(--glass-glint); }
 }
-/* Small screens and reduced-motion preferences use static translucent surfaces. */
-@media (max-width: 980px), (prefers-reduced-motion: reduce) {
+/* Motion preferences stop animation above; they do not change the desktop glass material. */
+/* Keep the cheaper static material on small screens. */
+@media (max-width: 980px) {
   #scrolling-text, body.sidebar-collapsed #scrolling-text,
   #sidebar, html[data-theme="dark"] #sidebar {
     backdrop-filter: none; -webkit-backdrop-filter: none;

@@ -61,6 +61,25 @@ html[data-theme="dark"][data-glass="readable"] {
 .glass-options button[aria-pressed="true"] { border-color: var(--primary-color); }
 .glass-options strong { font-size: 13px; }
 .glass-options small { color: var(--ui-secondary); font-size: 11px; }
+/* Use the same outline, radius and hover treatment as the navigation choices. */
+#settings-modal :is(.theme-option, .palette-btn, .glass-options button, .settings-tabs button) {
+  border: 1px solid var(--choice-edge); border-radius: var(--choice-radius);
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+#settings-modal :is(.theme-option.active, .palette-btn.active, .glass-options button[aria-pressed="true"], .settings-tabs button[aria-selected="true"]) {
+  border-color: var(--choice-active-edge);
+  box-shadow: var(--glass-inset);
+}
+#settings-modal .glass-options button[aria-pressed="true"] { background-color: var(--primary-soft); }
+#settings-modal :is(.theme-option, .palette-btn, .glass-options button, .settings-tabs button):focus-visible {
+  border-color: var(--choice-hover-edge);
+  outline: 2px solid var(--primary-color); outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  #settings-modal :is(.theme-option:not(.active), .palette-btn:not(.active), .glass-options button:not([aria-pressed="true"]), .settings-tabs button:not([aria-selected="true"])):hover {
+    border-color: var(--choice-hover-edge);
+  }
+}
 .glass-sample { display: block; width: 38px; height: 26px; margin-bottom: 3px; border: 1px solid var(--glass-edge); border-radius: 6px; background: color-mix(in srgb, var(--secondary-color) 18%, transparent); box-shadow: var(--glass-inset); }
 [data-glass-mode="airy"] .glass-sample { opacity: .45; }
 [data-glass-mode="readable"] .glass-sample { background-color: var(--ui-surface); }
