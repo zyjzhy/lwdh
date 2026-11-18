@@ -1540,7 +1540,7 @@
                     column.setAttribute('aria-labelledby', h2.id);
                     const count = document.createElement('span');
                     count.className = 'section-count';
-                    count.dataset.resourceCount = column.id === 'offen-links' ? 21 : column.querySelectorAll('.card').length;
+                    count.dataset.resourceCount = column.id === 'offen-links' ? column.querySelectorAll('[data-campus] .card').length : column.querySelectorAll('.card').length;
                     heading.append(h2, count);
                     column.prepend(heading);
                 });

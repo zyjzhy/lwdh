@@ -26,6 +26,8 @@ const CardEnExtra = {
     '党课学习备考': 'Party Study Prep',
     '名牌工具': 'Nameplate Tool',
     '离线PDF工具箱': 'Offline PDF Toolbox',
+    '导师津贴汇总': 'Supervisor Allowance Summary',
+    '档案模板生成': 'Student Archive Templates',
     '猪猪甄选': 'Zhuzhu Select',
     '学习笔记': 'Study Notes',
     // ===== 国产 AI =====
@@ -599,6 +601,8 @@ const CardEnExtra = {
     '党课学习备考资料': 'Party course study & exam materials',
     '名牌制作工具': 'Nameplate making tool',
     '离线 PDF 工具箱': 'Offline PDF toolbox',
+    '导师津贴整理与表格汇总': 'Prepare and summarize supervisor allowance spreadsheets',
+    '学生档案模板生成器': 'Student archive template generator',
     '各类会员，网课，租号，实物等应有尽有，价格实惠！！': 'Memberships, online courses, rentals, goods and more at great prices!',
     '以前的学习笔记！': 'Study notes from the past!',
     '抖音AI工具': 'Douyin AI tool',

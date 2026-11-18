@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生档案模板生成器</title>
+    <meta name="theme-color" content="#eef2f7">
+    <style>
+        :root {
+            color-scheme: light;
+            --page: #eef2f7;
+            --surface: #fff;
+            --surface-subtle: #f6f8fc;
+            --ink: #182942;
+            --muted: #55677d;
+            --rule: #e2e9f2;
+            --control-border: #c5d1df;
+            --btn-border: #b3c2d4;
+            --accent: #245ab0;
+            --accent-hover: #1b468c;
+            --accent-soft: #eaf2ff;
+            --success: #176045;
+            --success-soft: #edf7f1;
+            --warning: #805116;
+            --warning-soft: #f9f2e7;
+            --error: #a13540;
+            --error-soft: #fcf0f1;
+            --panel-radius: 12px;
+            --control-radius: 8px;
+            --shadow-panel: 0 1px 2px rgba(23, 46, 78, .05), 0 8px 20px -16px rgba(23, 46, 78, .35);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 0;
+            margin: 0;
+            background:
+                radial-gradient(1100px 460px at 50% -8%, #f8fbff 0%, rgba(248, 251, 255, 0) 64%),
+                var(--page);
+            color: var(--ink);
+            font: 0.9375rem/1.55 "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+            accent-color: var(--accent);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: #cce0ff;
+            color: var(--ink);
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        h1, h2, p, dl, dd {
+            margin: 0;
+        }
+
+        button, input, select, textarea {
+            font: inherit;
+        }
+
+        button, summary, select {
+            cursor: pointer;
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .container {
+            width: min(1200px, calc(100% - 56px));
+            margin-inline: auto;
+            padding-block: 26px 40px;
+        }
+
+        .masthead {
+            position: relative;
+            isolation: isolate;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px 28px;
+            overflow: hidden;
+            padding: 18px 24px;
+            border: 1px solid #dbe5f1;
+            border-radius: var(--panel-radius);
+            background: linear-gradient(104deg, #ffffff 0%, #f6faff 44%, #eaf2fc 100%);
+            box-shadow:
+                inset 0 1px 0 #fff,
+                0 1px 2px rgba(23, 46, 78, .05),
+                0 14px 26px -24px rgba(23, 46, 78, .5);
+            color: var(--ink);
+        }
+
+        /* 右侧柔光 + 细斜线纹理，用同色系做层次，不加新色。 */
+        .masthead::before {
+            position: absolute;
+            z-index: -1;
+            top: -220px;
+            right: -110px;
+            width: 460px;
+            height: 460px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffffff, rgba(255, 255, 255, 0) 66%);
+            content: "";
+        }
+
+        .masthead::after {
+            position: absolute;
+            z-index: -1;
+            inset: 0 0 0 auto;
+            width: 44%;
+            background: repeating-linear-gradient(116deg, rgba(31, 74, 130, .055) 0 1px, rgba(31, 74, 130, 0) 1px 11px);
+            content: "";
+            -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0), #000 72%);
+            mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0), #000 72%);
+        }
+
+        .masthead h1 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.28;
+            letter-spacing: .01em;
+            color: #152a44;
+        }
+
+        /* 与各面板标题同一套竖向短线，让页头融进整体语言。 */
+        .masthead h1::before {
+            flex: 0 0 auto;
+            width: 4px;
+            height: 23px;
+            border-radius: 3px;
+            background: linear-gradient(180deg, #3d7ac0, #1d4b8c);
+            content: "";
+        }
+
+        .masthead p {
+            display: flex;
+            align-items: center;
+            color: #5b6d84;
+            font-size: .8125rem;
+            line-height: 1.5;
+            letter-spacing: .01em;
+        }
+
+        /* 标题与说明之间的一根细线，让右侧说明有落点。 */
+        .masthead p::before {
+            width: 1px;
+            height: 13px;
+            margin-right: 13px;
+            background: rgba(23, 46, 78, .16);
+            content: "";
+        }
+
+        .main-content {
+            margin-top: 20px;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template:
+                "settings students" auto
+                "settings uploads" minmax(0, 1fr)
+                / minmax(300px, 344px) minmax(0, 1fr);
+            align-items: stretch;
+            gap: 20px;
+        }
+
+        .student-section { grid-area: students; }
+        .settings-rail { grid-area: settings; }
+        .upload-section { grid-area: uploads; }
+
+        .settings-rail {
+            position: relative;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .rail-inner {
+            display: flex;
+            min-height: 0;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* 左栏高度完全由右栏撑开：绝对定位的内部容器不参与行高计算，
+           于是「默认页数」的底边能与「文件上传」的底边严格对齐。 */
+        @media (min-width: 921px) {
+            .rail-inner {
+                position: absolute;
+                inset: 0;
+            }
+        }
+
+        .config-section {
+            min-width: 0;
+            padding: 22px;
+            border: 1px solid var(--rule);
+            border-radius: var(--panel-radius);
+            background: var(--surface);
+            box-shadow: var(--shadow-panel);
+        }
+
+        .section-heading {
+            margin-bottom: 17px;
+        }
+
+        .section-heading h2 {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 1.0625rem;
+            font-weight: 700;
+            line-height: 1.4;
+            letter-spacing: -.005em;
+        }
+
+        /* 统一的小标记：竖向渐变短线，用于区隔各面板标题。 */
+        .section-heading h2::before,
+        .details-trigger strong::before {
+            flex: 0 0 auto;
+            width: 3px;
+            height: 15px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #3d7ac0, #1d4b8c);
+            content: "";
+        }
+
+        .section-hint {
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: .875rem;
+            line-height: 1.55;
+        }
+
+        .config-row,
+        .data-input-section {
+            display: grid;
+            gap: 13px 16px;
+        }
+
+        .config-row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .data-input-section {
+            grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+        }
+
+        .date-group {
+            grid-column: 1 / -1;
+        }
+
+        .field {
+            min-width: 0;
+        }
+
+        .field-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 7px;
+        }
+
+        .field label {
+            display: block;
+            font-size: .875rem;
+            font-weight: 650;
+        }
+
+        .field > label {
+            margin-bottom: 6px;
+        }
+
+        .field input,
+        .field select,
+        .field textarea,
+        .page-settings-table input,
+        .manual-input-pages {
+            min-width: 0;
+            width: 100%;
+            min-height: 42px;
+            padding: 8px 11px;
+            border: 1px solid var(--control-border);
+            border-radius: var(--control-radius);
+            background: var(--surface);
+            color: var(--ink);
+            caret-color: var(--accent);
+        }
+
+        .field input:hover,
+        .field select:hover,
+        .field textarea:hover,
+        .page-settings-table input:hover,
+        .manual-input-pages:hover {
+            border-color: #627c9a;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus,
+        .page-settings-table input:focus,
+        .preview-table input:focus,
+        .manual-input-pages:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: -2px;
+            background: var(--surface);
+        }
+
+        .field input[aria-invalid="true"] {
+            border-color: var(--error);
+        }
+
+        .field textarea {
+            display: block;
+            min-height: 148px;
+            padding: 11px 13px;
+            resize: vertical;
+            background: var(--surface-subtle);
+            line-height: 1.7;
+        }
+
+        .field textarea::placeholder {
+            color: #5f7087;
+            opacity: 1;
+        }
+
+        .entry-count {
+            color: var(--muted);
+            font-size: .8125rem;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px 18px;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid var(--rule);
+        }
+
+        .status-message {
+            display: flex;
+            min-width: 0;
+            align-items: baseline;
+            gap: 8px;
+            color: var(--muted);
+            font-size: .8125rem;
+            overflow-wrap: anywhere;
+        }
+
+        .status-message::before {
+            flex: 0 0 auto;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            content: "";
+        }
+
+        .status-message:empty::before {
+            content: none;
+        }
+
+        .status-message.success { color: var(--success); }
+        .status-message.warning { color: var(--warning); }
+        .status-message.error { color: var(--error); }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-actions .button-group {
+            margin-left: auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            min-height: 42px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border: 1px solid transparent;
+            border-radius: var(--control-radius);
+            font-size: .875rem;
+            font-weight: 650;
+            line-height: 1.4;
+            text-align: center;
+            transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, #2c66ba, #1e5097);
+            box-shadow: 0 1px 2px rgba(19, 48, 92, .26);
+            color: #fff;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(180deg, #3272ca, #21579f);
+            box-shadow: 0 2px 6px -2px rgba(19, 48, 92, .45);
+        }
+
+        .btn-primary:active:not(:disabled) { background: #17407c; }
+
+        .btn-secondary {
+            border-color: var(--btn-border);
+            background: var(--surface);
+            color: var(--ink);
+        }
+
+        .btn-secondary:hover:not(:disabled),
+        .btn-quiet:hover:not(:disabled) {
+            background: var(--surface-subtle);
+            color: var(--accent-hover);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            border-color: #94a8bf;
+        }
+
+        .btn-secondary:active:not(:disabled),
+        .btn-quiet:active:not(:disabled) {
+            background: var(--accent-soft);
+        }
+
+        .btn-quiet {
+            background: transparent;
+            color: var(--muted);
+        }
+
+        .btn:disabled {
+            border-color: transparent;
+            background: #eaf0f7;
+            box-shadow: none;
+            color: #66788e;
+        }
+
+        .btn-quiet:disabled {
+            background: transparent;
+            color: #65758a;
+        }
+
+        .btn-small {
+            min-height: 34px;
+            padding: 5px 9px;
+            font-size: .8125rem;
+        }
+
+        .btn-arrow,
+        .details-arrow {
+            width: 7px;
+            height: 7px;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+        }
+
+        .btn-arrow {
+            transform: rotate(-45deg);
+        }
+
+        .defaults-section {
+            display: flex;
+            flex: 0 0 auto;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        /* 展开时撑满左栏剩余高度，与右下「文件上传」底边齐平。 */
+        .defaults-section[open] {
+            flex: 1 1 auto;
+        }
+
+        /* 新版浏览器把 details 内容包进 ::details-content，同样让它参与拉伸。 */
+        .defaults-section::details-content {
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .details-trigger {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 16px 20px;
+            border-radius: calc(var(--panel-radius) - 1px);
+            list-style: none;
+        }
+
+        .defaults-section[open] .details-trigger {
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .details-trigger::-webkit-details-marker {
+            display: none;
+        }
+
+        .details-trigger:hover {
+            background: var(--surface-subtle);
+        }
+
+        .details-trigger strong {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 1.0625rem;
+            font-weight: 700;
+        }
+
+        .details-caption {
+            display: block;
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: .8125rem;
+        }
+
+        .details-arrow {
+            flex: 0 0 auto;
+            margin-right: 2px;
+            color: var(--muted);
+            transform: rotate(45deg);
+        }
+
+        .defaults-section[open] .details-arrow {
+            transform: rotate(225deg);
+        }
+
+        .page-settings-container {
+            flex: 1 1 0;
+            min-height: 0;
+            overflow: auto;
+            margin: 12px;
+            border: 1px solid var(--rule);
+            border-radius: var(--control-radius);
+            background: var(--surface);
+            scrollbar-gutter: stable;
+        }
+
+        .page-settings-container::-webkit-scrollbar,
+        .preview-table-container::-webkit-scrollbar,
+        .file-list::-webkit-scrollbar {
+            width: 9px;
+            height: 9px;
+        }
+
+        .page-settings-container::-webkit-scrollbar-track,
+        .preview-table-container::-webkit-scrollbar-track,
+        .file-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .page-settings-container::-webkit-scrollbar-thumb,
+        .preview-table-container::-webkit-scrollbar-thumb,
+        .file-list::-webkit-scrollbar-thumb {
+            border: 3px solid transparent;
+            border-radius: 999px;
+            background: #c6d3e2;
+            background-clip: padding-box;
+        }
+
+        .page-settings-container::-webkit-scrollbar-thumb:hover,
+        .preview-table-container::-webkit-scrollbar-thumb:hover,
+        .file-list::-webkit-scrollbar-thumb:hover {
+            background: #a8bbd0;
+            background-clip: padding-box;
+        }
+
+        .page-settings-container,
+        .preview-table-container,
+        .file-list {
+            scrollbar-color: #b9c9da transparent;
+            scrollbar-width: thin;
+        }
+
+        .page-settings-table,
+        .preview-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .page-settings-table th,
+        .page-settings-table td {
+            padding: 6px 6px 6px 9px;
+            border-bottom: 1px solid #edf1f7;
+            text-align: left;
+            font-size: .8125rem;
+        }
+
+        .page-settings-table thead th,
+        .preview-table thead th {
+            position: sticky;
+            z-index: 1;
+            top: 0;
+            background: #f2f6fb;
+            color: #33475f;
+        }
+
+        .page-settings-table thead th {
+            padding-block: 9px;
+            border-bottom: 1px solid var(--rule);
+            font-size: .75rem;
+            font-weight: 650;
+            letter-spacing: .04em;
+        }
+
+        .page-settings-table tbody th {
+            font-weight: 500;
+            color: #2c3f57;
+        }
+
+        .page-settings-table tbody tr:hover {
+            background: #f8fbff;
+        }
+
+        .page-settings-table thead th:not(:first-child),
+        .page-settings-table td {
+            width: 61px;
+            text-align: center;
+        }
+
+        .page-settings-table tbody tr:last-child > * {
+            border-bottom: 0;
+        }
+
+        /* 页数输入在表格里默认「无框」，只在悬停/聚焦时出现边界，降低噪点。 */
+        .page-settings-table input {
+            min-height: 32px;
+            padding: 3px 4px;
+            border-color: transparent;
+            background: transparent;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .page-settings-table input:hover {
+            border-color: var(--control-border);
+            background: var(--surface);
+        }
+
+        .page-settings-table input:focus {
+            border-color: var(--accent);
+            outline: 0;
+            background: var(--surface);
+            box-shadow: 0 0 0 3px rgba(36, 90, 176, .14);
+        }
+
+        .tabs-header {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 3px;
+            padding: 4px;
+            border-radius: 10px;
+            background: #eef3f9;
+        }
+
+        .tab-button {
+            min-height: 39px;
+            padding: 6px 5px;
+            border: 1px solid transparent;
+            border-radius: 7px;
+            background: transparent;
+            color: #475c75;
+            font-size: .8125rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-wrap: balance;
+        }
+
+        .tab-button:hover:not([aria-selected="true"]) {
+            background: #e2ecfa;
+            color: var(--accent-hover);
+        }
+
+        .tab-button[aria-selected="true"] {
+            border-color: #cddae9;
+            background: var(--surface);
+            box-shadow: 0 1px 2px rgba(23, 46, 78, .08);
+            color: var(--accent-hover);
+        }
+
+        .tab-pane {
+            margin-top: 12px;
+        }
+
+        .drag-drop-area {
+            display: flex;
+            width: 100%;
+            min-height: 105px;
+            justify-content: center;
+            align-items: center;
+            gap: 13px;
+            padding: 14px;
+            border: 1px dashed var(--control-border);
+            border-radius: 10px;
+            background: #f7faff;
+            color: var(--accent-hover);
+            text-align: left;
+            transition: background-color 140ms ease, border-color 140ms ease;
+        }
+
+        .drag-drop-area:hover:not(:disabled),
+        .drag-drop-area.drag-over {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .drag-drop-area:disabled {
+            border-color: var(--control-border);
+            background: var(--surface-subtle);
+            color: var(--muted);
+        }
+
+        .upload-icon {
+            position: relative;
+            display: grid;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 auto;
+            place-items: center;
+            border-radius: 9px;
+            background: #e2edff;
+        }
+
+        .upload-icon::before {
+            width: 15px;
+            height: 19px;
+            border: 1.5px solid currentColor;
+            border-radius: 3px;
+            content: "";
+        }
+
+        .upload-icon::after {
+            position: absolute;
+            width: 7px;
+            height: 5px;
+            border-block: 1.5px solid currentColor;
+            content: "";
+        }
+
+        .upload-label {
+            display: block;
+            font-weight: 700;
+        }
+
+        .upload-hint {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: .8125rem;
+        }
+
+        .filename-guide {
+            margin-top: 11px;
+            color: var(--muted);
+            font-size: .8125rem;
+        }
+
+        .filename-guide summary {
+            width: fit-content;
+            padding-block: 3px;
+            color: var(--accent-hover);
+        }
+
+        .filename-guide ul {
+            margin: 6px 0 0;
+            padding-left: 21px;
+            overflow-wrap: anywhere;
+        }
+
+        .upload-results {
+            margin-top: 15px;
+        }
+
+        .progress-container {
+            height: 5px;
+            overflow: hidden;
+            margin-top: 9px;
+            border-radius: 10px;
+            background: #e1e9f4;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background: var(--accent);
+            transition: width 160ms ease;
+        }
+
+        .compact-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin-top: 11px;
+            padding-block: 9px;
+            border-block: 1px solid var(--rule);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .compact-stats > div {
+            padding-inline: 6px;
+            text-align: center;
+        }
+
+        .compact-stats > div + div {
+            border-left: 1px solid var(--rule);
+        }
+
+        .compact-stats dt {
+            color: var(--muted);
+            font-size: .8125rem;
+        }
+
+        .compact-stats dd {
+            margin-top: 1px;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .stat-success:not([data-empty]) { color: var(--success); }
+        .stat-warning:not([data-empty]) { color: var(--warning); }
+        .stat-error:not([data-empty]) { color: var(--error); }
+
+        .file-list {
+            max-height: 250px;
+            overflow: auto;
+            margin: 10px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .file-list:empty {
+            display: none;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px 12px;
+            padding: 8px 2px;
+            border-bottom: 1px solid var(--rule);
+            font-size: .875rem;
+        }
+
+        .file-name {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .file-pages {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            gap: 7px;
+            color: var(--muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .page-status {
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-size: .75rem;
+        }
+
+        .page-status.success { background: var(--success-soft); color: var(--success); }
+        .page-status.warning { background: var(--warning-soft); color: var(--warning); }
+        .page-status.error { background: var(--error-soft); color: var(--error); }
+
+        .issue-list {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: .8125rem;
+        }
+
+        .issue-list summary {
+            width: fit-content;
+            padding-block: 4px;
+            font-weight: 650;
+        }
+
+        .issue-list ul {
+            margin: 3px 0 0;
+            padding-left: 20px;
+            overflow-wrap: anywhere;
+        }
+
+        .preview-section {
+            margin-top: 26px;
+            scroll-margin-top: 16px;
+        }
+
+        .preview-heading {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: start;
+            gap: 10px 18px;
+        }
+
+        .preview-heading h2:focus {
+            outline: none;
+        }
+
+        .preview-heading .button-group {
+            margin-left: auto;
+        }
+
+        .preview-table-container {
+            max-height: min(540px, 67vh);
+            overflow: auto;
+            margin-top: 12px;
+            border: 1px solid var(--rule);
+            border-radius: 10px;
+        }
+
+        .preview-table {
+            width: max-content;
+            min-width: 100%;
+            table-layout: fixed;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .preview-table th,
+        .preview-table td {
+            width: 101px;
+            padding: 4px;
+            border-right: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .preview-table th {
+            padding: 10px 8px;
+            font-size: .8125rem;
+            text-align: left;
+        }
+
+        .preview-table :is(th, td):nth-child(10) { width: 238px; }
+        .preview-table :is(th, td):nth-child(11) { width: 158px; }
+        .preview-table :is(th, td):nth-child(13),
+        .preview-table :is(th, td):nth-child(17) { width: 122px; }
+
+        .preview-table tbody tr:nth-child(even) { background: var(--surface-subtle); }
+        .preview-table tbody tr.overview-row {
+            background: #eaf2fe;
+            font-weight: 700;
+        }
+
+        .preview-table input {
+            width: 100%;
+            min-width: 0;
+            min-height: 33px;
+            padding: 5px 7px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            background: transparent;
+            color: var(--ink);
+            font-size: .8125rem;
+            caret-color: var(--accent);
+        }
+
+        .preview-table input:hover {
+            border-color: var(--control-border);
+            background: var(--surface);
+        }
+
+        .modal {
+            width: min(520px, calc(100% - 28px));
+            max-height: min(85vh, 700px);
+            padding: 0;
+            overflow: auto;
+            border: 0;
+            border-radius: var(--panel-radius);
+            background: var(--surface);
+            color: var(--ink);
+            box-shadow: 0 20px 56px rgba(0, 0, 0, .27);
+        }
+
+        .modal::backdrop {
+            background: rgba(13, 29, 54, .54);
+        }
+
+        .modal-content {
+            padding: 21px;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 9px;
+        }
+
+        .modal-title {
+            font-size: 1.125rem;
+        }
+
+        .modal-close {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            flex: 0 0 auto;
+            border: 0;
+            border-radius: var(--control-radius);
+            background: transparent;
+            color: var(--muted);
+        }
+
+        .modal-close:hover {
+            background: var(--surface-subtle);
+        }
+
+        .modal-close::before, .modal-close::after {
+            position: absolute;
+            inset: 19px 12px auto;
+            height: 1.5px;
+            background: currentColor;
+            content: "";
+            transform: rotate(45deg);
+        }
+
+        .modal-close::after { transform: rotate(-45deg); }
+
+        .manual-input-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 76px;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .manual-input-name {
+            font-size: .875rem;
+            overflow-wrap: anywhere;
+        }
+
+        .manual-input-name small {
+            display: block;
+            color: var(--muted);
+            font-size: .8125rem;
+        }
+
+        .manual-input-pages {
+            text-align: center;
+        }
+
+        .modal-footer {
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 920px) {
+            .container {
+                width: calc(100% - 40px);
+            }
+
+            .masthead {
+                padding: 17px 20px;
+            }
+
+            .workspace {
+                grid-template: "settings" "students" "uploads" / minmax(0, 1fr);
+                gap: 16px;
+            }
+
+            .rail-inner {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                align-items: start;
+            }
+
+            /* 窄屏保持「基本信息」的自然紧凑高度，压缩「默认页数」去对齐它。 */
+            .details-trigger {
+                padding: 12px 18px;
+            }
+
+            .details-caption {
+                margin-top: 0;
+            }
+
+            .defaults-section:not([open]) {
+                align-self: start;
+            }
+
+            .defaults-section,
+            .page-settings-container {
+                flex: 0 0 auto;
+            }
+
+            .page-settings-container {
+                max-height: 148px;
+                margin: 8px;
+            }
+
+            .page-settings-table thead th {
+                padding-block: 7px;
+            }
+
+            .page-settings-table th,
+            .page-settings-table td {
+                padding-block: 3px;
+            }
+
+            .page-settings-table input {
+                min-height: 28px;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .container {
+                width: calc(100% - 24px);
+                padding-block: 12px 24px;
+            }
+
+            /* 手机单列时表格恢复舒展尺寸。 */
+            .details-trigger {
+                padding: 16px 15px;
+            }
+
+            .page-settings-container {
+                max-height: 320px;
+                margin: 12px;
+            }
+
+            .page-settings-table thead th {
+                padding-block: 9px;
+            }
+
+            .page-settings-table th,
+            .page-settings-table td {
+                padding-block: 6px;
+            }
+
+            .page-settings-table input {
+                min-height: 32px;
+            }
+
+            .masthead {
+                padding: 15px 17px;
+                gap: 4px;
+            }
+
+            .masthead h1 {
+                font-size: 1.1875rem;
+                letter-spacing: .01em;
+            }
+
+            .masthead p {
+                font-size: .75rem;
+                text-wrap: balance;
+            }
+
+            .masthead p::before {
+                content: none;
+            }
+
+            .main-content {
+                margin-top: 12px;
+            }
+
+            .workspace,
+            .rail-inner {
+                gap: 12px;
+            }
+
+            .rail-inner,
+            .data-input-section {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .config-section {
+                padding: 15px;
+            }
+
+            .defaults-section {
+                padding: 0;
+            }
+
+            .details-trigger {
+                padding-inline: 15px;
+            }
+
+            .section-heading {
+                margin-bottom: 13px;
+            }
+
+            .section-heading h2 {
+                font-size: 1.0625rem;
+            }
+
+            .field input,
+            .field select,
+            .field textarea,
+            .manual-input-pages,
+            .preview-table input {
+                font-size: 1rem;
+            }
+
+            .field textarea {
+                min-height: 105px;
+            }
+
+            .section-actions {
+                align-items: stretch;
+                gap: 10px;
+                margin-top: 14px;
+                padding-top: 11px;
+            }
+
+            .section-actions .button-group,
+            .preview-heading .button-group {
+                width: 100%;
+                justify-content: space-between;
+                margin: 0;
+            }
+
+            .tab-button,
+            .btn-small {
+                min-height: 44px;
+            }
+
+            .tabs-header {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .file-item {
+                flex-wrap: wrap;
+            }
+
+            .preview-section {
+                margin-top: 12px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="masthead">
+            <h1>学生档案模板生成器</h1>
+            <p>录入学生信息，核对页数，生成可编辑的 Excel 模板</p>
+        </header>
+
+        <main class="main-content">
+            <div class="workspace">
+                <aside class="settings-rail" aria-label="档案设置">
+                    <div class="rail-inner">
+                        <section class="config-section" aria-labelledby="settings-heading">
+                            <div class="section-heading">
+                                <h2 id="settings-heading">基本信息</h2>
+                            </div>
+                            <div class="config-row">
+                                <div class="field">
+                                    <label for="year">毕业年份</label>
+                                    <input type="text" id="year" value="2025" inputmode="numeric" maxlength="4" autocomplete="off">
+                                </div>
+                                <div class="field">
+                                    <label for="degree">学位类型</label>
+                                    <select id="degree">
+                                        <option value="硕士">硕士</option>
+                                        <option value="博士">博士</option>
+                                    </select>
+                                </div>
+                                <div class="field date-group">
+                                    <label for="date">档案日期</label>
+                                    <input type="date" id="date">
+                                </div>
+                            </div>
+                        </section>
+
+                        <details class="config-section defaults-section" id="default-pages" open>
+                            <summary class="details-trigger">
+                                <span>
+                                    <strong>默认页数</strong>
+                                    <span class="details-caption">未上传的材料使用此处页数</span>
+                                </span>
+                                <span class="details-arrow" aria-hidden="true"></span>
+                            </summary>
+                            <div class="page-settings-container" role="region" aria-label="默认页数表" tabindex="0">
+                                <table class="page-settings-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">文件类型</th>
+                                            <th scope="col">硕士</th>
+                                            <th scope="col">博士</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="page-settings-body"></tbody>
+                                </table>
+                            </div>
+                        </details>
+                    </div>
+                </aside>
+
+                <section class="config-section student-section" aria-labelledby="student-heading">
+                    <div class="section-heading">
+                        <h2 id="student-heading">学生信息</h2>
+                        <p class="section-hint" id="entry-hint">每行填写一项，姓名与论文题目按行对应。</p>
+                    </div>
+                    <div class="data-input-section">
+                        <div class="field">
+                            <div class="field-heading">
+                                <label for="names">学生姓名</label>
+                                <span class="entry-count" id="names-count">0 条</span>
+                            </div>
+                            <textarea id="names" rows="4" aria-describedby="entry-hint" placeholder="张三&#10;李四"></textarea>
+                        </div>
+                        <div class="field">
+                            <div class="field-heading">
+                                <label for="topics">论文题目</label>
+                                <span class="entry-count" id="topics-count">0 条</span>
+                            </div>
+                            <textarea id="topics" rows="4" aria-describedby="entry-hint" placeholder="人工智能在教育领域的应用研究&#10;金融数据的隐私保护方法"></textarea>
+                        </div>
+                    </div>
+                    <div class="section-actions">
+                        <div id="status" class="status-message" role="status">填写姓名和题目后可生成预览</div>
+                        <div class="button-group">
+                            <button type="button" id="clear-btn" class="btn btn-quiet" disabled>清空内容</button>
+                            <button type="button" id="generate-btn" class="btn btn-primary" disabled>
+                                生成预览 <span class="btn-arrow" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="config-section upload-section" aria-labelledby="upload-heading">
+                    <div class="section-heading">
+                        <h2 id="upload-heading">文件上传</h2>
+                        <p class="section-hint">可选。上传 PDF 获取实际页数，论文支持识别末页页码。</p>
+                    </div>
+                    <div class="tabs-header" id="tabs-header" role="tablist" aria-label="文件类型"></div>
+                    <div id="tabs-content"></div>
+                    <details class="filename-guide">
+                        <summary>文件命名规则</summary>
+                        <ul>
+                            <li>学号_姓名_论文题目.pdf</li>
+                            <li>姓名_论文题目.pdf</li>
+                            <li>姓名 论文题目.pdf</li>
+                        </ul>
+                    </details>
+                </section>
+            </div>
+
+            <section class="config-section preview-section" id="preview-section" aria-labelledby="preview-heading" hidden>
+                <div class="section-heading preview-heading">
+                    <div>
+                        <h2 id="preview-heading" tabindex="-1">模板预览</h2>
+                        <p class="section-hint" id="preview-hint">横向滚动可查看全部字段。直接编辑单元格，修改会随 Excel 导出。</p>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" id="update-template-btn" class="btn btn-secondary" disabled>更新模板</button>
+                        <button type="button" id="export-excel-btn" class="btn btn-primary" disabled>导出 Excel</button>
+                    </div>
+                </div>
+                <div id="preview-status" class="status-message" role="status"></div>
+                <div class="preview-table-container" role="region" aria-labelledby="preview-heading" aria-describedby="preview-hint" tabindex="0">
+                    <table class="preview-table" id="preview-table"></table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <dialog class="modal" id="manual-pages-modal" aria-labelledby="manual-pages-title" aria-describedby="manual-pages-hint">
+        <form class="modal-content" id="manual-pages-form" method="dialog">
+            <div class="modal-header">
+                <h2 class="modal-title" id="manual-pages-title">填写论文页数</h2>
+                <button type="button" class="modal-close" id="close-manual-modal" aria-label="关闭"></button>
+            </div>
+            <p class="section-hint" id="manual-pages-hint">请核对论文末页后填写正确的页数。</p>
+            <div id="manual-pages-container"></div>
+            <div class="button-group modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel-manual-pages">取消</button>
+                <button type="submit" class="btn btn-primary">保存页数</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearInput = document.getElementById('year');
+            const degreeSelect = document.getElementById('degree');
+            const dateInput = document.getElementById('date');
+            const namesTextarea = document.getElementById('names');
+            const topicsTextarea = document.getElementById('topics');
+            const namesCountDisplay = document.getElementById('names-count');
+            const topicsCountDisplay = document.getElementById('topics-count');
+            const statusDisplay = document.getElementById('status');
+            const generateBtn = document.getElementById('generate-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const previewSection = document.getElementById('preview-section');
+            const previewHeading = document.getElementById('preview-heading');
+            const previewStatus = document.getElementById('preview-status');
+            const previewTable = document.getElementById('preview-table');
+            const updateTemplateBtn = document.getElementById('update-template-btn');
+            const exportExcelBtn = document.getElementById('export-excel-btn');
+            const pageSettingsBody = document.getElementById('page-settings-body');
+            const tabsHeader = document.getElementById('tabs-header');
+            const tabsContent = document.getElementById('tabs-content');
+            const manualPagesModal = document.getElementById('manual-pages-modal');
+            const manualPagesForm = document.getElementById('manual-pages-form');
+            const manualPagesContainer = document.getElementById('manual-pages-container');
+
+            // 文件类型配置
+            const fileTypes = [
+                { id: 'thesis', name: '论文文件', useFooterDetection: true },
+                { id: 'trainingPlan', name: '培养计划', useFooterDetection: false },
+                { id: 'proposal', name: '开题报告', useFooterDetection: false },
+                { id: 'defenseApplication', name: '论文答辩申请材料', useFooterDetection: false },
+                { id: 'degreeApplication', name: '学位申请书', useFooterDetection: false },
+                { id: 'graduationForm', name: '毕业登记表', useFooterDetection: false },
+                { id: 'defenseSituation', name: '学位论文答辩情况表', useFooterDetection: false },
+                { id: 'supervisorReview', name: '指导教师评阅书', useFooterDetection: false }
+            ];
+
+            // 固定材料名称（另有论文一项）
+            const fixedTitles = [
+                "注册卡片", "培养计划", "开题报告", "开题报告评议结果",
+                "论文答辩申请材料", "学位申请书", "毕业登记表",
+                "学位论文答辩情况表", "学位评定委员会决议",
+                "颁发学位证明书", "指导教师评阅书", "论文评阅书",
+                "表决票", "答辩记录", "成绩单"
+            ];
+
+            // 默认页数设置（硕士/博士）
+            const defaultPages = {
+                "注册卡片": { master: 2, doctor: 2 },
+                "培养计划": { master: 11, doctor: 11 },
+                "开题报告": { master: 10, doctor: 20 },
+                "开题报告评议结果": { master: 1, doctor: 1 },
+                "论文答辩申请材料": { master: 10, doctor: 10 },
+                "学位申请书": { master: 4, doctor: 4 },
+                "毕业登记表": { master: 8, doctor: 8 },
+                "学位论文答辩情况表": { master: 3, doctor: 3 },
+                "学位评定委员会决议": { master: 1, doctor: 1 },
+                "颁发学位证明书": { master: 1, doctor: 1 },
+                "指导教师评阅书": { master: 4, doctor: 4 },
+                "论文评阅书": { master: 10, doctor: 15 }, // 博士为15页
+                "表决票": { master: 5, doctor: 5 },
+                "答辩记录": { master: 1, doctor: 1 },
+                "成绩单": { master: 1, doctor: 1 }
+            };
+            const pdfBase = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/';
+            const libraryUrls = {
+                pdfjsLib: pdfBase + 'pdf.min.js',
+                XLSX: 'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js'
+            };
+            const libraryLoads = new Map();
+            const uploadViews = new Map();
+            const typeByTitle = new Map(fileTypes.map(type => [type.name, type.id]));
+            const issueLabels = {
+                unmatched: '未匹配文件',
+                errors: '读取失败',
+                warnings: '页数待核对',
+                missing: '缺失学生'
+            };
+
+            let processingCount = 0;
+            let exporting = false;
+            let preview = null;
+            let manualSelection = null;
+
+            function loadLibrary(name) {
+                if (window[name]) return Promise.resolve(window[name]);
+                if (!libraryLoads.has(name)) {
+                    const promise = new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = libraryUrls[name];
+
+                        function fail() {
+                            clearTimeout(timeout);
+                            script.remove();
+                            reject(new Error('组件加载失败'));
+                        }
+
+                        const timeout = setTimeout(fail, 12000);
+                        script.onerror = fail;
+                        script.onload = () => {
+                            clearTimeout(timeout);
+                            if (window[name]) resolve(window[name]);
+                            else fail();
+                        };
+                        document.head.appendChild(script);
+                    }).catch(error => {
+                        libraryLoads.delete(name);
+                        throw error;
+                    });
+                    libraryLoads.set(name, promise);
+                }
+                return libraryLoads.get(name);
+            }
+
+            function setStatus(message, type = 'info', element = statusDisplay) {
+                element.className = type === 'info' ? 'status-message' : 'status-message ' + type;
+                if (element.textContent !== message) element.textContent = message;
+            }
+
+            function getNames() {
+                return namesTextarea.value.split('\n').map(name => name.trim()).filter(Boolean);
+            }
+
+            function getTopics() {
+                return topicsTextarea.value.split('\n').map(topic => topic.trim()).filter(Boolean);
+            }
+
+            function updateStatus() {
+                const names = getNames().length;
+                const topics = getTopics().length;
+                namesCountDisplay.textContent = `${names} 条`;
+                topicsCountDisplay.textContent = `${topics} 条`;
+                generateBtn.disabled = processingCount > 0 || names === 0 || names !== topics;
+                clearBtn.disabled = processingCount > 0 || !(names || topics || preview ||
+                    Array.from(uploadViews.values()).some(view => !view.results.hidden));
+
+                if (processingCount) {
+                    setStatus('正在读取 PDF，请稍候。');
+                } else if (names === 0 && topics === 0) {
+                    setStatus('填写姓名和题目后可生成预览');
+                } else if (names !== topics) {
+                    setStatus('姓名与题目的条数不同，请检查录入。', 'error');
+                } else {
+                    setStatus(`已匹配 ${names} 位学生`, 'success');
+                }
+            }
+
+            function createPageSettingsTable() {
+                pageSettingsBody.innerHTML = Object.entries(defaultPages).map(([title, pages]) => `
+                    <tr>
+                        <th scope="row">${title}</th>
+                        <td><input type="number" min="0" step="1" inputmode="numeric" value="${pages.master}"
+                            data-title="${title}" data-degree="master" aria-label="${title}，硕士页数"></td>
+                        <td><input type="number" min="0" step="1" inputmode="numeric" value="${pages.doctor}"
+                            data-title="${title}" data-degree="doctor" aria-label="${title}，博士页数"></td>
+                    </tr>
+                `).join('');
+            }
+
+            function getDefaultPage(title) {
+                const degreeKey = degreeSelect.value === '硕士' ? 'master' : 'doctor';
+                const input = pageSettingsBody.querySelector(`input[data-title="${title}"][data-degree="${degreeKey}"]`);
+                const pages = input?.valueAsNumber;
+                return Number.isInteger(pages) && pages >= 0 ? pages : defaultPages[title][degreeKey];
+            }
+
+            function setTodayDate() {
+                const today = new Date();
+                dateInput.value = [today.getFullYear(), today.getMonth() + 1, today.getDate()]
+                    .map(part => String(part).padStart(2, '0')).join('-');
+            }
+
+            function createFileUploadTabs() {
+                fileTypes.forEach((type, index) => {
+                    const tab = document.createElement('button');
+                    tab.type = 'button';
+                    tab.className = 'tab-button';
+                    tab.id = `open-${type.id}`;
+                    tab.textContent = type.name;
+                    tab.tabIndex = index === 0 ? 0 : -1;
+                    tab.setAttribute('role', 'tab');
+                    tab.setAttribute('aria-selected', String(index === 0));
+                    tab.setAttribute('aria-controls', `tab-${type.id}`);
+
+                    const pane = document.createElement('div');
+                    pane.className = 'tab-pane';
+                    pane.id = `tab-${type.id}`;
+                    pane.hidden = index !== 0;
+                    pane.setAttribute('role', 'tabpanel');
+                    pane.setAttribute('aria-labelledby', tab.id);
+                    pane.innerHTML = `
+                        <input type="file" class="file-input" accept=".pdf,application/pdf" multiple hidden>
+                        <button type="button" class="drag-drop-area">
+                            <span class="upload-icon" aria-hidden="true"></span>
+                            <span>
+                                <span class="upload-label">选择 PDF 文件</span>
+                                <span class="upload-hint">可一次选择多个文件，也可拖放到此处</span>
+                            </span>
+                        </button>
+                        <div class="upload-results" hidden>
+                            <div class="status-message" role="status"></div>
+                            <div class="progress-container" role="progressbar" aria-label="PDF 处理进度"
+                                aria-valuemin="0" aria-valuemax="100" hidden>
+                                <div class="progress-bar"></div>
+                            </div>
+                            <dl class="compact-stats" hidden>
+                                <div><dt>成功</dt><dd data-count="success" class="stat-success">0</dd></div>
+                                <div><dt>失败</dt><dd data-count="error" class="stat-error">0</dd></div>
+                                <div><dt>待核对</dt><dd data-count="warning" class="stat-warning">0</dd></div>
+                                <div><dt>缺失</dt><dd data-count="missing">0</dd></div>
+                            </dl>
+                            <ul class="file-list" aria-label="已处理文件"></ul>
+                            ${Object.entries(issueLabels).map(([key, label]) => `
+                                <details class="issue-list" data-issue="${key}" hidden>
+                                    <summary>${label}</summary>
+                                    <ul></ul>
+                                </details>
+                            `).join('')}
+                        </div>
+                    `;
+                    tabsHeader.appendChild(tab);
+                    tabsContent.appendChild(pane);
+
+                    const view = {
+                        type, tab, pane,
+                        button: pane.querySelector('.drag-drop-area'),
+                        input: pane.querySelector('.file-input'),
+                        results: pane.querySelector('.upload-results'),
+                        status: pane.querySelector('.status-message'),
+                        progress: pane.querySelector('.progress-container'),
+                        progressBar: pane.querySelector('.progress-bar'),
+                        stats: pane.querySelector('.compact-stats'),
+                        fileList: pane.querySelector('.file-list'),
+                        records: [],
+                        pagesByStudent: new Map()
+                    };
+                    uploadViews.set(type.id, view);
+                    tab.addEventListener('click', () => activateTab(index));
+                    tab.addEventListener('keydown', event => handleTabKeys(event, index));
+                    setupUpload(view);
+                });
+            }
+
+            function activateTab(index) {
+                fileTypes.forEach((type, position) => {
+                    const view = uploadViews.get(type.id);
+                    const selected = position === index;
+                    view.tab.setAttribute('aria-selected', String(selected));
+                    view.tab.tabIndex = selected ? 0 : -1;
+                    view.pane.hidden = !selected;
+                });
+            }
+
+            function handleTabKeys(event, index) {
+                if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+                const last = fileTypes.length - 1;
+                const step = {ArrowLeft: -1, ArrowRight: 1}[event.key];
+                const target = step ? (index + step + fileTypes.length) % fileTypes.length
+                    : {Home: 0, End: last}[event.key];
+                if (target === undefined) return;
+                event.preventDefault();
+                activateTab(target);
+                uploadViews.get(fileTypes[target].id).tab.focus();
+            }
+
+            function setupUpload(view) {
+                view.button.addEventListener('click', () => view.input.click());
+                view.input.addEventListener('change', () => {
+                    const files = Array.from(view.input.files);
+                    view.input.value = '';
+                    processFiles(files, view);
+                });
+                view.button.addEventListener('dragover', event => {
+                    event.preventDefault();
+                    if (!view.button.disabled) {
+                        event.dataTransfer.dropEffect = 'copy';
+                        view.button.classList.add('drag-over');
+                    }
+                });
+                view.button.addEventListener('dragleave', event => {
+                    if (!view.button.contains(event.relatedTarget)) view.button.classList.remove('drag-over');
+                });
+                view.button.addEventListener('drop', event => {
+                    event.preventDefault();
+                    view.button.classList.remove('drag-over');
+                    processFiles(Array.from(event.dataTransfer.files), view);
+                });
+            }
+
+            // 增强版：从文件名解析学生姓名（统一替换分隔符为下划线）
+            function parseStudentName(fileName, studentNames) {
+                // 移除文件扩展名
+                const nameWithoutExt = fileName.replace(/\.[^/.]+$/, "");
+
+                // 统一替换各种分隔符为下划线
+                const normalizedName = nameWithoutExt.replace(/[\s\-+：:]/g, '_');
+
+                // 支持的分隔符（现在只有下划线）
+                const separators = ['_'];
+
+                // 尝试各种分隔符分割文件名
+                for (const sep of separators) {
+                    const parts = normalizedName.split(sep);
+                    for (const part of parts) {
+                        // 检查部分是否在学生姓名列表中
+                        if (studentNames.includes(part.trim())) {
+                            return part.trim();
+                        }
+                    }
+                }
+
+                // 尝试匹配整个文件名（不含扩展名）
+                if (studentNames.includes(normalizedName.trim())) {
+                    return normalizedName.trim();
+                }
+
+                // 尝试匹配文件名中的中文姓名（2-4个字符）
+                const chineseNamePattern = /[\u4e00-\u9fa5]{2,4}/g;
+                const matches = normalizedName.match(chineseNamePattern);
+                if (matches) {
+                    for (const match of matches) {
+                        if (studentNames.includes(match)) {
+                            return match;
+                        }
+                    }
+                }
+
+                // 最后尝试：移除所有非中文字符
+                const cleanedName = normalizedName.replace(/[^\u4e00-\u9fa5]/g, '');
+                if (studentNames.includes(cleanedName)) {
+                    return cleanedName;
+                }
+
+                return null;
+            }
+            // 从 PDF 最后一页的页脚提取页码。
+            async function extractFooterPageNumber(pdf) {
+                const totalPages = pdf.numPages;
+
+                // 取最后一页
+                const page = await pdf.getPage(totalPages);
+                const viewport = page.getViewport({scale: 1.0});
+                const textContent = await page.getTextContent();
+
+                // 提取底部文本
+                let footerTexts = [];
+                const footerThreshold = viewport.height * 0.15; // 底部区域
+                textContent.items.forEach(item => {
+                    let y = item.transform[5]; // y坐标
+                    if (y < footerThreshold) {
+                        footerTexts.push(item.str);
+                    }
+                });
+
+                // 合并字符串，去掉空格
+                let footerStr = footerTexts.join("").replace(/\s+/g, "");
+
+                let pageNum = totalPages;
+                let found = false;
+                let suspect = false;
+
+                // 规则1: "第65页"
+                let m1 = footerStr.match(/第(\d{1,4})页/);
+                if (m1) {
+                    pageNum = parseInt(m1[1]);
+                    found = true;
+                }
+
+                // 规则2: "65/100"
+                let m2 = footerStr.match(/(\d{1,4})\s*\/\s*(\d{1,4})/);
+                if (m2) {
+                    pageNum = parseInt(m2[1]);
+                    let declaredTotal = parseInt(m2[2]);
+                    found = true;
+                    if (Math.abs(declaredTotal - totalPages) > 20) suspect = true;
+                }
+
+                // 规则3: "Page 65" 或 "Page 65 of 100"
+                let m3 = footerStr.match(/Page\s*(\d{1,4})(?:of(\d{1,4}))?/i);
+                if (m3) {
+                    pageNum = parseInt(m3[1]);
+                    found = true;
+                    if (m3[2]) {
+                        let declaredTotal = parseInt(m3[2]);
+                        if (Math.abs(declaredTotal - totalPages) > 20) suspect = true;
+                    }
+                }
+
+                // 规则4: 通用数字匹配（兜底）
+                if (!found) {
+                    let matches = footerStr.match(/\d{1,4}/g);
+                    if (matches) {
+                        let nums = matches.map(n => parseInt(n, 10)).filter(n => !isNaN(n));
+                        if (nums.length > 0) {
+                            let cand = Math.max(...nums);
+                            if (cand >= 1 && cand <= totalPages + 50) { // 放宽一点容差
+                                pageNum = cand;
+                                found = true;
+                            }
+                        }
+                    }
+                }
+
+                // 合理性校验：差距超过20页，标记疑似异常
+                if (found && Math.abs(pageNum - totalPages) > 20) {
+                    suspect = true;
+                }
+
+                return {found, pageNum, totalPages, suspect};
+            }
+            async function readFile(file, view, studentNames, pdfjs) {
+                const student = parseStudentName(file.name, studentNames);
+                const record = {name: file.name, student, pages: null, state: 'error'};
+                if (!student) {
+                    record.reason = '未匹配到学生';
+                    return record;
+                }
+
+                try {
+                    const data = new Uint8Array(await file.arrayBuffer());
+                    const pdf = await pdfjs.getDocument({data, isEvalSupported: false}).promise;
+                    try {
+                        record.pages = pdf.numPages;
+                        record.state = 'success';
+                        if (view.type.useFooterDetection) {
+                            const {found, pageNum, suspect} = await extractFooterPageNumber(pdf)
+                                .catch(() => ({found: false}));
+                            if (found) record.pages = pageNum;
+                            if (!found || suspect) {
+                                record.state = 'warning';
+                                record.reason = found ? '末页页码疑似异常' : '未识别到末页页码';
+                                record.editable = true;
+                            } else {
+                                record.label = '尾页识别';
+                            }
+                        }
+                    } finally {
+                        await pdf.destroy();
+                    }
+                } catch {
+                    record.pages = null;
+                    record.state = 'error';
+                    record.reason = '无法读取 PDF';
+                    record.editable = false;
+                    record.label = '';
+                }
+                return record;
+            }
+
+            function renderUploadSummary(view) {
+                const issues = { unmatched: [], errors: [], warnings: [], missing: [] };
+                const counts = { success: 0, error: 0, warning: 0, missing: 0 };
+
+                for (const record of view.records) {
+                    counts[record.state]++;
+                    if (!record.student) issues.unmatched.push(record.name);
+                    else if (record.state === 'error') issues.errors.push(record.name);
+                    else if (record.state === 'warning') issues.warnings.push(`${record.name} · ${record.reason}`);
+                }
+
+                issues.missing = getNames().filter(name => !view.pagesByStudent.has(name));
+                counts.missing = issues.missing.length;
+                for (const [key, count] of Object.entries(counts)) {
+                    const value = view.stats.querySelector(`[data-count="${key}"]`);
+                    value.textContent = count;
+                    value.toggleAttribute('data-empty', count === 0);
+                }
+
+                for (const [key, names] of Object.entries(issues)) {
+                    const group = view.results.querySelector(`[data-issue="${key}"]`);
+                    group.hidden = names.length === 0;
+                    group.querySelector('summary').textContent = `${issueLabels[key]}（${names.length}）`;
+                    group.querySelector('ul').replaceChildren(...names.map(name => {
+                        const item = document.createElement('li');
+                        item.textContent = name;
+                        return item;
+                    }));
+                }
+                view.stats.hidden = false;
+            }
+
+            function renderUploadedFiles(view) {
+                const rows = view.records.map((record, index) => {
+                    const row = document.createElement('li');
+                    row.className = 'file-item';
+                    const name = document.createElement('span');
+                    name.className = 'file-name';
+                    name.textContent = record.name;
+                    const pages = document.createElement('span');
+                    pages.className = 'file-pages';
+
+                    if (record.pages !== null) pages.append(`${record.pages} 页`);
+                    if (record.label || record.state === 'error') {
+                        const badge = document.createElement('span');
+                        badge.className = 'page-status ' + record.state;
+                        badge.textContent = record.label || record.reason;
+                        pages.appendChild(badge);
+                    }
+                    if (record.editable) {
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.className = 'btn btn-small btn-secondary manual-input-btn';
+                        button.dataset.record = index;
+                        button.textContent = record.state === 'success' ? '修改页数' : '填写页数';
+                        button.setAttribute('aria-label', `${button.textContent}，${record.name}`);
+                        button.addEventListener('click', () => showManualPages(view, [record], index));
+                        pages.appendChild(button);
+                    }
+                    row.append(name, pages);
+                    return row;
+                });
+                view.fileList.replaceChildren(...rows);
+                renderUploadSummary(view);
+            }
+            async function processFiles(selectedFiles, view) {
+                if (!selectedFiles.length || view.button.disabled) return;
+                const files = selectedFiles.filter(file => file.type === 'application/pdf' || /\.pdf$/i.test(file.name));
+                const studentNames = getNames();
+                view.results.hidden = false;
+
+                if (!files.length || !studentNames.length) {
+                    const message = !files.length ? '请选择 PDF 文件。' : '请先填写学生姓名，再上传 PDF。';
+                    setStatus(message, 'error', view.status);
+                    updateStatus();
+                    return;
+                }
+
+                view.button.disabled = true;
+                processingCount++;
+                updateStatus();
+                updatePreviewButtons();
+                setStatus('正在载入 PDF 解析组件…', 'info', view.status);
+
+                try {
+                    let pdfjs;
+                    try {
+                        pdfjs = await loadLibrary('pdfjsLib');
+                        pdfjs.GlobalWorkerOptions.workerSrc = pdfBase + 'pdf.worker.min.js';
+                    } catch {
+                        setStatus('无法载入 PDF 解析组件，请检查网络后重试。', 'error', view.status);
+                        return;
+                    }
+
+                    markPreviewStale();
+                    view.records = [];
+                    view.pagesByStudent.clear();
+                    view.stats.hidden = true;
+                    view.fileList.replaceChildren();
+                    view.results.querySelectorAll('.issue-list').forEach(group => { group.hidden = true; });
+                    view.progress.hidden = false;
+                    view.progress.setAttribute('aria-valuenow', '0');
+                    view.progressBar.style.width = '0%';
+                    setStatus(`正在处理 ${files.length} 个 PDF…`, 'info', view.status);
+
+                    for (const file of files) {
+                        const record = await readFile(file, view, studentNames, pdfjs);
+                        view.records.push(record);
+                        if (record.pages !== null) view.pagesByStudent.set(record.student, record);
+                        const progress = Math.round(view.records.length / files.length * 100);
+                        view.progress.setAttribute('aria-valuenow', progress);
+                        view.progressBar.style.width = `${progress}%`;
+                    }
+
+                    renderUploadedFiles(view);
+                    const skippedCount = selectedFiles.length - files.length;
+                    const skipped = skippedCount ? `，跳过 ${skippedCount} 个非 PDF 文件` : '';
+                    const needsReview = skippedCount || view.records.some(record => record.state !== 'success');
+                    setStatus(`已处理 ${files.length} 个 PDF${skipped}。`, needsReview ? 'warning' : 'success', view.status);
+                } finally {
+                    view.progress.hidden = true;
+                    view.button.disabled = false;
+                    processingCount--;
+                    updateStatus();
+                    updatePreviewButtons();
+                }
+
+                const pending = Array.from(view.pagesByStudent.values()).filter(record => record.state === 'warning' && record.editable);
+                if (pending.length && !view.pane.hidden && !manualPagesModal.open) {
+                    showManualPages(view, pending);
+                }
+            }
+
+            function showManualPages(view, records, triggerIndex) {
+                if (view.button.disabled || manualPagesModal.open) return;
+                manualSelection = {view, records, triggerIndex};
+                const rows = records.map((record, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'manual-input-row';
+                    const label = document.createElement('label');
+                    label.className = 'manual-input-name';
+                    label.htmlFor = `manual-pages-${index}`;
+                    label.textContent = record.student;
+                    const filename = document.createElement('small');
+                    filename.textContent = record.name;
+                    label.appendChild(filename);
+                    const pages = document.createElement('input');
+                    pages.id = label.htmlFor;
+                    pages.type = 'number';
+                    pages.className = 'manual-input-pages';
+                    pages.min = '1';
+                    pages.step = '1';
+                    pages.inputMode = 'numeric';
+                    pages.required = true;
+                    pages.value = record.pages;
+                    pages.autofocus = index === 0;
+                    row.append(label, pages);
+                    return row;
+                });
+                manualPagesContainer.replaceChildren(...rows);
+                manualPagesModal.showModal();
+            }
+
+            function saveManualPages(event) {
+                event.preventDefault();
+                const {view, records, triggerIndex} = manualSelection;
+                records.forEach((record, index) => {
+                    record.pages = document.getElementById(`manual-pages-${index}`).valueAsNumber;
+                    record.state = 'success';
+                    record.label = '已核对';
+                    view.pagesByStudent.set(record.student, record);
+                });
+                manualPagesModal.close();
+                renderUploadedFiles(view);
+                if (triggerIndex !== undefined) {
+                    view.fileList.querySelector(`[data-record="${triggerIndex}"]`)?.focus();
+                } else {
+                    view.button.focus({preventScroll: true});
+                }
+                setStatus('论文页数已保存。', 'success', view.status);
+                markPreviewStale();
+            }
+
+            function getPageForType(name, type, title) {
+                const record = uploadViews.get(type)?.pagesByStudent.get(name);
+                return record?.pages ?? getDefaultPage(title);
+            }
+
+            // 生成模板数据（不导出文件，只返回数据）
+            function generateTemplateData() {
+                try {
+                    const names = getNames();
+                    const topics = getTopics();
+                    const year = yearInput.value;
+                    const degree = degreeSelect.value;
+                    const dateValue = dateInput.value;
+                    const formattedDate = dateValue.split('-').map(Number).join('.');
+
+                    // 创建模板数据
+                    const data = [];
+
+                    // 添加第一行说明文本（合并A1:AE1）
+                    const note = "1.请避免档号重复2.用作类目的著录项不可超过50字符3.信息分类号：100字符以内；档案馆室代号：255字符以内；全宗号：100字符以内；缩微号：255字符以内；实体分类号：100字符以内；案卷/盒号：-2,147,483,648~2,147,483,647内的整数；馆编件号：-2,147,483,648~2,147,483,647内的整数；保管期：永久，长期，短期，15年，定期(30年)，定期(10年)，30年；密级：秘密/机密，内部，公开；正题名：1500字符以内；副题名：2000字符以内；附注：2147483647字符以内；责任者：500字符以内；合作者：255字符以内；页数：100字符以内；规格：10字符以内；时间：255字符以内；单位：255字符以内；存址：255字符以内；主题词：1000字符以内；出版项：255字符以内；获奖项：255字符以内；获奖等级：255字符以内；获奖时间：255字符以内；文号：500字符以内；载体：255字符以内；文本：10字符以内；归档份数：10字符以内；附件：2147483647字符以内；输入员：255字符以内；全文：2147483647字符以内；";
+                    const noteRow = [note]; // 第一行只有一个单元格，用于合并
+
+                    // 添加列标题行
+                    const headers = [
+                        "信息分类号", "档案馆室代号", "全宗号", "缩微号", "实体分类号",
+                        "案卷/盒号", "馆编件号", "保管期", "密级", "正题名", "副题名",
+                        "附注", "责任者", "合作者", "页数", "规格", "时间", "单位",
+                        "存址", "主题词", "出版项", "获奖项", "获奖等级", "获奖时间",
+                        "文号", "载体", "文本", "归档份数", "附件", "输入员", "全文"
+                    ];
+
+                    // 为每个学生生成数据
+                    let caseNumber = 1;  // 案卷/盒号
+                    const studentData = [];
+
+                    for (let i = 0; i < names.length; i++) {
+                        const name = names[i];
+                        const topic = topics[i];
+
+                        // 用于存储该学生的所有行（17行）
+                        const studentRows = [];
+                        let totalPages = 0; // 用于累计该学生的所有文件页数
+                        let cumulativePages = 0; // 累计页数
+
+                        // 先生成16个文件行（j从1到16）
+                        for (let j = 1; j <= 16; j++) {
+                            const row = Array(31).fill(null);
+
+                            // 设置固定值
+                            row[4] = year;  // 实体分类号
+                            row[5] = caseNumber;  // 案卷/盒号
+                            row[6] = j;  // 馆编件号
+                            row[12] = name;  // 责任者
+                            row[7] = "永久";  // 保管期设置为永久
+
+                            // 设置正题名和页数
+                            if (j === 1) {
+                                // 第一个文件是论文
+                                row[9] = topic;
+                                // 获取论文页数
+                                const pageCount = getPageForType(name, 'thesis', '论文评阅书');
+                                row[14] = pageCount;
+                                cumulativePages += pageCount;
+                                totalPages += pageCount;
+                            } else {
+                                const titleIndex = j - 2;
+                                if (titleIndex < fixedTitles.length) {
+                                    const title = fixedTitles[titleIndex];
+                                    row[9] = `${name}${title}`;
+
+                                    // 根据文件类型获取页数
+                                    const pageCount = getPageForType(name, typeByTitle.get(title), title);
+
+                                    // 如果是最后一个文件（第16个），显示累计页数/累计页数
+                                    if (j === 16) {
+                                        cumulativePages += pageCount;
+                                        row[14] = `${cumulativePages}/${cumulativePages}`;
+                                    } else {
+                                        cumulativePages += pageCount;
+                                        row[14] = cumulativePages;
+                                    }
+
+                                    totalPages += pageCount;
+                                }
+                            }
+
+                            // 设置文号和时间
+                            row[24] = j;   // 文号 = 馆编件号
+                            row[16] = formattedDate;
+
+                            studentRows.push(row);
+                        }
+
+                        // 生成总览行（第0行）
+                        const overviewRow = Array(31).fill(null);
+                        overviewRow[4] = year;  // 实体分类号
+                        overviewRow[5] = caseNumber;  // 案卷/盒号
+                        overviewRow[6] = null;   // 馆编件号设为空
+                        overviewRow[12] = name;  // 责任者
+                        overviewRow[9] = `${name}${degree}生档案`;
+                        overviewRow[14] = totalPages; // 总页数为16个文件的页数总和
+                        overviewRow[7] = "永久";  // 保管期设置为永久
+
+                        // 将总览行插入到该学生数据的最前面
+                        studentRows.unshift(overviewRow);
+
+                        // 添加到学生数据
+                        studentData.push(...studentRows);
+
+                        caseNumber++;
+                    }
+
+                    // 构建完整的数据数组
+                    data.push(noteRow);   // 第一行：说明文本（将合并）
+                    data.push(headers);   // 第二行：列标题
+                    data.push(...studentData); // 后续行：学生数据
+
+                    return data;
+
+                } catch (error) {
+                    setStatus('无法生成预览，请检查输入后重试。', 'error');
+                    return null;
+                }
+            }
+            function updatePreviewButtons() {
+                const disabled = !preview || preview.stale || processingCount > 0 || exporting;
+                updateTemplateBtn.disabled = disabled;
+                exportExcelBtn.disabled = disabled;
+            }
+
+            function markPreviewStale() {
+                if (!preview || preview.stale) return;
+                preview.stale = true;
+                updatePreviewButtons();
+                setStatus('学生信息或档案设置已变更，请重新生成预览。', 'warning', previewStatus);
+            }
+
+            function reportInvalid(input, message) {
+                input.setAttribute('aria-invalid', 'true');
+                input.setCustomValidity(message);
+                input.reportValidity();
+                setStatus(message, 'error');
+            }
+
+            function showPreview() {
+                if (!/^\d{4}$/.test(yearInput.value)) {
+                    reportInvalid(yearInput, '请填写 4 位毕业年份。');
+                    return;
+                }
+                if (!dateInput.value) {
+                    reportInvalid(dateInput, '请选择档案日期。');
+                    return;
+                }
+
+                const data = generateTemplateData();
+                if (!data) return;
+                preview = {
+                    data, year: yearInput.value, degree: degreeSelect.value,
+                    students: getNames().length, stale: false
+                };
+                renderPreview(data);
+                previewSection.hidden = false;
+                updatePreviewButtons();
+                setStatus(`已生成 ${data.length - 2} 条档案记录。`, 'success', previewStatus);
+                const tableRegion = previewTable.parentElement;
+                tableRegion.scrollTop = 0;
+                // 优先把有档案内容的列带进视野，完整列序与导出表一致。
+                const startingColumn = tableRegion.clientWidth < 600 ? 9 : 7;
+                const startingCell = previewTable.tHead.rows[0].cells[startingColumn];
+                tableRegion.scrollLeft = startingCell.getBoundingClientRect().left
+                    - previewTable.getBoundingClientRect().left;
+                previewHeading.focus({preventScroll: true});
+                previewSection.scrollIntoView({block: 'start'});
+            }
+
+            function renderPreview(data) {
+                const headers = data[1];
+                const head = document.createElement('thead');
+                const headingRow = head.insertRow();
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.scope = 'col';
+                    th.textContent = header;
+                    headingRow.appendChild(th);
+                });
+
+                const body = document.createElement('tbody');
+                for (let index = 2; index < data.length; index++) {
+                    const row = body.insertRow();
+                    if ((index - 2) % 17 === 0) row.className = 'overview-row';
+                    data[index].forEach((value, column) => {
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = value ?? '';
+                        input.dataset.row = index;
+                        input.dataset.col = column;
+                        input.setAttribute('aria-label', `第 ${index - 1} 行，${headers[column]}`);
+                        row.insertCell().appendChild(input);
+                    });
+                }
+                previewTable.replaceChildren(head, body);
+            }
+
+            function collectPreviewEdits() {
+                previewTable.querySelectorAll('input').forEach(input => {
+                    preview.data[input.dataset.row][input.dataset.col] = input.value;
+                });
+            }
+
+            async function exportExcel() {
+                if (exportExcelBtn.disabled) return;
+                collectPreviewEdits();
+                const current = preview;
+                exporting = true;
+                updatePreviewButtons();
+                setStatus('正在准备 Excel 文件…', 'info', previewStatus);
+
+                try {
+                    const xlsx = await loadLibrary('XLSX');
+                    if (preview !== current || current.stale) return;
+                    const wb = xlsx.utils.book_new();
+                    const ws = xlsx.utils.aoa_to_sheet(current.data);
+                    ws['!merges'] = [{s: {r: 0, c: 0}, e: {r: 0, c: 30}}];
+                    ws['!cols'] = current.data[1].map(() => ({width: 20}));
+                    ws['!rows'] = [{hpx: 80}];
+                    xlsx.utils.book_append_sheet(wb, ws, '模板');
+
+                    const fileName = `学生档案模板_${current.year}_${current.degree}_${current.students}人.xlsx`;
+                    xlsx.writeFile(wb, fileName);
+                    setStatus(`已导出 ${fileName}`, 'success', previewStatus);
+                } catch {
+                    if (preview === current && !current.stale) {
+                        setStatus('导出失败，请检查网络后重试。', 'error', previewStatus);
+                    }
+                } finally {
+                    exporting = false;
+                    updatePreviewButtons();
+                }
+            }
+
+            function clearContent() {
+                namesTextarea.value = '';
+                topicsTextarea.value = '';
+                for (const view of uploadViews.values()) {
+                    view.records = [];
+                    view.pagesByStudent.clear();
+                    view.results.hidden = true;
+                    view.stats.hidden = true;
+                    view.progress.hidden = true;
+                    view.fileList.replaceChildren();
+                    view.results.querySelectorAll('.issue-list').forEach(group => { group.hidden = true; });
+                }
+                preview = null;
+                previewTable.replaceChildren();
+                previewSection.hidden = true;
+                updatePreviewButtons();
+                updateStatus();
+                namesTextarea.focus();
+            }
+
+            function onEntryChange() {
+                markPreviewStale();
+                updateStatus();
+                if (!processingCount) {
+                    uploadViews.forEach(view => {
+                        if (view.records.length) renderUploadSummary(view);
+                    });
+                }
+            }
+
+            createPageSettingsTable();
+            createFileUploadTabs();
+            setTodayDate();
+            updateStatus();
+
+            namesTextarea.addEventListener('input', onEntryChange);
+            topicsTextarea.addEventListener('input', onEntryChange);
+            [yearInput, degreeSelect, dateInput, pageSettingsBody].forEach(element => {
+                element.addEventListener('input', event => {
+                    event.target.removeAttribute('aria-invalid');
+                    event.target.setCustomValidity('');
+                    markPreviewStale();
+                    updateStatus();
+                });
+            });
+
+            pageSettingsBody.addEventListener('focusout', ({target}) => {
+                if (target instanceof HTMLInputElement && (!target.value || !target.validity.valid)) {
+                    target.value = target.defaultValue;
+                }
+            });
+
+            generateBtn.addEventListener('click', showPreview);
+            clearBtn.addEventListener('click', clearContent);
+            updateTemplateBtn.addEventListener('click', () => {
+                collectPreviewEdits();
+                setStatus('模板修改已应用，可导出 Excel。', 'success', previewStatus);
+            });
+            exportExcelBtn.addEventListener('click', exportExcel);
+            document.getElementById('close-manual-modal').addEventListener('click', () => manualPagesModal.close());
+            document.getElementById('cancel-manual-pages').addEventListener('click', () => manualPagesModal.close());
+            manualPagesForm.addEventListener('submit', saveManualPages);
+        });
+    </script>
+</body>
+</html>
