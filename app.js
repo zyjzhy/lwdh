@@ -21,6 +21,7 @@
             const gamesModal = document.getElementById('games-modal');
             const scrollTopBtn = document.getElementById('scroll-to-top');
             const commonRecommendationContainer = document.getElementById('common-recommendations');
+            const commonRecommendationToggle = document.getElementById('common-recommendations-toggle');
             const feedbackForm = document.getElementById('feedback-form');
             const feedbackStatus = document.getElementById('feedback-status');
             const feedbackButton = document.querySelector('button[form="feedback-form"]');
@@ -224,10 +225,18 @@
             // === 使用频率追踪 ===
             const CLICK_COUNT_KEY = 'zz-nav-click-counts';
             const COMMON_RECOMMENDATION_LIMIT = 10;
+            const COMMON_RECOMMENDATION_EXPANDED_LIMIT = 20;
+            const fixedCommonIdentifiers = new Set(Array.from(document.querySelectorAll('[data-common-pinned="true"]'), getCardIdentifier));
+            const campusCardIdentifiers = new Set(Array.from(document.querySelectorAll('[data-campus] .card'), getCardIdentifier));
+            let showAllCommonRecommendations = false;
 
             function getClickCounts() {
                 try {
-                    return JSON.parse(localStorage.getItem(CLICK_COUNT_KEY)) || {};
+                    const stored = JSON.parse(localStorage.getItem(CLICK_COUNT_KEY));
+                    if (!stored || typeof stored !== 'object' || Array.isArray(stored)) return {};
+                    return Object.fromEntries(Object.entries(stored)
+                        .map(([id, count]) => [id, Number(count)])
+                        .filter(([, count]) => Number.isSafeInteger(count) && count > 0));
                 } catch (e) {
                     return {};
                 }
@@ -258,23 +267,21 @@
             }
 
             function isCampusServiceCard(card) {
-                return Boolean(card.closest('[data-campus]'));
-            }
-
-            function isPinnedCommonRecommendation(card) {
-                return card.closest('#common-recommendations') && card.dataset.commonPinned === 'true';
+                return Boolean(card.closest('[data-campus]')) || campusCardIdentifiers.has(getCardIdentifier(card));
             }
 
             function trackCardClick(card) {
-                if (isCampusServiceCard(card) || isPinnedCommonRecommendation(card)) return;
+                if (isCampusServiceCard(card) || fixedCommonIdentifiers.has(getCardIdentifier(card))) return false;
                 const id = getCardIdentifier(card);
-                if (!id) return;
+                if (!id) return false;
                 const counts = getClickCounts();
-                counts[id] = (counts[id] || 0) + 1;
+                counts[id] = Math.min((counts[id] || 0) + 1, Number.MAX_SAFE_INTEGER);
                 saveClickCounts(counts);
+                return true;
             }
 
             function getCardClickCount(card) {
+                if (isCampusServiceCard(card) || fixedCommonIdentifiers.has(getCardIdentifier(card))) return 0;
                 const id = getCardIdentifier(card);
                 if (!id) return 0;
                 const counts = getClickCounts();
@@ -287,7 +294,7 @@
 
                 return Array.from(document.querySelectorAll('.card'))
                     .filter(card => !card.closest('#common-recommendations'))
-                    .filter(card => !isCampusServiceCard(card))
+                    .filter(card => !isCampusServiceCard(card) && !fixedCommonIdentifiers.has(getCardIdentifier(card)))
                     .map(card => {
                         const id = getCardIdentifier(card);
                         return {
@@ -304,8 +311,7 @@
                         seen.add(item.id);
                         return true;
                     })
-                    .sort((a, b) => b.count - a.count || getCardLabel(a.card).localeCompare(getCardLabel(b.card), 'zh-Hans-CN'))
-                    .slice(0, COMMON_RECOMMENDATION_LIMIT);
+                    .sort((a, b) => b.count - a.count || getCardLabel(a.card).localeCompare(getCardLabel(b.card), 'zh-Hans-CN'));
             }
 
             function syncFrequentRecommendationIcon(sourceCard, clone, label) {
@@ -320,6 +326,18 @@
                 iconObserver?.observe(img);
             }
 
+            function updateCardClickCount(card, clickCount) {
+                let badge = card.querySelector('.frequent-count');
+                if (clickCount <= 0) { badge?.remove(); return; }
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'frequent-count';
+                    badge.setAttribute('aria-hidden', 'true');
+                    card.appendChild(badge);
+                }
+                badge.textContent = String(clickCount);
+            }
+
             function createFrequentRecommendationCard(sourceCard, clickCount) {
                 const clone = sourceCard.cloneNode(true);
                 const label = getCardLabel(clone);
@@ -328,16 +346,7 @@
                 clone.dataset.frequentClone = 'true';
                 syncFrequentRecommendationIcon(sourceCard, clone, label);
 
-                clone.querySelectorAll('.frequent-count').forEach(badge => badge.remove());
-
-                if (clickCount > 0) {
-                const badge = document.createElement('span');
-                badge.className = 'frequent-count';
-                badge.textContent = `${clickCount}`;
-                badge.setAttribute('aria-hidden', 'true');
-                clone.appendChild(badge);
-
-                }
+                updateCardClickCount(clone, clickCount);
                 clone.setAttribute('aria-label', label);
                 return clone;
             }
@@ -350,18 +359,34 @@
                     .querySelectorAll('.frequent-recommendation-card')
                     .forEach(card => (card.closest('.card-entry') || card).remove());
 
-                let recommendations = getFrequentRecommendationCards();
+                const favoriteUrls = window.PersonalNav?.getFavoriteUrls() || [];
+                const excludedIds = new Set([...favoriteUrls, ...fixedCommonIdentifiers]);
+                let recommendations = getFrequentRecommendationCards().filter(({ id }) => !excludedIds.has(id));
                 if (!recommendations.length) {
                     const defaults = ['https://www.deepseek.com/', 'https://www.doubao.com/', 'https://www.kimi.com/', 'https://www.cnki.net/', 'https://www.bilibili.com/', 'https://docs.qq.com/', 'https://github.com/', 'https://www.ilovepdf.com/zh-cn'];
-                    const sources = Array.from(document.querySelectorAll('.column .card')).filter(card => !card.closest('#common-recommendations'));
+                    const sources = Array.from(document.querySelectorAll('.column .card')).filter(card => !card.closest('#common-recommendations') && !isCampusServiceCard(card) && !excludedIds.has(getCardIdentifier(card)));
                     recommendations = defaults.map(url => sources.find(card => getCardIdentifier(card) === url)).filter(Boolean).map(card => ({ card, count: 0 }));
                 }
-                recommendations.forEach(({ card, count }) => {
+                const hasMore = favoriteUrls.length + recommendations.length > COMMON_RECOMMENDATION_LIMIT;
+                if (!hasMore) showAllCommonRecommendations = false;
+                const limit = showAllCommonRecommendations ? COMMON_RECOMMENDATION_EXPANDED_LIMIT : COMMON_RECOMMENDATION_LIMIT;
+                const automaticSlots = Math.max(0, limit - favoriteUrls.length);
+                recommendations.slice(0, automaticSlots).forEach(({ card, count }) => {
                     commonRecommendationContainer.appendChild(createFrequentRecommendationCard(card, count));
                 });
 
-                pinnedCards.forEach(card => commonRecommendationContainer.appendChild(card.closest('.card-entry') || card));
-                window.PersonalNav?.renderPinned();
+                pinnedCards.forEach(card => {
+                    updateCardClickCount(card, getCardClickCount(card));
+                    commonRecommendationContainer.appendChild(card.closest('.card-entry') || card);
+                });
+                window.PersonalNav?.renderPinned(limit);
+                if (commonRecommendationToggle) {
+                    commonRecommendationToggle.hidden = !hasMore;
+                    commonRecommendationToggle.setAttribute('aria-expanded', String(showAllCommonRecommendations));
+                    commonRecommendationToggle.textContent = showAllCommonRecommendations
+                        ? translate('refresh.collapseRecommendations', '收起至10个网站')
+                        : translate('refresh.expandRecommendations', '展开至20个网站');
+                }
             }
 
             function sortDynamicSection(container) {
@@ -1590,17 +1615,21 @@
             }
 
             function bindEvents() {
-                document.addEventListener('click', function(e) {
-                    const card = e.target.closest('.card');
-                    if (!card) {
-                        return;
-                    }
-
-                    trackCardClick(card);
-                    window.setTimeout(() => {
-                        renderCommonRecommendations();
-                    }, 0);
-                }, { capture: true });
+                const handleCardVisit = e => {
+                    if ((e.type === 'click' && e.button !== 0) || (e.type === 'auxclick' && e.button !== 1)) return;
+                    const card = e.target.closest('a.card');
+                    if (!card || !trackCardClick(card)) return;
+                    window.setTimeout(renderCommonRecommendations, 0);
+                };
+                document.addEventListener('click', handleCardVisit, { capture: true });
+                document.addEventListener('auxclick', handleCardVisit, { capture: true });
+                commonRecommendationToggle?.addEventListener('click', () => {
+                    showAllCommonRecommendations = !showAllCommonRecommendations;
+                    renderCommonRecommendations();
+                });
+                window.addEventListener('storage', e => {
+                    if (e.key === CLICK_COUNT_KEY) renderCommonRecommendations();
+                });
 
                 toggleButton?.addEventListener('click', () => {
                     sidebar?.classList.toggle('hidden');
@@ -1826,6 +1855,7 @@
             window.DirectoryTools = {
                 openSettings: openSettingsModal,
                 cloneCard: createFrequentRecommendationCard,
+                getClickCount: getCardClickCount,
                 refreshRecommendations: renderCommonRecommendations,
                 setCustomBackground,
                 applyBackground

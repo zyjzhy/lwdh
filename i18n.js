@@ -825,6 +825,8 @@ I18N.zh.refresh = {
   "campusOutside": "校外访问",
   "campusLocal": "本地工具",
   "campusNote": "校内系统需校园网络；校外访问请先登录学校 VPN。",
+  "expandRecommendations": "展开至20个网站",
+  "collapseRecommendations": "收起至10个网站",
   "recommendNote": "常用网站会根据你的访问记录自动整理，仅保存在当前浏览器。"
 };
 I18N.en.refresh = {
@@ -853,6 +855,8 @@ I18N.en.refresh = {
   "campusOutside": "Off-campus access",
   "campusLocal": "Local tools",
   "campusNote": "On-campus systems require the campus network. Sign in to the university VPN for off-campus access.",
+  "expandRecommendations": "Show up to 20 sites",
+  "collapseRecommendations": "Show up to 10 sites",
   "recommendNote": "Frequently used websites are arranged from your visits, stored only in this browser."
 };
 Object.assign(I18N.zh.search, { placeholder: '搜索网站、工具或关键词…', baiduPlaceholder: '百度搜索' });

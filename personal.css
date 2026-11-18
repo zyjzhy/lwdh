@@ -217,3 +217,12 @@ html[data-theme="dark"] .card-favorite-toggle[aria-pressed="true"] { color: #f2c
   .custom-wallpaper-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 10px; }
   .custom-wallpaper-name { font-size: 10px; }
 }
+
+/* Keep less frequent visits reachable without crowding the default recommendation list. */
+.common-recommendations-toggle {
+  display: block; max-width: 100%; margin: 14px auto 0; padding: 8px 16px;
+  border: 1px solid var(--choice-edge); border-radius: var(--choice-radius);
+  background: var(--glass-control); color: var(--ui-secondary); box-shadow: var(--glass-inset);
+  font: inherit; font-size: 12px; line-height: 1.6;
+}
+.common-recommendations-toggle:hover { border-color: var(--choice-hover-edge); color: var(--ui-ink); }

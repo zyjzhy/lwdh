@@ -82,19 +82,22 @@
     });
     syncCardStars();
   }
-  function renderPinned() {
+  function getFavoriteUrls() {
+    return state.urls.filter(url => sources.get(url)?.dataset.commonPinned !== 'true');
+  }
+  function renderPinned(limit = 10) {
     container.querySelectorAll('.favorite-card').forEach(card => (card.closest('.card-entry') || card).remove());
-    const favorites = new Set(state.urls);
+    const favorites = new Set(getFavoriteUrls());
     container.querySelectorAll('.card').forEach(card => card.classList.toggle('is-favorite-duplicate', favorites.has(card.getAttribute('href'))));
     const fragment = document.createDocumentFragment();
-    state.urls.forEach(url => {
+    getFavoriteUrls().slice(0, limit).forEach(url => {
       const source = sources.get(url);
       if (!source) return;
-      const card = window.DirectoryTools.cloneCard(source, 0);
+      const card = window.DirectoryTools.cloneCard(source, window.DirectoryTools.getClickCount(source));
       delete card.dataset.commonPinned;
       card.classList.remove('is-favorite-duplicate');
       card.classList.add('favorite-card');
-      card.querySelectorAll('.frequent-count, .favorite-pin').forEach(el => el.remove());
+      card.querySelectorAll('.favorite-pin').forEach(el => el.remove());
       fragment.append(card);
     });
     container.prepend(fragment);
@@ -249,10 +252,10 @@
   manage.type = 'button'; manage.append(icon('star'), node('span', '', t('manage'))); manage.setAttribute('aria-label', t('manage')); manage.title = t('manage');
   manage.addEventListener('click', () => window.DirectoryTools.openSettings('favorites'));
   heading.append(manage);
-  window.PersonalNav = { selectSection, renderPinned };
-  renderList(); renderPicker(); renderPinned();
+  window.PersonalNav = { selectSection, renderPinned, getFavoriteUrls };
+  renderList(); renderPicker(); window.DirectoryTools.refreshRecommendations();
   window.addEventListener('langchange', () => {
     manage.querySelector('span').textContent = t('manage'); manage.title = t('manage'); manage.setAttribute('aria-label', t('manage'));
-    renderList(); renderPicker(); renderPinned(); setStatus('');
+    renderList(); renderPicker(); window.DirectoryTools.refreshRecommendations(); setStatus('');
   });
 })();
