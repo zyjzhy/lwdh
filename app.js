@@ -1577,8 +1577,8 @@
                 const groups = [
                     ['refresh.campusPublic', '校园入口', cards.slice(0, 5).concat(cards[11])],
                     ['refresh.campusInside', '校内系统', cards.slice(5, 11)],
-                    ['refresh.campusOutside', '校外访问', cards.slice(12, 18)],
-                    ['refresh.campusLocal', '本地工具', cards.slice(18)]
+                    ['refresh.campusOutside', '校外访问', cards.slice(12, 17)],
+                    ['refresh.campusLocal', '本地工具', cards.slice(17)]
                 ];
                 groups.forEach(([key, label, items]) => {
                     const group = document.createElement('div');
