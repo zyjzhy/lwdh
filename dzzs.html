@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="党课学习与党员转正备考平台 - 党章知识练习、预备党员答辩题库，助力学党章、强党性、备转正">
-    <meta name="keywords" content="党章,党课,党员转正,预备党员答辩,党建,入党考试,党章知识">
-    <title>党课学习 · 党员转正备考平台</title>
+    <meta name="description" content="入党积极分子、党章知识学习平台 - 入党积极分子题库与党章知识题库练习、模拟考试与答案解析，学党章、强党性，以实际行动争取早日入党">
+    <meta name="keywords" content="党章,党课,入党积极分子,党员转正,预备党员答辩,党建,入党考试,二十大精神,党章知识">
+    <title>入党积极分子 · 党章知识学习平台</title>
     <style>
         * {
             margin: 0;
@@ -1620,16 +1620,21 @@
 
         .app-modal-actions {
             display: flex;
-            gap: 10px;
-            padding: 0 24px 20px;
-            justify-content: flex-end;
+            gap: 12px;
+            padding: 0 24px 22px;
+            justify-content: center;
+            align-items: stretch;
         }
 
         .app-modal-btn {
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-size: 14px;
+            flex: 1 1 0;
+            min-width: 0;
+            box-sizing: border-box;
+            padding: 11px 16px;
+            border-radius: 9px;
+            font-size: 14.5px;
             font-weight: 600;
+            text-align: center;
             cursor: pointer;
             border: none;
             transition: all 0.15s;
@@ -1999,6 +2004,7 @@
                 gap: 8px;
             }
             .app-modal-btn {
+                flex: none;
                 width: 100%;
                 padding: 13px 20px;
                 font-size: 15px;
@@ -2261,6 +2267,519 @@
             h1 { font-size: 1.35em; letter-spacing: 0.8px; }
             .subtitle .tag-item { padding: 3px 10px; font-size: 11px; }
         }
+
+        /* ===== 双题库与布局显示优化 ===== */
+        html { scroll-behavior: smooth; }
+        body { -webkit-font-smoothing: antialiased; }
+        .container { max-width: 1100px; border-radius: 18px; }
+
+        .bank-switch {
+            display: flex;
+            gap: 12px;
+            max-width: 820px;
+            margin: 0 auto 14px;
+        }
+        .bank-switch-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #fff;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 13px;
+            cursor: pointer;
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
+            transition: all .25s ease;
+        }
+        .bank-switch-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(139, 0, 0, .12); }
+        .bank-switch-btn.active {
+            border-color: #b01010;
+            background: linear-gradient(135deg, #fff6f6 0%, #ffffff 100%);
+            box-shadow: 0 4px 16px rgba(139, 0, 0, .14);
+        }
+        .bank-switch-btn[data-bank="activist"].active {
+            border-color: #059669;
+            background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
+            box-shadow: 0 4px 16px rgba(5, 150, 105, .16);
+        }
+        .bank-switch-icon {
+            flex: 0 0 auto;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #ffd700;
+            font-weight: 800;
+            font-size: 17px;
+        }
+        .bank-switch-icon.activist { background: linear-gradient(135deg, #065f46, #059669); }
+        .bank-switch-text { min-width: 0; }
+        .bank-switch-text strong { display: block; font-size: 14px; color: #1f2937; }
+        .bank-switch-text small { display: block; font-size: 12px; color: #6b7280; margin-top: 2px; }
+        .type-nav[hidden] { display: none !important; }
+        .nav-badge-activist {
+            background: linear-gradient(135deg, #065f46, #059669);
+            color: #fff;
+        }
+        .activist-nav .type-nav-item:hover:not(.active) {
+            border-color: #059669;
+            color: #065f46;
+            background: #ecfdf5;
+        }
+        .activist-nav .type-nav-item.active {
+            background: linear-gradient(135deg, #065f46, #059669);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, .35);
+            border-color: transparent;
+        }
+        .activist-nav .type-nav-item.active .nav-badge-activist,
+        .activist-exam-nav.active .nav-badge-activist {
+            background: rgba(255, 255, 255, .22);
+            color: #d1fae5;
+        }
+        .activist-exam-nav.active { background: linear-gradient(135deg, #b45309, #d97706) !important; }
+
+        .bank-intro {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 22px;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            background: linear-gradient(120deg, #fff5f5 0%, #fffdf7 100%);
+            border: 1px solid rgba(139, 0, 0, .12);
+        }
+        .bank-intro.activist {
+            background: linear-gradient(120deg, #ecfdf5 0%, #fffdf7 100%);
+            border-color: rgba(5, 150, 105, .18);
+        }
+        .bank-intro-icon {
+            flex: 0 0 auto;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #ffd700;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(139, 0, 0, .22);
+        }
+        .bank-intro.activist .bank-intro-icon { background: linear-gradient(135deg, #065f46, #059669); }
+        .bank-intro-copy { flex: 1; min-width: 0; }
+        .bank-intro-copy h3 { font-size: 1.05em; color: #8b0000; margin-bottom: 3px; }
+        .bank-intro.activist .bank-intro-copy h3 { color: #065f46; }
+        .bank-intro-copy p { font-size: 13px; color: #6b7280; line-height: 1.6; }
+        .bank-intro-exam {
+            flex: 0 0 auto;
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 3px 10px rgba(139, 0, 0, .25);
+        }
+        .bank-intro.activist .bank-intro-exam { background: linear-gradient(135deg, #065f46, #059669); box-shadow: 0 3px 10px rgba(5, 150, 105, .25); }
+
+        .question-card {
+            border-left-width: 4px;
+            box-shadow: 0 2px 12px rgba(17, 24, 39, .05);
+        }
+        .question-text { color: #111827; }
+        .q-source {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 10px;
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            letter-spacing: .5px;
+        }
+        .q-source.party { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+        .q-explain { display: block; margin-top: 6px; font-size: 13.5px; color: #4b5563; line-height: 1.7; font-weight: 400; }
+        .content-subheading { letter-spacing: .3px; }
+        .stats { box-shadow: 0 2px 12px rgba(139, 0, 0, .06); }
+        .back-to-top {
+            position: fixed;
+            right: 22px;
+            bottom: 26px;
+            z-index: 150;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            color: #ffd700;
+            font-size: 21px;
+            font-weight: 800;
+            box-shadow: 0 6px 18px rgba(139, 0, 0, .35);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all .25s ease;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        body.exam-mode .back-to-top { display: none !important; }
+
+        /* —— 紧凑页头与工具栏：放在样式末尾以覆盖原有大占位样式 —— */
+        header { padding: 14px 24px; }
+        .header-emblem { width: 30px; height: 30px; margin-bottom: 4px; }
+        h1 { font-size: 1.45em; line-height: 1.25; margin-bottom: 6px; letter-spacing: 1.5px; }
+        .subtitle { font-size: 12px; gap: 12px; letter-spacing: 1px; line-height: 1.4; }
+        .controls { padding: 14px 20px; }
+        .controls-inner { flex-direction: row; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+        .filter-group { flex: 1 1 330px; justify-content: flex-start; gap: 8px; }
+        .filter-group input[type="text"] { padding: 9px 12px; font-size: 14px; }
+        .filter-group button { padding: 9px 14px; font-size: 13px; }
+        .bank-switch {
+            flex: 0 0 auto;
+            order: -1;
+            margin: 0;
+            gap: 3px;
+            padding: 4px;
+            background: #eceff3;
+            border-radius: 12px;
+            box-shadow: inset 0 1px 2px rgba(17, 24, 39, .06);
+        }
+        .bank-switch .bank-switch-btn {
+            padding: 7px 13px;
+            gap: 8px;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            box-shadow: none;
+        }
+        .bank-switch .bank-switch-btn:hover { transform: none; box-shadow: none; background: rgba(255, 255, 255, .6); }
+        .bank-switch .bank-switch-btn.active { background: #fff; border: 0; box-shadow: 0 1px 4px rgba(17, 24, 39, .16); }
+        .bank-switch-icon { width: 22px; height: 22px; border-radius: 6px; font-size: 11px; }
+        .bank-switch-text strong { font-size: 13px; }
+        .bank-switch-text small { display: none; }
+        .bank-switch-btn:not(.active) .bank-switch-text strong { color: #4b5563; }
+        .bank-switch-btn[data-bank="activist"] .bank-switch-text strong { color: #065f46; }
+        .bank-switch-btn[data-bank="party"] .bank-switch-text strong { color: #991b1b; }
+        .bank-switch-btn:not(.active)[data-bank="activist"] .bank-switch-text strong,
+        .bank-switch-btn:not(.active)[data-bank="party"] .bank-switch-text strong { color: #4b5563; }
+        .type-nav { width: 100%; gap: 6px; padding: 0; }
+        .type-nav-item { flex: 0 1 auto; min-width: 62px; padding: 9px 14px; font-size: 13px; }
+        .nav-badge { display: none; }
+        .main-content { padding: 18px 24px 28px; }
+        .bank-intro { gap: 12px; padding: 10px 14px; margin-bottom: 14px; border-radius: 10px; }
+        .bank-intro-icon { width: 30px; height: 30px; border-radius: 8px; font-size: 14px; box-shadow: none; }
+        .bank-intro-copy h3 { font-size: 14px; margin: 0; }
+        .bank-intro-copy p { font-size: 12px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .bank-intro-exam { padding: 7px 12px; font-size: 12px; border-radius: 8px; box-shadow: none; }
+        .content-heading { font-size: 1.25em; margin-bottom: 6px; padding-bottom: 8px; }
+
+        @media (max-width: 768px) {
+            header { padding: 12px 16px; }
+            .header-emblem { width: 26px; height: 26px; }
+            h1 { font-size: 1.2em; letter-spacing: 0.8px; }
+            .subtitle { font-size: 11px; gap: 8px; letter-spacing: 0; }
+            .controls { padding: 12px 14px; }
+            .controls-inner { gap: 8px 12px; }
+            .filter-group { flex: 1 1 260px; min-width: 0; }
+            .filter-group .search-box { min-width: 0; max-width: none; }
+            .filter-group button { padding: 9px 12px; }
+            .bank-switch { flex: 0 0 auto; }
+            .type-nav-item { flex: 0 0 auto; min-width: 58px; padding: 8px 12px; }
+            .main-content { padding: 16px 14px 24px; }
+            .back-to-top { right: 14px; bottom: 20px; width: 40px; height: 40px; font-size: 19px; }
+        }
+
+        @media (max-width: 560px) {
+            .filter-group { flex: 1 1 100%; flex-wrap: nowrap; }
+            .filter-group .search-box { flex: 1 1 auto; min-width: 0; }
+            .filter-group button { flex: 0 0 auto; padding: 9px 10px; }
+            .bank-switch { flex: 0 0 auto; display: flex; }
+            .bank-switch .bank-switch-btn { flex: 0 0 auto; }
+            .type-nav { gap: 4px; }
+            .type-nav-item { flex: 1 1 0; min-width: 0; padding: 8px 4px; font-size: 12.5px; }
+            .subtitle .tag-item { padding: 2px 9px; font-size: 10px; }
+        }
+
+        /* ===== v3 清爽顶部：白色细页头 + 无边框工具栏 + 下划线分类标签 ===== */
+        body { background: #f2f3f5; background-image: none; }
+        .container {
+            box-shadow: 0 12px 40px rgba(17, 24, 39, .10), 0 0 0 1px rgba(17, 24, 39, .04);
+        }
+        .site-footer { color: #8a9099; text-shadow: none; }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 14px 24px 15px;
+            text-align: left;
+            background: #fff;
+            color: #1f2937;
+        }
+        header::before { display: none; }
+        header::after {
+            height: 3px;
+            background: linear-gradient(90deg, #8b0000 0%, #c01818 45%, #e6b800 100%);
+            box-shadow: none;
+        }
+        .header-rays { display: none; }
+        .header-emblem {
+            width: 30px;
+            height: 30px;
+            margin: 0;
+            padding: 5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b0000, #c01818);
+            box-shadow: 0 2px 6px rgba(139, 0, 0, .22);
+        }
+        h1 {
+            font-size: 1.2em;
+            line-height: 1.25;
+            margin: 0;
+            letter-spacing: .8px;
+            font-weight: 800;
+            color: #7a0000;
+            background: none;
+            -webkit-text-fill-color: #7a0000;
+            filter: none;
+            text-shadow: none;
+        }
+        .header-title { flex: 1 1 auto; min-width: 0; }
+        .header-sub {
+            margin: 3px 0 0;
+            font-size: 12px;
+            color: #8a9099;
+            letter-spacing: .3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .header-sub .dot { margin: 0 7px; color: #d9a441; }
+        .header-side { flex: 0 0 auto; display: flex; align-items: center; gap: 9px; }
+        .header-count {
+            font-size: 12px;
+            color: #8a9099;
+            background: #f6f7f9;
+            border: 1px solid #eceef2;
+            padding: 5px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .subtitle { display: none; }
+
+        .controls {
+            background: #fff;
+            padding: 12px 20px 0;
+            border-bottom: 1px solid #e8eaee;
+        }
+        .controls-inner { gap: 10px 14px; max-width: none; margin: 0; }
+        .filter-group { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; }
+        .filter-group .search-box { max-width: none; }
+        .filter-group input[type="text"] {
+            background: #f4f5f7;
+            border-color: #f4f5f7;
+            box-shadow: none;
+        }
+        .filter-group input[type="text"]:focus { background: #fff; border-color: #c9a24a; box-shadow: 0 0 0 3px rgba(201, 162, 74, .14); }
+        .filter-group #resetBtn {
+            background: #fff;
+            color: #6b7280;
+            border: 1px solid #e2e5ea;
+            box-shadow: none;
+            font-weight: 500;
+        }
+        .filter-group #resetBtn:hover { background: #f7f8fa; box-shadow: none; transform: none; }
+
+        .type-nav {
+            justify-content: flex-start;
+            gap: 22px;
+            border-top: 1px solid #f1f2f4;
+            padding: 0;
+        }
+        .type-nav-item,
+        .type-nav-item:hover,
+        .type-nav-item.active,
+        .activist-nav .type-nav-item:hover:not(.active),
+        .activist-nav .type-nav-item.active,
+        .type-nav-item.defense-nav:hover:not(.active),
+        .type-nav-item.defense-nav.active,
+        .type-nav-item.exam-nav:hover:not(.active),
+        .type-nav-item.exam-nav.active,
+        .type-nav-item.exam-nav.active {
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 11px 1px 10px;
+            color: #6b7280;
+            font-size: 13.5px;
+            transform: none;
+        }
+        .type-nav-item:hover:not(.active) { color: #8b0000; }
+        #partyNav .type-nav-item.active { color: #8b0000; }
+        #activistNav .type-nav-item.active { color: #047857; }
+        .type-nav-item.defense-nav.active { color: #b45309; }
+        .type-nav-item.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            border-radius: 2px;
+            background: currentColor;
+        }
+        .type-nav-item.active { position: relative; font-weight: 700; }
+        .activist-exam-nav.active { background: transparent !important; box-shadow: none !important; color: #047857 !important; }
+
+        .main-content { padding: 16px 20px 28px; background: #f7f8fa; }
+        @media (max-width: 900px) {
+            .bank-switch-icon { display: none; }
+            .bank-switch .bank-switch-btn { padding: 7px 12px; }
+            h1 { font-size: 1.1em; }
+        }
+        .content-heading {
+            font-size: 1.15em;
+            padding-bottom: 8px;
+            margin-bottom: 4px;
+            border-bottom: 1px solid #eceef2;
+            border-image: none;
+            color: #8b0000;
+            letter-spacing: 0;
+        }
+        .content-subheading { margin-top: 16px; margin-bottom: 10px; font-size: 1.02em; }
+
+        @media (max-width: 768px) {
+            header { padding: 11px 14px; gap: 9px; }
+            .header-emblem { width: 25px; height: 25px; }
+            h1 { font-size: 1.08em; letter-spacing: .5px; }
+            .header-sub { font-size: 11px; }
+            .controls { padding: 10px 12px 0; }
+            .controls-inner { gap: 8px 10px; }
+            .filter-group { flex-wrap: nowrap; gap: 6px; }
+            .filter-group .search-box { flex: 1 1 60px; min-width: 0; width: auto; }
+            #searchBtn, #resetBtn { flex: 0 0 auto; width: auto; padding: 9px 12px; font-size: 13px; }
+            .type-nav { gap: 0; justify-content: space-between; border-top: 0; }
+            .type-nav-item,
+            .type-nav-item:hover,
+            .type-nav-item.active {
+                flex: 1 1 0;
+                min-width: 0;
+                padding: 10px 2px 9px;
+                font-size: 12.5px;
+            }
+            .main-content { padding: 14px 12px 24px; }
+        }
+
+        @media (max-width: 560px) {
+            .header-side { display: none; }
+        }
+
+        /* ===== 回到顶部：白色描边圆形按钮 ===== */
+        .back-to-top {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            background: #fff;
+            color: #8b0000;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 6px 18px rgba(17, 24, 39, .12);
+            font-size: 0;
+        }
+        .back-to-top svg { width: 18px; height: 18px; }
+        .back-to-top.show:hover {
+            background: #fff5f5;
+            border-color: #f3d0d0;
+            color: #c01818;
+            box-shadow: 0 8px 22px rgba(17, 24, 39, .16);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 560px) {
+            .back-to-top { width: 38px; height: 38px; right: 12px; bottom: 18px; }
+            .back-to-top svg { width: 16px; height: 16px; }
+        }
+
+        /* ===== v6 练习模式：选项可点选 + 页头标语贴主题 ===== */
+        .header-count {
+            background: linear-gradient(180deg, #fdf8ec, #f9efd9);
+            border: 1px solid #efdcb6;
+            color: #94661a;
+            font-weight: 600;
+            letter-spacing: .6px;
+        }
+        .option.pickable {
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .option.pickable:active { transform: scale(.995); }
+        .option.selected {
+            position: relative;
+            padding-right: 40px;
+            background: #fdeaea;
+            border-color: #e9a3a3;
+            border-left-color: #8b0000;
+            color: #7a0000;
+            font-weight: 600;
+            box-shadow: 0 1px 4px rgba(139, 0, 0, .10);
+        }
+        .option.selected::after {
+            content: "✓";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #c01818;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 18px;
+            text-align: center;
+        }
+        @media (hover: none) {
+            .option.pickable:hover { background: #f9fafb; border-color: #eef0f2; }
+            .option.selected:hover { background: #fdeaea; border-color: #e9a3a3; }
+        }
+
+        /* 手机端：题库切换改为整行等分分段控件，工具栏不再左空右挤 */
+        @media (max-width: 560px) {
+            .controls { padding: 10px 12px 0; }
+            .controls-inner { gap: 8px; }
+            .bank-switch {
+                width: 100%;
+                display: flex;
+                gap: 4px;
+                padding: 3px;
+                border-radius: 10px;
+            }
+            .bank-switch .bank-switch-btn {
+                flex: 1 1 0;
+                justify-content: center;
+                padding: 8px 6px;
+                border-radius: 8px;
+            }
+            .bank-switch-text strong { font-size: 13.5px; }
+            .filter-group { width: 100%; flex: 1 1 100%; }
+            .filter-group button { padding: 9px 11px; font-size: 13px; }
+            .type-nav { padding-top: 2px; }
+        }
     </style>
 </head>
 <body>
@@ -2281,14 +2800,13 @@
                     <polygon points="60,28 66.76,49.7 89.5,49.73 71.3,63.15 78,85.7 60,72.3 42,85.7 48.7,63.15 30.5,49.73 53.24,49.7" fill="url(#emblemGold)"/>
                 </svg>
             </div>
-            <h1>党课学习 · 党员转正备考平台</h1>
-            <p class="subtitle">
-                <span class="tag-item">学党章</span>
-                <span class="tag-dot"></span>
-                <span class="tag-item">强党性</span>
-                <span class="tag-dot"></span>
-                <span class="tag-item">备转正</span>
-            </p>
+            <div class="header-title">
+                <h1>入党积极分子 · 党章知识学习平台</h1>
+                <p class="header-sub">学党章<span class="dot">·</span>强党性<span class="dot">·</span>以实际行动争取早日入党</p>
+            </div>
+            <div class="header-side">
+                <span class="header-count">不忘初心 牢记使命</span>
+            </div>
         </header>
         
         <div class="controls">
@@ -2298,14 +2816,32 @@
                     <button id="searchBtn">搜索</button>
                     <button id="resetBtn">重置</button>
                 </div>
-                <div class="type-nav">
-                    <span class="type-nav-item active" data-section="all" onclick="showSection('all')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">全部</span></span>
-                    <span class="type-nav-item" data-section="single" onclick="showSection('single')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">单选</span></span>
-                    <span class="type-nav-item" data-section="multiple" onclick="showSection('multiple')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">多选</span></span>
-                    <span class="type-nav-item" data-section="judge" onclick="showSection('judge')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">判断</span></span>
-                    <span class="type-nav-item" data-section="short" onclick="showSection('short')"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">简答</span></span>
-                    <span class="type-nav-item exam-nav" data-section="exam" onclick="showExamEntry()"><span class="nav-badge nav-badge-party">党课</span><span class="nav-label">考试</span></span>
-                    <span class="type-nav-item defense-nav" data-section="defense" onclick="showSection('defense')"><span class="nav-badge nav-badge-member">党员</span><span class="nav-label">答辩</span></span>
+                <div class="bank-switch" id="bankSwitch" role="tablist" aria-label="题库切换">
+                    <button type="button" class="bank-switch-btn active" data-bank="activist" role="tab" aria-selected="true" onclick="switchBank('activist')">
+                        <span class="bank-switch-icon activist">积</span>
+                        <span class="bank-switch-text"><strong>积极分子</strong><small>二十大精神 · 党章考点 · 入党动机</small></span>
+                    </button>
+                    <button type="button" class="bank-switch-btn" data-bank="party" role="tab" aria-selected="false" onclick="switchBank('party')">
+                        <span class="bank-switch-icon">党</span>
+                        <span class="bank-switch-text"><strong>党章知识</strong><small>党章学习 · 党员转正备考</small></span>
+                    </button>
+                </div>
+                <div class="type-nav" id="partyNav" hidden>
+                    <span class="type-nav-item active" data-bank="party" data-section="all" onclick="showSection('all','party')"><span class="nav-badge nav-badge-party">党章</span><span class="nav-label">全部</span></span>
+                    <span class="type-nav-item" data-bank="party" data-section="single" onclick="showSection('single','party')"><span class="nav-badge nav-badge-party">党章</span><span class="nav-label">单选</span></span>
+                    <span class="type-nav-item" data-bank="party" data-section="multiple" onclick="showSection('multiple','party')"><span class="nav-badge nav-badge-party">党章</span><span class="nav-label">多选</span></span>
+                    <span class="type-nav-item" data-bank="party" data-section="judge" onclick="showSection('judge','party')"><span class="nav-badge nav-badge-party">党章</span><span class="nav-label">判断</span></span>
+                    <span class="type-nav-item" data-bank="party" data-section="short" onclick="showSection('short','party')"><span class="nav-badge nav-badge-party">党章</span><span class="nav-label">简答</span></span>
+                    <span class="type-nav-item exam-nav" data-bank="party" data-section="exam" onclick="showExamEntry('party')"><span class="nav-badge nav-badge-party">党章</span><span class="nav-label">考试</span></span>
+                    <span class="type-nav-item defense-nav" data-bank="party" data-section="defense" onclick="showSection('defense','party')"><span class="nav-badge nav-badge-member">党员</span><span class="nav-label">答辩</span></span>
+                </div>
+                <div class="type-nav activist-nav" id="activistNav">
+                    <span class="type-nav-item active" data-bank="activist" data-section="all" onclick="showSection('all','activist')"><span class="nav-badge nav-badge-activist">入党</span><span class="nav-label">全部</span></span>
+                    <span class="type-nav-item" data-bank="activist" data-section="single" onclick="showSection('single','activist')"><span class="nav-badge nav-badge-activist">入党</span><span class="nav-label">单选</span></span>
+                    <span class="type-nav-item" data-bank="activist" data-section="multiple" onclick="showSection('multiple','activist')"><span class="nav-badge nav-badge-activist">入党</span><span class="nav-label">多选</span></span>
+                    <span class="type-nav-item" data-bank="activist" data-section="judge" onclick="showSection('judge','activist')"><span class="nav-badge nav-badge-activist">入党</span><span class="nav-label">判断</span></span>
+                    <span class="type-nav-item" data-bank="activist" data-section="short" onclick="showSection('short','activist')"><span class="nav-badge nav-badge-activist">入党</span><span class="nav-label">简答</span></span>
+                    <span class="type-nav-item exam-nav activist-exam-nav" data-bank="activist" data-section="exam" onclick="showExamEntry('activist')"><span class="nav-badge nav-badge-activist">入党</span><span class="nav-label">考试</span></span>
                 </div>
             </div>
         </div>
@@ -2314,7 +2850,7 @@
             <div class="main-content">
                 <div id="content-area">
                     <div class="welcome-section">
-                        <h2>👋 欢迎使用党章知识学习与测试系统</h2>
+                        <h2>👋 欢迎使用党章与入党积极分子学习与测试系统</h2>
                         <p>请选择上方题型分类查看，或使用搜索功能查找特定题目</p>
                     </div>
                 </div>
@@ -2323,8 +2859,12 @@
     </div>
     
     <footer class="site-footer">
-        <p>党课学习 · 党员转正备考平台 · 党章题目依据《中国共产党章程》（2022年修订）</p>
+        <p>题库依据党章（2022年修订）与党的二十大精神整理 · 仅供学习参考</p>
     </footer>
+
+    <button type="button" class="back-to-top" id="backToTop" aria-label="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 12l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
 
     <div class="app-modal-overlay" id="appModalOverlay" hidden>
         <div class="app-modal" role="dialog" aria-modal="true" aria-labelledby="appModalTitle">
@@ -2486,14 +3026,114 @@
                 { id: 140, text: "党的总支部委员会和支部委员会设（    ）。", options: ["A.纪律检查委员会", "B.纪律检查组", "C.纪律检查组组长", "D.纪律检查委员"], answer: "D" },
                 { id: 141, text: "纪律检查组组长（    ）驻在部门党的领导组织的有关会议。", options: ["A.参加", "B.列席", "C.旁听", "D.主持"], answer: "A" },
                 { id: 142, text: "党的地方各级纪律检查委员会和基层纪律检查委员会，如果对（    ）处理案件的决定有不同意见，可以请求上一级纪律检查委员会予以复查；如果发现同级党的委员会或它的成员有违犯党的纪律的情况，在同级党的委员会不给予解决或不给予正确解决的时候，有权向上级纪律检查委员会提出申诉，请求协助处理。", options: ["A.上级党的委员会", "B.同级党的委员会", "C.同级党的委员会常务委员会", "D.基层委员会"], answer: "B" },
-                { id: 143, text: "党的中央纪律检查委员会在党的（    ）领导下进行工作。", options: ["A.全国代表大会", "B.中央委员会", "C.中央政治局", "D.中央政治局常务委员会"], answer: "A" },
+                { id: 143, text: "党的中央纪律检查委员会在党的（    ）领导下进行工作。", options: ["A.全国代表大会", "B.中央委员会", "C.中央政治局", "D.中央政治局常务委员会"], answer: "B" },
                 { id: 144, text: "党组的成员，由（    ）决定。", options: ["A.上级党组织", "B.党员代表大会", "C.同级领导班子", "D.批准成立党组的党组织"], answer: "D" },
                 { id: 145, text: "党组必须服从（    ）领导。", options: ["A.上级党组织", "B.党员代表大会", "C.同级领导班子", "D.批准它成立的党组织"], answer: "D" },
                 { id: 146, text: "中国共产主义青年团是中国共产党领导的先进青年的（    ），是广大青年在实践中学习中国特色社会主义和共产主义的学校，是党的助手和后备军。", options: ["A.社会组织", "B.群众组织", "C.社会团体组织", "D.群团组织"], answer: "D" },
                 { id: 147, text: "共青团中央委员会受（    ）领导。", options: ["A.共青团全国代表大会", "B.共青团全国代表会议", "C.党中央委员会", "D.中央政治局"], answer: "C" },
                 { id: 148, text: "共青团的地方各级组织受（    ）领导，同时受共青团上级组织领导。", options: ["A.上级团代表大会", "B.同级团代表大会", "C.同级党的委员会", "D.同级党的委员会常务委员会"], answer: "C" },
                 { id: 149, text: "中国共产党的（    ）是中国共产党的象征和标志。", options: ["A.党章党徽", "B.党徽", "C.党旗", "D.党徽党旗"], answer: "D" },
-                { id: 150, text: "中国共产党党徽为镰刀和（    ）组成的图案。", options: ["A.斧头", "B.火炬", "C.五星", "D.锤头"], answer: "D" }
+                { id: 150, text: "中国共产党党徽为镰刀和（    ）组成的图案。", options: ["A.斧头", "B.火炬", "C.五星", "D.锤头"], answer: "D" },
+                { id: 1, text: "2022年10月16日，中国共产党第二十次全国代表大会在京开幕。习近平代表第十九届中央委员会向大会作报告。习近平总书记在党的二十大报告中指出，经过不懈努力，党找到了_____这一跳出治乱兴衰历史周期率的第二个答案，确保党永远不变质、不变色、不变味", options: ["A. 自我革命", "B. 自我监察", "C. 反腐败"], answer: "A", source: 'activist' },
+                { id: 2, text: "习近平总书记在党的二十大报告中指出，_____是国家治理的一场深刻革命，关系党执政兴国，关系人民幸福安康，关系党和国家长治久安。", options: ["A. 全面从严治党", "B. 全面深化改革", "C. 全面依法治国"], answer: "C", source: 'activist' },
+                { id: 3, text: "党的二十大是在全党全国各族人民迈上全面建设社会主义现代化国家新征程、向第二个百年奋斗目标进军的（）召开的一次十分重要的大会。", options: ["A. 关键时期", "B. 重要时刻", "C. 关键时刻"], answer: "C", source: 'activist' },
+                { id: 4, text: "我们经过接续奋斗，实现了小康这个中华民族的千年梦想，打赢了人类历史上规模最大的脱贫攻坚战，全国八百三十二个贫困县全部摘帽，近_____农村贫困人口实现脱贫，九百六十多万贫困人口实现易地搬迁。", options: ["A. 一亿", "B. 二亿", "C. 三亿"], answer: "A", source: 'activist' },
+                { id: 5, text: "新时代的伟大成就是______一道拼出来、干出来、奋斗出来的。", options: ["A. 党员干部", "B. 人民群众", "C. 党和人民"], answer: "C", source: 'activist' },
+                { id: 6, text: "习近平总书记在党的二十大报告中指出，高质量发展是全面建设社会主义现代化国家的_____。发展是党执政兴国的第一要务。没有坚实的物质技术基础，就不可能全面建成社会主义现代化强国。", options: ["A. 首要任务", "B. 重要任务", "C. 根本任务"], answer: "A", source: 'activist' },
+                { id: 7, text: "习近平在二十大报告中指出，必须坚定历史自信、文化自信，坚持古为今用、推陈出新，把马克思主义思想精髓同（）贯通起来、同（）融通起来，不断赋予科学理论鲜明的中国特色，不断夯实马克思主义中国化时代化的历史基础和群众基础，让马克思主义在中国牢牢扎根。", options: ["A. 中华优秀传统文化精华 中国传统价值观念", "B. 中华优秀传统文化精华 人民群众日用而不觉的共同价值观念", "C. 中华传统文化 中国传统价值观念"], answer: "B", source: 'activist' },
+                { id: 8, text: "习近平总书记在党的二十大报告中指出，努力提高居民收入在国民收入分配中的比重，提高_____在初次分配中的比重。", options: ["A. 经营性收入", "B. 劳动报酬", "C. 财产性收入"], answer: "B", source: 'activist' },
+                { id: 9, text: "坚持以_____为中心的创作导向，推出更多增强人民精神力量的优秀作品，培育造就大批德艺双馨的文学艺术家和规模宏大的文化文艺人才队伍。", options: ["A. 群众", "B. 人民", "C. 艺术家"], answer: "B", source: 'activist' },
+                { id: 10, text: "中国特色社会主义进入新时代，我国社会主要矛盾已经转化为人民日益增长的____需要和____的发展之间的矛盾。", options: ["A. 美好生活，不充分不平衡", "B. 幸福生活，不平衡不充分", "C. 幸福生活，不充分不平衡", "D. 美好生活，不平衡不充分"], answer: "D", source: 'activist' },
+                { id: 11, text: "必须认识到，我国社会主要矛盾的变化，没有改变我们对我国社会主义所处历史阶段的判断，我国仍处于并将长期处于____的基本国情没有变，我国是世界最大发展中国家的国际地位没有变。", options: ["A. 社会主义阶段", "B. 社会主义初级阶段", "C. 社会主义中级阶段", "D. 社会主义高级阶段"], answer: "B", source: 'activist' },
+                { id: 12, text: "_____是实现社会主义现代化、创造人民美好生活的必由之路。", options: ["A. 中国特色社会主义道路", "B. 中国特色社会主义理论体系", "C. 中国特色社会主义制度", "D. 中国特色社会主义文化"], answer: "A", source: 'activist' },
+                { id: 13, text: "_____是指导党和人民实现中华民族伟大复兴的正确理论。", options: ["A. 中国特色社会主义道路", "B. 中国特色社会主义理论体系", "C. 中国特色社会主义制度", "D. 中国特色社会主义文化"], answer: "B", source: 'activist' },
+                { id: 14, text: "_____是当代中国发展进步的根本制度保障。", options: ["A. 中国特色社会主义道路", "B. 中国特色社会主义理论体系", "C. 中国特色社会主义制度", "D. 中国特色社会主义文化"], answer: "C", source: 'activist' },
+                { id: 15, text: "_____是激励全党全国各族人民奋勇前进的强大精神力量。", options: ["A. 中国特色社会主义道路", "B. 中国特色社会主义理论体系", "C. 中国特色社会主义制度", "D. 中国特色社会主义文化"], answer: "D", source: 'activist' },
+                { id: 16, text: "新时代中国特色社会主义思想，明确坚持和发展中国特色社会主义，总任务是实现社会主义现代化和中华民族伟大复兴，在全面建成小康社会的基础上，分____在本世纪中叶建成富强民主文明和谐美丽的社会主义现代化强国。", options: ["A. 两步走", "B. 三步走", "C. 四步走", "D. 五步走"], answer: "A", source: 'activist' },
+                { id: 17, text: "新时代中国特色社会主义思想，明确中国特色社会主义最本质的特征是____。", options: ["A. “五位一体”总体布局", "B. 建设中国特色社会主义法治体系", "C. 人民利益为根本出发点", "D. 中国共产党领导"], answer: "D", source: 'activist' },
+                { id: 18, text: "发展是解决我国一切问题的基础和关键，发展必须是科学发展，必须坚定不移贯彻____的发展理念。", options: ["A. 创新、协调、绿色、开放、共享", "B. 创造、协调、生态、开放、共享", "C. 创新、统筹、绿色、开放、共享", "D. 创造、统筹、生态、开放、共享"], answer: "A", source: 'activist' },
+                { id: 19, text: "____是中国特色社会主义的本质要求和重要保障。", options: ["A. 全面依法治国", "B. 全面从严治党", "C. 全面发展经济", "D. 全面可持续发展"], answer: "A", source: 'activist' },
+                { id: 20, text: "____是一个国家、一个民族发展中更基本、更深沉、更持久的力量。", options: ["A. 道路自信", "B. 理论自信", "C. 制度自信", "D. 文化自信"], answer: "D", source: 'activist' },
+                { id: 21, text: "必须统筹国内国际两个大局，始终不渝走和平发展道路、奉行____的开放战略。", options: ["A. 互利共赢", "B. 互相合作", "C. 包容互信", "D. 开放共赢"], answer: "A", source: 'activist' },
+                { id: 22, text: "从现在到二〇二〇年，是全面建成小康社会______。", options: ["A. 决战期", "B. 决胜期", "C. 关键期", "D. 攻坚期"], answer: "B", source: 'activist' },
+                { id: 23, text: "从____到____，是“两个一百年”奋斗目标的历史交汇期。", options: ["A. 二〇二〇年二〇三五年", "B. 十九大二十大", "C. 二十大二十一大", "D. 二〇三五年本世纪中叶"], answer: "B", source: 'activist' },
+                { id: 24, text: "综合分析国际国内形势和我国发展条件，从二〇二〇年到本世纪中叶可以分两个阶段来安排。第一个阶段，从______到______，在全面建成小康社会的基础上，再奋斗十五年，基本实现社会主义现代化。", options: ["A. 二〇二〇年二〇三五年", "B. 二〇二五年二〇四〇年", "C. 二〇三〇年二〇四五年", "D. 二〇三五年本世纪中叶"], answer: "A", source: 'activist' },
+                { id: 25, text: "综合分析国际国内形势和我国发展条件，从二〇二〇年到本世纪中叶可以分两个阶段来安排。第二个阶段，从_____到_____，在基本实现现代化的基础上，再奋斗十五年，把我国建成富强民主文明和谐美丽的社会主义现代化强国。", options: ["A. 二〇二〇年二〇三五年", "B. 二〇三五年二〇五〇年", "C. 二〇三〇年二〇四五年", "D. 二〇三五年本世纪中叶"], answer: "D", source: 'activist' },
+                { id: 26, text: "从全面建成小康社会到基本实现现代化，再到全面建成____，是新时代中国特色社会主义发展的战略安排。", options: ["A. 创新型国家", "B. 社会主义现代化强国", "C. 社会主义现代化大国", "D. 世界一流强国"], answer: "B", source: 'activist' },
+                { id: 27, text: "实现“两个一百年”奋斗目标、实现中华民族伟大复兴的中国梦，不断提高人民生活水平，必须坚定不移把_____作为党执政兴国的第一要务。", options: ["A. 创新", "B. 改革", "C. 发展", "D. 开放"], answer: "C", source: 'activist' },
+                { id: 28, text: "我国经济已由___高速增长___阶段转向___高质量发展___阶段，正处在转变发展方式、优化经济结构、转换增长动力的攻关期，建设现代化经济体系是跨越关口的迫切要求和我国发展的战略目标。", options: ["A. 高速增长，高水平发展", "B. 高速发展，高水平发展", "C. 高速增长，高质量发展", "D. 高速发展，高质量发展"], answer: "C", source: 'activist' },
+                { id: 29, text: "贯彻新发展理念，建设现代化经济体系，必须坚持质量第一、效益优先，以_______为主线。", options: ["A. 转变发展方式", "B. 优化经济结构", "C. 供给侧结构性改革", "D. 转换增长动力"], answer: "C", source: 'activist' },
+                { id: 30, text: "建设现代化经济体系，必须把发展经济的着力点放在______上，把提高供给体系质量作为主攻方向，显著增强我国经济质量优势。", options: ["A. 实体经济", "B. 共享经济", "C. 虚拟经济", "D. 国民经济"], answer: "A", source: 'activist' },
+                { id: 31, text: "______是引领发展的第一动力，是建设现代化经济体系的战略支撑。", options: ["A. 改革", "B. 创新", "C. 开放", "D. 科技"], answer: "B", source: 'activist' },
+                { id: 32, text: "保持土地承包关系稳定并长久不变，第二轮土地承包到期后再延长_____年。", options: ["A. 二十", "B. 三十", "C. 四十", "D. 五十"], answer: "B", source: 'activist' },
+                { id: 33, text: "确保到______我国现行标准下农村贫困人口实现脱贫，贫困县全部摘帽，解决区域性整体贫困，做到脱真贫、真脱贫。", options: ["A. 二〇三〇年", "B. 二〇二〇年", "C. 二〇二五年", "D. 二〇三五年"], answer: "B", source: 'activist' },
+                { id: 34, text: "加快完善社会主义市场经济体制。经济体制改革必须以________和________为重点，实现产权有效激励、要素自由流动、价格反应灵活、竞争公平有序、企业优胜劣汰。", options: ["A. 完善产权制度，要素市场化配置", "B. 要素市场化配置，建立现代财政制度", "C. 建立现代财政制度，创新和完善宏观调控", "D. 完善产权制度，创新和完善宏观调控"], answer: "A", source: 'activist' },
+                { id: 35, text: "推动形成全面开放新格局。要以_____建设为重点，坚持引进来和走出去并重，遵循共商共建共享原则，加强创新能力开放合作，形成陆海内外联动、东西双向互济的开放格局。", options: ["A. “金砖机制”", "B. 自贸区", "C. “一带一路”", "D. 区域合作"], answer: "C", source: 'activist' },
+                { id: 36, text: "赋予自由贸易试验区更大改革自主权，探索建设______。", options: ["A. 自由贸易城", "B. 自由贸易区", "C. 自由贸易港", "D. 自由贸易市"], answer: "C", source: 'activist' },
+                { id: 37, text: "坚持党的领导、人民当家作主、依法治国有机统一。_______是社会主义民主政治的本质特征。", options: ["A. 党的领导", "B. 人民当家作主", "C. 依法治国", "D. 政治体制改革"], answer: "B", source: 'activist' },
+                { id: 38, text: "加强人民当家作主制度保障。______是坚持党的领导、人民当家作主、依法治国有机统一的根本政治制度安排。", options: ["A. 人民代表大会制度", "B. 多党合作和政治协商制度", "C. 民族区域自治制度", "D. 基层群众自治制度"], answer: "A", source: 'activist' },
+                { id: 39, text: "发挥社会主义协商民主重要作用。______是具有中国特色的制度安排，是社会主义协商民主的重要渠道和专门协商机构。", options: ["A. 政党协商", "B. 人大协商", "C. 基层协商", "D. 人民政协"], answer: "D", source: 'activist' },
+                { id: 40, text: "深化依法治国实践。成立中央全面______领导小组，加强对法治中国建设的统一领导。", options: ["A. 深化改革", "B. 依法治国", "C. 从严治党", "D. 司法改革"], answer: "B", source: 'activist' },
+                { id: 41, text: "深化机构和行政体制改革。转变政府职能，深化简政放权，创新监管方式，增强政府公信力和执行力，建设人民满意的______政府。", options: ["A. 法治", "B. 创新型", "C. 廉洁", "D. 服务型"], answer: "D", source: 'activist' },
+                { id: 42, text: "全党必须牢记，______的问题，是检验一个政党、一个政权性质的试金石。", options: ["A. 为什么人", "B. 执政宗旨", "C. 建党宗旨", "D. 权力来源"], answer: "A", source: 'activist' },
+                { id: 43, text: "建设______是中华民族伟大复兴的基础工程。", options: ["A. 经济强国", "B. 政治强国", "C. 教育强国", "D. 文化强国"], answer: "C", source: 'activist' },
+                { id: 44, text: "国家安全是安邦定国的重要基石，______是全国各族人民根本利益所在。", options: ["A. 加快经济发展", "B. 维护国家统一", "C. 促进国际合作", "D. 维护国家安全"], answer: "D", source: 'activist' },
+                { id: 45, text: "我们要建设的现代化是人与自然_____的现代化。", options: ["A. 和谐相处", "B. 和睦相处", "C. 和谐共生", "D. 和睦共生"], answer: "C", source: 'activist' },
+                { id: 46, text: "加快建立绿色生产和消费的法律制度和政策导向，建立健全____的经济体系。", options: ["A. 绿色低碳循环发展", "B. 绿色节约循环发展", "C. 绿色低碳节约发展", "D. 节约低碳循环发展"], answer: "A", source: 'activist' },
+                { id: 47, text: "加强对生态文明建设的总体设计和组织领导，设立________机构。", options: ["A. 国有自然资源资产管理和自然环境监管", "B. 国有自然资源资产管理和自然生态监管", "C. 国有自然资源资产监管和自然生态管理", "D. 国有自然环境资产监管和自然生态管理"], answer: "B", source: 'activist' },
+                { id: 48, text: "我们要牢固树立社会主义生态文明观，推动形成______现代化建设新格局，为保护生态环境作出我们这代人的努力！", options: ["A. 人与自然和谐共生", "B. 人与环境和谐发展", "C. 人与自然和谐发展", "D. 人与环境和谐共生"], answer: "C", source: 'activist' },
+                { id: 49, text: "适应世界新军事革命发展趋势和国家安全需求，提高建设质量和效益，确保到二〇二〇年基本实现____，____建设取得重大进展，____有大的提升。", options: ["A. 现代化，信息化，战斗能力", "B. 机械化，信息化，战斗能力", "C. 机械化，信息化，战略能力", "D. 现代化，信息化，战略能力"], answer: "C", source: 'activist' },
+                { id: 50, text: "力争到二〇三五年____国防和军队现代化，到本世纪中叶把人民军队____世界一流军队。", options: ["A. 全面实现，基本建成", "B. 全面实现，全面建成", "C. 基本实现，基本建成", "D. 基本实现，全面建成"], answer: "D", source: 'activist' },
+                { id: 51, text: "党章规定，国有企业和集体企业中党的基层组织，围绕企业_____ 开展工作。", options: ["A. 党建", "B. 文化", "C. 生产经营", "D. 发展前景"], answer: "C", source: 'activist' },
+                { id: 52, text: "党章规定，非公有制经济组织中党的基层组织的主要职责不包括_____ 。", options: ["A. 领导工会、共青团等群团组织", "B. 指导生产、运输、销售等全链条工作", "C. 团结凝聚职工群众", "D. 促进企业健康发展"], answer: "B", source: 'activist' },
+                { id: 53, text: "党章规定，关于社会组织中党的基层组织主要职责说法正确的是_____ 。", options: ["A. 监督企业遵守法律法规", "B. 促进企业健康发展", "C. 教育管理党员", "D. 加强基层社会治理"], answer: "C", source: 'activist' },
+                { id: 54, text: "党章规定，要深入推进党风廉政建设和反腐败斗争，以零容忍态度惩治腐败，一体推进_____ 。", options: ["A. 不愿腐、不能腐、不敢腐", "B. 不想腐、不能腐、不敢腐", "C. 不能腐、不敢腐、不想腐", "D. 不敢腐、不能腐、不想腐"], answer: "D", source: 'activist' },
+                { id: 55, text: "中国共产党的领导是中国特色社会主义最本质的特征，是中国特色社会主义制度的最大优势，党是 力量。", options: ["A. 最高组织领导", "B. 最高政治领导", "C. 国家领导", "D. 组织领导"], answer: "B", source: 'activist' },
+                { id: 56, text: "党章规定，党要适应_____ 的要求，坚持科学执政、民主执政、依法执政，加强和改善党的领导。", options: ["A. 对外开放和新时代", "B. 国际国内严峻形式", "C. 改革开放和社会主义现代化建设", "D. 中国特色社会主义进入新时代"], answer: "C", source: 'activist' },
+                { id: 57, text: "党章规定，党必须集中精力领导_____ ，组织、协调各方面的力量，同心协力，围绕经济建设开展工作，促进经济社会全面发展。", options: ["A. 经济建设", "B. 社会建设", "C. 国民经济", "D. 民生工作"], answer: "A", source: 'activist' },
+                { id: 58, text: "党章规定，党必须在_____ 的范围内活动。", options: ["A. 法律和法规", "B. 宪法和法律", "C. 宪法和法规", "D. 法律和制度"], answer: "B", source: 'activist' },
+                { id: 59, text: "党章规定，年满_____岁的中国工人、农民、军人、知识分子和其他社会阶层的先进分子，承认党的纲领和章程，愿意参加党的一个组织并在其中积极工作、执行党的决议和按期交纳党费的，可以申请加入中国共产党。", options: ["A. 十五", "B. 十六", "C. 十七", "D. 十八"], answer: "D", source: 'activist' },
+                { id: 60, text: "中国共产党党徽为_____ 组成的图案。中国共产党党旗为旗面缀有金黄色党徽图案的红旗。", options: ["A. 麦穗和斧头", "B. 镰刀和锤头", "C. 镰刀和斧头", "D. 麦穗和锤头"], answer: "B", source: 'activist' },
+                { id: 61, text: "党章规定，中国共产党党员必须_____ ，不惜牺牲个人的一切，为实现共产主义奋斗终身。", options: ["A. 忠诚于党和人民", "B. 一心一意为人民服务", "C. 全心全意为人民服务", "D. 为人民而奋斗"], answer: "C", source: 'activist' },
+                { id: 62, text: "党章规定，党的各级领导干部必须具备的基本条件之一是：坚持解放思想，实事求是，与时俱进，开拓创新，认真调查研究，能够把党的方针、政策同本地区、本部门的实际相结合，卓有成效地开展工作，_____。", options: ["A. 讲实话", "B. 办实事", "C. 求实效", "D. 以上都是"], answer: "D", source: 'activist' },
+                { id: 63, text: "党章规定，党员干部要善于同_____ 干部合作共事，尊重他们，虚心学习他们的长处。", options: ["A. 民主党派", "B. 党外", "C. 基层", "D. 无党派"], answer: "B", source: 'activist' },
+                { id: 64, text: "党章规定，党选拔干部坚持_____ 、任人唯贤，反对任人唯亲。", options: ["A. 五湖四海", "B. 政绩突出", "C. 政治性强", "D. 品质优先"], answer: "A", source: 'activist' },
+                { id: 65, text: "中国共产党要领导全国各族人民实现第二个百年奋斗目标、实现中华民族伟大复兴的中国梦，必须紧密围绕党的基本路线，坚持和加强党的全面领导，弘扬坚持真理、坚守理想，践行初心、担当使命，不怕牺牲、英勇斗争，__对党忠诚，不负人民___的伟大建党精神。", options: ["A. 砥砺奋进、争取胜利", "B. 万众一心、众志成城", "C. 对党忠诚、不负人民", "D. 排除万难、争取胜利"], answer: "C", source: 'activist' },
+                { id: 66, text: "党章指出，要加强党的长期执政能力建设、先进性和纯洁性建设，以改革创新精神全面推进党的建设新的伟大工程，以党的政治建设为统领，全面推进党的政治建设、思想建设、组织建设、作风建设、纪律建设，深入推进反腐败斗争，全面提高党的建设科学化水平，以 引领伟大社会革命。", options: ["A. 伟大自我革命", "B. 伟大牺牲精神", "C. 自我革命精神", "D. 全面从严治党"], answer: "A", source: 'activist' },
+                { id: 67, text: "党章指出，必须提高_____ ，增强贯彻落实党的理论和路线方针政策的自觉性和坚定性。", options: ["A. 政治素养、党性修养、理论素养", "B. 政治判断力、政治领悟力、政治执行力", "C. 为人民服务的宗旨意识", "D. 道德素养、法治素养、自身修养"], answer: "B", source: 'activist' },
+                { id: 68, text: "党章规定，要全面贯彻习近平新时代中国特色社会主义思想，以（ ）为重点，着力培养忠诚干净担当的高素质干部，着力集聚爱国奉献的各方面优秀人才。", options: ["A. 干部队伍建设", "B. 人才队伍建设", "C. 组织体系建设", "D. 人才体系建设"], answer: "C", source: 'activist' },
+                { id: 69, text: "党章规定，党按照_____ 的原则选拔干部。", options: ["A. 政绩突出", "B. 德才兼备、以德为先", "C. 政治性强", "D. 公道正派"], answer: "B", source: 'activist' },
+                { id: 70, text: "党章规定，党选拔干部努力实现干部队伍的革命化、 、知识化、专业化。", options: ["A. 年轻化", "B. 青年化", "C. 科学化", "D. 制度化"], answer: "A", source: 'activist' },
+                { id: 71, text: "党的基层组织要对要求入党的积极分子进行教育和培养，做好经常性的发展党员工作，重视在 中发展党员。", options: ["A. 生产、工作第一线和青年", "B. 急难险重任务一线和大学生", "C. 少数民族和优秀女性", "D. 工人、农民和科学家"], answer: "A", source: 'activist' },
+                { id: 72, text: "党章规定，党的基层组织要监督党员干部和其他任何工作人员严格遵守国家法律法规，严格遵守国家的财政经济法规和人事制度，不得侵占_____ 的利益。", options: ["A. 社会、个人", "B. 集体、他人", "C. 社会、集体", "D. 国家、集体和群众"], answer: "D", source: 'activist' },
+                { id: 73, text: "党章规定，党的基层组织，根据工作需要和_____ ，经上级党组织批准，分别设立党的基层委员会、总支部委员会、支部委员会。", options: ["A. 工作性质", "B. 群众数量", "C. 党员人数", "D. 开展情况"], answer: "C", source: 'activist' },
+                { id: 74, text: "党章规定，党组织讨论决定问题，必须执行_____的原则。", options: ["A. 民主集中制", "B. “三重一大”", "C. 多数服从少数", "D. 少数服从多数"], answer: "D", source: 'activist' },
+                { id: 75, text: "党组织讨论决定问题，如对重要问题发生争论，双方人数接近，除了在紧急情况下必须按多数意见执行外，应当 ，进一步调查研究，交换意见，下次再表决。", options: ["A. 暂缓作出决定", "B. 不予考虑", "C. 认真考虑", "D. 给与批评"], answer: "A", source: 'activist' },
+                { id: 76, text: "党的中央和省、自治区、直辖市委员会实行_____ 制度；党的市（地、州、盟）和县（市、区、旗）委员会建立_____制度。", options: ["A. 巡察；巡视", "B. 巡视；巡察", "C. 视察；监察", "D. 巡查；调研"], answer: "B", source: 'activist' },
+                { id: 77, text: "党章规定，党的下级组织必须坚决执行上级组织的决定。下级组织如果认为上级组织的决定不符合本地区、本部门的实际情况，可以_____。", options: ["A. 向上申诉", "B. 请求撤回", "C. 请求改变", "D. 不予执行"], answer: "C", source: 'activist' },
+                { id: 78, text: "凡属重大问题都要按照集体领导、民主集中、_____的原则，由党的委员会集体讨论，作出决定。", options: ["A. 会议讨论；集体决策", "B. 全员协商；一致表决", "C. 重点研究；个别同意", "D. 个别酝酿；会议决定"], answer: "D", source: 'activist' },
+                { id: 79, text: "党章规定，委员会成员要根据_____，切实履行自己的职责。", options: ["A. 自身的选择和能力", "B. 共同的努力和坚持", "C. 集体的决定和分工", "D. 自己的职责和分工"], answer: "C", source: 'activist' },
+                { id: 80, text: "党章规定，全党必须增强党组织的 功能和 功能，培养选拔党和人民需要的好干部，培养和造就大批堪当时代重任的社会主义事业接班人。", options: ["A. 领导；培养", "B. 培养；选拔", "C. 组织；理论", "D. 政治；组织"], answer: "D", source: 'activist' },
+                { id: 81, text: "党章规定，必须充分发扬_____，尊重党员主体地位，保障党员民主权利，发挥各级党组织和广大党员的积极性创造性。", options: ["A. 民主集中制", "B. 主动性", "C. 党内民主", "D. 主观能动性"], answer: "C", source: 'activist' },
+                { id: 82, text: "党在自己的政治生活中正确地开展_____，在原则问题上进行思想斗争，坚持真理，修正错误。", options: ["A. 自我剖析", "B. 批评和自我批评", "C. 学习教育", "D. 自我检视自我剖析"], answer: "B", source: 'activist' },
+                { id: 83, text: "党章规定，全面从严治党永远在路上，党的_____永远在路上。", options: ["A. 自我革命", "B. 自我批评", "C. 廉政建设", "D. 作风建设"], answer: "A", source: 'activist' },
+                { id: 84, text: "中国共产党同全国各民族工人、农民、知识分子团结在一起，同各民主党派、无党派人士、各民族的爱国力量团结在一起，进一步发展和壮大由全体社会主义劳动者、社会主义事业的建设者、拥护社会主义的爱国者、拥护祖国统一和致力于中华民族伟大复兴的爱国者组成的最广泛的_____。", options: ["A. 爱国统一战线", "B. 祖国统一战线", "C. 和平统一战线", "D. 国家统一战线"], answer: "A", source: 'activist' },
+                { id: 85, text: "中国共产党坚持独立自主的和平外交政策，坚持_____道路，坚持_____的开放战略，统筹国内国际两个大局，积极发展对外关系，努力为我国的改革开放和现代化建设争取有利的国际环境。", options: ["A. 和平发展；互利共赢", "B. 社会主义；深化改革", "C. 互利共赢；对外开放", "D. 改革开放；解放思想"], answer: "A", source: 'activist' },
+                { id: 86, text: "党章指出，要弘扬和平、发展、公平、正义、民主、自由的全人类共同价值，坚持_____，维护我国的独立和主权，反对霸权主义和强权政治，维护世界和平，促进人类进步，推动构建人类命运共同体，推动建设持久和平、普遍安全、共同繁荣、开放包容、清洁美丽的世界。", options: ["A. 社会主义核心价值观", "B. 总体国家安全观", "C. 正确义利观", "D. 正确党史观"], answer: "C", source: 'activist' },
+                { id: 87, text: "党章指出，在互相尊重主权和领土完整、互不侵犯、互不干涉内政、平等互利、_____五项原则的基础上，发展我国同世界各国的关系。", options: ["A. 独立自主", "B. 求同存异", "C. 和平共处", "D. 国家安全"], answer: "C", source: 'activist' },
+                { id: 88, text: "党章指出，按照民主法治、公平正义、诚信友爱、充满活力、安定有序、人与自然和谐相处的总要求和共同建设、共同享有的原则，以_____为重点，解决好人民最关心、最直接、最现实的利益问题。", options: ["A. 服务型社会建设", "B. 服务和保障民生", "C. 和谐社会建设", "D. 保障和改善民生"], answer: "D", source: 'activist' },
+                { id: 89, text: "党章指出，严格区分和正确处理_____和人民内部矛盾这两类不同性质的矛盾。", options: ["A. 外部矛盾", "B. 敌我矛盾", "C. 社会矛盾", "D. 相对矛盾"], answer: "B", source: 'activist' },
+                { id: 90, text: "党章指出，要加强_____ 综合治理，依法坚决打击各种危害国家安全和利益、危害社会稳定和经济发展的犯罪活动和犯罪分子，保持社会长期稳定。", options: ["A. 国家安全", "B. 社会环境", "C. 社会治安", "D. 国家治安"], answer: "C", source: 'activist' },
+                { id: 91, text: "党章指出，坚持_____ ，统筹发展和安全，坚决维护国家主权、安全、发展利益。", options: ["A. 总体国家发展观", "B. 总体国家安全观", "C. 和平共处五项原则", "D. 独立自主外交政策"], answer: "B", source: 'activist' },
+                { id: 92, text: "中国共产党领导人民发展社会主义市场经济。毫不动摇地巩固和发展公有制经济，毫不动摇地鼓励、支持、引导_____发展。", options: ["A. 非公有制经济", "B. 公有制经济", "C. 社会主义全民所有制经济", "D. 集体经济"], answer: "A", source: 'activist' },
+                { id: 93, text: "党章指出，发挥市场在资源配置中的决定性作用，更好发挥政府作用，建立完善的_____。", options: ["A. 计划经济体系", "B. 微观调控体系", "C. 市场经济体系", "D. 宏观调控体系"], answer: "D", source: 'activist' },
+                { id: 94, text: "党章指出，统筹城乡发展、区域发展、经济社会发展、人与自然和谐发展、国内发展和对外开放，调整经济结构，转变经济发展方式，推进_____改革。", options: ["A. “放管服”", "B. 地方机构", "C. 供给侧结构性", "D. 经济体制"], answer: "C", source: 'activist' },
+                { id: 95, text: "党章指出，促进新型工业化、信息化、城镇化、农业现代化同步发展，建设社会主义新农村，走中国特色新型工业化道路，建设_____。", options: ["A. 工业强国和信息强国", "B. 社会主义现代化强国", "C. 科技强国和创新型强国", "D. 创新型国家和世界科技强国"], answer: "D", source: 'activist' },
+                { id: 96, text: "新时代新征程，经济和社会发展的战略目标是，到二〇三五年基本实现 ，到本世纪中叶把我国建成 。", options: ["A. 中等发达国家水平；富强民主文明的社会主义国家", "B. 更高层次的发展；社会主义强国", "C. 跨越发展；科技强国", "D. 社会主义现代化；社会主义现代化强国"], answer: "D", source: 'activist' },
+                { id: 97, text: "党章指出，坚持和完善人民代表大会制度、中国共产党领导的 制度、民族区域自治制度以及基层群众自治制度。", options: ["A. 多党合作和政治协商", "B. “一国两制”", "C. 多党合作", "D. 政治协商"], answer: "A", source: 'activist' },
+                { id: 98, text: "党章指出，要发展更加广泛、更加充分、更加健全的_____，推进协商民主广泛多层制度化发展，切实保障人民管理国家事务和社会事务、管理经济和文化事业的权利。", options: ["A. 民主集中制", "B. 全过程人民民主", "C. 体制机制", "D. 全方位人民民主"], answer: "B", source: 'activist' },
+                { id: 99, text: "习近平新时代中国特色社会主义思想是对马克思列宁主义、毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观的继承和发展，是 马克思主义、_____马克思主义。", options: ["A. 当代；中国", "B. 当代中国；二十一世纪", "C. 现代中国；新时代", "D. 中国化；时代化"], answer: "B", source: 'activist' },
+                { id: 100, text: "中国共产党自成立以来，始终把_____作为自己的初心使命。", options: ["A. 为中国人民谋幸福、为中华民族谋复兴", "B. 为中华民族谋幸福、为中国人民谋复兴", "C. 为人民服务", "D. 中华民族的伟大复兴"], answer: "A", source: 'activist' }
             ],
             multiple: [
                 { id: 1, text: "中国共产党以（    ）作为自己的行动指南。", options: ["A.习近平新时代中国特色社会主义思想", "B.三个代表重要思想", "C.科学发展观", "D.邓小平理论", "E.马克思列宁主义", "F.毛泽东思想"], answer: "ABCDEF" },
@@ -2550,7 +3190,27 @@
                 { id: 52, text: "新形势下，党面临的执政考验、（    ）是长期的、复杂的、严峻的，精神懈怠危险、能力不足危险、脱离群众危险、消极腐败危险更加尖锐地摆在全党面前。", options: ["A.改革开放考验", "B.市场经济考验", "C.意识形态考验", "D.外部环境考验"], answer: "ABD" },
                 { id: 53, text: "新形势下，党面临的执政考验、改革开放考验、市场经济考验、外部环境考验是长期的、复杂的、严峻的，精神懈怠危险、（    ）更加尖锐地摆在全党面前。", options: ["A.能力不足危险", "B.脱离群众危险", "C.消极腐败危险", "D.西化分化危险"], answer: "ABC" },
                 { id: 54, text: "中国共产党坚持对人民解放军和其他人民武装力量的绝对领导，贯彻习近平强军思想，加强人民解放军的建设，坚持（    ），建设一支听党指挥、能打胜仗、作风优良的人民军队，切实保证人民解放军有效履行新时代军队使命任务，充分发挥人民解放军在巩固国防、保卫祖国和参加社会主义现代化建设中的作用。", options: ["A.政治建军", "B.改革强军", "C.科技兴军", "D.依法治军"], answer: "ABCD" },
-                { id: 55, text: "党的各级领导干部必须信念坚定、（    ），模范地履行党员的各项义务，并且必须具备领导干部的六项基本条件。", options: ["A.为民服务", "B.勤政务实", "C.敢于担当", "D.清正廉洁"], answer: "ABCD" }
+                { id: 55, text: "党的各级领导干部必须信念坚定、（    ），模范地履行党员的各项义务，并且必须具备领导干部的六项基本条件。", options: ["A.为民服务", "B.勤政务实", "C.敢于担当", "D.清正廉洁"], answer: "ABCD" },
+                { id: 1, text: "中国共产党是（ ）的先锋队。", options: ["A. 中国工人阶级", "B. 中国无产阶级", "C. 中国人民和中华民族", "D. 中国农民阶级"], answer: "AC", source: 'activist' },
+                { id: 2, text: "改革开放以来我们取得一切成绩和进步的根本原因，归结起来就是：（ ）", options: ["A. 开辟了中国特色社会主义道路", "B. 形成了中国特色社会主义理论体系", "C. 确立了中国特色社会主义制度", "D. 发展了中国特色社会主义文化"], answer: "ABCD", source: 'activist' },
+                { id: 3, text: "党要实现的三大历史任务是（ ）。", options: ["A. 全面建成小康社会", "B. 完成祖国统一", "C. 维护世界和平与促进共同发展", "D. 推进现代化建设"], answer: "BCD", source: 'activist' },
+                { id: 4, text: "十九大党章在总纲部分增写了坚持创新、（ ）、共享的发展理念的内容。", options: ["A. 协调", "B. 绿色", "C. 包容", "D. 开放"], answer: "ABD", source: 'activist' },
+                { id: 5, text: "要尊重劳动、尊重知识、尊重人才、尊重创造，做到（ ）。", options: ["A. 发展目标由人民决定", "B. 发展为了人民", "C. 发展依靠人民", "D. 发展成果由人民共享"], answer: "BCD", source: 'activist' },
+                { id: 6, text: "中共八七会议上确定的两大总方针是。", options: ["A. 实行土地革命", "B. 走农村包围城市道路", "C. 武装反抗国民党反动派", "D. 掌握军队领导权"], answer: "AC", source: 'activist' },
+                { id: 7, text: "社会主义的本质是", options: ["A. 解放生产力", "B. 发展生产力", "C. 消灭剥削、消除两极分化", "D. 最终达到共同富裕"], answer: "ABCD", source: 'activist' },
+                { id: 8, text: "2016年2月3日,习近平在江西考察工作时指出,井冈山精神的内涵包括。", options: ["A. 坚定信念、艰苦奋斗", "B. 实事求是、敢闯新路", "C. 依靠群众、勇于胜利"], answer: "ABC", source: 'activist' },
+                { id: 9, text: "发展社会主义民主政治，建设社会主义政治文明，是全面建设小康社会的重要目标。发展社会主义民主政治，最根本的是要把坚持有机统一起来。", options: ["A. 党的领导", "B. 人民当家作主", "C. 依法治国", "D. 依法执政"], answer: "ABC", source: 'activist' },
+                { id: 10, text: "党组织对违犯党的纪律的党员，应坚持（    ），按照错误性质和情节轻重，给以批评教育直至纪律处分。", options: ["A. 惩前毖后、治病救人", "B. 执纪必严、违纪必究", "C. 抓早抓小、防微杜渐", "D. 严的要求、严的标准"], answer: "ABC", source: 'activist' },
+                { id: 11, text: "1924年举行的国民党一大事实上确立了的三大革命政策，标志着第一次国共合作正式形成。", options: ["A. 耕者有其田", "B. 联俄", "C. 联共", "D. 扶助农工"], answer: "BCD", source: 'activist' },
+                { id: 12, text: "党员在留党察看期间没有（    ）。", options: ["A. 表决权", "B. 选举权", "C. 被选举权", "D. 控告权"], answer: "ABC", source: 'activist' },
+                { id: 13, text: "改革及开放以来，我们取得一切成绩和进步的根本原因，归结起来就是。", options: ["A. 开辟了中国特色社会主义道路", "B. 形成了中国特色社会主义理论体系", "C. 确定了中国特色社会主义制度", "D. 发展了中国特色社会主义文化"], answer: "ABCD", source: 'activist' },
+                { id: 14, text: "，是中国共产党人的精神支柱和政治灵魂，也是保持党的团结统一的思想基础。", options: ["A. 共产主义远大理想", "B. 新时代中国特色社会主义共同理想", "C. 中国特色社会主义共同理想", "D. 共产主义崇高理想"], answer: "AC", source: 'activist' },
+                { id: 15, text: "领导十三亿多人的社会主义大国，我们党既要政治过硬，也要本领高强。要（    ）。", options: ["A. 增强学习本领，增强政治领导本领", "B. 增强改革创新本领，增强科学发展本领", "C. 增强依法执政本领，增强群众工作本领", "D. 增强狠抓落实本领，增强驾驭风险本领"], answer: "ABCD", source: 'activist' },
+                { id: 16, text: "以（    ）、____、____、____、____，把党内和党外、国内和国外各方面优秀人才集聚到党和人民的伟大奋斗中来。", options: ["A. 识才的慧眼", "B. 敬才的风度", "C. 爱才的诚意", "D. 用才的胆识", "E. 容才的雅量", "F. 聚才的良方"], answer: "ACDEF", source: 'activist' },
+                { id: 17, text: "青年兴则国家兴，青年强则国家强。青年一代（    ）、____、____，国家就有前途，民族就有希望。", options: ["A. 有品德", "B. 有理想", "C. 有本领", "D. 有担当"], answer: "BCD", source: 'activist' },
+                { id: 18, text: "全党全国各族人民要紧密团结在党中央周围，高举中国特色社会主义伟大旗帜，锐意进取，埋头苦干，为实现推进现代化建设、完成祖国统一、维护世界和平与促进共同发展三大历史任务，为（    ）继续奋斗!", options: ["A. 决胜全面建成小康社会", "B. 夺取新时代中国特色社会主义伟大胜利", "C. 全面建成社会主义现代化强国", "D. 实现中华民族伟大复兴的中国梦", "E. 实现人民对美好生活的向往"], answer: "ABDE", source: 'activist' },
+                { id: 19, text: "关于全国人大职权，下列哪些说法是正确的?", options: ["A. 选举国家主席、副主席", "B. 选举最高人民法院院长、最高人民检察院检察长", "C. 选举国务院总理、副总理", "D. 决定特别行政区的设立与建置"], answer: "AB", source: 'activist' },
+                { id: 20, text: "宪法确定:“中国各族人民将继续在中国共产党领导下，把我国建设成为的社会主义国家。”", options: ["A. 自由", "B. 民主", "C. 文明", "D. 富强"], answer: "BCD", source: 'activist' }
             ],
             judge: [
                 { id: 1, text: "党章总纲强调，要全面深化改革，完善和发展中国特色社会主义制度，推进国家治理体系和治理能力现代化。", answer: "√" },
@@ -2587,7 +3247,27 @@
                 { id: 32, text: "运用监督执纪'四种形态'，让'红红脸、出出汗'成为常态，党纪处分、组织调整成为管党治党的重要手段，严重违纪、严重触犯刑律的党员必须开除党籍。", answer: "√" },
                 { id: 33, text: "自觉遵守党的纪律，首先是党的政治纪律和廉洁纪律，模范遵守国家的法律法规，严格保守党和国家的秘密，执行党的决定，服从组织分配，积极完成党的任务。", answer: "×" },
                 { id: 34, text: "坚持依规治党、标本兼治，坚持把纪律挺在前面，加强组织性纪律性，在党的纪律面前人人平等。", answer: "√" },
-                { id: 35, text: "深入推进党风廉政建设和反腐败斗争，以行贿受贿一起查的态度惩治腐败，构建不敢腐、不能腐、不想腐的有效机制。", answer: "×" }
+                { id: 35, text: "深入推进党风廉政建设和反腐败斗争，以行贿受贿一起查的态度惩治腐败，构建不敢腐、不能腐、不想腐的有效机制。", answer: "×" },
+                { id: 1, text: "党的二十大把坚持新时代党的群众路线作为党的建设的基本要求之一写入了党章。", answer: "×", explain: "二十大党章写入的是新时代党的组织路线，不是群众路线。", source: 'activist' },
+                { id: 2, text: "全面依法治国是国家治理的一场深刻革命，关系党执政兴国、人民幸福安康、党和国家长治久安。", answer: "√", explain: "全面依法治国是新时代治国理政的重大战略部署，是国家治理深刻革命。", source: 'activist' },
+                { id: 3, text: "我们要坚持列宁主义在意识形态领域指导地位的根本制度。", answer: "×", explain: "根本指导制度是马克思主义，不是列宁主义。", source: 'activist' },
+                { id: 4, text: "高质量发展是全面建设社会主义现代化国家的首要任务。", answer: "√", explain: "二十大明确：高质量发展是首要任务，发展是党执政兴国的第一要务。", source: 'activist' },
+                { id: 5, text: "教育的根本问题是：教什么知识、怎样培养人、为谁培养人。", answer: "×", explain: "教育三根本问题：培养什么人、怎样培养人、为谁培养人。", source: 'activist' },
+                { id: 6, text: "全面加强党的制度建设，加强理想信念教育，筑牢信仰之基。", answer: "×", explain: "理想信念教育归属党的思想建设，是思想建设核心内容。", source: 'activist' },
+                { id: 7, text: "新征程上我们必须增强忧患意识，坚持底线思维。", answer: "√", explain: "二十大原文：增强忧患意识、坚持底线思维，应对重大风险考验。", source: 'activist' },
+                { id: 8, text: "我国牢牢守住十五亿亩耕地红线，保障国家粮食安全。", answer: "×", explain: "国家法定耕地红线是十八亿亩。", source: 'activist' },
+                { id: 9, text: "乡村振兴要巩固农村经营制度，重点发展个体私营经济。", answer: "×", explain: "农村重点发展新型农村集体经济、适度规模经营。", source: 'activist' },
+                { id: 10, text: "年满十八岁的工人、农民、军人、知识分子和其他社会阶层先进分子，满足条件可入党。", answer: "√", explain: "党章明确入党基本人员范围，涵盖四类主体+先进分子。", source: 'activist' },
+                { id: 11, text: "发展党员可以把能力水平放在首位，不必优先政治标准。", answer: "×", explain: "发展党员必须把政治标准放在首位，坚持政治过硬优先。", source: 'activist' },
+                { id: 12, text: "党组织讨论决定问题，执行多数服从少数原则。", answer: "×", explain: "党内议事原则：少数服从多数。", source: 'activist' },
+                { id: 13, text: "党的基层组织是党的全部工作和战斗力的基础。", answer: "√", explain: "基层组织是党在社会基层的战斗堡垒，是执政根基。", source: 'activist' },
+                { id: 14, text: "乡镇、村社区党组织统一领导辖区各类工作，强化基层社会治理。", answer: "√", explain: "基层党组织属地全面领导，统筹基层治理与各类组织工作。", source: 'activist' },
+                { id: 15, text: "党支部职责概括为：管党员、管干部、管群众三项核心职责。", answer: "×", explain: "党支部七大职责：教育、管理、监督党员；组织、宣传、凝聚、服务群众。", source: 'activist' },
+                { id: 16, text: "党的纪律主要包括政治、组织、廉洁、群众、工作、生活六大纪律。", answer: "√", explain: "党章明确六大纪律，是党员行为根本准则。", source: 'activist' },
+                { id: 17, text: "对党员的纪律处分分为四类：警告、记过、降级、开除。", answer: "×", explain: "党纪五种处分：警告、严重警告、撤销党内职务、留党察看、开除党籍。", source: 'activist' },
+                { id: 18, text: "党徽党旗是中国共产党的象征和标志，必须规范使用、维护尊严。", answer: "√", explain: "党章明确党徽党旗的政治定位与严肃性要求。", source: 'activist' },
+                { id: 19, text: "中国共产党仅是中国工人阶级的先锋队。", answer: "×", explain: "党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队。", source: 'activist' },
+                { id: 20, text: "党的最高理想和最终目标是实现中华民族伟大复兴。", answer: "×", explain: "党的最高理想和最终目标是实现共产主义，伟大复兴是阶段性奋斗目标。", source: 'activist' }
             ],
             short: [
                 { id: 1, text: "请写出入党誓词的内容。", answer: "我志愿加入中国共产党，拥护党的纲领，遵守党的章程，履行党员义务，执行党的决定，严守党的纪律，保守党的秘密，对党忠诚，积极工作，为共产主义奋斗终身，随时准备为党和人民牺牲一切，永不叛党。" },
@@ -2599,7 +3279,13 @@
                 { id: 7, text: "党的建设必须坚决实现哪些基本要求？", answer: "第一，坚持党的基本路线。<br>第二，坚持解放思想，实事求是，与时俱进，求真务实。<br>第三，坚持新时代党的组织路线。<br>第四，坚持全心全意为人民服务。<br>第五，坚持民主集中制。<br>第六，坚持从严管党治党。" },
                 { id: 8, text: "中国共产党的初心使命是什么？", answer: "中国共产党自成立以来，始终把为中国人民谋幸福、为中华民族谋复兴作为自己的初心使命，历经百年奋斗，从根本上改变了中国人民的前途命运，开辟了实现中华民族伟大复兴的正确道路，展示了马克思主义的强大生命力，深刻影响了世界历史进程，锻造了走在时代前列的中国共产党。" },
                 { id: 9, text: "'四个意识'、'四个自信'、'两个维护'是什么？", answer: "'四个意识'是指政治意识、大局意识、核心意识、看齐意识。<br>'四个自信'包括道路自信、理论自信、制度自信、文化自信。<br>'两个维护'指的是坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导。" },
-                { id: 10, text: "党的纪律包括哪些方面？对党员的纪律处分有哪些？", answer: "党的纪律主要包括政治纪律、组织纪律、廉洁纪律、群众纪律、工作纪律、生活纪律。<br>对党员的纪律处分有五种：警告、严重警告、撤销党内职务、留党察看、开除党籍。" }
+                { id: 10, text: "党的纪律包括哪些方面？对党员的纪律处分有哪些？", answer: "党的纪律主要包括政治纪律、组织纪律、廉洁纪律、群众纪律、工作纪律、生活纪律。<br>对党员的纪律处分有五种：警告、严重警告、撤销党内职务、留党察看、开除党籍。" },
+                { id: 1, text: "党在社会初级阶段的基本路线是什么?", answer: "领导和团结全国各族人 民，以经济建设为中心，坚持四项基本原则，坚持改革开放，自力更生，艰苦创业，为把我国建设成为富强民主文明和谐的社会主义现代化国家而奋斗。", source: 'activist' },
+                { id: 2, text: "什么是四项基本原则?", answer: "坚持社会主义道路、坚持人民民主专政、坚持中国共产党的领导、坚持马克思列宁主义毛泽东思想。", source: 'activist' },
+                { id: 3, text: "中国共产党的性质是什么?", answer: "中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心，代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。", source: 'activist' },
+                { id: 4, text: "中国共产党的行动指南是什么?", answer: "中国共产党以马克思列宁主义、毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观、习近平新时代中国特色社会主义思想作为自己的行动指南。", source: 'activist' },
+                { id: 5, text: "如何理解党章是党的根本大法?", answer: "(1)党章是党整体意志的体现。<br>党章集中体现了党的性质和宗旨、党的理论和路线方针政策、党的重要主张，规定了党的重要制度和体制机制，集中了全党的意志、信念和愿望。<br>(2)党章是具有最高权威的党内法规。党内法规包含许多种类，党章被称为党内的基本法。所有其他法规，都是党章的延伸和补充，同时必须服从或从属于党章。<br>(3)党章是全党必须共同遵守的最基本、最重要、最全面的行为规范。", source: 'activist' },
+                { id: 6, text: "结合实际谈谈如何端正入党动机？", answer: "1.正确的入党动机，指争取入党的内在原因是忠诚地信仰共产主义，把最终实现共产主义社会制度作为自己的最高理想，决心为了壮丽的共产主义事业奋斗终身，全心全意为人民服务，并随时准备为党和人民的利益牺牲一切。<br>2.端正入党动机是争取入党的前提。克服错误认识，树立正确的入党动机。<br>3.加强世界观改造，努力做到在思想上入党，组织上入党，思想上入党却是一辈子的事，而且是无止境的。要争取成为共产党员，就一定要把思想上入党放在首位。<br>4.要认真学习马克思列宁主义、毛泽东思想和中国特色社会主义理论体系，及其关于党的建设的理论，树立正确的入党思想。<br>5.在实践中严格按照党员标准要求自己。.通过实践锻炼，不断提高自身素养。在实践中用切身体验来深化对党的认识，从而进一步端正自己的入党动机。", source: 'activist' }
             ],
             defense: [
                 { id: 1, text: "请简要说说党的性质和根本宗旨是什么？", answer: "党的性质：中国共产党是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心，代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。<br>根本宗旨：全心全意为人民服务。" },
@@ -2647,8 +3333,28 @@
             single: '单选题', multiple: '多选题', judge: '判断题', short: '简答题', defense: '转正答辩题'
         };
 
-        const EXAM_COUNTS = { single: 20, multiple: 15, judge: 15, short: 5 };
-        const EXAM_DURATION_SEC = 60 * 60;
+        const BANK_CONFIG = {
+            party: {
+                name: '党章知识题库', short: '党章', title: '党课模拟考试',
+                desc: '系统将从党课题库中随机抽取试题，客观题自动判分，简答题提交后显示参考答案。',
+                intro: '覆盖党章总纲、党员义务权利、党的组织制度与纪律等核心考点，适用于党课学习与党员转正备考。',
+                counts: { single: 20, multiple: 15, judge: 15, short: 5 },
+                duration: 60 * 60
+            },
+            activist: {
+                name: '入党积极分子题库', short: '入党', title: '入党积极分子模拟考试',
+                desc: '系统将从入党积极分子题库中随机抽取试题，涵盖党的二十大精神、党章要点与入党动机，客观题自动判分。',
+                intro: '依据《入党积极分子考试题库》整理，涵盖党的二十大精神、党章基础知识、入党条件与端正入党动机等内容。',
+                counts: { single: 20, multiple: 10, judge: 10, short: 5 },
+                duration: 50 * 60
+            }
+        };
+        const EXAM_COUNTS = BANK_CONFIG.activist.counts;
+        const EXAM_DURATION_SEC = BANK_CONFIG.activist.duration;
+        let activeBank = 'activist';
+        function bankOf(q) { return q.source || 'party'; }
+        function bankCfg(bank) { return BANK_CONFIG[bank] || BANK_CONFIG.party; }
+        function fmtDuration(sec) { return String(Math.floor(sec / 60)).padStart(2, '0') + ':00'; }
 
         let currentExam = null;
         let examTimerInterval = null;
@@ -2662,18 +3368,19 @@
             return a;
         }
 
-        function pickRandom(type, count) {
-            const pool = questionsData[type];
+        function pickRandom(type, count, bank) {
+            const pool = questionsData[type].filter(q => bankOf(q) === bank);
             return shuffleArray(pool).slice(0, Math.min(count, pool.length))
                 .map(q => ({ type, question: q }));
         }
 
-        function buildExamPaper() {
+        function buildExamPaper(bank) {
+            const c = bankCfg(bank).counts;
             const paper = [
-                ...pickRandom('single', EXAM_COUNTS.single),
-                ...pickRandom('multiple', EXAM_COUNTS.multiple),
-                ...pickRandom('judge', EXAM_COUNTS.judge),
-                ...pickRandom('short', EXAM_COUNTS.short)
+                ...pickRandom('single', c.single, bank),
+                ...pickRandom('multiple', c.multiple, bank),
+                ...pickRandom('judge', c.judge, bank),
+                ...pickRandom('short', c.short, bank)
             ];
             return paper.map((item, idx) => ({ ...item, examIdx: idx }));
         }
@@ -2711,10 +3418,21 @@
             if (mainContent) mainContent.scrollTop = 0;
         }
 
-        function setActiveNav(section) {
+        function setActiveNav(section, bank) {
             document.querySelectorAll('.type-nav-item').forEach(item => {
-                item.classList.toggle('active', item.getAttribute('data-section') === section);
+                item.classList.toggle('active',
+                    item.getAttribute('data-section') === section &&
+                    (item.getAttribute('data-bank') || 'party') === bank);
             });
+            document.querySelectorAll('.bank-switch-btn').forEach(btn => {
+                const on = btn.getAttribute('data-bank') === bank;
+                btn.classList.toggle('active', on);
+                btn.setAttribute('aria-selected', String(on));
+            });
+            const partyNav = document.getElementById('partyNav');
+            const activistNav = document.getElementById('activistNav');
+            if (partyNav) partyNav.hidden = bank !== 'party';
+            if (activistNav) activistNav.hidden = bank !== 'activist';
         }
 
         function clearExamFooterState() {
@@ -2727,20 +3445,22 @@
 
         function renderExamPageHeader(opts = {}) {
             const { subtitle, showStats, showTimer, showRegenerate, hideActions, exitHandler = 'exitExam()' } = opts;
+            const cfg = bankCfg(currentExam?.bank || activeBank);
+            const c = cfg.counts;
 
             const statsHtml = showStats
                 ? `<div class="exam-header-stats">
-                    <span class="exam-stat-pill">单选 ${EXAM_COUNTS.single}道</span>
-                    <span class="exam-stat-pill">多选 ${EXAM_COUNTS.multiple}道</span>
-                    <span class="exam-stat-pill">判断 ${EXAM_COUNTS.judge}道</span>
-                    <span class="exam-stat-pill">简答 ${EXAM_COUNTS.short}道</span>
+                    <span class="exam-stat-pill">单选 ${c.single}道</span>
+                    <span class="exam-stat-pill">多选 ${c.multiple}道</span>
+                    <span class="exam-stat-pill">判断 ${c.judge}道</span>
+                    <span class="exam-stat-pill">简答 ${c.short}道</span>
                 </div>`
                 : (subtitle ? `<div class="exam-header-subtitle">${subtitle}</div>` : '');
 
             const timerHtml = showTimer
                 ? `<div class="exam-header-timer" id="examTimerBox">
                         <span class="exam-timer-label">剩余时间</span>
-                        <span class="exam-timer-value" id="examTimer">60:00</span>
+                        <span class="exam-timer-value" id="examTimer">${fmtDuration(cfg.duration)}</span>
                     </div>`
                 : '';
 
@@ -2764,7 +3484,7 @@
                 <div class="exam-header-top">
                     <div class="exam-page-header-brand">
                         <div class="exam-page-header-icon">考</div>
-                        <h2>党课模拟考试</h2>
+                        <h2>${cfg.title}</h2>
                     </div>
                     ${timerHtml}
                 </div>
@@ -2809,11 +3529,12 @@
             }, 1000);
         }
 
-        function createExamSession() {
+        function createExamSession(bank) {
             return {
+                bank: bank,
                 submitted: false,
-                questions: buildExamPaper(),
-                endTime: Date.now() + EXAM_DURATION_SEC * 1000
+                questions: buildExamPaper(bank),
+                endTime: Date.now() + bankCfg(bank).duration * 1000
             };
         }
 
@@ -2864,10 +3585,11 @@
             stopExamTimer();
             clearExamFooterState();
             setExamMode(false);
+            const bank = activeBank;
             currentExam = null;
-            setActiveNav('all');
+            setActiveNav('all', bank);
             animateContentArea();
-            document.getElementById('content-area').innerHTML = generateAllQuestionsHTML();
+            document.getElementById('content-area').innerHTML = generateAllQuestionsHTML(bank);
             scrollToTop();
         }
 
@@ -2879,7 +3601,8 @@
             return showConfirmModal('退出考试', msg, { warn: true, confirmText: '退出', cancelText: '继续作答' });
         }
 
-        async function showSection(section) {
+        async function showSection(section, bank) {
+            bank = bank || activeBank;
             if (section !== 'exam' && currentExam) {
                 if (!(await confirmLeaveExam())) return;
             }
@@ -2888,64 +3611,75 @@
                 clearExamFooterState();
                 setExamMode(false);
             }
-            setActiveNav(section);
+            activeBank = bank;
+            setActiveNav(section, bank);
             animateContentArea();
             currentExam = null;
             const contentArea = document.getElementById('content-area');
             if (section === 'exam') {
-                showExamEntry(false);
+                showExamEntry(bank, false);
                 return;
             }
             if (section === 'all') {
-                contentArea.innerHTML = generateAllQuestionsHTML();
+                contentArea.innerHTML = generateAllQuestionsHTML(bank);
             } else if (section === 'defense') {
-                contentArea.innerHTML = generateQuestionTypeHTML('defense', defenseSection.name, questionsData.defense);
+                contentArea.innerHTML = generateQuestionTypeHTML('defense', defenseSection.name, questionsData.defense, 'party');
             } else {
                 const s = sections.find(x => x.id === section);
-                if (s) contentArea.innerHTML = generateQuestionTypeHTML(section, s.name, questionsData[section]);
+                if (s) contentArea.innerHTML = generateQuestionTypeHTML(section, s.name, questionsData[section], bank);
             }
             scrollToTop();
         }
 
-        async function showExamEntry(updateNav) {
+        async function switchBank(bank) {
+            if (bank === activeBank && !currentExam) return;
+            showSection('all', bank);
+        }
+
+        async function showExamEntry(bank, updateNav) {
+            if (typeof bank === 'boolean') { updateNav = bank; bank = activeBank; }
+            bank = bank || activeBank;
             if (updateNav !== false && currentExam) {
                 if (!(await confirmLeaveExam())) return;
             }
             stopExamTimer();
-            setActiveNav('exam');
+            activeBank = bank;
+            setActiveNav('exam', bank);
             animateContentArea();
             currentExam = null;
             clearExamFooterState();
             setExamMode(true);
-            renderExamEntry();
+            renderExamEntry(bank);
         }
 
-        function renderExamEntry() {
-            const total = EXAM_COUNTS.single + EXAM_COUNTS.multiple + EXAM_COUNTS.judge + EXAM_COUNTS.short;
-            const gradable = EXAM_COUNTS.single + EXAM_COUNTS.multiple + EXAM_COUNTS.judge;
+        function renderExamEntry(bank) {
+            const cfg = bankCfg(bank);
+            const c = cfg.counts;
+            const total = c.single + c.multiple + c.judge + c.short;
+            const gradable = c.single + c.multiple + c.judge;
             document.getElementById('content-area').innerHTML =
                 `<div class="exam-page-body exam-page-body--entry">
                 <div class="exam-entry">
                     <div class="exam-entry-icon">考</div>
-                    <h2>欢迎参加党课模拟考试</h2>
-                    <p class="exam-entry-desc">系统将从党课题库中随机抽取试题，客观题自动判分，简答题提交后显示参考答案。</p>
+                    <h2>欢迎参加${cfg.title}</h2>
+                    <p class="exam-entry-desc">${cfg.desc}</p>
                     <div class="exam-entry-chips">
                         <span class="exam-chip total">共 ${total} 题</span>
                         <span class="exam-chip objective">客观题 ${gradable} 道</span>
-                        <span class="exam-chip subjective">简答题 ${EXAM_COUNTS.short} 道</span>
+                        <span class="exam-chip subjective">简答题 ${c.short} 道</span>
                     </div>
                     <div class="exam-entry-rules">
                         <h3>考试说明</h3>
                         <ul>
-                            <li>单选题 ${EXAM_COUNTS.single} 道、多选题 ${EXAM_COUNTS.multiple} 道、判断题 ${EXAM_COUNTS.judge} 道，提交后自动比对正确答案</li>
-                            <li>简答题 ${EXAM_COUNTS.short} 道，可自由作答，提交后显示参考答案，不计入自动得分</li>
+                            <li>单选题 ${c.single} 道、多选题 ${c.multiple} 道、判断题 ${c.judge} 道，提交后自动比对正确答案</li>
+                            <li>简答题 ${c.short} 道，可自由作答，提交后显示参考答案，不计入自动得分</li>
                             <li>作答完毕请点击「提交答卷」查看成绩与解析</li>
-                            <li>考试时长 60 分钟，到时系统将自动提交答卷</li>
+                            <li>考试时长 ${Math.floor(cfg.duration / 60)} 分钟，到时系统将自动提交答卷</li>
                             <li>考试过程中请勿刷新页面，退出将不保存作答进度</li>
                         </ul>
                     </div>
                     <div class="exam-entry-actions">
-                        <button type="button" class="btn-exam-start" onclick="beginExam()">▶ 开始考试</button>
+                        <button type="button" class="btn-exam-start" onclick="beginExam('${bank}')">▶ 开始考试</button>
                         <button type="button" class="btn-exam-entry-exit" onclick="exitToMain()">✕ 退出</button>
                     </div>
                 </div>
@@ -2953,19 +3687,22 @@
             scrollToTop();
         }
 
-        function beginExam() {
-            setActiveNav('exam');
+        function beginExam(bank) {
+            bank = bank || activeBank;
+            activeBank = bank;
+            setActiveNav('exam', bank);
             setExamMode(true);
             animateContentArea();
-            currentExam = createExamSession();
+            currentExam = createExamSession(bank);
             renderExamPage();
         }
 
         async function exitExam() {
             if (!(await confirmLeaveExam())) return;
+            const bank = currentExam?.bank || activeBank;
             stopExamTimer();
             clearExamFooterState();
-            showExamEntry(false);
+            showExamEntry(bank, false);
         }
 
         async function regenerateExam() {
@@ -2977,7 +3714,8 @@
                 );
                 if (!ok) return;
             }
-            currentExam = createExamSession();
+            const bank = currentExam?.bank || activeBank;
+            currentExam = createExamSession(bank);
             renderExamPage();
         }
 
@@ -3070,6 +3808,7 @@
         function renderExamQuestionCard(item, idx) {
             const { type, question: q } = item;
             const disabled = currentExam.submitted ? 'disabled' : '';
+            const src = bankOf(q);
             let body = `<div class="question-text">${q.text}</div>`;
 
             if (type === 'single' && q.options) {
@@ -3113,6 +3852,7 @@
                     <div class="q-card-head-left">
                         <span class="q-num">第 ${idx + 1} 题</span>
                         <span class="q-type-tag ${type}">${typeLabels[type]}</span>
+                        <span class="q-source ${src}">${bankCfg(src).short}题库</span>
                     </div>
                 </div>
                 <div class="q-card-body">${body}</div>
@@ -3185,7 +3925,7 @@
             panel.innerHTML = `
                 ${autoNote}
                 <div class="score-big">${correct} / ${gradable}</div>
-                <div class="score-detail">客观题正确率 ${pct}% · 答对 ${correct} 题 · 答错 ${wrong} 题 · 未答 ${unanswered} 题 · 简答题 ${EXAM_COUNTS.short} 道请对照参考答案</div>
+                <div class="score-detail">客观题正确率 ${pct}% · 答对 ${correct} 题 · 答错 ${wrong} 题 · 未答 ${unanswered} 题 · 简答题 ${bankCfg(currentExam?.bank).counts.short} 道请对照参考答案</div>
                 <div class="score-breakdown">
                     <span class="score-chip">单选 ${breakdown.single.c}/${breakdown.single.t}</span>
                     <span class="score-chip">多选 ${breakdown.multiple.c}/${breakdown.multiple.t}</span>
@@ -3230,52 +3970,71 @@
             el.classList.toggle('expanded');
         }
 
+        // 练习模式下点选选项：单选/判断互斥，多选可多选，再点一次取消
+        function pickOption(e, box) {
+            const opt = e.target.closest('.option');
+            if (!opt || !box.contains(opt)) return;
+            if (box.dataset.multi === '1') {
+                opt.classList.toggle('selected');
+            } else {
+                const wasSelected = opt.classList.contains('selected');
+                box.querySelectorAll('.option').forEach(o => {
+                    o.classList.remove('selected');
+                    o.setAttribute('aria-pressed', 'false');
+                });
+                if (!wasSelected) opt.classList.add('selected');
+            }
+            opt.setAttribute('aria-pressed', opt.classList.contains('selected') ? 'true' : 'false');
+        }
+
         function renderQuestionCard(type, q, highlightTerm, displayNum) {
             const hl = t => highlightTerm ? highlightText(t, highlightTerm) : t;
             const num = displayNum !== undefined ? displayNum : q.id;
+            const src = bankOf(q);
             const cardClass = type === 'defense' ? 'question-card defense-card' : 'question-card';
             let html = `<div class="${cardClass}">`;
             html += `<div class="q-card-head"><div class="q-card-head-left">
                 <span class="q-num">第 ${num} 题</span>
                 <span class="q-type-tag ${type}">${typeLabels[type] || type}</span>
+                <span class="q-source ${src}">${bankCfg(src).short}题库</span>
             </div></div>`;
             html += `<div class="q-card-body"><div class="question-text">${hl(q.text)}</div>`;
             if (type !== 'judge' && type !== 'short' && type !== 'defense' && q.options) {
-                html += '<div class="options">';
-                q.options.forEach(o => { html += `<div class="option">${hl(o)}</div>`; });
+                const isMulti = type === 'multiple';
+                html += `<div class="options" data-multi="${isMulti ? '1' : '0'}" onclick="pickOption(event, this)">`;
+                q.options.forEach(o => {
+                    html += `<div class="option pickable" role="button" tabindex="0" aria-pressed="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">${hl(o)}</div>`;
+                });
                 html += '</div>';
             }
             const isLongAnswer = type === 'short' || type === 'defense';
-            const answerText = isLongAnswer ? q.answer : '正确答案: ' + q.answer;
+            const explain = q.explain ? `<br><span class="q-explain">详解：${q.explain}</span>` : '';
+            const answerText = isLongAnswer ? q.answer : '正确答案: ' + q.answer + explain;
             const shortClass = isLongAnswer ? ' short' : '';
             html += `<div class="answer${shortClass}" onclick="toggleAnswer(this)"><span class="a-text">${answerText}</span><span class="a-toggle">▶ 点击展开答案</span><span class="a-collapse">▲ 收起答案</span></div>`;
             html += `</div></div>`;
             return html;
         }
 
-        function generateQuestionTypeHTML(type, title, questions) {
-            let html = `<h2 class="content-heading">${title} <span style="font-size:0.75em;font-weight:500;color:#6b7280;">共 ${questions.length} 题</span></h2>`;
-            questions.forEach(q => { html += renderQuestionCard(type, q); });
+        function generateQuestionTypeHTML(type, title, questions, bank) {
+            bank = bank || activeBank;
+            const list = (questions || []).filter(q => bankOf(q) === bank);
+            const cfg = bankCfg(bank);
+            const displayTitle = title.replace(/^(党课|入党积极分子)/, '');
+            let html = `<h2 class="content-heading">${displayTitle} <span style="font-size:0.75em;font-weight:500;color:#6b7280;">共 ${list.length} 题</span></h2>`;
+            list.forEach(q => { html += renderQuestionCard(type, q); });
             return html;
         }
 
-        function generateAllQuestionsHTML() {
-            let html = `<h2 class="content-heading">党课全部题目</h2>`;
-            let total = 0;
-            const counts = {};
+        function generateAllQuestionsHTML(bank) {
+            bank = bank || activeBank;
+            const totalCount = sections.reduce((n, s) => n + questionsData[s.id].filter(q => bankOf(q) === bank).length, 0);
+            let html = `<h2 class="content-heading">全部题目 <span style="font-size:0.75em;font-weight:500;color:#6b7280;">共 ${totalCount} 题</span></h2>`;
             sections.forEach(s => {
-                const qs = questionsData[s.id];
-                total += qs.length;
-                counts[s.id] = qs.length;
-                html += `<h3 class="content-subheading">${s.prefix}${s.name.replace('党课', '')} <span style="font-weight:500;color:#9ca3af;font-size:0.9em;">(${qs.length} 题)</span></h3>`;
+                const qs = questionsData[s.id].filter(q => bankOf(q) === bank);
+                html += `<h3 class="content-subheading">${s.prefix}${s.name.replace('党课', '').replace('入党积极分子', '')} <span style="font-weight:500;color:#9ca3af;font-size:0.9em;">(${qs.length} 题)</span></h3>`;
                 qs.forEach(q => { html += renderQuestionCard(s.id, q); });
             });
-            html += `<div class="stats">`;
-            html += `<div class="stat-item"><div class="stat-number">${total}</div><div class="stat-label">党课题总数</div></div>`;
-            sections.forEach(s => {
-                html += `<div class="stat-item"><div class="stat-number">${counts[s.id]}</div><div class="stat-label">${s.name.replace('党课', '')}</div></div>`;
-            });
-            html += `</div>`;
             return html;
         }
 
@@ -3300,6 +4059,11 @@
             // 搜索时清除导航高亮
             currentExam = null;
             document.querySelectorAll('.type-nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.bank-switch-btn').forEach(btn => {
+                const on = btn.getAttribute('data-bank') === activeBank;
+                btn.classList.toggle('active', on);
+                btn.setAttribute('aria-selected', String(on));
+            });
             
             function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
             const contentArea = document.getElementById('content-area');
@@ -3310,12 +4074,13 @@
             }
             
             let html = `<h2 class="content-heading">搜索结果 <span style="font-size:0.75em;font-weight:500;color:#6b7280;">共 ${results.length} 条</span></h2><p style="color:#6b7280;margin-bottom:8px;">关键词：<span class="highlight">${esc(searchTerm)}</span></p>`;
-            const typeNames = { single: '党课单选题', multiple: '党课多选题', judge: '党课判断题', short: '党课简答题', defense: '党员转正答辩题' };
+            const typeNames = { single: '单选题', multiple: '多选题', judge: '判断题', short: '简答题', defense: '转正答辩题' };
             const grouped = {};
             results.forEach(r => {
-                (grouped[typeNames[r.type]] = grouped[typeNames[r.type]] || []).push(r);
+                const key = bankCfg(bankOf(r.question)).short + '题库 · ' + typeNames[r.type];
+                (grouped[key] = grouped[key] || []).push(r);
             });
-            Object.keys(grouped).forEach(tn => {
+            Object.keys(grouped).sort((a, b) => (a.startsWith('入党') ? -1 : b.startsWith('入党') ? 1 : 0)).forEach(tn => {
                 html += `<h3 class="content-subheading">${tn}</h3>`;
                 grouped[tn].forEach(r => { html += renderQuestionCard(r.type, r.question, searchTerm); });
             });
@@ -3351,7 +4116,7 @@
             clearExamFooterState();
             setExamMode(false);
             currentExam = null;
-            showSection('all');
+            showSection('all', activeBank);
         }
 
         function init() {
@@ -3363,6 +4128,10 @@
                 if (document.visibilityState === 'visible') scrollToTop();
             });
             initModal();
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (backToTop) backToTop.classList.toggle('show', window.scrollY > 420);
+            }, { passive: true });
             document.getElementById('searchBtn').addEventListener('click', searchQuestions);
             document.getElementById('resetBtn').addEventListener('click', resetFilters);
             document.getElementById('searchInput').addEventListener('keydown', function(e) {
@@ -3378,7 +4147,7 @@
                     label.classList.toggle('selected', e.target.checked);
                 }
             });
-            showSection('all');
+            showSection('all', activeBank);
         }
 
         init();
