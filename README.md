@@ -33,6 +33,16 @@ node tools/directory-data.js generate  # 反向从首页重新生成 JSON（会�
 node tools/build-search-index.js
 ```
 
+## 壁纸
+
+内置壁纸使用 WebP 格式（默认山峰约 200KB，窗边约 76KB），原始 JPG/PNG 保留在仓库中作为转换源。新增或更换壁纸后重新生成：
+
+```shell
+python tools/optimize-wallpapers.py
+```
+
+该脚本会把 `wallpapers/*.jpg`、`wallpaper-window.png`、`123.jpg` 转成同名 WebP，并同步改写 `styles.css` 中的引用。
+
 ## 本地预览
 
 可直接打开 `index.html`，也可以在网站目录运行：
