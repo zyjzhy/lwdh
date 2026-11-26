@@ -1,0 +1,457 @@
+/* 知径 · 视觉与体验增强层
+   最后加载，只覆盖外观与微交互，不改变页面结构和原有功能。 */
+
+:root {
+  --beauty-ease: cubic-bezier(.22, .75, .25, 1);
+  --beauty-accent: var(--primary-color);
+}
+
+html { scroll-behavior: smooth; }
+
+/* 阅读位置指示条：由页尾脚本更新 --scroll-progress */
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 4000;
+  width: 100%;
+  height: 3px;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: 0 50%;
+  opacity: .92;
+  box-shadow: 0 1px 8px color-mix(in srgb, var(--primary-color) 30%, transparent);
+}
+
+/* 细滚动条，长目录里不那么抢眼 */
+* { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--ui-secondary) 32%, transparent) transparent; }
+/* 页面主滚动条隐藏，滚轮/触控滚动仍保留；弹窗等内部列表维持自身滚动条 */
+html, body { scrollbar-width: none; }
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ui-secondary) 32%, transparent);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--primary-color) 48%, transparent);
+  background-clip: padding-box;
+}
+
+/* 顶栏与侧栏：更清晰的层级与当前位置提示 */
+#scrolling-text { box-shadow: 0 1px 0 color-mix(in srgb, var(--ui-secondary) 12%, transparent); }
+#scrolling-text .top-bar-center { letter-spacing: .2px; }
+#sidebar li a { position: relative; }
+#sidebar li a::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  transform: translateY(-50%);
+  transition: height 180ms var(--beauty-ease);
+}
+#sidebar li a.active::before { height: 20px; }
+
+/* 顶部分类标签整体居中；窄屏内容超出时可安全回退到左对齐以便滚动 */
+@media (max-width: 980px) {
+  header.nav-main nav {
+    justify-content: center;
+    justify-content: safe center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  header.nav-main nav::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+/* 横向滑动的标签栏：滚动条隐藏，滚动能力保留 */
+header.nav-main nav,
+#search-tabs,
+.module-tabs {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+header.nav-main nav::-webkit-scrollbar,
+#search-tabs::-webkit-scrollbar,
+.module-tabs::-webkit-scrollbar,
+header.nav-main nav::-webkit-scrollbar-button,
+#search-tabs::-webkit-scrollbar-button,
+.module-tabs::-webkit-scrollbar-button,
+header.nav-main nav::-webkit-scrollbar-track,
+#search-tabs::-webkit-scrollbar-track,
+.module-tabs::-webkit-scrollbar-track,
+header.nav-main nav::-webkit-scrollbar-thumb,
+#search-tabs::-webkit-scrollbar-thumb,
+.module-tabs::-webkit-scrollbar-thumb {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+@media (max-width: 600px) {
+  .module-tabs { padding-bottom: 5px; }
+}
+
+/* 搜索：聚焦时给出明确反馈，按钮有轻微回弹 */
+#search-bar {
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms var(--beauty-ease);
+}
+#search-bar:focus-within {
+  transform: translateY(-1px);
+  box-shadow: var(--glass-inset), 0 12px 28px rgb(20 30 48 / 12%),
+              0 0 0 3px color-mix(in srgb, var(--primary-color) 16%, transparent);
+}
+#search-button { transition: transform 160ms var(--beauty-ease), filter 160ms ease; }
+#search-button:hover { transform: scale(1.05); filter: brightness(1.06); }
+#search-button:active { transform: scale(.97); }
+.search-feedback { border-left: 3px solid var(--primary-color); }
+.search-history { border-radius: 12px; }
+
+/* 搜索建议：下拉面板 + 键盘选中态 */
+.search-suggestions {
+  margin-top: 8px;
+  padding: 6px;
+  border: 1px solid var(--ui-border);
+  border-radius: 12px;
+  background: var(--ui-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 16px 36px rgb(20 30 48 / 16%);
+  max-height: 336px;
+  overflow-y: auto;
+  animation: suggestion-in 160ms var(--beauty-ease) both;
+}
+.search-suggestions[hidden] { display: none; }
+@keyframes suggestion-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.search-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ui-ink);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 140ms ease, transform 140ms var(--beauty-ease);
+}
+.search-suggestion:hover,
+.search-suggestion.is-active {
+  background: var(--primary-soft);
+  transform: translateX(2px);
+}
+.search-suggestion.is-active { box-shadow: inset 2px 0 0 var(--primary-color); }
+.suggestion-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.suggestion-match {
+  padding: 0 2px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--primary-color) 22%, transparent);
+  color: var(--primary-color);
+  font-weight: 700;
+}
+.suggestion-category {
+  flex: 0 0 auto;
+  max-width: 40%;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--secondary-soft);
+  color: var(--ui-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.suggestion-arrow {
+  flex: 0 0 auto;
+  color: var(--primary-color);
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+.search-suggestion:hover .suggestion-arrow,
+.search-suggestion.is-active .suggestion-arrow { opacity: 1; }
+
+/* 命中卡片：搜索态下轻微高亮 */
+body.searching .card:not(.is-hidden) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary-color) 24%, transparent);
+}
+
+/* 倒计时卡片：柔光和渐变数字，保持可读性 */
+.countdown-container { position: relative; overflow: hidden; }
+.countdown-container::after {
+  content: "";
+  position: absolute;
+  right: -28px;
+  top: -36px;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary-color) 20%, transparent), transparent 70%);
+}
+#kaoyan, #kaogong { color: var(--primary-color); font-weight: 750; letter-spacing: -.02em; }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  #kaoyan, #kaogong {
+    background: linear-gradient(115deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* 分类面板：顶部渐隐彩条 + 悬浮时边框提亮 */
+.column, .column.active, html[data-theme="dark"] .column {
+  position: relative;
+  overflow: hidden;
+  animation: beauty-panel-in 460ms var(--beauty-ease) both;
+  transition: border-color 200ms ease;
+}
+.column::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color) 58%, transparent);
+  opacity: .6;
+}
+.column:hover, html[data-theme="dark"] .column:hover {
+  border-color: color-mix(in srgb, var(--primary-color) 26%, var(--glass-side));
+}
+@keyframes beauty-panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 分区标题：小色条 + 计数胶囊，扫读更快 */
+.section-heading h2 { display: flex; align-items: center; gap: 10px; }
+.section-heading h2::before {
+  content: "";
+  flex: 0 0 4px;
+  width: 4px;
+  height: 18px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
+}
+.section-count {
+  padding: 3px 10px;
+  border: 1px solid var(--glass-side);
+  border-radius: 99px;
+  background: var(--glass-control);
+  background-image: var(--glass-glint);
+}
+.sub-column h3 .svg-icon { box-shadow: 0 3px 10px color-mix(in srgb, var(--secondary-color) 20%, transparent); }
+
+/* 卡片：图标小底盘、悬浮抬升、收藏星标弱化但可发现 */
+.card-container { gap: 11px; }
+.card > img, .card > img.fallback-icon {
+  padding: 4px;
+  border-radius: 9px;
+  background-color: color-mix(in srgb, var(--secondary-soft) 75%, transparent);
+}
+.card::before { height: 2px; opacity: .55; }
+.card:hover::before, .card:focus-visible::before { opacity: 1; }
+.card-entry:hover, html[data-theme="dark"] .card-entry:hover { transform: translateY(-3px); }
+.card-entry:hover > .card, html[data-theme="dark"] .card-entry:hover > .card,
+.card-entry:focus-within > .card {
+  border-color: color-mix(in srgb, var(--primary-color) 38%, transparent);
+  box-shadow: var(--glass-inset), 0 10px 22px color-mix(in srgb, var(--primary-color) 14%, transparent);
+}
+.card-favorite-toggle {
+  opacity: .5;
+  transition: opacity 160ms ease, transform 160ms var(--beauty-ease), background-color 160ms ease, color 160ms ease;
+}
+.card-entry:hover .card-favorite-toggle,
+.card-favorite-toggle:focus-visible,
+.card-favorite-toggle[aria-pressed="true"] { opacity: 1; transform: none; }
+.card-favorite-toggle:hover { transform: scale(1.08); }
+.badge-new { border-radius: 99px; letter-spacing: .2px; }
+.common-recommendations-toggle { transition: transform 160ms var(--beauty-ease), box-shadow 160ms ease, border-color 160ms ease; }
+.common-recommendations-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px color-mix(in srgb, var(--primary-color) 14%, transparent);
+}
+
+/* 悬浮按钮与页脚 */
+.floating-button { transition: transform 180ms var(--beauty-ease), box-shadow 180ms ease, filter 180ms ease; }
+.floating-button:hover {
+  transform: translateY(-2px) scale(1.04);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--primary-color) 26%, transparent);
+}
+.site-footer { margin-top: 6px; }
+.site-footer strong { letter-spacing: .4px; }
+
+/* 弹窗：背景更聚焦，出现更柔和 */
+.modal { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.modal-content-wrapper { animation: beauty-modal-in 240ms var(--beauty-ease) both; }
+@keyframes beauty-modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (hover: none) {
+  .card-favorite-toggle { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .card-container { gap: 8px; }
+  .section-heading h2::before { height: 15px; }
+  .card-favorite-toggle { opacity: .85; }
+  .column::before { opacity: .45; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .column::before, .countdown-container::after { display: none; }
+}
+
+/* 卡片图标：带内高光的玻璃底盘，悬浮时染上主题色 */
+.card > img, .card > img.fallback-icon {
+  border: 1px solid color-mix(in srgb, var(--glass-edge, var(--ui-border)) 72%, transparent);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 58%), 0 2px 6px rgb(20 30 48 / 8%);
+  transition: background-color 180ms ease, border-color 180ms ease,
+              box-shadow 180ms ease, transform 180ms var(--beauty-ease);
+}
+html[data-theme="dark"] .card > img, html[data-theme="dark"] .card > img.fallback-icon {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 14%), 0 2px 6px rgb(0 0 0 / 20%);
+}
+.card:hover > img, .card:focus-visible > img, html[data-theme="dark"] .card:hover > img {
+  background-color: color-mix(in srgb, var(--primary-soft) 88%, transparent);
+  border-color: color-mix(in srgb, var(--primary-color) 34%, transparent);
+  transform: scale(1.06);
+}
+.card:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+
+/* 侧栏当前项：渐变底色之上再叠一道内高光，读起来更像一块独立的玻璃片 */
+#sidebar li a.active, header.nav-main nav a.active {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 38%),
+              0 5px 16px color-mix(in srgb, var(--primary-color) 30%, transparent);
+}
+.section-count {
+  font-variant-numeric: tabular-nums;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 48%), 0 1px 3px rgb(20 30 48 / 6%);
+}
+
+/* 液态玻璃点缀：仅搜索框与倒计时，顶边镜面高光弧 + 1px 彩色色散描边 */
+#search-bar, .countdown-container { position: relative; isolation: isolate; }
+#search-bar::before, .countdown-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 150% at 50% -60%, rgb(255 255 255 / 92%) 0%, rgb(255 255 255 / 22%) 42%, transparent 66%);
+  -webkit-mask: linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0);
+}
+html[data-theme="dark"] #search-bar::before,
+html[data-theme="dark"] .countdown-container::before {
+  background:
+    radial-gradient(120% 150% at 50% -60%, rgb(255 255 255 / 34%) 0%, rgb(255 255 255 / 8%) 44%, transparent 68%);
+}
+#search-bar, .countdown-container {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 72%),
+    inset 0 0 0 1px color-mix(in srgb, var(--secondary-color) 18%, transparent),
+    var(--glass-inset);
+}
+html[data-theme="dark"] #search-bar, html[data-theme="dark"] .countdown-container {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 22%),
+    inset 0 0 0 1px color-mix(in srgb, var(--secondary-color) 22%, transparent),
+    var(--glass-inset);
+}
+#search-bar:focus-within {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 82%),
+    inset 0 0 0 1px color-mix(in srgb, var(--primary-color) 42%, transparent),
+    var(--glass-inset),
+    0 12px 28px rgb(20 30 48 / 12%),
+    0 0 0 3px color-mix(in srgb, var(--primary-color) 16%, transparent);
+}
+
+/* 暗色主题：极淡颗粒噪点，救掉渐变与玻璃的塑料味 */
+html[data-theme="dark"] body::before {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E"),
+    radial-gradient(circle at top left, var(--primary-soft), transparent 34rem),
+    radial-gradient(circle at 90% 12%, var(--accent-soft), transparent 30rem),
+    linear-gradient(180deg, rgba(13, 20, 34, 0.55), rgba(13, 20, 34, 0.45));
+  background-size: 180px 180px, auto, auto, auto;
+}
+
+/* 缩放 / 窄屏下顶栏图标按钮组：统一触碰反馈
+   游戏按钮与语言、主题、设置按钮保持一致的抬升、背景与按压手感 */
+@media (max-width: 980px) {
+  .top-bar-actions .games-toggle,
+  .top-bar-actions .icon-button,
+  .top-bar-actions .lang-toggle {
+    border-radius: 6px;
+    transition: transform 160ms var(--beauty-ease), background-color 160ms ease, filter 160ms ease;
+  }
+  .top-bar-actions .games-toggle:hover,
+  .top-bar-actions .icon-button:hover,
+  .top-bar-actions .lang-toggle:hover {
+    transform: translateY(-1px);
+    background: color-mix(in srgb, var(--text-color) 14%, transparent);
+    filter: none;
+  }
+  .top-bar-actions .games-toggle:active,
+  .top-bar-actions .icon-button:active,
+  .top-bar-actions .lang-toggle:active {
+    transform: scale(.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .column, .modal-content-wrapper { animation: none; }
+  .card-entry:hover, html[data-theme="dark"] .card-entry:hover,
+  .floating-button:hover, #search-button:hover, #search-bar:focus-within { transform: none; }
+  .search-suggestions { animation: none; }
+  .search-suggestion:hover, .search-suggestion.is-active { transform: none; }
+  .top-bar-actions .games-toggle:hover,
+  .top-bar-actions .icon-button:hover,
+  .top-bar-actions .lang-toggle:hover { transform: none; }
+  .top-bar-actions .games-toggle:active,
+  .top-bar-actions .icon-button:active,
+  .top-bar-actions .lang-toggle:active { transform: none; }
+}

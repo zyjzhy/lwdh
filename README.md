@@ -9,6 +9,30 @@
 
 收藏、主题、壁纸和倒计时保存在当前浏览器，不依赖数据库。
 
+## 站点数据
+
+首页的 829 个站点入口集中在 `sites.json`，按栏目和分区分组，包含中英文名称、说明、图标、置顶与 NEW 标记。`index.html` 仍保留静态卡片，便于直接打开和部署。
+
+日常维护只改 `sites.json`，然后回填到首页：
+
+```shell
+node tools/directory-data.js check     # 校验 JSON 与首页是否一致
+node tools/directory-data.js write     # 从 JSON 回填首页卡片区
+node tools/directory-data.js generate  # 反向从首页重新生成 JSON（会覆盖现有 JSON）
+```
+
+`write` 只替换各分区 `.card-container` 内的卡片行，不改动其他结构、脚本或样式。
+
+## 搜索
+
+站内筛选支持名称、说明、网址，以及中文名称的**全拼和拼音首字母**（如 `db` 命中「豆包AI」、`wyy` 命中「网易云音乐」）。输入时会显示带分类标签的建议列表，可用 ↑↓ 选择、回车直接打开选中站点；未选择时回车仍走全网搜索，`Esc` 关闭建议或清空。
+
+拼音索引在 `search-index.js`，由 `sites.json` 生成、随页面静态加载，运行时不依赖拼音库。修改站点名称后需重新生成：
+
+```shell
+node tools/build-search-index.js
+```
+
 ## 本地预览
 
 可直接打开 `index.html`，也可以在网站目录运行：

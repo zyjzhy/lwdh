@@ -64,7 +64,7 @@
             justify-content: center;
             min-height: 100vh;
             background-color: #f5f7fa;
-            background-image: url('https://i.postimg.cc/VvvkL7Ny/123.jpg'); /*设置背景图片*/
+            background-image: url('wallpapers/peak.jpg'); /*设置背景图片：首屏默认山峰，避免脚本执行前闪现「学习」图*/
             background-size:cover;  /*背景图片覆盖整个页面*/
             background-repeat: no-repeat;  /*防止背景图片重复*/
             background-attachment: fixed; /* 固定背景 */
@@ -1033,7 +1033,7 @@ font-size: 18px;
             --control-glass-hover-bg: color-mix(in srgb, var(--surface-strong) 86%, var(--secondary-soft));
             --glass-blur: 12px;
             --glass-border: 1px solid var(--line);
-            --background-image: url('https://i.postimg.cc/VvvkL7Ny/123.jpg');
+            --background-image: url('wallpapers/peak.jpg');
             --custom-background-image: none;
         }
 
@@ -1397,99 +1397,99 @@ font-size: 18px;
         }
 
         html[data-bg="desk"] {
-            --background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/desk.jpg');
         }
 
         html[data-bg="sky"] {
-            --background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/sky.jpg');
         }
 
         html[data-bg="green"] {
-            --background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/green.jpg');
         }
 
         html[data-bg="campus"] {
-            --background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/campus.jpg');
         }
 
         html[data-bg="peak"] {
-            --background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/peak.jpg');
         }
 
         html[data-bg="library"] {
-            --background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/library.jpg');
         }
 
         html[data-bg="coast"] {
-            --background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/coast.jpg');
         }
 
         html[data-bg="study"] {
-            --background-image: url('https://i.postimg.cc/VvvkL7Ny/123.jpg');
+            --background-image: url('123.jpg');
         }
 
         html[data-bg="mountain"] {
-            --background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/mountain.jpg');
         }
 
         html[data-bg="forest"] {
-            --background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/forest.jpg');
         }
 
         html[data-bg="night"] {
-            --background-image: url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/night.jpg');
         }
 
         html[data-bg="autumn"] {
-            --background-image: url('https://images.unsplash.com/photo-1771820081376-092f1d9cec75?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/autumn.jpg');
         }
 
         html[data-bg="sunset"] {
-            --background-image: url('https://images.unsplash.com/photo-1691958262703-8fdcf760d9b9?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/sunset.jpg');
         }
 
         html[data-bg="ocean"] {
-            --background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
+            --background-image: url('wallpapers/coast.jpg');
         }
 
         html[data-bg="lantern"] {
-            --background-image: url('https://img-s.msn.cn/tenant/amp/entityid/BB1msDTq?w=0&h=0&q=60&m=6&f=jpg&u=t');
+            --background-image: url('wallpapers/lantern.jpg');
         }
 
         html[data-bg="mist"] {
-            --background-image: url('https://img-s.msn.cn/tenant/amp/entityid/BB1msFQx?w=0&h=0&q=60&m=6&f=jpg&u=t');
+            --background-image: url('wallpapers/mist.jpg');
         }
 
         html[data-bg="ridge"] {
-            --background-image: url('https://img-s.msn.cn/tenant/amp/entityid/BB1msDMN?w=0&h=0&q=60&m=6&f=jpg&u=t');
+            --background-image: url('wallpapers/ridge.jpg');
         }
 
         html[data-bg="starry"] {
-            --background-image: url('https://img-s.msn.cn/tenant/amp/entityid/AAOE58E?w=0&h=0&q=60&m=6&f=jpg&u=t');
+            --background-image: url('wallpapers/starry.jpg');
         }
 
         html[data-bg="space"] {
-            --background-image: url('https://img-s.msn.cn/tenant/amp/entityid/BB1msKXW?w=0&h=0&q=60&m=6&f=jpg&u=t');
+            --background-image: url('wallpapers/space.jpg');
         }
 
         html[data-bg="sunrise"] {
-            --background-image: url('https://img-s.msn.cn/tenant/amp/entityid/BB1msOOX?w=0&h=0&q=60&m=6&f=jpg&u=t');
+            --background-image: url('wallpapers/sunrise.jpg');
         }
 
         html[data-bg="meadow"] {
-            --background-image: url('https://img-s.msn.cn/tenant/amp/entityid/BB1msKEv?w=0&h=0&q=60&m=6&f=jpg&u=t');
+            --background-image: url('wallpapers/meadow.jpg');
         }
 
         html[data-bg="window"] {
-            --background-image: url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1800&q=80');
+            --background-image: url('wallpaper-window.png');
         }
 
         html[data-bg="notebook"] {
-            --background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1800&q=80');
+            --background-image: url('wallpapers/notebook.jpg');
         }
 
         html[data-bg="nightdesk"] {
-            --background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1800&q=80');
+            --background-image: url('wallpapers/nightdesk.jpg');
         }
 
         html[data-bg="custom"] {
@@ -1531,7 +1531,7 @@ font-size: 18px;
             color: var(--text-color);
             padding-top: 46px;
             background-color: var(--page-bg);
-            background-image: var(--background-image, url('https://i.postimg.cc/VvvkL7Ny/123.jpg'));
+            background-image: var(--background-image, url('wallpaper-window.png'));
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -3723,30 +3723,30 @@ font-size: 18px;
         }
 
         .bgp-none { background: linear-gradient(135deg, #f8fafc, #dbeafe 52%, #ccfbf1); }
-        .bgp-study { background-image: linear-gradient(135deg, rgba(217,72,95,0.32), rgba(49,94,216,0.2)), url(https://i.postimg.cc/VvvkL7Ny/123.jpg); background-size: cover; background-position: center; }
-        .bgp-desk { background-image: linear-gradient(135deg, rgba(15,23,42,0.08), rgba(49,94,216,0.18)), url(https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-sky { background-image: linear-gradient(135deg, rgba(30,58,138,0.14), rgba(113,86,217,0.22)), url(https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-green { background-image: linear-gradient(135deg, rgba(22,101,52,0.16), rgba(139,154,61,0.2)), url(https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-campus { background-image: linear-gradient(135deg, rgba(49,94,216,0.18), rgba(15,148,136,0.18)), url(https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-peak { background-image: linear-gradient(135deg, rgba(71,85,105,0.2), rgba(20,134,109,0.16)), url(https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-library { background-image: linear-gradient(135deg, rgba(75,89,106,0.18), rgba(184,106,36,0.12)), url(https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-coast { background-image: linear-gradient(135deg, rgba(8,125,145,0.18), rgba(63,106,200,0.16)), url(https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-window { background-image: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.12)), url(https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-notebook { background-image: linear-gradient(135deg, rgba(180,83,9,0.18), rgba(217,70,120,0.12)), url(https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-nightdesk { background-image: linear-gradient(135deg, rgba(30,41,82,0.3), rgba(109,40,117,0.18)), url(https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-mountain { background-image: linear-gradient(135deg, rgba(45,55,72,0.3), rgba(99,102,241,0.18)), url(https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-forest { background-image: linear-gradient(135deg, rgba(22,101,52,0.25), rgba(20,134,109,0.18)), url(https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-night { background-image: linear-gradient(135deg, rgba(30,41,82,0.35), rgba(109,40,117,0.2)), url(https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-autumn { background-image: linear-gradient(135deg, rgba(180,83,9,0.25), rgba(234,88,12,0.15)), url(https://images.unsplash.com/photo-1771820081376-092f1d9cec75?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-sunset { background-image: linear-gradient(135deg, rgba(200,80,30,0.25), rgba(200,50,100,0.15)), url(https://images.unsplash.com/photo-1691958262703-8fdcf760d9b9?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-ocean { background-image: linear-gradient(135deg, rgba(8,125,145,0.25), rgba(63,106,200,0.2)), url(https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=70); background-size: cover; background-position: center; }
-        .bgp-lantern { background-image: linear-gradient(135deg, rgba(180,80,30,0.2), rgba(200,150,50,0.15)), url(https://img-s.msn.cn/tenant/amp/entityid/BB1msDTq?w=0&h=0&q=60&m=6&f=jpg&u=t); background-size: cover; background-position: center; }
-        .bgp-mist { background-image: linear-gradient(135deg, rgba(100,120,160,0.2), rgba(160,180,200,0.15)), url(https://img-s.msn.cn/tenant/amp/entityid/BB1msFQx?w=0&h=0&q=60&m=6&f=jpg&u=t); background-size: cover; background-position: center; }
-        .bgp-ridge { background-image: linear-gradient(135deg, rgba(40,80,60,0.2), rgba(100,140,120,0.15)), url(https://img-s.msn.cn/tenant/amp/entityid/BB1msDMN?w=0&h=0&q=60&m=6&f=jpg&u=t); background-size: cover; background-position: center; }
-        .bgp-starry { background-image: linear-gradient(135deg, rgba(20,100,140,0.2), rgba(60,160,200,0.15)), url(https://img-s.msn.cn/tenant/amp/entityid/AAOE58E?w=0&h=0&q=60&m=6&f=jpg&u=t); background-size: cover; background-position: center; }
-        .bgp-space { background-image: linear-gradient(135deg, rgba(10,10,50,0.3), rgba(30,30,80,0.2)), url(https://img-s.msn.cn/tenant/amp/entityid/BB1msKXW?w=0&h=0&q=60&m=6&f=jpg&u=t); background-size: cover; background-position: center; }
-        .bgp-sunrise { background-image: linear-gradient(135deg, rgba(200,80,30,0.2), rgba(200,150,80,0.15)), url(https://img-s.msn.cn/tenant/amp/entityid/BB1msOOX?w=0&h=0&q=60&m=6&f=jpg&u=t); background-size: cover; background-position: center; }
-        .bgp-meadow { background-image: linear-gradient(135deg, rgba(40,120,60,0.2), rgba(100,180,120,0.15)), url(https://img-s.msn.cn/tenant/amp/entityid/BB1msKEv?w=0&h=0&q=60&m=6&f=jpg&u=t); background-size: cover; background-position: center; }
+        .bgp-study { background-image: linear-gradient(135deg, rgba(217,72,95,0.32), rgba(49,94,216,0.2)), url(123.jpg); background-size: cover; background-position: center; }
+        .bgp-desk { background-image: linear-gradient(135deg, rgba(15,23,42,0.08), rgba(49,94,216,0.18)), url('wallpapers/desk.jpg'); background-size: cover; background-position: center; }
+        .bgp-sky { background-image: linear-gradient(135deg, rgba(30,58,138,0.14), rgba(113,86,217,0.22)), url('wallpapers/sky.jpg'); background-size: cover; background-position: center; }
+        .bgp-green { background-image: linear-gradient(135deg, rgba(22,101,52,0.16), rgba(139,154,61,0.2)), url('wallpapers/green.jpg'); background-size: cover; background-position: center; }
+        .bgp-campus { background-image: linear-gradient(135deg, rgba(49,94,216,0.18), rgba(15,148,136,0.18)), url('wallpapers/campus.jpg'); background-size: cover; background-position: center; }
+        .bgp-peak { background-image: linear-gradient(135deg, rgba(71,85,105,0.2), rgba(20,134,109,0.16)), url('wallpapers/peak.jpg'); background-size: cover; background-position: center; }
+        .bgp-library { background-image: linear-gradient(135deg, rgba(75,89,106,0.18), rgba(184,106,36,0.12)), url('wallpapers/library.jpg'); background-size: cover; background-position: center; }
+        .bgp-coast { background-image: linear-gradient(135deg, rgba(8,125,145,0.18), rgba(63,106,200,0.16)), url('wallpapers/coast.jpg'); background-size: cover; background-position: center; }
+        .bgp-window { background-image: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.12)), url(wallpaper-window.png); background-size: cover; background-position: center; }
+        .bgp-notebook { background-image: linear-gradient(135deg, rgba(180,83,9,0.18), rgba(217,70,120,0.12)), url('wallpapers/notebook.jpg'); background-size: cover; background-position: center; }
+        .bgp-nightdesk { background-image: linear-gradient(135deg, rgba(30,41,82,0.3), rgba(109,40,117,0.18)), url('wallpapers/nightdesk.jpg'); background-size: cover; background-position: center; }
+        .bgp-mountain { background-image: linear-gradient(135deg, rgba(45,55,72,0.3), rgba(99,102,241,0.18)), url('wallpapers/mountain.jpg'); background-size: cover; background-position: center; }
+        .bgp-forest { background-image: linear-gradient(135deg, rgba(22,101,52,0.25), rgba(20,134,109,0.18)), url('wallpapers/forest.jpg'); background-size: cover; background-position: center; }
+        .bgp-night { background-image: linear-gradient(135deg, rgba(30,41,82,0.35), rgba(109,40,117,0.2)), url('wallpapers/night.jpg'); background-size: cover; background-position: center; }
+        .bgp-autumn { background-image: linear-gradient(135deg, rgba(180,83,9,0.25), rgba(234,88,12,0.15)), url('wallpapers/autumn.jpg'); background-size: cover; background-position: center; }
+        .bgp-sunset { background-image: linear-gradient(135deg, rgba(200,80,30,0.25), rgba(200,50,100,0.15)), url('wallpapers/sunset.jpg'); background-size: cover; background-position: center; }
+        .bgp-ocean { background-image: linear-gradient(135deg, rgba(8,125,145,0.25), rgba(63,106,200,0.2)), url('wallpapers/coast.jpg'); background-size: cover; background-position: center; }
+        .bgp-lantern { background-image: linear-gradient(135deg, rgba(180,80,30,0.2), rgba(200,150,50,0.15)), url('wallpapers/lantern.jpg'); background-size: cover; background-position: center; }
+        .bgp-mist { background-image: linear-gradient(135deg, rgba(100,120,160,0.2), rgba(160,180,200,0.15)), url('wallpapers/mist.jpg'); background-size: cover; background-position: center; }
+        .bgp-ridge { background-image: linear-gradient(135deg, rgba(40,80,60,0.2), rgba(100,140,120,0.15)), url('wallpapers/ridge.jpg'); background-size: cover; background-position: center; }
+        .bgp-starry { background-image: linear-gradient(135deg, rgba(20,100,140,0.2), rgba(60,160,200,0.15)), url('wallpapers/starry.jpg'); background-size: cover; background-position: center; }
+        .bgp-space { background-image: linear-gradient(135deg, rgba(10,10,50,0.3), rgba(30,30,80,0.2)), url('wallpapers/space.jpg'); background-size: cover; background-position: center; }
+        .bgp-sunrise { background-image: linear-gradient(135deg, rgba(200,80,30,0.2), rgba(200,150,80,0.15)), url('wallpapers/sunrise.jpg'); background-size: cover; background-position: center; }
+        .bgp-meadow { background-image: linear-gradient(135deg, rgba(40,120,60,0.2), rgba(100,180,120,0.15)), url('wallpapers/meadow.jpg'); background-size: cover; background-position: center; }
 
         .bg-btn-custom .bg-preview {
             display: flex;

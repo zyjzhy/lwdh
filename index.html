@@ -13,6 +13,45 @@
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="refinement.css?v=unified-choice-edges-1">
 <link rel="stylesheet" href="personal.css?v=recommendation-counts-2">
+<link rel="stylesheet" href="beauty.css?v=experience-3">
+<script>
+/* 首屏反闪烁：在页面渲染前尽早确定壁纸与主题，避免先闪默认图再跳到用户选择 */
+(function () {
+    try {
+        var root = document.documentElement;
+        var get = function (k) { return localStorage.getItem(k); };
+        var set = function (k, v) { localStorage.setItem(k, v); };
+
+        var saved = get('zz-nav-background-mode');
+        var custom = get('zz-nav-custom-bg');
+        // 与 app.js 的「首次访问 / 无背景 / 旧窗边」迁移保持一致
+        if (get('zz-nav-bg-default-peak-v2') !== '1' && !custom && (!saved || saved === 'none' || saved === 'window')) {
+            saved = 'peak';
+            set('zz-nav-background-mode', 'peak');
+            set('zz-nav-bg-default-peak-v2', '1');
+        }
+        if (custom) {
+            root.style.setProperty('--custom-background-image', 'url("' + custom + '")');
+            root.dataset.hasCustomBg = 'true';
+        }
+        root.dataset.bg = saved || (custom ? 'custom' : 'peak');
+
+        // 主题提前应用，避免暗色偏好首帧闪白
+        var themeChoice = get('zz-nav-theme-mode') || 'auto';
+        var dark = themeChoice === 'dark' ||
+            (themeChoice === 'auto' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        root.dataset.theme = dark ? 'dark' : 'light';
+        root.dataset.themeChoice = themeChoice;
+
+        // 玻璃档提前应用，避免首帧跳档
+        var glass = get('zz-nav-glass-mode');
+        if (['airy', 'balanced', 'readable'].indexOf(glass) === -1) glass = 'balanced';
+        root.dataset.glass = glass;
+    } catch (e) {
+        document.documentElement.dataset.bg = 'peak';
+    }
+})();
+</script>
 <script src="i18n.js?v=recommendation-counts-2"></script>
 <script src="language.js"></script>
 <script src="card-en-extra.js?v=campus-tools-1"></script>
@@ -1039,6 +1078,7 @@ s.parentNode.insertBefore(hm, s);
 <input type="text" id="search-input" placeholder="输入关键字后按回车搜索" aria-label="搜索框" data-i18n-placeholder="search.placeholder">
 <button id="search-button" type="button" aria-label="执行搜索"><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-search"></use></svg></button>
 </div>
+<div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="站内匹配结果" hidden></div>
 <div id="search-history" class="search-history" aria-label="搜索内容记录" hidden></div>
 <div id="search-feedback" class="search-feedback" role="status" aria-live="polite" hidden>
 <span id="search-feedback-text"></span>
@@ -1477,7 +1517,7 @@ s.parentNode.insertBefore(hm, s);
 <a class="card" data-tooltip="鸠摩搜书 - 电子书搜索引擎" href="https://www.jiumodiary.com/" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.jiumodiary.com/favicon.ico" alt="鸠摩搜书" loading="lazy" decoding="async" referrerpolicy="no-referrer">鸠摩搜书</a>
 <a class="card" data-tooltip="好读 - 优质电子书分享网站" href="https://www.haodoo.net/" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.haodoo.net/favicon.ico" alt="好读" loading="lazy" decoding="async" referrerpolicy="no-referrer">好读网</a>
 <a class="card" data-tooltip="国学大师 - 古籍文献在线阅读" href="http://www.guoxuedashi.net/" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="http://www.guoxuedashi.net/favicon.ico" alt="国学大师" loading="lazy" decoding="async" referrerpolicy="no-referrer">国学大师</a>
-<a class="card" data-tooltip":"书格 - 古籍数字化图书馆" href="https://new.shuge.org/" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://new.shuge.org/favicon.ico" alt="书格" loading="lazy" decoding="async" referrerpolicy="no-referrer">书格古籍</a>
+<a class="card" data-tooltip="书格 - 古籍数字化图书馆" href="https://new.shuge.org/" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://new.shuge.org/favicon.ico" alt="书格" loading="lazy" decoding="async" referrerpolicy="no-referrer">书格古籍</a>
 <a class="card" data-tooltip="在线免费 TXT 电子书下载网站，覆盖多类小说资源。" href="https://aqxsw888.com" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://aqxsw888.com/favicon.ico" alt="爱去小说网" loading="lazy" decoding="async" referrerpolicy="no-referrer">爱去小说网</a>
 <a class="card" data-tooltip="灵异鬼故事和恐怖小说阅读平台。" href="https://guihualianpian.cn" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://guihualianpian.cn/favicon.ico" alt="鬼话连篇网" loading="lazy" decoding="async" referrerpolicy="no-referrer">鬼话连篇网</a>
 </div>
@@ -2170,6 +2210,7 @@ s.parentNode.insertBefore(hm, s);
 <footer class="site-footer"><p><strong>知径</strong><span data-i18n="refresh.footer">把好用的网站，放在顺手的地方。</span></p><p><span id="directory-summary"></span><button type="button" class="about-open" data-i18n="common.about">关于本站</button><button type="button" onclick="openContactModal()" data-i18n="common.feedback">反馈建议</button></p></footer>
 </main>
 <script>if (typeof LangManager !== "undefined") LangManager.init();</script>
+<script src="search-index.js?v=pinyin-1"></script>
 <script src="app.js?v=campus-cleanup-1"></script>
 <script src="personal.js?v=recommendation-counts-2"></script>
 <script src="wallpaper.js?v=1"></script>
@@ -2181,6 +2222,24 @@ if (typeof LangManager !== 'undefined') {
         if (btn) btn.addEventListener('click', function() { LangManager.toggle(); });
     });
 }
+
+/* 阅读进度：轻量更新，不参与布局计算 */
+(function () {
+    var root = document.documentElement;
+    var frame = 0;
+    function update() {
+        frame = 0;
+        var max = root.scrollHeight - window.innerHeight;
+        var progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        root.style.setProperty('--scroll-progress', progress.toFixed(4));
+    }
+    function schedule() {
+        if (!frame) frame = window.requestAnimationFrame(update);
+    }
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+})();
 </script>
 </body>
 </html>

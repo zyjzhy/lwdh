@@ -9,6 +9,7 @@
             const searchHistoryContainer = document.getElementById('search-history');
             const searchFeedback = document.getElementById('search-feedback');
             const searchFeedbackText = document.getElementById('search-feedback-text');
+            const searchSuggestions = document.getElementById('search-suggestions');
             const clearSearchFilterButton = document.getElementById('clear-search-filter');
             const searchTabs = Array.from(document.querySelectorAll('#search-tabs button'));
             const navLinks = Array.from(document.querySelectorAll('#sidebar a[data-target], .nav-link[data-target]'));
@@ -59,8 +60,10 @@
                 || 'https://cn.bing.com/search?q=';
             let activeThemeChoice = 'auto';
             let activePaletteChoice = 'rose';
-            let activeBackgroundChoice = 'study';
+            let activeBackgroundChoice = 'peak';
             let searchHistoryItems = [];
+            let suggestionItems = [];
+            let activeSuggestionIndex = -1;
             let emailLoadPromise = null;
             let scrollSpyTicking = false;
             let scrollSaveTimer = 0;
@@ -559,8 +562,8 @@
                 });
             }
 
-            function applyBackground(choice = 'study', shouldSave = true) {
-                activeBackgroundChoice = backgroundOrder.includes(choice) ? choice : 'study';
+            function applyBackground(choice = 'peak', shouldSave = true) {
+                activeBackgroundChoice = backgroundOrder.includes(choice) ? choice : 'peak';
                 document.documentElement.dataset.bg = activeBackgroundChoice;
 
                 if (shouldSave) {
@@ -676,8 +679,14 @@
                 applyPalette(storageGet(paletteKey) || 'rose', false);
                 var customBg = storageGet('zz-nav-custom-bg');
                 setCustomBackground(customBg);
-                var savedBg = storageGet(backgroundKey) || (customBg ? 'custom' : 'none');
-                applyBackground(savedBg, false);
+                var savedBg = storageGet(backgroundKey);
+                // 首次访问、无背景或上一版自动迁移的窗边，默认切到本地「山峰」壁纸；只迁移一次，尊重之后的手动选择
+                if (storageGet('zz-nav-bg-default-peak-v2') !== '1' && !customBg && (!savedBg || savedBg === 'none' || savedBg === 'window')) {
+                    savedBg = 'peak';
+                    storageSet(backgroundKey, savedBg);
+                    storageSet('zz-nav-bg-default-peak-v2', '1');
+                }
+                applyBackground(savedBg || (customBg ? 'custom' : 'peak'), false);
                 var sel = document.getElementById('bg-rotate-mode');
                 if (sel) sel.value = getBgRotateMode();
                 window.setTimeout(advanceBgByMode, 1000);
@@ -820,11 +829,110 @@
                     : LangManager.tReplace('search.noResult', { query });
             }
 
+            function getCardPinyin(card) {
+                const index = window.SEARCH_INDEX;
+                if (!index) return '';
+                const labels = [card.dataset.labelOrig, getCardLabel(card), card.textContent.trim()].filter(Boolean);
+                const parts = [];
+                labels.forEach(label => { if (index[label]) parts.push(index[label]); });
+                return parts.join(' ');
+            }
+
+            function getCardCategory(card) {
+                const group = card.closest('.sub-column');
+                if (!group) return '';
+                const heading = group.querySelector('h3');
+                return heading ? heading.textContent.trim() : '';
+            }
+
+            function appendHighlighted(container, text, query) {
+                const needle = (query || '').trim().toLowerCase();
+                if (!needle) { container.textContent = text; return; }
+                const lower = text.toLowerCase();
+                const at = lower.indexOf(needle);
+                if (at === -1) { container.textContent = text; return; }
+                container.append(
+                    document.createTextNode(text.slice(0, at)),
+                    Object.assign(document.createElement('mark'), {
+                        className: 'suggestion-match', textContent: text.slice(at, at + needle.length)
+                    }),
+                    document.createTextNode(text.slice(at + needle.length))
+                );
+            }
+
+            function renderSuggestions(cards, query) {
+                if (!searchSuggestions) return;
+                searchSuggestions.innerHTML = '';
+                suggestionItems = [];
+                activeSuggestionIndex = -1;
+
+                if (!query || !cards.length) {
+                    searchSuggestions.hidden = true;
+                    return;
+                }
+
+                const seen = new Set();
+                const unique = cards.filter(card => {
+                    const key = getCardIdentifier(card) + '|' + getCardLabel(card);
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                });
+                const limit = Math.min(unique.length, 8);
+                for (let i = 0; i < limit; i += 1) {
+                    const card = unique[i];
+                    const label = getCardLabel(card);
+                    const category = getCardCategory(card);
+                    const item = document.createElement('button');
+                    item.type = 'button';
+                    item.className = 'search-suggestion';
+                    item.setAttribute('role', 'option');
+                    item.setAttribute('aria-selected', 'false');
+                    item.dataset.url = card.getAttribute('href') || '';
+
+                    const name = document.createElement('span');
+                    name.className = 'suggestion-name';
+                    appendHighlighted(name, label, query);
+
+                    const badge = document.createElement('span');
+                    badge.className = 'suggestion-category';
+                    // 常用推荐里的克隆卡片，其分区标题是管理文字，缩短为更有意义的标签
+                    badge.textContent = /常用推荐|管理收藏/.test(category) ? '收藏' : category;
+
+                    const arrow = document.createElement('span');
+                    arrow.className = 'suggestion-arrow';
+                    arrow.setAttribute('aria-hidden', 'true');
+                    arrow.textContent = '↵';
+
+                    item.append(name, badge, arrow);
+                    item.addEventListener('click', () => {
+                        rememberSearchTerm(query);
+                        window.open(item.dataset.url, '_blank', 'noopener');
+                    });
+                    item.addEventListener('mousedown', event => event.preventDefault());
+                    searchSuggestions.appendChild(item);
+                    suggestionItems.push(item);
+                }
+                searchSuggestions.hidden = false;
+            }
+
+            function setActiveSuggestion(index) {
+                if (!suggestionItems.length) return;
+                activeSuggestionIndex = (index + suggestionItems.length) % suggestionItems.length;
+                suggestionItems.forEach((item, i) => {
+                    const active = i === activeSuggestionIndex;
+                    item.classList.toggle('is-active', active);
+                    item.setAttribute('aria-selected', String(active));
+                    if (active) item.scrollIntoView({ block: 'nearest' });
+                });
+            }
+
             function clearSearchFilter() {
                 document.body.classList.remove('searching', 'search-has-results', 'search-no-results');
                 columns.forEach(resetColumnFilters);
                 navLinks.forEach(link => link.classList.remove('search-filtered-out'));
                 setSearchFeedback('', 0, 0);
+                renderSuggestions([], '');
                 restoreModuleTabs();
             }
 
@@ -840,6 +948,7 @@
                 let totalVisible = 0;
                 const matchedUrls = new Set();
                 const matchedColumns = [];
+                const matchedCards = [];
                 document.body.classList.add('searching');
 
                 columns.forEach(column => {
@@ -854,16 +963,18 @@
                             if (searchableText === undefined) {
                                 searchableText = [card.textContent, card.dataset.tooltip,
                                     card.getAttribute('aria-label'), card.dataset.labelOrig,
-                                    card.dataset.tooltipOrig, card.getAttribute('href')].join(' ').toLowerCase();
+                                    card.dataset.tooltipOrig, card.getAttribute('href'),
+                                    getCardPinyin(card)].join(' ').toLowerCase().replace(/\s+/g, '');
                                 searchableTextCache.set(card, searchableText);
                             }
-                            const isMatch = searchableText.includes(query);
+                            const isMatch = searchableText.includes(query.replace(/\s+/g, ''));
 
                             card.classList.toggle('is-hidden', !isMatch);
                             if (isMatch) {
                                 groupVisible += 1;
                                 columnVisible += 1;
                                 matchedUrls.add(getCardIdentifier(card));
+                                matchedCards.push(card);
                             }
                         });
 
@@ -887,6 +998,7 @@
                 document.body.classList.toggle('search-has-results', totalVisible > 0);
                 document.body.classList.toggle('search-no-results', totalVisible === 0);
                 setSearchFeedback(rawQuery, totalVisible, matchedColumns.length);
+                renderSuggestions(matchedCards, rawQuery);
 
                 const active = document.querySelector('.column.active');
                 if (matchedColumns.length && (!active || active.classList.contains('is-filtered-out'))) {
@@ -1611,7 +1723,13 @@
                     const isCampus = el.closest('#offen-links');
                     el.textContent = `${el.dataset.resourceCount} ${isCampus ? (isEn ? 'campus links' : '个校园入口') : (isEn ? 'links' : '个入口')}`;
                 });
-                document.getElementById('directory-summary').textContent = isEn ? '9 categories · 828 links' : '9 个分类 · 828 个资源入口';
+                const totalLinks = Array.from(document.querySelectorAll('[data-resource-count]'))
+                    .reduce((sum, el) => sum + (Number(el.dataset.resourceCount) || 0), 0)
+                    + document.querySelectorAll('a.card[data-common-pinned="true"]').length;
+                const totalCategories = document.querySelectorAll('main .column').length;
+                document.getElementById('directory-summary').textContent = isEn
+                    ? `${totalCategories} categories · ${totalLinks} links`
+                    : `${totalCategories} 个分类 · ${totalLinks} 个资源入口`;
             }
 
             function bindEvents() {
@@ -1667,7 +1785,7 @@
                 backgroundOptionButtons.forEach(button => {
                     button.type = 'button';
                     button.addEventListener('click', () => {
-                        const option = button.dataset.bgOption || 'study';
+                        const option = button.dataset.bgOption || 'peak';
                         if (option === 'custom') {
                             const input = document.getElementById('custom-bg-input');
                             if (input) input.click();
@@ -1715,13 +1833,48 @@
 
                 searchInput?.addEventListener('input', filterCards);
                 searchInput?.addEventListener('keydown', event => {
+                    if (event.key === 'ArrowDown' && suggestionItems.length) {
+                        event.preventDefault();
+                        setActiveSuggestion(activeSuggestionIndex + 1);
+                        return;
+                    }
+                    if (event.key === 'ArrowUp' && suggestionItems.length) {
+                        event.preventDefault();
+                        setActiveSuggestion(activeSuggestionIndex - 1);
+                        return;
+                    }
                     if (event.key === 'Enter') {
                         event.preventDefault();
+                        if (activeSuggestionIndex >= 0 && suggestionItems[activeSuggestionIndex]) {
+                            const url = suggestionItems[activeSuggestionIndex].dataset.url;
+                            if (url) {
+                                rememberSearchTerm(searchInput.value.trim());
+                                window.open(url, '_blank', 'noopener');
+                                return;
+                            }
+                        }
                         performExternalSearch();
                     }
                     if (event.key === 'Escape') {
+                        if (searchSuggestions && !searchSuggestions.hidden && activeSuggestionIndex >= 0) {
+                            setActiveSuggestion(-1);
+                            suggestionItems.forEach(item => {
+                                item.classList.remove('is-active');
+                                item.setAttribute('aria-selected', 'false');
+                            });
+                            activeSuggestionIndex = -1;
+                            return;
+                        }
                         searchInput.value = '';
                         filterCards();
+                    }
+                });
+
+                document.addEventListener('click', event => {
+                    if (searchSuggestions && !searchSuggestions.hidden && !searchSuggestions.contains(event.target) && event.target !== searchInput) {
+                        searchSuggestions.hidden = true;
+                        suggestionItems.forEach(item => item.classList.remove('is-active'));
+                        activeSuggestionIndex = -1;
                     }
                 });
 
