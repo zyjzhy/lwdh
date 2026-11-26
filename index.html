@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="styles.css?v=webp-wallpapers-2">
 <link rel="stylesheet" href="refinement.css?v=unified-choice-edges-1">
 <link rel="stylesheet" href="personal.css?v=recommendation-counts-2">
-<link rel="stylesheet" href="beauty.css?v=experience-4">
+<link rel="stylesheet" href="beauty.css?v=campus-tabs-1">
 <script>
 /* 首屏反闪烁：在页面渲染前尽早确定壁纸与主题，避免先闪默认图再跳到用户选择 */
 (function () {
@@ -62,9 +62,9 @@
     }
 })();
 </script>
-<script src="i18n.js?v=recommendation-counts-2"></script>
+<script src="i18n.js?v=campus-tabs-1"></script>
 <script src="language.js"></script>
-<script src="card-en-extra.js?v=campus-tools-1"></script>
+<script src="card-en-extra.js?v=campus-tabs-1"></script>
 <script src="card-i18n.js"></script>
 <script>
 var _hmt = _hmt || [];
@@ -1108,9 +1108,13 @@ s.parentNode.insertBefore(hm, s);
 </div>
 
 <div id="offen-links" class="column active" data-no-tabs>
+<div class="campus-tabs" role="tablist" aria-label="校园服务分类">
+<button type="button" class="campus-tab active" role="tab" aria-selected="true" aria-controls="campus-schools-panel" data-campus-target="0" data-i18n="section.campusSchools">学校网站</button>
+<button type="button" class="campus-tab" role="tab" aria-selected="false" aria-controls="campus-tools-panel" data-campus-target="1" data-i18n="section.campusTools">校园工具</button>
+</div>
 <div class="sub-column" data-campus>
 <h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-school"></use></svg> <span data-i18n="section.campus">校园服务</span></h3>
-<div class="card-container">
+<div class="card-container" id="campus-schools-panel">
 <a class="card" data-tooltip="哈商大官网" href="https://www.hrbcu.edu.cn/index.htm" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.hrbcu.edu.cn/favicon.ico" alt="官网" loading="lazy" decoding="async" referrerpolicy="no-referrer">商大官网</a>
 <a class="card" data-tooltip="经济学院官网" href="https://jjxy.hrbcu.edu.cn/" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.hrbcu.edu.cn/favicon.ico" alt="经济学院" loading="lazy" decoding="async" referrerpolicy="no-referrer">经济学院</a>
 <a class="card" data-tooltip="哈商大研究生院官网" href="https://yjsc.hrbcu.edu.cn/" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://yjsc.hrbcu.edu.cn/favicon.ico" alt="研究生院" loading="lazy" decoding="async" referrerpolicy="no-referrer">研究生学院</a>
@@ -1128,11 +1132,18 @@ s.parentNode.insertBefore(hm, s);
 <a class="card" data-tooltip="(校外访问)哈商大研究生正方教务系统" href="https://111-117-45-14-8080.webvpn.hrbcu.edu.cn/yjsxt/xtgl/login_slogin.html" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://111-117-45-14-8080.webvpn.hrbcu.edu.cn/yjsxt/logo/favicon.ico" alt="研究生" loading="lazy" decoding="async" referrerpolicy="no-referrer">(外)研究生教务</a>
 <a class="card" data-tooltip="(校外访问)哈商大新版科研系统" href="https://ky-443.webvpn.hrbcu.edu.cn/userAction!to_login.action" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://ky-443.webvpn.hrbcu.edu.cn/system/img/favicon.ico" alt="科研入口" loading="lazy" decoding="async" referrerpolicy="no-referrer">(外)新科研系统</a>
 <a class="card" data-tooltip="(校外访问)哈商大OA邮箱系统" href="https://xt-443.webvpn.hrbcu.edu.cn/" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://xt-443.webvpn.hrbcu.edu.cn/favicon.ico" alt="办公入口" loading="lazy" decoding="async" referrerpolicy="no-referrer">(外)OA邮箱</a>
+
+</div>
+</div>
+<div class="sub-column" data-campus>
+<h3><svg class="svg-icon" aria-hidden="true" focusable="false"><use href="#icon-tools"></use></svg> <span data-i18n="section.campusTools">校园工具</span></h3>
+<div class="card-container" id="campus-tools-panel">
 <a class="card" data-tooltip="党课学习备考资料" href="dzzs.html" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.hrbcu.edu.cn/favicon.ico" alt="党课学习" loading="lazy" decoding="async" referrerpolicy="no-referrer">党课学习备考<span class="badge-new">NEW</span></a>
 <a class="card" data-tooltip="名牌制作工具" href="nameplate.html" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.hrbcu.edu.cn/favicon.ico" alt="名牌工具" loading="lazy" decoding="async" referrerpolicy="no-referrer">名牌工具</a>
 <a class="card" data-tooltip="离线 PDF 工具箱" href="pdf-tools.html" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.hrbcu.edu.cn/favicon.ico" alt="PDF工具" loading="lazy" decoding="async" referrerpolicy="no-referrer">离线PDF工具箱</a>
 <a class="card" data-tooltip="导师津贴整理与表格汇总" href="mentor-allowance.html" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.hrbcu.edu.cn/favicon.ico" alt="导师津贴汇总" loading="lazy" decoding="async" referrerpolicy="no-referrer">导师津贴汇总<span class="badge-new">NEW</span></a>
 <a class="card" data-tooltip="学生档案模板生成器" href="student-archive.html" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.hrbcu.edu.cn/favicon.ico" alt="档案模板生成" loading="lazy" decoding="async" referrerpolicy="no-referrer">档案模板生成<span class="badge-new">NEW</span></a>
+<a class="card" data-tooltip="硕博奖学金名额分配测算工具" href="scholarship-allocator/index.html" target="_blank" rel="noopener noreferrer"><img src="site-placeholder.svg" width="32" height="32" data-icon-src="https://www.hrbcu.edu.cn/favicon.ico" alt="奖学金名额" loading="lazy" decoding="async" referrerpolicy="no-referrer">硕博奖学金名额<span class="badge-new">NEW</span></a>
 
 </div>
 </div>
@@ -2220,8 +2231,8 @@ s.parentNode.insertBefore(hm, s);
 <footer class="site-footer"><p><strong>知径</strong><span data-i18n="refresh.footer">把好用的网站，放在顺手的地方。</span></p><p><span id="directory-summary"></span><button type="button" class="about-open" data-i18n="common.about">关于本站</button><button type="button" onclick="openContactModal()" data-i18n="common.feedback">反馈建议</button></p></footer>
 </main>
 <script>if (typeof LangManager !== "undefined") LangManager.init();</script>
-<script src="search-index.js?v=pinyin-1"></script>
-<script src="app.js?v=campus-cleanup-1"></script>
+<script src="search-index.js?v=campus-tabs-1"></script>
+<script src="app.js?v=campus-tabs-1"></script>
 <script src="personal.js?v=recommendation-counts-2"></script>
 <script src="wallpaper.js?v=1"></script>
 <script>

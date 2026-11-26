@@ -320,6 +320,8 @@ const I18N = {
     // 页面内容分类标题
     section: {
       campus: '校园服务',
+      campusSchools: '学校网站',
+      campusTools: '校园工具',
       commonRec: '常用推荐',
       domesticAI: '国产AI',
       overseasAI: '国外AI',
@@ -711,6 +713,8 @@ const I18N = {
 
     section: {
       campus: 'Campus Services',
+      campusSchools: 'School Websites',
+      campusTools: 'Campus Tools',
       commonRec: 'Frequently Used',
       domesticAI: 'Chinese AI',
       overseasAI: 'Global AI',

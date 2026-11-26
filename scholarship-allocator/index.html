@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奖学金名额计算过程</title>
+<style>
+
+:root{
+  --primary:#4f46e5;--primary-d:#4338ca;--primary-l:#eef2ff;--primary-b:#c7d2fe;
+  --ink:#111827;--ink-2:#4b5563;--ink-3:#9ca3af;
+  --bg:#f7f8fc;--card:#fff;--line:#e8eaf0;--line-2:#d7dbe3;
+  --gold:#a16207;--gold-bg:#fef9e7;--gold-line:#fde68a;
+  --blue:#1d4ed8;--blue-bg:#eff6ff;--blue-line:#bfdbfe;
+  --teal:#0f766e;--teal-bg:#f0fdfa;--teal-line:#99f6e4;
+  --ok:#059669;--ok-bg:#ecfdf5;--warn:#b45309;--warn-bg:#fffbeb;
+  --r:14px;
+  --grad:linear-gradient(120deg,#4f46e5,#7c3aed);
+  --sh:0 1px 2px rgba(16,24,40,.04),0 8px 24px -14px rgba(16,24,40,.14);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.6;background:
+  radial-gradient(1100px 520px at 6% -8%,#eef0ff 0%,rgba(238,240,255,0) 60%),
+  radial-gradient(900px 460px at 98% -2%,#e6f6fb 0%,rgba(230,246,251,0) 56%),
+  var(--bg);
+  -webkit-font-smoothing:antialiased;background-attachment:fixed}
+.page{max-width:1120px;margin:0 auto;padding:0 22px 64px}
+
+/* ---------- header ---------- */
+.site-header{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px;margin:0 -22px 30px;padding:0 22px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.site-brand{display:flex;align-items:center;gap:10px}
+.site-logo{width:31px;height:31px;border-radius:9px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 12px -4px rgba(91,70,229,.6)}
+.site-name{font-size:13.5px;font-weight:680;letter-spacing:-.01em}
+.site-year{font-size:11px;color:var(--ink-3);padding-left:10px;margin-left:2px;border-left:1px solid var(--line)}
+.site-meta{font-size:11px;font-weight:600;color:var(--primary);background:var(--primary-l);border:1px solid var(--primary-b);padding:4px 11px;border-radius:999px}
+
+/* ---------- page title ---------- */
+.page-title{margin:0 0 22px}
+.page-title .kicker{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--primary);margin-bottom:10px}
+.page-title .kicker::before{content:"";width:18px;height:3px;border-radius:2px;background:var(--grad)}
+.page-title h1{font-size:29px;font-weight:760;letter-spacing:-.04em;margin:0 0 8px;line-height:1.25;background:linear-gradient(100deg,#111827 0%,#312e81 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.page-title p{font-size:13px;color:var(--ink-2);margin:0;max-width:660px;line-height:1.7}
+
+/* ---------- overview ---------- */
+.overview{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px 24px 22px;margin-bottom:18px;box-shadow:var(--sh)}
+.overview::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#4f46e5 0%,#7c3aed 38%,#2563eb 70%,#0891b2 100%)}
+.ov-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:18px}
+.ov-head b{font-size:12px;font-weight:680}
+.ov-head span{font-size:11px;color:var(--ink-3)}
+.flow-overview{display:flex;align-items:center;gap:0}
+.flow-node{flex:1;min-width:0;padding:0 16px}
+.flow-node:first-child{padding-left:0}
+.flow-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+.flow-label{font-size:11.5px;font-weight:650;color:var(--ink-2)}
+.flow-pct{font-size:10.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.flow-val{display:flex;align-items:baseline;gap:3px;margin-bottom:10px}
+.flow-val b{font-size:30px;font-weight:760;letter-spacing:-.045em;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.flow-val small{font-size:11px;color:var(--ink-3)}
+.flow-track{height:5px;border-radius:99px;background:#eef1f5;overflow:hidden}
+.flow-track i{display:block;height:100%;border-radius:99px;transition:width .45s cubic-bezier(.4,0,.2,1)}
+.tone-total .flow-val b{color:var(--primary)}
+.tone-total .flow-track i{background:linear-gradient(90deg,#4f46e5,#6366f1)}
+.tone-g0 .flow-val b{color:#7c3aed}
+.tone-g0 .flow-track i{background:linear-gradient(90deg,#8b5cf6,#a78bfa)}
+.tone-g1 .flow-val b{color:#2563eb}
+.tone-g1 .flow-track i{background:linear-gradient(90deg,#3b82f6,#60a5fa)}
+.tone-g2 .flow-val b{color:#0891b2}
+.tone-g2 .flow-track i{background:linear-gradient(90deg,#06b6d4,#22d3ee)}
+.flow-arrow{display:flex;align-items:center;color:#b9c0d4;padding:0 2px;flex:none}
+
+/* ---------- panel ---------- */
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px 22px;margin-bottom:16px;box-shadow:var(--sh)}
+.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px}
+.panel-head h2{font-size:14px;font-weight:680;margin:0 0 2px;letter-spacing:-.01em;padding-left:11px;position:relative}
+.panel-head h2::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:3px;border-radius:2px;background:var(--grad)}
+.panel-head p{font-size:11.5px;color:var(--ink-3);margin:0}
+.panel-tag{font-size:10px;font-weight:650;color:#fff;background:var(--grad);padding:3px 10px;border-radius:999px;flex:none}
+
+/* ---------- params ---------- */
+.param-group{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.param-group:first-of-type{border-top:0}
+.param-group:last-child{padding-bottom:0}
+.pg-title{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:var(--ink-2)}
+.pg-num{width:19px;height:19px;flex:none;border-radius:6px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.pg-fields{display:flex;flex-wrap:wrap;gap:8px 14px}
+.field{display:flex;flex-direction:row;align-items:center;gap:6px;flex:1 1 112px;min-width:0}
+.field.full{flex:1 1 100%}
+.field.full .in-wrap{width:100%}
+.field.wide .in-wrap{width:150px}
+.field label{font-size:10.5px;color:var(--ink-2);font-weight:500;white-space:nowrap}
+.in-wrap{position:relative;width:70px;flex:none}
+.in{width:100%;padding:5px 25px 5px 9px;border:1px solid var(--line-2);border-radius:7px;background:#fff;color:var(--ink);font-size:12px;outline:none;font-variant-numeric:tabular-nums;transition:border-color .15s,box-shadow .15s}
+.in:hover{border-color:#b9c0cc}
+.in:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+select.in{appearance:none;cursor:pointer;padding-right:24px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center}
+.unit{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--ink-3);pointer-events:none}
+
+/* ---------- table ---------- */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl thead th{background:#fafbfe;color:var(--ink-2);font-weight:650;font-size:11px;text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:7px 11px;border-bottom:1px solid #f0f2f5;vertical-align:middle}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover{background:#fafbff}
+.right{text-align:right}
+.tbl th.right{text-align:right}
+.tbl .num{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.tbl .sum td{background:#fafbfe;font-weight:650;border-top:1px solid var(--line)}
+.res{display:inline-flex;min-width:26px;justify-content:center;padding:1px 7px;border-radius:6px;background:var(--primary-l);color:var(--primary);font-weight:650;font-size:11.5px;font-variant-numeric:tabular-nums}
+.res.g{background:var(--gold-bg);color:var(--gold)}
+.res.b{background:var(--blue-bg);color:var(--blue)}
+.res.t{background:var(--teal-bg);color:var(--teal)}
+.bonus{color:var(--ok);font-weight:650;font-size:11px}
+.dash{color:#cbd0d9}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11px;color:var(--ink-3);letter-spacing:-.01em}
+.calc-res{color:var(--primary);font-weight:680}
+.frac{display:flex;align-items:center;gap:7px}
+.fracbar{width:54px;height:4px;border-radius:99px;background:#eef1f5;overflow:hidden;display:inline-block;flex:none}
+.fracbar i{display:block;height:100%;border-radius:99px;background:#cbd0d9}
+.frac.hit .fracbar i{background:var(--grad)}
+.frac em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--ink-3);font-size:11px}
+.ldot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
+.ldot.g{background:#eab308}.ldot.b{background:#3b82f6}.ldot.t{background:#14b8a6}
+.final-tbl thead th{background:linear-gradient(180deg,#f3f4ff,#fafbff)}
+
+/* ---------- scheme ---------- */
+.scheme-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:22px 0 14px}
+.seg{display:inline-flex;background:#ebedf3;border-radius:9px;padding:3px;gap:2px}
+.seg .tab{border:0;background:transparent;color:var(--ink-2);font-size:11.5px;font-weight:550;padding:6px 14px;border-radius:6px;cursor:pointer;transition:.18s;font-family:inherit}
+.seg .tab:hover{color:var(--ink)}
+.seg .tab.on{background:var(--grad);color:#fff;box-shadow:0 3px 8px -3px rgba(91,70,229,.6);font-weight:650}
+.scheme-note{font-size:11px;color:var(--ink-3)}
+
+/* ---------- steps ---------- */
+.flow{display:flex;flex-direction:column;gap:12px}
+.step{display:grid;grid-template-columns:30px minmax(0,1fr);gap:14px;position:relative}
+.step:not(:last-child)::before{content:"";position:absolute;left:14px;top:34px;bottom:-14px;width:2px;background:linear-gradient(180deg,#c7d2fe,#e8eaf0)}
+.step-badge{width:30px;height:30px;border-radius:9px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;font-variant-numeric:tabular-nums;z-index:1;box-shadow:0 0 0 4px var(--bg),0 4px 10px -3px rgba(91,70,229,.55)}
+.step-body{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);min-width:0;position:relative;overflow:hidden}
+.step-body::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#6366f1,#a78bfa 55%,#67e8f9)}
+.step-title{font-size:13px;font-weight:680;margin:0 0 5px;letter-spacing:-.01em}
+.step-desc{font-size:11.5px;color:var(--ink-2);margin:0 0 13px;line-height:1.65}
+.step-note{display:flex;gap:8px;margin-top:12px;padding:9px 12px;background:#f7f8ff;border:1px solid #eef0ff;border-radius:8px;font-size:11.5px;color:var(--ink-2);line-height:1.6}
+.step-note .ico{color:var(--primary);flex:none}
+
+/* ---------- compare ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.subcard{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.subcard-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(180deg,#fafbff,#f6f7fb);border-bottom:1px solid var(--line)}
+.subcard-head b{font-size:11.5px;font-weight:680}
+.subcard-head span{font-size:10.5px;color:var(--ink-3)}
+.subcard .table-wrap{border:0;border-radius:0}
+.subhead{font-size:11.5px;font-weight:680;color:var(--ink-2);margin:18px 0 9px}
+.final-note{margin-top:10px;font-size:11px;color:var(--ink-3);line-height:1.6}
+.alert{margin-top:12px;background:var(--warn-bg);border:1px solid var(--gold-line);color:var(--warn);border-radius:9px;padding:9px 12px;font-size:11.5px}
+.check{display:flex;align-items:center;gap:9px;margin-top:14px;padding:11px 14px;border-radius:9px;background:linear-gradient(100deg,#ecfdf5,#d1fae5);border:1px solid #a7f3d0;color:var(--ok);font-size:12px;font-weight:650}
+.check.bad{background:var(--warn-bg);border-color:var(--gold-line);color:var(--warn)}
+.check .mark{width:19px;height:19px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex:none}
+.foot{text-align:center;font-size:11px;color:var(--ink-3);margin-top:22px;line-height:1.8;padding-top:16px;border-top:1px solid var(--line)}
+
+/* ---------- track switch ---------- */
+.track-switch{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 24px;padding:11px 16px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.track-hint{font-size:11px;color:var(--ink-3)}
+
+@media(max-width:820px){
+  .overview{padding:16px}
+  .flow-overview{flex-wrap:nowrap;gap:0}
+  .flow-node{flex:1 1 0;padding:0 7px}
+  .flow-label{font-size:10.5px}
+  .flow-pct{display:none}
+  .flow-val b{font-size:23px}
+  .flow-arrow{padding:0 1px}
+  .flow-arrow svg{width:13px;height:13px}
+  .split{grid-template-columns:1fr}
+  .page-title h1{font-size:25px}
+}
+@media(max-width:640px){
+  .page{padding:0 12px 40px}
+  .site-header{margin:0 -12px 24px;padding:0 12px}
+  .site-name{font-size:12.5px}
+  .site-year{display:none}
+  .site-meta{display:none}
+  .page-title h1{font-size:22px}
+  .panel{padding:15px}
+  .param-group{grid-template-columns:1fr;gap:6px;padding:9px 0}
+  .pg-fields{gap:7px 10px}
+  .field{flex:1 1 125px}
+  .step{grid-template-columns:26px minmax(0,1fr);gap:10px}
+  .step-badge{width:26px;height:26px;font-size:11px;box-shadow:0 0 0 3px var(--bg)}
+  .step:not(:last-child)::before{left:12px}
+  .step-body{padding:13px}
+  .scheme-bar{flex-wrap:wrap;gap:8px}
+}
+@media print{
+  body{background:#fff}
+  .page{max-width:none;padding:0}
+  .site-header{margin-bottom:18px}
+  .panel,.step-body,.overview{box-shadow:none}
+  .step,.panel,.subcard{break-inside:avoid}
+  .site-header,.scheme-bar{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="site-header">
+    <div class="site-brand">
+      <div class="site-logo">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="6" y="10" width="3" height="7" rx="1"/><rect x="11" y="6" width="3" height="11" rx="1"/><rect x="16" y="12" width="3" height="5" rx="1"/></svg>
+      </div>
+      <span class="site-name">研究生奖学金名额分配</span>
+      <span class="site-year"><span id="brandYear"></span> 学年</span>
+    </div>
+    <span class="site-meta">名额计算过程</span>
+  </header>
+
+  <div class="track-switch">
+    <div class="seg" id="trackTabs"></div>
+    <span class="track-hint">硕士按专硕 / 学硕分，博士只按年级分 · 两套独立计算</span>
+  </div>
+
+  <div id="masterView">
+  <div class="page-title">
+    <span class="kicker">名额分配 · 计算过程</span>
+    <h1>名额是怎么一步步分下来的？</h1>
+    <p>从学校总名额出发，拆到年级、专硕学硕，再划为一二三等奖。每一步的算式、取整与补位，全部摊开给你看。</p>
+  </div>
+
+  <section class="overview">
+    <div class="ov-head"><b>名额分配概览</b><span>按年级人数占比拆分</span></div>
+    <div class="flow-overview" id="heroFlow"></div>
+  </section>
+
+<section class="panel">
+    <div class="panel-head">
+      <div><h2>计算参数</h2><p>改动任一参数，下面每一步都会立即重新计算</p></div>
+      <span class="panel-tag">可调</span>
+    </div>
+    <div class="param-group">
+      <div class="pg-title"><span class="pg-num">1</span>名额规则</div>
+      <div class="pg-fields">
+        <div class="field wide"><label>保研评一等</label><div class="in-wrap"><select class="in" id="baoLevel"><option value="yes">是，占一等名额</option><option value="no">否，名额释放</option></select></div></div>
+        <div class="field wide"><label>空出一等调剂依据</label><div class="in-wrap"><select class="in" id="basis"><option value="quota">按年级名额占比</option><option value="head">按年级人数占比</option></select></div></div>
+      </div>
+    </div>
+    <div class="param-group">
+      <div class="pg-title"><span class="pg-num">2</span>基础设置</div>
+      <div class="pg-fields">
+        <div class="field"><label>总名额</label><div class="in-wrap"><input class="in" id="totalQuota" type="number" value="118" min="0"><span class="unit">个</span></div></div>
+        <div class="field"><label>一等奖</label><div class="in-wrap"><input class="in" id="r1" type="number" value="10" min="0" max="100"><span class="unit">%</span></div></div>
+        <div class="field"><label>二等奖</label><div class="in-wrap"><input class="in" id="r2" type="number" value="30" min="0" max="100"><span class="unit">%</span></div></div>
+      </div>
+    </div>
+    <div class="param-group">
+      <div class="pg-title"><span class="pg-num">3</span>研一占用</div>
+      <div class="pg-fields">
+        <div class="field"><label>学硕保研</label><div class="in-wrap"><input class="in" id="baoX" type="number" value="1" min="0"><span class="unit">人</span></div></div>
+        <div class="field"><label>专硕保研</label><div class="in-wrap"><input class="in" id="baoZ" type="number" value="0" min="0"><span class="unit">人</span></div></div>
+        <div class="field"><label>学硕成果</label><div class="in-wrap"><input class="in" id="chengX" type="number" value="0" min="0"><span class="unit">人</span></div></div>
+        <div class="field"><label>专硕成果</label><div class="in-wrap"><input class="in" id="chengZ" type="number" value="0" min="0"><span class="unit">人</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <div><h2>各年级人数</h2><p>人数是名额拆分的权重，直接填公示名单里的年级人数</p></div>
+    </div>
+    <div class="table-wrap"><table class="tbl" id="headTable"></table></div>
+  </section>
+
+  <div class="scheme-bar">
+    <div class="seg" id="schemeTabs"></div>
+    <div class="scheme-note">同一套名额，两种划等级口径</div>
+  </div>
+
+  <div class="flow" id="processArea"></div>
+
+  <section class="panel" style="margin-top:22px">
+    <div class="panel-head">
+      <div><h2>最终名额结果</h2><p>按研一学硕、研一专硕、研二学硕、研二专硕、研三学硕、研三专硕共 6 组给出一 / 二 / 三等奖名额</p></div>
+      <span class="panel-tag" id="finalTag">方案 A</span>
+    </div>
+    <div id="compareArea"></div>
+  </section>
+
+  <footer class="foot">名额取整统一采用最大余数法：先向下取整，剩余名额按小数部分从大到小依次补 1。<br>所有步骤只做名额计算，不包含学生名单，也不考虑同分并列加名额。</footer>
+  </div><!-- /masterView -->
+
+  <div id="phdView" style="display:none">
+    <div class="page-title">
+      <span class="kicker">博士 · 名额分配计算过程</span>
+      <h1>博士名额是怎么一步步分下来的？</h1>
+      <p>博士只按博一、博二、博三三个年级分配（目前不分专博 / 学博）。规则与硕士一致：全校统筹一等奖总额，博一先占用，剩余按占比分给博二、博三，再各自划分二、三等奖。</p>
+    </div>
+
+    <section class="overview">
+      <div class="ov-head"><b>博士名额分配概览</b><span>按年级人数占比拆分</span></div>
+      <div class="flow-overview" id="phdHeroFlow"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><h2>博士计算参数</h2><p>改动任一参数，下面每一步都会立即重新计算</p></div>
+        <span class="panel-tag">可调</span>
+      </div>
+      <div class="param-group">
+        <div class="pg-title"><span class="pg-num">1</span>名额规则</div>
+        <div class="pg-fields">
+          <div class="field wide"><label>直博评一等</label><div class="in-wrap"><select class="in" id="phdBaoLevel"><option value="yes">是，占一等名额</option><option value="no">否，名额释放</option></select></div></div>
+          <div class="field wide"><label>空出一等调剂依据</label><div class="in-wrap"><select class="in" id="phdBasis"><option value="quota">按年级名额占比</option><option value="head">按年级人数占比</option></select></div></div>
+        </div>
+      </div>
+      <div class="param-group">
+        <div class="pg-title"><span class="pg-num">2</span>基础设置</div>
+        <div class="pg-fields">
+          <div class="field"><label>总名额</label><div class="in-wrap"><input class="in" id="phdTotalQuota" type="number" value="40" min="0"><span class="unit">个</span></div></div>
+          <div class="field"><label>一等奖</label><div class="in-wrap"><input class="in" id="phdR1" type="number" value="10" min="0" max="100"><span class="unit">%</span></div></div>
+          <div class="field"><label>二等奖</label><div class="in-wrap"><input class="in" id="phdR2" type="number" value="30" min="0" max="100"><span class="unit">%</span></div></div>
+        </div>
+      </div>
+      <div class="param-group">
+        <div class="pg-title"><span class="pg-num">3</span>博一占用</div>
+        <div class="pg-fields">
+          <div class="field"><label>直博人数</label><div class="in-wrap"><input class="in" id="phdBao" type="number" value="1" min="0"><span class="unit">人</span></div></div>
+          <div class="field"><label>有成果获一等</label><div class="in-wrap"><input class="in" id="phdCheng" type="number" value="0" min="0"><span class="unit">人</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><h2>各年级人数</h2><p>人数是名额拆分的权重，直接填公示名单里的博士年级人数</p></div>
+      </div>
+      <div class="table-wrap"><table class="tbl" id="phdHeadTable"></table></div>
+    </section>
+
+    <div class="flow" id="phdProcessArea"></div>
+
+    <section class="panel" style="margin-top:22px">
+      <div class="panel-head">
+        <div><h2>最终名额结果</h2><p>按博一、博二、博三共 3 个年级给出一 / 二 / 三等奖名额</p></div>
+        <span class="panel-tag" id="phdFinalTag">博士</span>
+      </div>
+      <div id="phdCompareArea"></div>
+    </section>
+
+    <footer class="foot">博士名额单独计算，与硕士名额互不影响。名额取整统一采用最大余数法：先向下取整，剩余名额按小数部分从大到小依次补 1。</footer>
+  </div>
+</div>
+
+<script>
+function academicYear(){var d=new Date();return d.getMonth()>=8?d.getFullYear():d.getFullYear()-1}
+var GRADE=['研一','研二','研三'];
+var TYPE=['专硕','学硕'];
+var LEVEL=['一等奖','二等奖','三等奖'];
+var state={totalQuota:118,r1:10,r2:30,baoX:1,baoZ:0,chengX:0,chengZ:0,baoLevel:'yes',basis:'quota',scheme:'A',
+  bases:[{pros:21,acad:26},{pros:19,acad:17},{pros:15,acad:23}]};
+
+function esc(x){return String(x).replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]})}
+
+function detail(total,weights,labels){
+  total=Math.max(0,Math.round(total));
+  var sum=weights.reduce(function(a,b){return a+b},0);
+  var raw=weights.map(function(w){return sum>0?w/sum*total:(weights.length?total/weights.length:0)});
+  var floors=raw.map(function(v){return Math.floor(v)});
+  var rem=total-floors.reduce(function(a,b){return a+b},0);
+  var fracs=raw.map(function(v){return v-Math.floor(v)});
+  var order=raw.map(function(v,i){return{i:i,f:fracs[i]}}).sort(function(a,b){return b.f-a.f||a.i-b.i});
+  var final=floors.slice();
+  for(var k=0;k<rem&&order.length;k++)final[order[k%order.length].i]++;
+  return {total:total,weights:weights,labels:labels,raw:raw,floors:floors,fracs:fracs,rem:rem,final:final,sum:sum,order:order};
+}
+function ratios(){
+  var a=Math.max(0,Math.min(100,state.r1||0));
+  var b=Math.max(0,Math.min(100-a,state.r2||0));
+  return [a,b,100-a-b];
+}
+function detailTable(d,unit){
+  unit=unit||'人';
+  var h='<div class="table-wrap"><table class="tbl"><thead><tr><th>项目</th><th class="right">权重</th><th class="right">占比</th>'+
+    '<th>原始计算</th><th class="right">取整</th><th>余数</th><th class="right">补位</th><th class="right">结果</th></tr></thead><tbody>';
+  d.labels.forEach(function(label,i){
+    var pct=d.sum?(d.weights[i]/d.sum*100).toFixed(1):'0.0';
+    var hit=d.final[i]>d.floors[i];
+    h+='<tr><td>'+esc(label)+'</td><td class="right num">'+d.weights[i]+unit+'</td><td class="right num">'+pct+'%</td>'+
+      '<td class="mono">'+d.total+' × '+d.weights[i]+' ÷ '+d.sum+' = <b class="calc-res">'+d.raw[i].toFixed(3)+'</b></td>'+
+      '<td class="right num">'+d.floors[i]+'</td>'+
+      '<td><div class="frac'+(hit?' hit':'')+'"><span class="fracbar"><i style="width:'+Math.max(2,d.fracs[i]*100).toFixed(1)+'%"></i></span><em>'+d.fracs[i].toFixed(3)+'</em></div></td>'+
+      '<td class="right">'+(hit?'<span class="bonus">+1</span>':'<span class="dash">—</span>')+'</td>'+
+      '<td class="right"><span class="res">'+d.final[i]+'</span></td></tr>';
+  });
+  h+='<tr class="sum"><td>合计</td><td class="right num">'+d.sum+unit+'</td><td class="right num">100%</td><td class="mono">—</td>'+
+    '<td class="right num">'+d.floors.reduce(function(a,b){return a+b},0)+'</td><td class="dash">—</td>'+
+    '<td class="right">'+(d.rem?'<span class="bonus">+'+d.rem+'</span>':'<span class="dash">—</span>')+'</td><td class="right"><span class="res">'+d.final.reduce(function(a,b){return a+b},0)+'</span></td></tr>';
+  return h+'</tbody></table></div>';
+}
+function capTable(rows,heads){
+  var h='<div class="table-wrap"><table class="tbl"><thead><tr>'+heads.map(function(x,i){
+    return '<th'+(i>0?' class="right"':'')+'>'+x+'</th>'}).join('')+'</tr></thead><tbody>';
+  rows.forEach(function(r){
+    h+='<tr>'+r.map(function(c,i){return '<td'+(i>0?' class="right num"':'')+'>'+c+'</td>'}).join('')+'</tr>';
+  });
+  return h+'</tbody></table></div>';
+}
+function step(n,title,desc,body,note){
+  return '<div class="step"><div class="step-badge">'+n+'</div><div class="step-body">'+
+    '<div class="step-title">'+title+'</div>'+
+    (desc?'<p class="step-desc">'+desc+'</p>':'')+body+
+    (note?'<div class="step-note"><span class="ico">◈</span><span>'+note+'</span></div>':'')+'</div></div>';
+}
+
+function calc(scheme){
+  var heads=state.bases.map(function(b){return b.pros+b.acad});
+  var dGrade=detail(state.totalQuota,heads,GRADE);
+  var gq=dGrade.final,rr=ratios(),totalHead=heads.reduce(function(a,b){return a+b},0);
+  var result={scheme:scheme,dGrade:dGrade,steps:[],warnings:[]};
+
+  result.steps.push(step(1,'第一步：总名额 '+state.totalQuota+' 按年级人数占比拆分（作权重）',
+    '先算出各年级名额，作为后面分配一、二、三等奖的权重。权重是各年级人数，用最大余数法取整。',
+    detailTable(dGrade,'人'),
+    '以研一为例：<b>'+state.totalQuota+' × '+heads[0]+' ÷ '+totalHead+' = '+dGrade.raw[0].toFixed(3)+'</b>，取整 '+dGrade.floors[0]+'，余数 '+dGrade.fracs[0].toFixed(3)+'，最终权重 <b>'+gq[0]+'</b> 个。'));
+
+  // 全校三个等级的名义总额（按总名额 × 比例，最大余数法）
+  var dLv=detail(state.totalQuota,[rr[0],rr[1],rr[2]],LEVEL);
+  var Eall=dLv.final[0],Sall=dLv.final[1],Tall=dLv.final[2];
+
+  result.steps.push(step(2,'第二步：先算全校一等奖总额 '+Eall+' 个',
+    '一等奖不再按年级各自算，而是全校先按总名额的 '+rr[0]+'% 统筹出一个总额，再往下分配。',
+    capTable(LEVEL.map(function(l,i){
+      return [l,rr[i]+'%',dLv.raw[i].toFixed(3),'<span class="res g">'+dLv.final[i]+'</span>'];
+    }),['等级','比例','原始值','名额']),
+    '全校总名额 '+state.totalQuota+' × 一等奖比例 '+rr[0]+'% = <b>'+dLv.raw[0].toFixed(3)+'</b>，用最大余数法取整后一等奖共 <b>'+Eall+'</b> 个。'));
+
+  // 研一占用：保研 + 有成果，学硕/专硕均按实际归属
+  // 保研评一等关闭时，保研生不占一等名额（名额释放给研二研三）
+  var baoOn=state.baoLevel==='yes';
+  var baoZRaw=state.baoZ,baoXRaw=state.baoX;
+  var baoZ=baoOn?baoZRaw:0,baoX=baoOn?baoXRaw:0,chengZ=state.chengZ,chengX=state.chengX;
+  var y1Bao=baoZ+baoX,y1Cheng=chengZ+chengX,y1Occ=y1Bao+y1Cheng;
+  if(y1Occ>Eall){
+    result.warnings.push('研一保研加成果 '+y1Occ+' 人超过全校一等奖 '+Eall+' 个，已按一等奖总额封顶');
+    if(y1Bao>Eall){
+      var dB=detail(Eall,[baoZ,baoX],TYPE);
+      baoZ=dB.final[0];baoX=dB.final[1];chengZ=0;chengX=0;
+    }else{
+      var b0=state.bases[0];
+      var dC=detail(Eall-y1Bao,[chengZ,chengX],[b0.pros,b0.acad]);
+      chengZ=dC.final[0];chengX=dC.final[1];
+    }
+    y1Bao=baoZ+baoX;y1Cheng=chengZ+chengX;y1Occ=Eall;
+  }
+  var leftE=Eall-y1Occ;
+
+  result.steps.push(step(3,'第三步：研一占用 '+y1Occ+' 个一等奖'+(baoOn?'（保研 '+y1Bao+' + 成果 '+y1Cheng+'）':'（仅成果 '+y1Cheng+'，保研不占）'),
+    baoOn
+      ? '研一一等奖给保研生和有成果直接获一等的学生，学硕、专硕分别按实际人数占用。这部分名额不参加后面研二研三的分配。'
+      : '「保研评一等」已关闭：保研生不占一等奖，其名额释放出来分给研二、研三。研一只有有成果的学生占用一等奖。',
+    capTable([
+      ['研一专硕保研',baoZRaw,'<span class="'+(baoOn?'res':'dash')+'">'+(baoOn?baoZRaw:'不占')+'</span>'],
+      ['研一学硕保研',baoXRaw,'<span class="'+(baoOn?'res':'dash')+'">'+(baoOn?baoXRaw:'不占')+'</span>'],
+      ['研一专硕有成果获一等',chengZ,'<span class="res">'+chengZ+'</span>'],
+      ['研一学硕有成果获一等',chengX,'<span class="res">'+chengX+'</span>'],
+      ['研一占用合计','—','<span class="res g">'+y1Occ+'</span>'],
+      ['剩余可分给研二研三','—','<span class="bonus">'+leftE+'</span>']
+    ],['项目','人数','一等奖']),
+    '全校一等奖 '+Eall+' − 研一占用 '+y1Occ+' = <b>'+leftE+'</b> 个，剩下的全部分给研二、研三。'));
+
+  // 研二研三按占比分剩余一等奖
+  var w23=state.basis==='quota'?[gq[1],gq[2]]:[heads[1],heads[2]];
+  var dE23=detail(leftE,w23,[GRADE[1],GRADE[2]]);
+  var gradeE=[y1Occ,dE23.final[0],dE23.final[1]];
+
+  result.steps.push(step(4,'第四步：剩余 '+leftE+' 个一等奖按'+(state.basis==='quota'?'年级名额':'年级人数')+'占比分给研二、研三',
+    '按研二、研三的'+(state.basis==='quota'?'名额权重':'人数权重')+'拆分，用最大余数法取整。',
+    capTable([
+      [GRADE[1],w23[0],(w23[0]/(w23[0]+w23[1])*100).toFixed(1)+'%',dE23.raw[0].toFixed(3),'<span class="res g">'+dE23.final[0]+'</span>'],
+      [GRADE[2],w23[1],(w23[1]/(w23[0]+w23[1])*100).toFixed(1)+'%',dE23.raw[1].toFixed(3),'<span class="res g">'+dE23.final[1]+'</span>']
+    ],['年级','权重','占比','原始值','一等奖']),
+    '至此各年级一等奖 = 研一 <b>'+gradeE[0]+'</b> / 研二 <b>'+gradeE[1]+'</b> / 研三 <b>'+gradeE[2]+'</b>，合计仍为全校一等奖 '+Eall+' 个。'));
+
+  // 各年级二等奖、三等奖：各年级各自用自己的名额按 30% / 60% 算
+  var gradeS=[0,0,0],gradeT=[0,0,0],rowsST=[];
+  state.bases.forEach(function(b,g){
+    var remain=gq[g]-gradeE[g];
+    var d=detail(Math.max(0,remain),[rr[1],rr[2]],[LEVEL[1],LEVEL[2]]);
+    gradeS[g]=d.final[0];gradeT[g]=d.final[1];
+    rowsST.push([GRADE[g],gq[g],gradeE[g],remain,d.raw[0].toFixed(2),d.raw[1].toFixed(2),'<span class="res b">'+gradeS[g]+'</span>','<span class="res t">'+gradeT[g]+'</span>']);
+  });
+  result.steps.push(step(5,'第五步：各年级扣除一等奖后，各自按 '+rr[1]+'% / '+rr[2]+'% 划二、三等奖',
+    '二等奖、三等奖按各年级自己的名额算：年级名额减去该年级一等奖，剩下的按 30:60 划分。',
+    capTable(rowsST,['年级','年级名额','一等奖','剩余名额','二等原始','三等原始','二等奖','三等奖']),
+    '每个年级“一等 + 二等 + 三等”之和等于该年级名额，二、三等奖总数不因一等奖统筹而改变。'));
+
+  // 拆到 6 组：各年级的一、二、三等再按专硕 / 学硕人数占比拆开
+  var pool=[],rowsSplit=[];
+  state.bases.forEach(function(b,g){
+    var eS,tS,sS;
+    if(g===0){
+      // 研一一等：保研与成果都按学硕 / 专硕实际归属直接落到对应类别
+      eS=[baoZ+chengZ,baoX+chengX];
+    }else{
+      eS=detail(gradeE[g],[b.pros,b.acad],TYPE).final;
+    }
+    sS=detail(gradeS[g],[b.pros,b.acad],TYPE).final;
+    tS=detail(gradeT[g],[b.pros,b.acad],TYPE).final;
+    TYPE.forEach(function(t,c){
+      pool.push({g:g,c:c,type:t,head:c===0?b.pros:b.acad,
+        quota:eS[c]+sS[c]+tS[c],E:eS[c],S:sS[c],T:tS[c],baseE:eS[c],
+        bao:g===0?(c===0?baoZ:baoX):0,
+        cheng:g===0?(c===0?chengZ:chengX):0,transfer:g>0?eS[c]:0});
+      rowsSplit.push([GRADE[g],t,c===0?b.pros:b.acad,'<span class="res g">'+eS[c]+'</span>','<span class="res b">'+sS[c]+'</span>','<span class="res t">'+tS[c]+'</span>']);
+    });
+  });
+  result.steps.push(step(6,'第六步：各年级的三个等级名额，再按专硕 / 学硕人数占比拆成 6 组',
+    '研一的一等奖按保研 / 成果的实际归属直接落到学硕或专硕；二、三等奖以及研二研三的一等奖，都按该年级专硕、学硕人数占比用最大余数法拆开。',
+    capTable(rowsSplit,['年级','类别','人数','一等奖','二等奖','三等奖']),
+    '这一步得到最终结果：研一学硕、研一专硕、研二学硕、研二专硕、研三学硕、研三专硕共 6 组的名额。'));
+
+  result.pool=pool;
+  result.gradeStats=GRADE.map(function(name,g){
+    var ps=pool.filter(function(p){return p.g===g});
+    return {g:g,quota:ps.reduce(function(a,p){return a+p.quota},0),
+      l1:ps.reduce(function(a,p){return a+p.E},0),l2:ps.reduce(function(a,p){return a+p.S},0),l3:ps.reduce(function(a,p){return a+p.T},0)};
+  });
+  return result;
+}
+
+function renderHero(rA){
+  var total=state.totalQuota||1;
+  var arrow='<div class="flow-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>';
+  var h='<div class="flow-node tone-total"><div class="flow-top"><span class="flow-label">学校总名额</span><span class="flow-pct">100%</span></div>'+
+    '<div class="flow-val"><b>'+state.totalQuota+'</b><small>个</small></div><div class="flow-track"><i style="width:100%"></i></div></div>';
+  [0,1,2].forEach(function(g){
+    var q=rA.gradeStats[g].quota,pct=q/total*100;
+    h+=arrow+'<div class="flow-node tone-g'+g+'"><div class="flow-top"><span class="flow-label">'+GRADE[g]+'</span><span class="flow-pct">'+pct.toFixed(1)+'%</span></div>'+
+      '<div class="flow-val"><b>'+q+'</b><small>个</small></div><div class="flow-track"><i style="width:'+Math.min(100,pct).toFixed(1)+'%"></i></div></div>';
+  });
+  document.getElementById('heroFlow').innerHTML=h;
+}
+function renderHead(){
+  var h='<thead><tr><th>年级</th><th>入学年份</th><th class="right">专硕人数</th><th class="right">学硕人数</th><th class="right">合计</th></tr></thead><tbody>';
+  state.bases.forEach(function(b,g){
+    h+='<tr><td><b>'+GRADE[g]+'</b></td><td class="num">'+(academicYear()-g)+' 级</td>'+
+      '<td class="right"><input class="in" style="width:86px;text-align:right;padding-right:10px" type="number" min="0" value="'+b.pros+'" oninput="setHead('+g+',\'pros\',this.value)"></td>'+
+      '<td class="right"><input class="in" style="width:86px;text-align:right;padding-right:10px" type="number" min="0" value="'+b.acad+'" oninput="setHead('+g+',\'acad\',this.value)"></td>'+
+      '<td class="right"><span class="res">'+(b.pros+b.acad)+'</span></td></tr>';
+  });
+  h+='<tr class="sum"><td>合计</td><td class="dash">—</td><td class="right num">'+state.bases.reduce(function(a,b){return a+b.pros},0)+
+    '</td><td class="right num">'+state.bases.reduce(function(a,b){return a+b.acad},0)+'</td><td class="right num">'+
+    state.bases.reduce(function(a,b){return a+b.pros+b.acad},0)+'</td></tr>';
+  document.getElementById('headTable').innerHTML=h+'</tbody>';
+}
+function setHead(g,k,v){state.bases[g][k]=Math.max(0,parseInt(v,10)||0);renderHead();renderAll()}
+function buildFinalTable(r){
+  var rows=[],scheme=r.scheme;
+  GRADE.forEach(function(_,g){
+    [1,0].forEach(function(c){
+      var b=state.bases[g],label=GRADE[g]+TYPE[c],quota,E,S,T;
+      if(scheme==='A'){
+        var p=r.pool.filter(function(x){return x.g===g&&x.c===c})[0];
+        quota=p.quota;E=p.E;S=p.S;T=p.T;
+      }else{
+        var gp=r.pool[g],w=[b.acad,b.pros],lbl=['学硕','专硕'];
+        quota=detail(gp.quota,w,lbl).final[0];
+        E=detail(gp.E,w,lbl).final[0];
+        S=detail(gp.S,w,lbl).final[0];
+        T=detail(gp.T,w,lbl).final[0];
+      }
+      rows.push([label,quota,E,S,T]);
+    });
+  });
+  var h='<div class="table-wrap"><table class="tbl final-tbl"><thead><tr><th>组别</th><th class="right">名额</th><th class="right"><span class="ldot g"></span>一等奖</th><th class="right"><span class="ldot b"></span>二等奖</th><th class="right"><span class="ldot t"></span>三等奖</th><th class="right">合计</th></tr></thead><tbody>';
+  rows.forEach(function(row){
+    h+='<tr><td>'+row[0]+'</td><td class="right num">'+row[1]+'</td><td class="right num"><span class="res g">'+row[2]+'</span></td><td class="right num"><span class="res b">'+row[3]+'</span></td><td class="right num"><span class="res t">'+row[4]+'</span></td><td class="right num"><b>'+(row[2]+row[3]+row[4])+'</b></td></tr>';
+  });
+  var cq=rows.reduce(function(a,x){return a+x[1]},0),c1=rows.reduce(function(a,x){return a+x[2]},0),c2=rows.reduce(function(a,x){return a+x[3]},0),c3=rows.reduce(function(a,x){return a+x[4]},0);
+  h+='<tr class="sum"><td>合计</td><td class="right num">'+cq+'</td><td class="right num">'+c1+'</td><td class="right num">'+c2+'</td><td class="right num">'+c3+'</td><td class="right num">'+(c1+c2+c3)+'</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="final-note">'+(scheme==='A'
+    ? '方案 A 的 6 组名额直接来自「年级 × 类别」各自划等级的结果。'
+    : '方案 B 先按年级整体划等级，再按专硕 / 学硕人数占比把各组等级名额拆到类别，因此这里展示的是拆分后的 6 组结果。')+
+    ' 各组名额与该组一 / 二 / 三等奖之和可能不等，是因为研一空出的一等名额已调剂给研二、研三。</div>';
+  return h;
+}
+function renderCompare(rA,rB){
+  var r=state.scheme==='A'?rA:rB;
+  document.getElementById('finalTag').textContent=state.scheme==='A'?'方案 A':'方案 B';
+  var h='<div class="subhead" style="margin-top:0">6 组名额结果 · 当前方案</div>'+buildFinalTable(r)+
+    '<div class="subhead">两方案对照</div><div class="split"><div class="subcard"><div class="subcard-head"><b>方案 A · 类别内划等级</b><span>'+rA.pool.length+' 个名额池</span></div>'+
+    '<div class="table-wrap"><table class="tbl"><thead><tr><th>年级</th><th>类别</th><th class="right">名额</th><th class="right"><span class="ldot g"></span>一等</th><th class="right"><span class="ldot b"></span>二等</th><th class="right"><span class="ldot t"></span>三等</th><th class="right">合计</th></tr></thead><tbody>'+
+    rA.pool.map(function(p){return '<tr><td>'+GRADE[p.g]+'</td><td>'+p.type+'</td><td class="right num">'+p.quota+'</td><td class="right num">'+p.E+'</td><td class="right num">'+p.S+'</td><td class="right num">'+p.T+'</td><td class="right num"><b>'+(p.E+p.S+p.T)+'</b></td></tr>'}).join('')+
+    '</tbody></table></div></div>'+
+    '<div class="subcard"><div class="subcard-head"><b>方案 B · 年级整体划等级</b><span>'+rB.pool.length+' 个名额池</span></div>'+
+    '<div class="table-wrap"><table class="tbl"><thead><tr><th>年级</th><th class="right">名额</th><th class="right"><span class="ldot g"></span>一等</th><th class="right"><span class="ldot b"></span>二等</th><th class="right"><span class="ldot t"></span>三等</th><th class="right">合计</th></tr></thead><tbody>'+
+    rB.pool.map(function(p){return '<tr><td>'+GRADE[p.g]+'</td><td class="right num">'+p.quota+'</td><td class="right num">'+p.E+'</td><td class="right num">'+p.S+'</td><td class="right num">'+p.T+'</td><td class="right num"><b>'+(p.E+p.S+p.T)+'</b></td></tr>'}).join('')+
+    '</tbody></table></div></div></div>';
+  h+='<div class="subhead">按年级对照</div><div class="table-wrap"><table class="tbl"><thead><tr><th>年级</th><th class="right">A 名额</th><th class="right">A 一等</th><th class="right">A 二等</th><th class="right">A 三等</th><th class="right">B 名额</th><th class="right">B 一等</th><th class="right">B 二等</th><th class="right">B 三等</th></tr></thead><tbody>'+
+    GRADE.map(function(g,i){
+      var a=rA.gradeStats[i],b=rB.gradeStats[i];
+      return '<tr><td><b>'+g+'</b></td><td class="right num">'+a.quota+'</td><td class="right num">'+a.l1+'</td><td class="right num">'+a.l2+'</td><td class="right num">'+a.l3+'</td><td class="right num">'+b.quota+'</td><td class="right num">'+b.l1+'</td><td class="right num">'+b.l2+'</td><td class="right num">'+b.l3+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
+  var total=rA.pool.reduce(function(a,p){return a+p.E+p.S+p.T},0);
+  h+=total===state.totalQuota
+    ? '<div class="check"><span class="mark">✓</span>校验通过：最终名额合计 '+total+' = 学校总名额 '+state.totalQuota+'，没有多出或遗漏。</div>'
+    : '<div class="check bad"><span class="mark">!</span>最终名额合计 '+total+'，与总名额 '+state.totalQuota+' 不符，请检查参数。</div>';
+  document.getElementById('compareArea').innerHTML=h;
+}
+function renderAll(){
+  var rA=calc('A'),rB=calc('B');
+  document.getElementById('schemeTabs').innerHTML=[['A','方案 A · 分类别'],['B','方案 B · 年级整体']].map(function(x){
+    return '<button class="tab '+(state.scheme===x[0]?'on':'')+'" onclick="state.scheme=\''+x[0]+'\';renderAll()">'+x[1]+'</button>'}).join('');
+  var r=state.scheme==='A'?rA:rB;
+  document.getElementById('processArea').innerHTML=r.steps.join('')+
+    (r.warnings.length?'<div class="alert">'+r.warnings.map(esc).join('<br>')+'</div>':'');
+  renderHero(rA);renderCompare(rA,rB);
+}
+function bind(){
+  document.getElementById('totalQuota').oninput=function(){state.totalQuota=Math.max(0,parseInt(this.value,10)||0);renderAll()};
+  document.getElementById('r1').oninput=function(){state.r1=parseFloat(this.value)||0;renderAll()};
+  document.getElementById('r2').oninput=function(){state.r2=parseFloat(this.value)||0;renderAll()};
+  document.getElementById('baoX').oninput=function(){state.baoX=Math.max(0,parseInt(this.value,10)||0);renderAll()};
+  document.getElementById('baoZ').oninput=function(){state.baoZ=Math.max(0,parseInt(this.value,10)||0);renderAll()};
+  document.getElementById('chengX').oninput=function(){state.chengX=Math.max(0,parseInt(this.value,10)||0);renderAll()};
+  document.getElementById('chengZ').oninput=function(){state.chengZ=Math.max(0,parseInt(this.value,10)||0);renderAll()};
+  document.getElementById('baoLevel').onchange=function(){state.baoLevel=this.value;renderAll()};
+  document.getElementById('basis').onchange=function(){state.basis=this.value;renderAll()};
+}
+/* ================= 博士 ================= */
+var PHDGRADE=['博一','博二','博三'];
+var phdState={totalQuota:40,r1:10,r2:30,bao:1,cheng:0,baoLevel:'yes',basis:'quota',heads:[18,16,14]};
+function phdRatios(){
+  var a=Math.max(0,Math.min(100,phdState.r1||0));
+  var b=Math.max(0,Math.min(100-a,phdState.r2||0));
+  return [a,b,100-a-b];
+}
+function calcPhd(){
+  var s=phdState;
+  var dGrade=detail(s.totalQuota,s.heads,PHDGRADE);
+  var gq=dGrade.final,rr=phdRatios(),totalHead=s.heads.reduce(function(a,b){return a+b},0);
+  var result={dGrade:dGrade,steps:[],warnings:[]};
+
+  result.steps.push(step(1,'第一步：博士总名额 '+s.totalQuota+' 按年级人数占比拆分（作权重）',
+    '先算出各年级名额，作为后面分配一、二、三等奖的权重。权重是各年级人数，用最大余数法取整。',
+    detailTable(dGrade,'人'),
+    '以博一为例：<b>'+s.totalQuota+' × '+s.heads[0]+' ÷ '+totalHead+' = '+dGrade.raw[0].toFixed(3)+'</b>，取整 '+dGrade.floors[0]+'，余数 '+dGrade.fracs[0].toFixed(3)+'，最终权重 <b>'+gq[0]+'</b> 个。'));
+
+  var dLv=detail(s.totalQuota,[rr[0],rr[1],rr[2]],LEVEL);
+  var Eall=dLv.final[0];
+  result.steps.push(step(2,'第二步：先算全校一等奖总额 '+Eall+' 个',
+    '一等奖不按年级各自算，而是全校先按总名额的 '+rr[0]+'% 统筹出一个总额，再往下分配。',
+    capTable(LEVEL.map(function(l,i){
+      return [l,rr[i]+'%',dLv.raw[i].toFixed(3),'<span class="res g">'+dLv.final[i]+'</span>'];
+    }),['等级','比例','原始值','名额']),
+    '全校总名额 '+s.totalQuota+' × 一等奖比例 '+rr[0]+'% = <b>'+dLv.raw[0].toFixed(3)+'</b>，用最大余数法取整后一等奖共 <b>'+Eall+'</b> 个。'));
+
+  var baoOn=s.baoLevel==='yes';
+  var baoRaw=s.bao,bao=baoOn?baoRaw:0,cheng=s.cheng;
+  var y1Occ=bao+cheng;
+  if(y1Occ>Eall){
+    result.warnings.push('博一直博加成果 '+y1Occ+' 人超过全校一等奖 '+Eall+' 个，已按一等奖总额封顶');
+    if(bao>Eall){bao=Eall;cheng=0}else{cheng=Math.max(0,Eall-bao)}
+    y1Occ=bao+cheng;
+  }
+  var leftE=Eall-y1Occ;
+  result.steps.push(step(3,'第三步：博一占用 '+y1Occ+' 个一等奖'+(baoOn?'（直博 '+bao+' + 成果 '+cheng+'）':'（仅成果 '+cheng+'，直博不占）'),
+    baoOn
+      ? '博一一等奖给直博生和有成果直接获一等的学生，这部分名额不参加后面博二博三的分配。'
+      : '「直博评一等」已关闭：直博生不占一等奖，其名额释放出来分给博二、博三。博一只有有成果的学生占用一等奖。',
+    capTable([
+      ['博一直博',baoRaw,'<span class="'+(baoOn?'res':'dash')+'">'+(baoOn?baoRaw:'不占')+'</span>'],
+      ['博一有成果获一等',cheng,'<span class="res">'+cheng+'</span>'],
+      ['博一占用合计','—','<span class="res g">'+y1Occ+'</span>'],
+      ['剩余可分给博二博三','—','<span class="bonus">'+leftE+'</span>']
+    ],['项目','人数','一等奖']),
+    '全校一等奖 '+Eall+' − 博一占用 '+y1Occ+' = <b>'+leftE+'</b> 个，剩下的全部分给博二、博三。'));
+
+  var w23=s.basis==='quota'?[gq[1],gq[2]]:[s.heads[1],s.heads[2]];
+  var dE23=detail(leftE,w23,[PHDGRADE[1],PHDGRADE[2]]);
+  var gradeE=[y1Occ,dE23.final[0],dE23.final[1]];
+  result.steps.push(step(4,'第四步：剩余 '+leftE+' 个一等奖按'+(s.basis==='quota'?'年级名额':'年级人数')+'占比分给博二、博三',
+    '按博二、博三的'+(s.basis==='quota'?'名额权重':'人数权重')+'拆分，用最大余数法取整。',
+    capTable([
+      [PHDGRADE[1],w23[0],(w23[0]/(w23[0]+w23[1])*100).toFixed(1)+'%',dE23.raw[0].toFixed(3),'<span class="res g">'+dE23.final[0]+'</span>'],
+      [PHDGRADE[2],w23[1],(w23[1]/(w23[0]+w23[1])*100).toFixed(1)+'%',dE23.raw[1].toFixed(3),'<span class="res g">'+dE23.final[1]+'</span>']
+    ],['年级','权重','占比','原始值','一等奖']),
+    '至此各年级一等奖 = 博一 <b>'+gradeE[0]+'</b> / 博二 <b>'+gradeE[1]+'</b> / 博三 <b>'+gradeE[2]+'</b>，合计仍为全校一等奖 '+Eall+' 个。'));
+
+  var gradeS=[0,0,0],gradeT=[0,0,0],rowsST=[];
+  s.heads.forEach(function(h,g){
+    var remain=gq[g]-gradeE[g];
+    var d=detail(Math.max(0,remain),[rr[1],rr[2]],[LEVEL[1],LEVEL[2]]);
+    gradeS[g]=d.final[0];gradeT[g]=d.final[1];
+    rowsST.push([PHDGRADE[g],gq[g],gradeE[g],remain,d.raw[0].toFixed(2),d.raw[1].toFixed(2),'<span class="res b">'+gradeS[g]+'</span>','<span class="res t">'+gradeT[g]+'</span>']);
+  });
+  result.steps.push(step(5,'第五步：各年级扣除一等奖后，各自按 '+rr[1]+'% / '+rr[2]+'% 划二、三等奖',
+    '二等奖、三等奖按各年级自己的名额算：年级名额减去该年级一等奖，剩下的按 '+rr[1]+':'+rr[2]+' 划分。',
+    capTable(rowsST,['年级','年级名额','一等奖','剩余名额','二等原始','三等原始','二等奖','三等奖']),
+    '每个年级“一等 + 二等 + 三等”之和等于该年级名额，二、三等奖总数不因一等奖统筹而改变。'));
+
+  result.gradeE=gradeE;result.gradeS=gradeS;result.gradeT=gradeT;result.gq=gq;
+  return result;
+}
+function renderPhdHero(r){
+  var total=phdState.totalQuota||1;
+  var arrow='<div class="flow-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>';
+  var h='<div class="flow-node tone-total"><div class="flow-top"><span class="flow-label">学校总名额</span><span class="flow-pct">100%</span></div>'+
+    '<div class="flow-val"><b>'+phdState.totalQuota+'</b><small>个</small></div><div class="flow-track"><i style="width:100%"></i></div></div>';
+  [0,1,2].forEach(function(g){
+    var q=r.gq[g],pct=q/total*100;
+    h+=arrow+'<div class="flow-node tone-g'+g+'"><div class="flow-top"><span class="flow-label">'+PHDGRADE[g]+'</span><span class="flow-pct">'+pct.toFixed(1)+'%</span></div>'+
+      '<div class="flow-val"><b>'+q+'</b><small>个</small></div><div class="flow-track"><i style="width:'+Math.min(100,pct).toFixed(1)+'%"></i></div></div>';
+  });
+  document.getElementById('phdHeroFlow').innerHTML=h;
+}
+function renderPhdHead(){
+  var h='<thead><tr><th>年级</th><th>入学年份</th><th class="right">人数</th></tr></thead><tbody>';
+  phdState.heads.forEach(function(n,g){
+    h+='<tr><td><b>'+PHDGRADE[g]+'</b></td><td class="num">'+(academicYear()-g)+' 级博士</td>'+
+      '<td class="right"><input class="in" style="width:86px;text-align:right;padding-right:10px" type="number" min="0" value="'+n+'" oninput="setPhdHead('+g+',this.value)"></td></tr>';
+  });
+  var sum=phdState.heads.reduce(function(a,b){return a+b},0);
+  h+='<tr class="sum"><td>合计</td><td class="dash">—</td><td class="right num">'+sum+'</td></tr>';
+  document.getElementById('phdHeadTable').innerHTML=h+'</tbody>';
+}
+function setPhdHead(g,v){phdState.heads[g]=Math.max(0,parseInt(v,10)||0);renderPhdHead();renderPhdAll()}
+function renderPhdResult(r){
+  var h='<div class="table-wrap"><table class="tbl final-tbl"><thead><tr><th>年级</th><th class="right">名额</th><th class="right"><span class="ldot g"></span>一等奖</th><th class="right"><span class="ldot b"></span>二等奖</th><th class="right"><span class="ldot t"></span>三等奖</th><th class="right">合计</th></tr></thead><tbody>';
+  PHDGRADE.forEach(function(name,g){
+    var E=r.gradeE[g],S=r.gradeS[g],T=r.gradeT[g];
+    h+='<tr><td><b>'+name+'</b></td><td class="right num">'+r.gq[g]+'</td><td class="right num"><span class="res g">'+E+'</span></td><td class="right num"><span class="res b">'+S+'</span></td><td class="right num"><span class="res t">'+T+'</span></td><td class="right num"><b>'+(E+S+T)+'</b></td></tr>';
+  });
+  var cq=r.gq.reduce(function(a,b){return a+b},0),c1=r.gradeE.reduce(function(a,b){return a+b},0),c2=r.gradeS.reduce(function(a,b){return a+b},0),c3=r.gradeT.reduce(function(a,b){return a+b},0);
+  h+='<tr class="sum"><td>合计</td><td class="right num">'+cq+'</td><td class="right num">'+c1+'</td><td class="right num">'+c2+'</td><td class="right num">'+c3+'</td><td class="right num">'+(c1+c2+c3)+'</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div class="final-note">博士只按博一、博二、博三 3 个年级给出结果，暂不区分专博 / 学博。各年级“名额”与“一 / 二 / 三等奖之和”相等。</div>';
+  var total=c1+c2+c3;
+  h+=total===phdState.totalQuota
+    ? '<div class="check"><span class="mark">✓</span>校验通过：最终名额合计 '+total+' = 学校给博士的总名额 '+phdState.totalQuota+'，没有多出或遗漏。</div>'
+    : '<div class="check bad"><span class="mark">!</span>最终名额合计 '+total+'，与总名额 '+phdState.totalQuota+' 不符，请检查参数。</div>';
+  return h;
+}
+function renderPhdAll(){
+  var r=calcPhd();
+  document.getElementById('phdProcessArea').innerHTML=r.steps.join('')+(r.warnings.length?'<div class="alert">'+r.warnings.map(esc).join('<br>')+'</div>':'');
+  renderPhdHero(r);
+  document.getElementById('phdCompareArea').innerHTML=renderPhdResult(r);
+}
+function bindPhd(){
+  document.getElementById('phdTotalQuota').oninput=function(){phdState.totalQuota=Math.max(0,parseInt(this.value,10)||0);renderPhdAll()};
+  document.getElementById('phdR1').oninput=function(){phdState.r1=parseFloat(this.value)||0;renderPhdAll()};
+  document.getElementById('phdR2').oninput=function(){phdState.r2=parseFloat(this.value)||0;renderPhdAll()};
+  document.getElementById('phdBao').oninput=function(){phdState.bao=Math.max(0,parseInt(this.value,10)||0);renderPhdAll()};
+  document.getElementById('phdCheng').oninput=function(){phdState.cheng=Math.max(0,parseInt(this.value,10)||0);renderPhdAll()};
+  document.getElementById('phdBaoLevel').onchange=function(){phdState.baoLevel=this.value;renderPhdAll()};
+  document.getElementById('phdBasis').onchange=function(){phdState.basis=this.value;renderPhdAll()};
+}
+function switchTrack(t){
+  document.getElementById('masterView').style.display=t==='master'?'':'none';
+  document.getElementById('phdView').style.display=t==='phd'?'':'none';
+  document.getElementById('trackTabs').innerHTML=[['master','硕士'],['phd','博士']].map(function(x){
+    return '<button class="tab '+(t===x[0]?'on':'')+'" onclick="switchTrack(\''+x[0]+'\')">'+x[1]+'</button>'}).join('');
+}
+document.getElementById('brandYear').textContent=academicYear();
+bind();bindPhd();renderHead();renderPhdHead();renderAll();renderPhdAll();switchTrack('master');
+</script>
+</body>
+</html>

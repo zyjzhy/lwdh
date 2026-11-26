@@ -749,6 +749,52 @@
                         setActiveSubColumn(column, activeTab.dataset.subTarget);
                     }
                 });
+                if (typeof restoreCampusTabs === 'function') restoreCampusTabs();
+            }
+
+            // 校园服务内部分组（学校网站 / 校园工具）
+            let restoreCampusTabs = null;
+
+            function setupCampusTabs() {
+                const tablist = document.querySelector('#offen-links .campus-tabs');
+                if (!tablist) return;
+                const tabs = Array.from(tablist.querySelectorAll('.campus-tab'));
+                const panels = Array.from(document.querySelectorAll('#offen-links .sub-column[data-campus]'));
+                if (tabs.length < 2 || panels.length < tabs.length) return;
+
+                function activate(index) {
+                    tabs.forEach((tab, i) => {
+                        const isActive = i === index;
+                        tab.classList.toggle('active', isActive);
+                        tab.setAttribute('aria-selected', String(isActive));
+                        tab.tabIndex = isActive ? 0 : -1;
+                    });
+                    panels.forEach((panel, i) => {
+                        const isHidden = i !== index;
+                        panel.classList.toggle('is-tab-hidden', isHidden);
+                        panel.setAttribute('aria-hidden', String(isHidden));
+                    });
+                }
+
+                tabs.forEach((tab, i) => {
+                    tab.tabIndex = i === 0 ? 0 : -1;
+                    tab.addEventListener('click', () => activate(i));
+                });
+                tablist.addEventListener('keydown', event => {
+                    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+                    event.preventDefault();
+                    let index = tabs.findIndex(tab => tab.classList.contains('active'));
+                    index = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1
+                        : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+                    tabs[index].focus();
+                    tabs[index].click();
+                });
+
+                restoreCampusTabs = () => {
+                    const activeIndex = Math.max(0, tabs.findIndex(tab => tab.classList.contains('active')));
+                    activate(activeIndex);
+                };
+                restoreCampusTabs();
             }
 
             function setupModuleTabs() {
@@ -1681,7 +1727,7 @@
                     heading.append(h2, count);
                     column.prepend(heading);
                 });
-                const campus = document.querySelector('#offen-links [data-campus]');
+                const campus = document.querySelector('#offen-links .sub-column[data-campus]');
                 campus.dataset.campus = 'true';
                 const cards = Array.from(campus.querySelectorAll('.card'));
                 const container = campus.querySelector('.card-container');
@@ -1689,8 +1735,7 @@
                 const groups = [
                     ['refresh.campusPublic', '校园入口', cards.slice(0, 5).concat(cards[11])],
                     ['refresh.campusInside', '校内系统', cards.slice(5, 11)],
-                    ['refresh.campusOutside', '校外访问', cards.slice(12, 17)],
-                    ['refresh.campusLocal', '本地工具', cards.slice(17)]
+                    ['refresh.campusOutside', '校外访问', cards.slice(12, 17)]
                 ];
                 groups.forEach(([key, label, items]) => {
                     const group = document.createElement('div');
@@ -1960,6 +2005,7 @@
                 enhanceCards();
                 setupDirectory();
                 setupModuleTabs();
+                setupCampusTabs();
                 renderCommonRecommendations();
                 searchHistoryItems = loadSearchHistory();
                 renderSearchHistory();

@@ -215,7 +215,15 @@
               "iconSpace": false,
               "pinned": false,
               "badgeNew": false
-            },
+            }
+          ]
+        },
+        {
+          "id": "section.campusTools",
+          "title": "校园工具",
+          "campus": true,
+          "blankTail": 1,
+          "cards": [
             {
               "label": "党课学习备考",
               "labelEn": "Party Study Prep",
@@ -272,6 +280,18 @@
               "tooltipEn": "Student archive template generator",
               "icon": "https://www.hrbcu.edu.cn/favicon.ico",
               "iconAlt": "档案模板生成",
+              "iconSpace": false,
+              "pinned": false,
+              "badgeNew": true
+            },
+            {
+              "label": "硕博奖学金名额",
+              "labelEn": "Scholarship Quota Allocator",
+              "url": "scholarship-allocator/index.html",
+              "tooltip": "硕博奖学金名额分配测算工具",
+              "tooltipEn": "PhD and master scholarship quota allocation tool",
+              "icon": "https://www.hrbcu.edu.cn/favicon.ico",
+              "iconAlt": "奖学金名额",
               "iconSpace": false,
               "pinned": false,
               "badgeNew": true
