@@ -118,7 +118,7 @@ body.searching #offen-links > .sub-column > h3 { display: flex; margin-top: 18px
 /* 校园服务内部的两个标签：学校网站 / 校园工具 */
 .campus-tabs {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 7px;
   margin: 0 0 16px;
   padding: 5px;
@@ -148,16 +148,29 @@ body.searching #offen-links > .sub-column > h3 { display: flex; margin-top: 18px
   .campus-tab { font-size: 11px; padding-inline: 10px; }
 }
 
-/* 横向滑动的标签栏：滚动条隐藏，滚动能力保留 */
+/* 横向滑动的标签栏：始终单行、滚动条隐藏、滚动能力保留 */
 header.nav-main nav,
 #search-tabs,
 .campus-tabs,
 .module-tabs {
+  flex-wrap: nowrap !important;
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
+/* 标签项：随视口平滑缩小字号与内边距，始终单行；放不下时整条横向滚动 */
+header.nav-main nav > a,
+#search-tabs button,
+.campus-tabs .campus-tab,
+.module-tabs .module-tab {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: clamp(10px, 0.6vw + 5px, 13px);
+  padding-inline: clamp(6px, 0.6vw + 5px, 14px);
+}
+/* 居中标签栏在内容溢出时退化为左对齐，保证左侧内容可滚动到 */
+#search-tabs { justify-content: safe center; }
 header.nav-main nav::-webkit-scrollbar,
 #search-tabs::-webkit-scrollbar,
 .campus-tabs::-webkit-scrollbar,
