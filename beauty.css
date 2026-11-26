@@ -329,7 +329,8 @@ body.searching .card:not(.is-hidden) {
 }
 
 /* 分区标题：小色条 + 计数胶囊，扫读更快 */
-.section-heading h2 { display: flex; align-items: center; gap: 10px; }
+.section-heading { justify-content: center; }
+.section-heading h2 { display: flex; align-items: center; justify-content: center; gap: 10px; }
 .section-heading h2::before {
   content: "";
   flex: 0 0 4px;
