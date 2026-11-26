@@ -64,7 +64,7 @@
             justify-content: center;
             min-height: 100vh;
             background-color: #f5f7fa;
-            background-image: url('wallpapers/peak.webp'); /*设置背景图片：首屏默认山峰，避免脚本执行前闪现「学习」图*/
+            background-image: url('wallpapers/peak.webp?v=2'); /*设置背景图片：首屏默认山峰，避免脚本执行前闪现「学习」图*/
             background-size:cover;  /*背景图片覆盖整个页面*/
             background-repeat: no-repeat;  /*防止背景图片重复*/
             background-attachment: fixed; /* 固定背景 */
@@ -1033,7 +1033,7 @@ font-size: 18px;
             --control-glass-hover-bg: color-mix(in srgb, var(--surface-strong) 86%, var(--secondary-soft));
             --glass-blur: 12px;
             --glass-border: 1px solid var(--line);
-            --background-image: url('wallpapers/peak.webp');
+            --background-image: url('wallpapers/peak.webp?v=2');
             --custom-background-image: none;
         }
 
@@ -1413,7 +1413,7 @@ font-size: 18px;
         }
 
         html[data-bg="peak"] {
-            --background-image: url('wallpapers/peak.webp');
+            --background-image: url('wallpapers/peak.webp?v=2');
         }
 
         html[data-bg="library"] {
@@ -3728,7 +3728,7 @@ font-size: 18px;
         .bgp-sky { background-image: linear-gradient(135deg, rgba(30,58,138,0.14), rgba(113,86,217,0.22)), url('wallpapers/sky.webp'); background-size: cover; background-position: center; }
         .bgp-green { background-image: linear-gradient(135deg, rgba(22,101,52,0.16), rgba(139,154,61,0.2)), url('wallpapers/green.webp'); background-size: cover; background-position: center; }
         .bgp-campus { background-image: linear-gradient(135deg, rgba(49,94,216,0.18), rgba(15,148,136,0.18)), url('wallpapers/campus.webp'); background-size: cover; background-position: center; }
-        .bgp-peak { background-image: linear-gradient(135deg, rgba(71,85,105,0.2), rgba(20,134,109,0.16)), url('wallpapers/peak.webp'); background-size: cover; background-position: center; }
+        .bgp-peak { background-image: linear-gradient(135deg, rgba(71,85,105,0.2), rgba(20,134,109,0.16)), url('wallpapers/peak.webp?v=2'); background-size: cover; background-position: center; }
         .bgp-library { background-image: linear-gradient(135deg, rgba(75,89,106,0.18), rgba(184,106,36,0.12)), url('wallpapers/library.webp'); background-size: cover; background-position: center; }
         .bgp-coast { background-image: linear-gradient(135deg, rgba(8,125,145,0.18), rgba(63,106,200,0.16)), url('wallpapers/coast.webp'); background-size: cover; background-position: center; }
         .bgp-window { background-image: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.12)), url(wallpaper-window.webp); background-size: cover; background-position: center; }

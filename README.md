@@ -35,7 +35,7 @@ node tools/build-search-index.js
 
 ## 壁纸
 
-内置壁纸使用 WebP 格式（默认山峰约 200KB，窗边约 76KB），原始 JPG/PNG 保留在仓库中作为转换源。新增或更换壁纸后重新生成：
+内置壁纸使用 WebP 格式（默认山峰约 144KB，窗边约 76KB），并内置 312B 低清占位图让首屏立刻有背景；原始 JPG/PNG 保留在仓库中作为转换源。新增或更换壁纸后重新生成：
 
 ```shell
 python tools/optimize-wallpapers.py

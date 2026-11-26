@@ -19,9 +19,16 @@ SOURCES = sorted((ROOT / "wallpapers").glob("*.jpg")) + [
 def convert() -> None:
     for src in SOURCES:
         dst = src.with_suffix(".webp")
-        quality = 72 if src.name == "wallpaper-window.png" else 68
+        quality = 68
         with Image.open(src) as im:
-            im.convert("RGB").save(dst, "WEBP", quality=quality, method=6)
+            image = im.convert("RGB")
+            if src.name == "peak.jpg":
+                # 默认壁纸首屏必载，稍降分辨率换更快的首帧
+                image = image.resize((1440, 960), Image.LANCZOS)
+                quality = 58
+            elif src.name == "wallpaper-window.png":
+                quality = 72
+            image.save(dst, "WEBP", quality=quality, method=6)
         print(f"{src.name} -> {dst.name}: {dst.stat().st_size / 1024:.0f} KB")
 
 
@@ -31,6 +38,7 @@ def rewrite_css() -> None:
     css = re.sub(r"(wallpapers/[^'\")\s]+)\.jpg", r"\1.webp", css)
     css = css.replace("wallpaper-window.png", "wallpaper-window.webp")
     css = re.sub(r"(?<![\w/])123\.jpg", "123.webp", css)
+    css = re.sub(r"wallpapers/peak\.webp(?:\?v=\d+)?", "wallpapers/peak.webp?v=2", css)
     css_path.write_text(css, encoding="utf-8")
     print(f"updated {css_path.name}")
 

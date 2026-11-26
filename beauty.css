@@ -6,6 +6,14 @@
   --beauty-accent: var(--primary-color);
 }
 
+/* 默认山峰的低清占位图（312B）：全图加载前先铺底，消除空背景等待感 */
+html[data-bg="peak"] {
+  --wallpaper-placeholder: url("data:image/webp;base64,UklGRjABAABXRUJQVlA4ICQBAABwBwCdASooABsAPwFqsVArJaSisBVaqWAgCWQAsR8vjCgSgRsonH4Piz+2765ng8gYydj8QHc9HR4/eaZSRryqJ8CQAAD+M9I/JsHNl2TwYLVMW1dd01U/Qqmw1n1AkOVUFBt7UffIUWxzCsfkS4VLfhKhws/tEHOXjX8fURmPv+lOe1iZrIXmjDHf98pgAR5FjabyiQHXjzExSnhiKexciiFfQuTKGRsJWYDkyp/TKMbsLX3AkTJ/qm3ZHAnNl6zWJism66uFwu1IRwS6BpAUE38ADWiWHxSnfR06onk/eaT1w1H5WuH0Oihi/4P5IoLuiFBxbAlED7t0Ytzh13ARURMkSjMTbTRVBFgGQQvP3naMSUtE6S4aeigmWoGRbV4XJAAA");
+}
+body {
+  background-image: var(--background-image), var(--wallpaper-placeholder, none);
+}
+
 html { scroll-behavior: smooth; }
 
 /* 阅读位置指示条：由页尾脚本更新 --scroll-progress */
