@@ -91,6 +91,30 @@ body::-webkit-scrollbar {
   }
 }
 
+/* 校园服务：共享标题放在标签栏上方，面板内重复标题在常规浏览时隐藏 */
+#offen-links > .campus-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  color: var(--ui-ink);
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+#offen-links > .campus-section-title .svg-icon {
+  width: 28px;
+  height: 28px;
+  padding: 6px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  color: var(--secondary-color);
+  background: linear-gradient(135deg, var(--secondary-soft), var(--accent-soft));
+}
+#offen-links > .sub-column > h3 { display: none; }
+body.searching #offen-links > .sub-column > h3 { display: flex; margin-top: 18px; }
+
 /* 校园服务内部的两个标签：学校网站 / 校园工具 */
 .campus-tabs {
   display: flex;
